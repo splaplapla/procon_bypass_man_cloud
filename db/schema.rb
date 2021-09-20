@@ -10,6 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2021_09_20_135239) do
+
+  create_table "reports", charset: "utf8mb4", force: :cascade do |t|
+    t.text "body"
+    t.string "report_type", null: false
+    t.string "ip_address"
+    t.string "hostname", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end
