@@ -20,3 +20,11 @@ test:
 production:
   <<: *default
   database: pbm_cloud_production
+
+prduction:
+  url: <%= ENV['DATABASE_URL'] %>
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: myapp_production
+  username: myapp
+  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
