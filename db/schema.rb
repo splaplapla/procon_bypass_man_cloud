@@ -12,9 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2021_09_20_135239) do
 
-  create_table "reports", charset: "utf8mb4", force: :cascade do |t|
+  create_table "events", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
-    t.string "report_type", null: false
+    t.string "event_type", null: false
+    t.string "session_id"
     t.string "ip_address"
     t.string "hostname", null: false
     t.bigint "user_id"
