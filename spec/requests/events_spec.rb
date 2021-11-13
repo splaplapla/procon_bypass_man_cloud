@@ -11,15 +11,18 @@ RSpec.describe "Events", type: :request do
 
       it do
         expect {
-          post api_events_path, params: { body: "a", event_type: "error", hostname: "foo" }
+          post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo" }
         }.to change { Event.count }.by(1)
-        expect(response).to have_http_status(200)
+        event = Event.last
+        expect(event.body).to be_a(Hash)
+        expect(event.hostname).to be_a(String)
+        expect(event.event_type).to eq('error')
       end
 
       it do
-        post api_events_path, params: { body: "a", event_type: "error", hostname: "foo" }
-        expect(response).to have_http_status(200)
+        post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo" }
+        expect(response).to be_ok
       end
     end
   end
-  end
+end

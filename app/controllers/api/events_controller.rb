@@ -6,7 +6,7 @@ class Api::EventsController < Api::Base
     Event.create!(body: form.body,
                   event_type: form.event_type,
                   hostname: form.hostname)
-    render plain: :a
+    render json: {}, status: :ok
   rescue ActiveModel::ValidationError => e
     render json: { errors: e.model.errors.full_messages }, status: :bad_request
   end
@@ -14,6 +14,6 @@ class Api::EventsController < Api::Base
   private
 
   def event_params
-    params.permit(:body, :event_type, :hostname)
+    params.permit(:event_type, :hostname, body: {})
   end
 end

@@ -10,6 +10,7 @@ gem 'sass-rails'
 # gem 'webpacker', '~> 5.0'
 gem 'jbuilder'
 # gem 'bcrypt', '~> 3.1.7'
+gem 'kaminari'
 
 group :production do
   gem 'pg'
