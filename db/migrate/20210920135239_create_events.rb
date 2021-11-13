@@ -3,12 +3,11 @@ class CreateEvents < ActiveRecord::Migration[6.1]
     create_table :events do |t|
       t.text :body
       t.string :event_type, null: false
-      t.string :session_id
-      t.string :ip_address
-      t.string :hostname, null: false
-      t.bigint :user_id, null: true # あとで使う
+      t.string :pbm_session_id
 
       t.timestamps
     end
+    add_index :events, :pbm_session_id
+    add_index :events, :updated_at
   end
 end

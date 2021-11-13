@@ -15,7 +15,7 @@ RSpec.describe "Events", type: :request do
         }.to change { Event.count }.by(1)
         event = Event.last
         expect(event.body).to be_a(Hash)
-        expect(event.hostname).to be_a(String)
+        expect(event.pbm_session.hostname).to be_a(String)
         expect(event.event_type).to eq('error')
       end
 

@@ -10,20 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_154819) do
+ActiveRecord::Schema.define(version: 2021_11_13_164945) do
 
   create_table "events", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
     t.string "event_type", null: false
-    t.string "session_id"
+    t.string "pbm_session_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pbm_session_id"], name: "index_events_on_pbm_session_id"
+    t.index ["updated_at"], name: "index_events_on_updated_at"
+  end
+
+  create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|
+    t.string "ulid", null: false
     t.string "ip_address"
     t.string "hostname", null: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_at"], name: "index_events_on_created_at"
-    t.index ["session_id"], name: "index_events_on_session_id"
-    t.index ["user_id"], name: "index_events_on_user_id"
+    t.index ["ulid"], name: "index_pbm_sessions_on_ulid", unique: true
+    t.index ["user_id"], name: "index_pbm_sessions_on_user_id"
   end
 
 end
