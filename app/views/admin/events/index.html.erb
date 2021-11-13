@@ -4,6 +4,7 @@
     <th>type</th>
     <th>body</th>
     <th>hostname</th>
+    <th>created at</th>
   </tr>
   <% @events.each do |event| %>
     <tr>
@@ -11,6 +12,7 @@
       <td><%= event.event_type %></td>
       <td><%= event.body %></td>
       <td><%= event.hostname %></td>
+      <td><%= event.created_at %></td>
     </tr>
   <% end %>
 </table>
