@@ -1,9 +1,9 @@
 class Api::CreateEventForm
   include ActiveModel::Model
 
-  validates :body, :event_type, :hostname, presence: true
+  validates :body, :event_type, :hostname, :session_id, presence: true
 
-  attr_accessor :body, :event_type, :hostname
+  attr_accessor :body, :event_type, :hostname, :session_id
 
   def initialize(attrs)
     super(attrs)
