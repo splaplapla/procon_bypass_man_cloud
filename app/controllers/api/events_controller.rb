@@ -16,7 +16,7 @@ class Api::EventsController < Api::Base
         )
       when "heartbeat"
         if(heartbeat_event = pbm_session.events.find_by(event_type: form.event_type))
-          heartbeat_event.touch
+          heartbeat_event.update!(body: form.body)
         else
           pbm_session.events.create!(event_type: :heartbeat, body: form.body)
         end
