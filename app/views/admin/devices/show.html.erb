@@ -4,12 +4,14 @@
   <tr>
     <th>id</th>
     <th>name</th>
+    <th>uuid</th>
     <th>ip_address</th>
     <th>hostname</th>
     <th>created_at</th>
   </tr>
   <tr>
     <td><%= @device.id %></td>
+    <td><%= @device.uuid %></td>
     <td><%= @device.name %></td>
     <td><%= @device.ip_address %></td>
     <td><%= @device.hostname %></td>
