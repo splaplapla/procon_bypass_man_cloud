@@ -1,0 +1,22 @@
+<h1>Devices</h1>
+
+<table border=1>
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>ip_address</th>
+    <th>hostname</th>
+    <th>created_at</th>
+    <th>updated_at</th>
+  </tr>
+  <% @devices.each do |device| %>
+    <tr>
+      <td><%= link_to device.id, admin_device_path(device) %></td>
+      <td><%= device.name %></td>
+      <td><%= device.ip_address %></td>
+      <td><%= device.hostname %></td>
+      <td><%= device.created_at %></td>
+      <td><%= device.updated_at %></td>
+    </tr>
+  <% end %>
+</table>

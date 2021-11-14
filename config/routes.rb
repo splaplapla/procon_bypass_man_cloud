@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :events, only: [:index]
+    resources :devices, only: [:index, :show]
   end
 end
