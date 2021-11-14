@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2021_11_14_080126) do
 
   create_table "devices", charset: "utf8mb4", force: :cascade do |t|
+    t.string "uuid", null: false
     t.string "name"
     t.string "ip_address"
     t.string "hostname", null: false
@@ -20,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_11_14_080126) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_devices_on_user_id"
+    t.index ["uuid"], name: "index_devices_on_uuid", unique: true
   end
 
   create_table "events", charset: "utf8mb4", force: :cascade do |t|

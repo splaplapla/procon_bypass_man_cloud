@@ -1,8 +1,16 @@
 class SaveEventService
-  def self.execute!(session_id: , hostname: , event_type: , body: )
+  def self.execute!(session_id: , hostname: , event_type: , body: , device_id: )
     ApplicationRecord.transaction do
-      pbm_session = PbmSession.find_or_create_by!(uuid: session_id) do |pbm_session|
-        pbm_session.assign_attributes(hostname: hostname, ip_address: nil, user_id: nil)
+      device =
+        if(device = Device.find_by(uuid: device_id))
+          device.update!(hostname: hostname)
+          device
+        else
+          Device.create!(uuid: device_id, hostname: hostname, user_id: nil)
+        end
+
+      pbm_session = device.pbm_sessions.find_or_create_by!(uuid: session_id) do |pbm_session|
+        pbm_session.assign_attributes(hostname: hostname, ip_address: nil)
       end
 
       case event_type

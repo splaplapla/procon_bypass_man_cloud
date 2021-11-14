@@ -12,7 +12,7 @@ RSpec.describe "Events", type: :request do
     context 'when provide event_type is boot' do
       it do
         expect {
-          post api_events_path, params: { body: { pid: 1 }, event_type: "boot", hostname: "foo", session_id: "a" }
+          post api_events_path, params: { body: { pid: 1 }, event_type: "boot", hostname: "foo", session_id: "a", device_id: "b" }
         }.to change { Event.count }.by(1)
         event = Event.last
         expect(event.pbm_session.hostname).to eq("foo")
@@ -25,8 +25,8 @@ RSpec.describe "Events", type: :request do
     context 'when provide event_type is heartbeat' do
       it do
         expect {
-          post api_events_path, params: { body: { pid: 1 }, event_type: "heartbeat", hostname: "foo", session_id: "a" }
-          post api_events_path, params: { body: { pid: 1 }, event_type: "heartbeat", hostname: "foo", session_id: "a" }
+          post api_events_path, params: { body: { pid: 1 }, event_type: "heartbeat", hostname: "foo", session_id: "a", device_id: "b" }
+          post api_events_path, params: { body: { pid: 1 }, event_type: "heartbeat", hostname: "foo", session_id: "a", device_id: "b" }
         }.to change { Event.count }.by(1)
         event = Event.last
         expect(event.body).to be_a(Hash)
@@ -38,7 +38,7 @@ RSpec.describe "Events", type: :request do
     context 'when provide event_type is error' do
       it do
         expect {
-          post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo", session_id: "a" }
+          post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo", session_id: "a", device_id: "b" }
         }.to change { Event.count }.by(1)
         event = Event.last
         expect(event.body).to be_a(Hash)
@@ -47,7 +47,7 @@ RSpec.describe "Events", type: :request do
       end
 
       it do
-        post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo", session_id: "a" }
+        post api_events_path, params: { body: { pid: 1 }, event_type: "error", hostname: "foo", session_id: "a", device_id: "b" }
         expect(response).to be_ok
       end
     end
