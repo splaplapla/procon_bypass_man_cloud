@@ -13,7 +13,9 @@ RSpec.describe "Events", type: :request do
       it do
         expect {
           post api_events_path, params: { body: { pid: 1 }, event_type: "boot", hostname: "foo", session_id: "a", device_id: "b" }
-        }.to change { Event.count }.by(1)
+        }.to \
+          change { Event.count }.by(1).and \
+          change { Device.count }.by(1)
         event = Event.last
         expect(event.pbm_session.hostname).to eq("foo")
         expect(event.body).to be_a(Hash)
