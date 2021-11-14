@@ -1,7 +1,7 @@
 class SaveEventService
   def self.execute!(session_id: , hostname: , event_type: , body: )
     ApplicationRecord.transaction do
-      pbm_session = PbmSession.find_or_create_by!(ulid: session_id) do |pbm_session|
+      pbm_session = PbmSession.find_or_create_by!(uuid: session_id) do |pbm_session|
         pbm_session.assign_attributes(hostname: hostname, ip_address: nil, user_id: nil)
       end
 

@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_13_164945) do
+ActiveRecord::Schema.define(version: 2021_11_14_080126) do
+
+  create_table "devices", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "ip_address"
+    t.string "hostname", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_devices_on_user_id"
+  end
 
   create_table "events", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
@@ -23,14 +33,13 @@ ActiveRecord::Schema.define(version: 2021_11_13_164945) do
   end
 
   create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|
-    t.string "ulid", null: false
+    t.bigint "device_id", null: false
+    t.string "uuid", null: false
     t.string "ip_address"
     t.string "hostname", null: false
-    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["ulid"], name: "index_pbm_sessions_on_ulid", unique: true
-    t.index ["user_id"], name: "index_pbm_sessions_on_user_id"
+    t.index ["uuid"], name: "index_pbm_sessions_on_uuid", unique: true
   end
 
 end
