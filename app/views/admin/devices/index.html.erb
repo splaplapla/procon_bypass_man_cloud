@@ -4,6 +4,7 @@
   <tr>
     <th>id</th>
     <th>name</th>
+    <th>uuid</th>
     <th>ip_address</th>
     <th>hostname</th>
     <th>created_at</th>
@@ -13,6 +14,7 @@
     <tr>
       <td><%= link_to device.id, admin_device_path(device) %></td>
       <td><%= device.name %></td>
+      <td><%= device.uuid %></td>
       <td><%= device.ip_address %></td>
       <td><%= device.hostname %></td>
       <td><%= device.created_at %></td>
