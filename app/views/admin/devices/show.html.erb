@@ -1,23 +1,6 @@
 <h1>Device</h1>
 
-<table border=1>
-  <tr>
-    <th>id</th>
-    <th>name</th>
-    <th>uuid</th>
-    <th>ip_address</th>
-    <th>hostname</th>
-    <th>created_at</th>
-  </tr>
-  <tr>
-    <td><%= @device.id %></td>
-    <td><%= @device.uuid %></td>
-    <td><%= @device.name %></td>
-    <td><%= @device.ip_address %></td>
-    <td><%= @device.hostname %></td>
-    <td><%= @device.created_at %></td>
-  </tr>
-</table>
+<%= render "devices_table", devices: [@device] %>
 
 <h2>Sessions</h2>
 <table border=1>
