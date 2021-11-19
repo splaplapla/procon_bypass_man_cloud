@@ -14,7 +14,7 @@ class SaveEventService
       end
 
       case event_type
-      when "boot", "reload_config"
+      when "boot", "reload_config", "load_config"
         pbm_session.events.create!(
           body: body,
           event_type: event_type,
