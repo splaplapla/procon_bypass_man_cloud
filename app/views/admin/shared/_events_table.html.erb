@@ -3,6 +3,9 @@
     <th>id</th>
     <th>type</th>
     <th>body</th>
+    <% if show_session_column %>
+      <th>pbm_session</th>
+    <% end %>
     <th>created at</th>
     <th>updated at</th>
   </tr>
@@ -11,6 +14,9 @@
       <td><%= event.id %></td>
       <td><%= event.event_type %></td>
       <td><%= event.body %></td>
+      <% if show_session_column %>
+        <th><%= link_to event.pbm_session.uuid, admin_device_pbm_session_path(event.pbm_session.device, event.pbm_session) %></th>
+      <% end %>
       <td><%= event.created_at %></td>
       <td><%= event.updated_at %></td>
     </tr>

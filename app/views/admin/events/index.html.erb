@@ -3,5 +3,6 @@
   <%= collection_select :event, :event_type, Event.event_types, :name, :name, include_blank: true %>
   <%= submit_tag "送信する" %>
 <% end %>
-<%= render "/admin/shared/events_table", events: @events %>
+
+<%= render "/admin/shared/events_table", events: @events, show_session_column: true %>
 <%= paginate @events %>
