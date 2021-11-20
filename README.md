@@ -4,7 +4,7 @@
 
 ## Installation
 ```
-bundle config set --local without 'production
+bundle config set --local without production
 bundle install
 ```
 
