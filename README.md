@@ -16,6 +16,4 @@ bundle install
 * デバイスに紐づくセッションは最大１０にする
     * modelのコールバックで削除する感じ
 * webからコマンドを送信して再起動したり、をしたい
-* デバイスに紐づくエラーを見れる
-* device, session, eventごとにnestしたcontrollerを作成する
 * webから設定を更新して反映できる
