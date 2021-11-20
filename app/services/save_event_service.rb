@@ -8,6 +8,7 @@ class SaveEventService
         else
           Device.create!(uuid: device_id, hostname: hostname, user_id: nil)
         end
+      device.update_columns(last_access_at: Time.zone.now)
 
       pbm_session = device.pbm_sessions.find_or_create_by!(uuid: session_id) do |pbm_session|
         pbm_session.assign_attributes(hostname: hostname, ip_address: nil)

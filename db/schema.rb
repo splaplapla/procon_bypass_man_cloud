@@ -16,6 +16,7 @@ ActiveRecord::Schema.define(version: 2021_11_20_110736) do
     t.string "uuid", null: false
     t.string "name"
     t.string "ip_address"
+    t.datetime "last_access_at"
     t.string "hostname", null: false
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
