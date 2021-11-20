@@ -10,6 +10,6 @@ class Admin::EventsController < Admin::Base
   private
 
   def event_params
-    params.required(:event).permit(:event_type)
+    params.fetch(:event, {}).permit(:event_type)
   end
 end
