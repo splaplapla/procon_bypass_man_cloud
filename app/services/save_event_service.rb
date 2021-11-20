@@ -14,11 +14,17 @@ class SaveEventService
       end
 
       case event_type
-      when "boot", "reload_config", "load_config"
+      when "boot"
         pbm_session.events.create!(
           body: body,
           event_type: event_type,
         )
+      when "reload_config", "load_config"
+        event = pbm_session.events.create!(
+          body: body,
+          event_type: event_type,
+        )
+        event.create_event_buttons_setting!(content: body)
       when "heartbeat"
         if(heartbeat_event = pbm_session.events.find_by(event_type: event_type))
           heartbeat_event.update!(body: body)
