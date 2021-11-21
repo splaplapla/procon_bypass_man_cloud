@@ -8,4 +8,11 @@ class Api::CreateEventForm
   def initialize(attrs)
     super(attrs)
   end
+
+  def body
+    JSON.parse(@body)
+  rescue JSON::ParserError
+    Rails.logger.error "can not JSON.parse. #{@body}"
+    @body
+  end
 end

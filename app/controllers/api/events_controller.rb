@@ -19,6 +19,6 @@ class Api::EventsController < Api::Base
   private
 
   def event_params
-    params.permit(:event_type, :hostname, :session_id, :device_id, body: {})
+    params.permit(:event_type, :hostname, :session_id, :device_id, :body)
   end
 end
