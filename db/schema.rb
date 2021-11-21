@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2021_11_20_110736) do
 
   create_table "events", charset: "utf8mb4", force: :cascade do |t|
     t.text "body"
-    t.string "event_type", null: false
+    t.integer "event_type", null: false
     t.string "pbm_session_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -8,6 +8,7 @@
     <% end %>
     <th>created at</th>
     <th>updated at</th>
+    <th></th>
   </tr>
   <% events.each do |event| %>
     <tr>
@@ -19,6 +20,7 @@
       <% end %>
       <td><%= event.created_at %></td>
       <td><%= event.updated_at %></td>
+      <td><%= link_to "save", "" %></td>
     </tr>
   <% end %>
 </table>
