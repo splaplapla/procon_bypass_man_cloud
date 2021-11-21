@@ -10,6 +10,7 @@ Rails.application.routes.draw do
       resources :saved_buttons_settings, only: [:create]
     end
     resources :devices, only: [:index, :show] do
+      resources :saved_buttons_settings, only: [:index, :show]
       resources :pbm_sessions, only: [:index, :show] do
       end
     end

@@ -1,0 +1,22 @@
+<h1>SavedButtonsSetting</h1>
+
+<table border=1>
+  <tr>
+    <th>id</th>
+    <th>name</th>
+    <th>content</th>
+    <th>memo</th>
+    <th>created_at</th>
+    <th>updated_at</th>
+  </tr>
+  <% @settings.each do |setting| %>
+    <tr>
+      <td><%= setting.id %></td>
+      <td><%= setting.name %></td>
+      <td><%= setting.content %></td>
+      <td><%= setting.memo %></td>
+      <td><%= setting.created_at %></td>
+      <td><%= setting.updated_at %></td>
+    </tr>
+  <% end %>
+</table>

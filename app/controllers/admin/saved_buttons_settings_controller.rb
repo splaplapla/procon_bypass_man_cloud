@@ -1,4 +1,11 @@
 class Admin::SavedButtonsSettingsController < Admin::Base
+  def index
+    @settings = SavedButtonsSetting.where(params[:device_id])
+  end
+
+  def show
+  end
+
   def create
     event = Event.where(event_type: [:load_config, :reload_config]).find(params[:event_id])
     event.pbm_session.device.saved_buttons_settings.create!(content: event.body)
