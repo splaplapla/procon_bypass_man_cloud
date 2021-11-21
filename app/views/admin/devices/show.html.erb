@@ -1,23 +1,6 @@
 <h1>Device</h1>
 
-<%= render "devices_table", devices: [@device] %>
+<%= render "admin/shared/devices_table", devices: [@device] %>
 
 <h2>Sessions</h2>
-<table border=1>
-  <tr>
-    <th>id</th>
-    <th>uuid</th>
-    <th>ip_address</th>
-    <th>hostname</th>
-    <th>created_at</th>
-  </tr>
-  <% @device.pbm_sessions.limit(100).order(id: :desc).each do |pbm_session| %>
-    <tr>
-      <td><%= link_to pbm_session.id, admin_device_pbm_session_path(@device, pbm_session) %></td>
-      <td><%= pbm_session.uuid%></td>
-      <td><%= pbm_session.ip_address %></td>
-      <td><%= pbm_session.hostname %></td>
-      <td><%= pbm_session.created_at %></td>
-    </tr>
-  <% end %>
-</table>
+<%= render "admin/shared/pbm_session_table", pbm_sessions: @device.pbm_sessions.limit(100).order(id: :desc) %>
