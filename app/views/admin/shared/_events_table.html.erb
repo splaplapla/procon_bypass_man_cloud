@@ -20,7 +20,7 @@
       <% end %>
       <td><%= event.created_at %></td>
       <td><%= event.updated_at %></td>
-      <td><%= link_to "save", admin_event_saved_buttons_settings_path(event) if event.loading_config? %></td>
+      <td><%= link_to "save", admin_event_saved_buttons_settings_path(event), method: :post if event.loading_config? %></td>
     </tr>
   <% end %>
 </table>

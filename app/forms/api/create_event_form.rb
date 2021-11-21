@@ -10,6 +10,8 @@ class Api::CreateEventForm
   end
 
   def body
+    return @body if @body.blank?
+
     JSON.parse(@body)
   rescue JSON::ParserError
     Rails.logger.error "can not JSON.parse. #{@body}"
