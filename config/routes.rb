@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :events, only: [:index]
+    resources :events, only: [:index] do
+      resources :saved_buttons_settings, only: [:create]
+    end
     resources :devices, only: [:index, :show] do
       resources :pbm_sessions, only: [:index, :show] do
       end

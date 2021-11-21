@@ -5,13 +5,15 @@ class Event < ApplicationRecord
 
   belongs_to :pbm_session
 
-  has_one :event_buttons_setting, dependent: :destroy
-
   def self.event_types
     [ OpenStruct.new(name: :error),
       OpenStruct.new(name: :boot),
       OpenStruct.new(name: :load_config),
       OpenStruct.new(name: :reload_config),
     ]
+  end
+
+  def loading_config?
+    reload_config? || load_config?
   end
 end
