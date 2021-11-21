@@ -1,6 +1,6 @@
 class Admin::SavedButtonsSettingsController < Admin::Base
   def index
-    @settings = SavedButtonsSetting.where(params[:device_id])
+    @settings = Device.find(params[:device_id]).saved_buttons_settings
   end
 
   def show
