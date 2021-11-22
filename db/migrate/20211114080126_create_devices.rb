@@ -7,6 +7,8 @@ class CreateDevices < ActiveRecord::Migration[6.1]
       t.datetime :last_access_at
       t.string :hostname, null: false
       t.bigint :user_id, null: true, index: true # あとで使う
+      t.string :pbm_version, null: true
+      t.boolean :enable_pbmenv, null: true, default: false
 
       t.timestamps
       t.index :uuid, unique: true

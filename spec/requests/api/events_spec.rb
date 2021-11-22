@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Events", type: :request do
   describe "POST /events" do
+    let(:device) { Device.create(uuid: :a, hostname: "aa") }
+    let(:device_id) { device.uuid }
+    subject do
+      post api_events_path, params: { body: params_body.to_json, event_type: "boot", hostname: "foo", session_id: "a", device_id: device_id }
+    end
     context 'does not provide params' do
       it do
         expect { post api_events_path }.not_to change { Event.count }
@@ -10,10 +15,9 @@ RSpec.describe "Events", type: :request do
     end
 
     context 'when provide event_type is boot' do
+      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
       it do
-        expect {
-          post api_events_path, params: { body: { pid: 1 }.to_json, event_type: "boot", hostname: "foo", session_id: "a", device_id: "b" }
-        }.to \
+        expect { subject }.to \
           change { Event.count }.by(1).and \
           change { Device.count }.by(1)
         event = Event.last
@@ -21,6 +25,14 @@ RSpec.describe "Events", type: :request do
         expect(event.body).to be_a(Hash)
         expect(event.pbm_session.hostname).to be_a(String)
         expect(event.event_type).to eq('boot')
+      end
+
+      it do
+        expect { subject }.to change { device.reload.pbm_version }.to("1.1")
+      end
+
+      it do
+        expect { subject }.to change { device.reload.enable_pbmenv }.to(true)
       end
     end
 

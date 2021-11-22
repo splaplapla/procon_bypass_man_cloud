@@ -24,6 +24,10 @@ group :development, :test do
   gem 'pry'
 end
 
+group :test do
+  gem 'factory_bot'
+end
+
 group :development do
   gem 'rack-mini-profiler'
   gem 'listen'

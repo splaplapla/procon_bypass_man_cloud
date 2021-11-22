@@ -20,6 +20,7 @@ class SaveEventService
           body: body,
           event_type: event_type,
         )
+        device.update_columns(pbm_version: body["pbm_version"], enable_pbmenv: body["use_pbmenv"])
       when "reload_config", "load_config"
         pbm_session.events.create!(
           body: body,

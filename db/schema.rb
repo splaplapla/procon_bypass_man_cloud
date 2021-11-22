@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 2021_11_20_110419) do
     t.datetime "last_access_at"
     t.string "hostname", null: false
     t.bigint "user_id"
+    t.string "pbm_version"
+    t.boolean "enable_pbmenv", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_devices_on_user_id"
