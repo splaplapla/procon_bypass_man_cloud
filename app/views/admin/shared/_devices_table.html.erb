@@ -1,4 +1,7 @@
-<%= link_to "saved_buttons_settings", admin_device_saved_buttons_settings_path(@device) %>
+<% if devices.to_a.size == 1 %>
+  <%= link_to "saved_buttons_settings", admin_device_saved_buttons_settings_path(devices.first) %>
+<% end %>
+
 <table border=1>
   <tr>
     <th>id</th>
