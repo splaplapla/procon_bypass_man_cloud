@@ -3,5 +3,6 @@ class Admin::DeviceVersionsController < Admin::Base
   end
 
   def current
+    @device = Device.find(params[:device_id])
   end
 end
