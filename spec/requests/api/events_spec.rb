@@ -50,6 +50,12 @@ RSpec.describe "Events", type: :request do
     end
 
     context 'when provide event_type is error' do
+      context do
+        it do
+          post api_events_path, params: { "body"=>{"value"=>"\"接続の見込みがないのでsleepしまくります\"", "event_type"=>"error"}, "hostname"=>"raspberrypi", "event_type"=>"error", "session_id"=>"s_029caaea-8812-4d50-bb59-c92ca7514f6f", "device_id"=>"d_8b0c90d8-901e-45e0-a9ef-c4a874972948" }
+        expect(response).to be_bad_request
+        end
+      end
       it do
         expect {
           post api_events_path, params: { body: { pid: 1 }.to_json, event_type: "error", hostname: "foo", session_id: "a", device_id: "b" }
