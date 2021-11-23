@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :devices, only: [:index, :show] do
       resource :device_versions, only: [:show] do
         get :current, on: :member
+        post :change_request, on: :member
       end
       resources :saved_buttons_settings, only: [:index, :show]
       resources :pbm_sessions, only: [:index, :show] do
