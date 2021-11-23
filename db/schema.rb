@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 2021_11_23_014704) do
   end
 
   create_table "pbm_jobs", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "device_id", null: false
     t.integer "action", null: false
     t.string "status", null: false
     t.text "job_stdout"
