@@ -1,0 +1,2 @@
+class PbmJob < ApplicationRecord
+end

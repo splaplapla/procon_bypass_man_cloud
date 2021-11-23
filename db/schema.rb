@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_20_110419) do
+ActiveRecord::Schema.define(version: 2021_11_23_014704) do
 
   create_table "devices", charset: "utf8mb4", force: :cascade do |t|
     t.string "uuid", null: false
@@ -35,6 +35,15 @@ ActiveRecord::Schema.define(version: 2021_11_20_110419) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pbm_session_id"], name: "index_events_on_pbm_session_id"
     t.index ["updated_at"], name: "index_events_on_updated_at"
+  end
+
+  create_table "pbm_jobs", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "action", null: false
+    t.string "status", null: false
+    t.text "job_stdout"
+    t.text "job_stderr"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|
