@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :events, only: [:create]
+    resources :devices, only: :show do
+      resources :pbm_jobs, only: :index
+    end
   end
 
   namespace :admin do

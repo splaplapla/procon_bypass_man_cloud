@@ -40,11 +40,13 @@ ActiveRecord::Schema.define(version: 2021_11_23_014704) do
   create_table "pbm_jobs", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.integer "action", null: false
-    t.string "status", null: false
+    t.integer "status", null: false
+    t.string "uuid", null: false
     t.text "job_stdout"
     t.text "job_stderr"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["uuid"], name: "index_pbm_jobs_on_uuid", unique: true
   end
 
   create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|
