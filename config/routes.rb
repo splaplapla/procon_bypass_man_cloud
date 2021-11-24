@@ -15,6 +15,13 @@ Rails.application.routes.draw do
     end
 
     resources :devices, only: [:index, :show] do
+      resources :available_pbm_jobs, only: :index
+      namespace :pbm_jobs do
+        resources :change_pbm_version, only: :create
+        resources :reboot_os, only: :create
+        resources :reboot_pbm, only: :create
+      end
+
       resource :device_versions, only: [:show] do
         get :current, on: :member
         post :change_request, on: :member

@@ -1,9 +1,12 @@
-<% if devices.to_a.size == 1 %>
+<% if params[:device_id] || @device %>
   <div>
     <%= link_to "saved_buttons_settings", admin_device_saved_buttons_settings_path(devices.first) %>
   </div>
   <div>
     <%= link_to "current version", current_admin_device_device_versions_path(devices.first) %>
+  </div>
+  <div>
+    <%= link_to "アクション", admin_device_available_pbm_jobs_path(devices.first) %>
   </div>
 <% end %>
 
