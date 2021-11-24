@@ -24,20 +24,60 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   end
 
   describe 'PUT /:id' do
-    subject { put api_device_pbm_job_path(device, pbm_job, status: :in_progress) }
+    subject { put api_device_pbm_job_path(device, pbm_job, status: status) }
 
-    it do
-      subject
-      expect(response).to be_ok
+    context 'when in_progress' do
+      let(:status) { :in_progress }
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        subject
+        expect(response.body).to eq(PbmJobSerializer.new(pbm_job.reload).to_json)
+      end
+
+      it do
+        expect { subject }.to change { pbm_job.reload.status }.to("in_progress")
+      end
     end
 
-    it do
-      subject
-      expect(response.body).to eq(PbmJobSerializer.new(pbm_job.reload).to_json)
+    context 'when processed' do
+      let(:status) { :processed }
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        subject
+        expect(response.body).to eq(PbmJobSerializer.new(pbm_job.reload).to_json)
+      end
+
+      it do
+        expect { subject }.to change { pbm_job.reload.status }.to("processed")
+      end
     end
 
-    it do
-      expect { subject }.to change { pbm_job.reload.status }.to("in_progress")
+    context 'when processed' do
+      let(:status) { :failed }
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        subject
+        expect(response.body).to eq(PbmJobSerializer.new(pbm_job.reload).to_json)
+      end
+
+      it do
+        expect { subject }.to change { pbm_job.reload.status }.to("failed")
+      end
     end
   end
 end
