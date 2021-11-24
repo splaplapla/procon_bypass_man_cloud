@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   let(:device) { Device.create(uuid: :a, hostname: "aa") }
   let(:pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save! } }
+  let(:failed_pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save!; x.failed! } }
 
   describe "GET /" do
     subject { get api_device_pbm_jobs_path(device) }
