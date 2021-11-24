@@ -22,4 +22,22 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
       expect(response.body).to eq([PbmJobSerializer.new(pbm_job)].to_json)
     end
   end
+
+  describe 'PUT /:id' do
+    subject { put api_device_pbm_job_path(device, pbm_job, status: :in_progress) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+
+    it do
+      subject
+      expect(response.body).to eq(PbmJobSerializer.new(pbm_job.reload).to_json)
+    end
+
+    it do
+      expect { subject }.to change { pbm_job.reload.status }.to("in_progress")
+    end
+  end
 end

@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :events, only: [:create]
 
     resources :devices, only: :show do
-      resources :pbm_jobs, only: :index
+      resources :pbm_jobs, only: [:index, :update]
     end
   end
 
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
     resources :devices, only: [:index, :show] do
       resources :available_pbm_jobs, only: :index
+
       namespace :pbm_jobs do
         resources :change_pbm_version, only: :create
         resources :reboot_os, only: :create
@@ -28,8 +29,7 @@ Rails.application.routes.draw do
       end
 
       resources :saved_buttons_settings, only: [:index, :show]
-      resources :pbm_sessions, only: [:index, :show] do
-      end
+      resources :pbm_sessions, only: [:index, :show]
     end
   end
 end
