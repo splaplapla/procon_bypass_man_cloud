@@ -6,7 +6,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   let(:failed_pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save!; x.failed! } }
 
   describe "GET /" do
-    subject { get api_device_pbm_jobs_path(device) }
+    subject { get api_device_pbm_jobs_path(device.uuid) }
 
     before do
       pbm_job
@@ -24,7 +24,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   end
 
   describe 'PUT /:id' do
-    subject { put api_device_pbm_job_path(device, pbm_job, status: status) }
+    subject { put api_device_pbm_job_path(device.uuid, pbm_job, status: status) }
 
     context 'when in_progress' do
       let(:status) { :in_progress }
