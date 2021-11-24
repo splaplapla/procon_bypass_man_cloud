@@ -1,7 +1,11 @@
 class Device::ChangeVersionRequestService
   # @param [Device] device
-  def self.execute(device: )
-    pbm_job = PbmJobBuilder.build(device_id: device.id)
+  def self.execute(device: , next_version: )
+    raise "need next_version" if next_version.nil?
+
+    builder = PbmJobBuilder.new(device_id: device.id)
+    builder.args = { next_version: next_version }
+    pbm_job = builder.build
     pbm_job.save!
     pbm_job
   end
