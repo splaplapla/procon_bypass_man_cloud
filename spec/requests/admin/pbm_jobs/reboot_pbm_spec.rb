@@ -12,7 +12,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
 
     it do
       subject
-      expect(response).to be_ok
+      expect(response).to be_redirect
     end
 
     it do
@@ -29,6 +29,15 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
       subject
       pbm_job = device.pbm_jobs.last
       expect(pbm_job.action).to eq("reboot_pbm")
+    end
+
+    context '既に実行待ちのジョブがあるとき' do
+    it do
+      expect {
+        post admin_device_pbm_jobs_reboot_pbm_index_path(device)
+        post admin_device_pbm_jobs_reboot_pbm_index_path(device)
+      }.to change { PbmJob.count }.by(1)
+    end
     end
   end
 end

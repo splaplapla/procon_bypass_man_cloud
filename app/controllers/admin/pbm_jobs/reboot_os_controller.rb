@@ -8,6 +8,6 @@ class Admin::PbmJobs::RebootOsController < Admin::Base
     pbm_job = builder.build
     pbm_job.save!
 
-    head :ok
+    redirect_to admin_device_path(@device), notice: "アクションを実行リクエストを作成しました"
   end
 end

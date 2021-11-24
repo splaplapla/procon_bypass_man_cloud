@@ -12,7 +12,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
 
     it do
       subject
-      expect(response).to be_ok
+      expect(response).to be_redirect
     end
 
     it do

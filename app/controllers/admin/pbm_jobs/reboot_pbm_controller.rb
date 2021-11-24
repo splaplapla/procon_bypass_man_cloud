@@ -1,4 +1,4 @@
-class Admin::PbmJobs::RebootPbmController < Admin::Base
+class Admin::PbmJobs::RebootPbmController < Admin::PbmJobs
   def create
     @device = Device.find(params[:device_id])
 
@@ -7,6 +7,6 @@ class Admin::PbmJobs::RebootPbmController < Admin::Base
     pbm_job = builder.build
     pbm_job.save!
 
-    head :ok
+    redirect_to admin_device_path(@device), notice: "アクションを実行リクエストを作成しました"
   end
 end
