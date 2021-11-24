@@ -4,7 +4,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
   describe 'POST /reboot_pbm' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0") }
 
-    subject { post admin_device_pbm_jobs_change_pbm_version_index_path(device, next_version: "0.1.1") }
+    subject { post admin_device_pbm_jobs_reboot_pbm_index_path(device) }
 
     before do
       device
@@ -22,13 +22,13 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
     it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq("next_version"=>"0.1.1")
+      expect(pbm_job.args).to eq({})
     end
 
     it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.action).to eq("change_pbm_version")
+      expect(pbm_job.action).to eq("reboot_pbm")
     end
   end
 end

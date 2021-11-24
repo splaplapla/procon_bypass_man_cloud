@@ -4,6 +4,8 @@ class Device::ChangeVersionRequestService
     raise "need next_version" if next_version.nil?
 
     builder = PbmJobBuilder.new(device_id: device.id)
+    # TODO これを消す
+    builder.action = :change_pbm_version
     builder.args = { next_version: next_version }
     pbm_job = builder.build
     pbm_job.save!
