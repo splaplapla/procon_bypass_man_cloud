@@ -1,4 +1,4 @@
-class Admin::PbmJobs::RebootOsController < Admin::Base
+class Admin::PbmJobs::RebootOsController < Admin::PbmJobs
   def create
     @device = Device.find(params[:device_id])
 
