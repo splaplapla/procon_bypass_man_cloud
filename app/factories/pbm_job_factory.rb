@@ -1,4 +1,4 @@
-class PbmJobBuilder
+class PbmJobFactory
   def initialize(device_id: )
     @device_id = device_id
     @pbm_job = Device.find(device_id).pbm_jobs.build

@@ -3,7 +3,7 @@ class Device::ChangeVersionRequestService
   def self.execute(device: , next_version: )
     raise "need next_version" if next_version.nil?
 
-    builder = PbmJobBuilder.new(device_id: device.id)
+    builder = PbmJobFactory.new(device_id: device.id)
     # TODO これを消す
     builder.action = :change_pbm_version
     builder.args = { next_version: next_version }
