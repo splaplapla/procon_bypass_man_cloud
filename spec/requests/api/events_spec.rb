@@ -6,7 +6,7 @@ RSpec.describe "Events", type: :request do
     let(:device_id) { device.uuid }
 
     subject do
-      post api_events_path, params: { body: params_body.to_json, event_type: event_type, hostname: "foo", session_id: "a", device_id: device_id }
+      post api_events_path, params: { body: params_body, event_type: event_type, hostname: "foo", session_id: "a", device_id: device_id }
     end
 
     context 'does not provide params' do
@@ -50,6 +50,13 @@ RSpec.describe "Events", type: :request do
         expect(event.body).to be_a(Hash)
         expect(event.pbm_session.hostname).to be_a(String)
         expect(event.event_type).to eq('heartbeat')
+      end
+
+      context do
+        it do
+          params = {"session_id"=>"s_ff09e6f0-050b-4dcb-b079-ac32c88f57a3", "device_id"=>"d_9fadc91f-6575-4f4a-b58d-fe66e557758b", "hostname"=>"raspberrypi2", "event_type"=>"heartbeat", "body"=>{"ruby_version"=>"3.0.1", "pbm_version"=>"0.1.14", "pid"=>983, "root_path"=>"/usr/share/pbm/v0.1.11", "pid_path"=>"/usr/share/pbm/v0.1.11/pbm_pid", "setting_path"=>"/usr/share/pbm/current/setting.yml", "uptime_from_boot"=>66, "use_pbmenv"=>true}, "event"=>{"body"=>{"ruby_version"=>"3.0.1", "pbm_version"=>"0.1.14", "pid"=>983, "root_path"=>"/usr/share/pbm/v0.1.11", "pid_path"=>"/usr/share/pbm/v0.1.11/pbm_pid", "setting_path"=>"/usr/share/pbm/current/setting.yml", "uptime_from_boot"=>66, "use_pbmenv"=>true}, "event_type"=>"heartbeat"} }
+          post api_events_path, params: params
+        end
       end
     end
 
