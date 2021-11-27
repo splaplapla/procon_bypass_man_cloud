@@ -24,7 +24,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   end
 
   describe 'PUT /:id' do
-    subject { put api_device_pbm_job_path(device.uuid, pbm_job.uuid, status: status) }
+    subject { put api_device_pbm_job_path(device.uuid, pbm_job.uuid, body: { status: status }) }
 
     context 'when in_progress' do
       let(:status) { :in_progress }

@@ -9,7 +9,7 @@ class Api::PbmJobsController < Api::Base
     pbm_job = device.pbm_jobs.find_by!(uuid: params[:id])
 
     # TODO forom object
-    pbm_job.update!(status: params[:status])
+    pbm_job.update!(status: pbm_params[:status])
 
     render json: PbmJobSerializer.new(pbm_job)
   end
@@ -17,6 +17,10 @@ class Api::PbmJobsController < Api::Base
   private
 
   def get_device
-    @device = Device.find_by!(uuid: params[:device_id])
+    @device ||= Device.find_by!(uuid: params[:device_id])
+  end
+
+  def pbm_params
+    params.require(:body).permit(:status)
   end
 end
