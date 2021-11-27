@@ -6,7 +6,7 @@ class Api::PbmJobsController < Api::Base
 
   def update
     device = get_device
-    pbm_job = device.pbm_jobs.find(params[:id])
+    pbm_job = device.pbm_jobs.find_by!(uuid: params[:id])
 
     # TODO forom object
     pbm_job.update!(status: params[:status])

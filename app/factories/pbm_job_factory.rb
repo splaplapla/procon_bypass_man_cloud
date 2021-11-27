@@ -26,7 +26,7 @@ class PbmJobFactory
   def default_attributes
     { action: :change_pbm_version,
       status: :queued,
-      uuid: SecureRandom.uuid,
+      uuid: "rpj_#{SecureRandom.uuid}",
       args: {},
     }
   end
