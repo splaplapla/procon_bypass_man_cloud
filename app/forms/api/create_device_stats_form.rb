@@ -1,10 +1,10 @@
 class Api::CreateDeviceStatsForm
   include ActiveModel::Model
 
-  validates :stats, presence: true
-  validate :validate_stats, if: ->{ stats.present? }
+  validates :status, presence: true
+  validate :validate_status, if: ->{ status.present? }
 
-  attr_accessor :stats
+  attr_accessor :status
 
   def initialize(attrs)
     super(attrs)
@@ -12,9 +12,9 @@ class Api::CreateDeviceStatsForm
 
   private
 
-  def validate_stats
-    unless DeviceStatus.stats.keys.include?(stats)
-      errors.add(:stats, :invalid)
+  def validate_status
+    unless DeviceStatus.statuses.keys.include?(status)
+      errors.add(:status, :invalid)
     end
   end
 end

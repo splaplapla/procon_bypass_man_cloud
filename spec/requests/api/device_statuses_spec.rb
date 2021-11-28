@@ -6,27 +6,27 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
   describe 'POST /' do
     subject { post api_device_device_statuses_path(device.uuid), params: params }
 
-    context 'statsを渡さないとき' do
+    context 'statusを渡さないとき' do
       let(:params) { {} }
 
       it do
         subject
-        expect(response.body).to eq({ "errors":["Stats can't be blank"] }.to_json)
+        expect(response.body).to eq({ "errors":["Status can't be blank"] }.to_json)
       end
     end
 
-    context '定義にないstatsを渡すとき' do
-      let(:params) { { body: { stats: "undefined" } } }
+    context '定義にないstatusを渡すとき' do
+      let(:params) { { body: { status: "undefined" } } }
 
       it do
         subject
-        expect(response.body).to eq({ "errors":["Stats is invalid"] }.to_json)
+        expect(response.body).to eq({ "errors":["Status is invalid"] }.to_json)
       end
     end
 
-    context '定義にあるstatsを渡すとき' do
+    context '定義にあるstatusを渡すとき' do
       context 'when running' do
-        let(:params) { { body: { stats: "running" } } }
+        let(:params) { { body: { status: "running" } } }
 
         it do
           subject

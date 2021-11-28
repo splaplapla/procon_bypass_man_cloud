@@ -4,7 +4,7 @@ class Api::DeviceStatusesController < Api::Base
     form.validate!
 
     device = get_device
-    device.device_statuses.create!(stats: form.stats)
+    device.device_statuses.create!(status: form.status)
     render json: {}, status: :ok
   rescue ActiveModel::ValidationError => e
     render json: { errors: e.model.errors.full_messages }, status: :bad_request
@@ -13,6 +13,6 @@ class Api::DeviceStatusesController < Api::Base
   private
 
   def permitted_params
-    params.fetch(:body, {}).permit(:stats)
+    params.fetch(:body, {}).permit(:status)
   end
 end

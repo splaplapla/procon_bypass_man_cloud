@@ -1,5 +1,5 @@
 class DeviceStatus < ApplicationRecord
-  enum stats: {
+  enum status: {
     running: 5,
     connected_but_sleeping: 10,
     device_error: 15,
