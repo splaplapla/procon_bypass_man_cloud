@@ -9,6 +9,7 @@ class CreateDevices < ActiveRecord::Migration[6.1]
       t.bigint :user_id, null: true, index: true # あとで使う
       t.string :pbm_version, null: true
       t.boolean :enable_pbmenv, null: true, default: false
+      t.bigint :current_device_status_id, null: true
 
       t.timestamps
       t.index :uuid, unique: true

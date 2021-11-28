@@ -7,8 +7,8 @@ class Device::CreateDeviceStatusService
 
   def execute(status: )
     ApplicationRecord.transaction do
-      device.device_statuses.create!(status: status)
-      device.touch
+      device_status = device.device_statuses.create!(status: status)
+      device.update!(current_device_status: device_status)
     end
   end
 end

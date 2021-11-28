@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2021_11_28_011459) do
     t.bigint "user_id"
     t.string "pbm_version"
     t.boolean "enable_pbmenv", default: false
+    t.bigint "current_device_status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_devices_on_user_id"
