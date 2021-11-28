@@ -5,7 +5,7 @@ class CreateDevices < ActiveRecord::Migration[6.1]
       t.string :name
       t.string :ip_address
       t.datetime :last_access_at
-      t.string :hostname, null: false
+      t.string :hostname, null: true
       t.bigint :user_id, null: true, index: true # あとで使う
       t.string :pbm_version, null: true
       t.boolean :enable_pbmenv, null: true, default: false

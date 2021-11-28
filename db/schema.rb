@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_11_28_011459) do
     t.string "name"
     t.string "ip_address"
     t.datetime "last_access_at"
-    t.string "hostname", null: false
+    t.string "hostname"
     t.bigint "user_id"
     t.string "pbm_version"
     t.boolean "enable_pbmenv", default: false
