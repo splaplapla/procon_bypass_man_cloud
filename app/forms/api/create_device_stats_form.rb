@@ -13,7 +13,7 @@ class Api::CreateDeviceStatsForm
   private
 
   def validate_stats
-    unless DeviceStat.stats.keys.include?(stats)
+    unless DeviceStatus.stats.keys.include?(stats)
       errors.add(:stats, :invalid)
     end
   end

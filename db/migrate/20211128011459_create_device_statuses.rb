@@ -1,6 +1,6 @@
-class CreateDeviceStats < ActiveRecord::Migration[6.1]
+class CreateDeviceStatuses < ActiveRecord::Migration[6.1]
   def change
-    create_table :device_stats do |t|
+    create_table :device_statuses do |t|
       t.bigint :device_id, null: false, index: true
       t.integer :stats, null: false
 

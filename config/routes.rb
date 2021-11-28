@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
     resources :devices, only: :show do
       resources :pbm_jobs, only: [:index, :update]
-      resources :device_stats, only: [:create]
+      resources :device_statuses, only: [:create]
     end
   end
 

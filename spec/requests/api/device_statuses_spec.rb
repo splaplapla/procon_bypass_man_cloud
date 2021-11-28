@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe "/api/devices/:device_id/device_stats", type: :request do
+RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
   let(:device) { Device.create(uuid: :a, hostname: "aa") }
 
   describe 'POST /' do
-    subject { post api_device_device_stats_path(device.uuid), params: params }
+    subject { post api_device_device_statuses_path(device.uuid), params: params }
 
     context 'statsを渡さないとき' do
       let(:params) { {} }
@@ -34,7 +34,7 @@ RSpec.describe "/api/devices/:device_id/device_stats", type: :request do
         end
 
         it do
-          expect { subject }.to change { device.device_stats.count }.by(1)
+          expect { subject }.to change { device.device_statuses.count }.by(1)
         end
       end
     end

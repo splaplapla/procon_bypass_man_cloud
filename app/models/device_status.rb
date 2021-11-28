@@ -1,4 +1,4 @@
-class DeviceStat < ApplicationRecord
+class DeviceStatus < ApplicationRecord
   enum stats: {
     running: 5,
     connected_but_sleeping: 10,
