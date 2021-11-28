@@ -1,8 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "Devices", type: :request do
-  describe 'GET /admin/devices' do
+RSpec.describe "/admin/devices", type: :request do
+  describe 'GET /' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+
     before do
       device
     end
@@ -13,8 +14,9 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
-  describe 'GET /admin/devices/:id' do
+  describe 'GET /:id' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+
     before do
       device
     end
