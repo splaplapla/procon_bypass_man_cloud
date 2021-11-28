@@ -1,4 +1,6 @@
 class DeviceStatus < ApplicationRecord
+  belongs_to :device
+
   enum status: {
     running: 5,
     connected_but_sleeping: 10,

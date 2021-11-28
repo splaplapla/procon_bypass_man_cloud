@@ -4,7 +4,8 @@ class Api::DeviceStatusesController < Api::Base
     form.validate!
 
     device = get_device
-    device.device_statuses.create!(status: form.status)
+    Device::CreateDeviceStatusService.new(device: device).execute(status: form.status)
+
     render json: {}, status: :ok
   rescue ActiveModel::ValidationError => e
     render json: { errors: e.model.errors.full_messages }, status: :bad_request
