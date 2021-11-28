@@ -13,6 +13,6 @@ class Api::DeviceStatusesController < Api::Base
   private
 
   def permitted_params
-    params.permit(:stats)
+    params.fetch(:body, {}).permit(:stats)
   end
 end

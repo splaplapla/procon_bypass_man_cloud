@@ -16,7 +16,7 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
     end
 
     context '定義にないstatsを渡すとき' do
-      let(:params) { { stats: "undefined" } }
+      let(:params) { { body: { stats: "undefined" } } }
 
       it do
         subject
@@ -26,7 +26,7 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
 
     context '定義にあるstatsを渡すとき' do
       context 'when running' do
-        let(:params) { { stats: "running" } }
+        let(:params) { { body: { stats: "running" } } }
 
         it do
           subject
