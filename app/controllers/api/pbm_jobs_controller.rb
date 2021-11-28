@@ -16,10 +16,6 @@ class Api::PbmJobsController < Api::Base
 
   private
 
-  def get_device
-    @device ||= Device.find_by!(uuid: params[:device_id])
-  end
-
   def pbm_params
     params.require(:body).permit(:status)
   end

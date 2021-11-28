@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_23_014704) do
+ActiveRecord::Schema.define(version: 2021_11_28_004705) do
+
+  create_table "device_stats", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "device_id", null: false
+    t.integer "stats", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["device_id"], name: "index_device_stats_on_device_id"
+  end
 
   create_table "devices", charset: "utf8mb4", force: :cascade do |t|
     t.string "uuid", null: false

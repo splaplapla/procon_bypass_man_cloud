@@ -1,10 +1,18 @@
 class Api::DeviceStatsController < Api::Base
   def create
+    form = Api::CreateDeviceStatsForm.new(permitted_params)
+    form.validate!
+
+    device = get_device
+    device.device_stats.create!(stats: form.stats)
+    render json: {}, status: :ok
+  rescue ActiveModel::ValidationError => e
+    render json: { errors: e.model.errors.full_messages }, status: :bad_request
   end
 
   private
 
-  def event_params
+  def permitted_params
     params.permit(:stats)
   end
 end
