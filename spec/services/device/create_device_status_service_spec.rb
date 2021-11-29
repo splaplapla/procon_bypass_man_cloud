@@ -23,8 +23,22 @@ RSpec.describe Device::CreateDeviceStatusService, type: :request do
       context '最後のdevice_statusと同じものを引数に渡すとき' do
         let(:status) { "running" }
 
-        it do
-          expect { subject }.not_to change { device.device_statuses.count }
+        context 'session_idが同じとき' do
+          it do
+            expect { subject }.not_to change { device.device_statuses.count }
+          end
+        end
+
+        context 'session_idが違うとき' do
+          let(:new_pbm_session) { PbmSession.create(uuid: :b, device: device, hostname: "a") }
+
+          before do
+            device.device_statuses.create!(status: :running, pbm_session: new_pbm_session)
+          end
+
+          it do
+            expect { subject }.to change { device.device_statuses.count }.by(1)
+          end
         end
       end
 

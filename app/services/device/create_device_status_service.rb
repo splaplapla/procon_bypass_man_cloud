@@ -16,7 +16,7 @@ class Device::CreateDeviceStatusService
         device_status = device.device_statuses.create!(status: status, pbm_session: pbm_session)
         device.update!(current_device_status: device_status)
       else
-        if latest_device_status.status == status
+        if latest_device_status.status == status && latest_device_status.pbm_session_id == pbm_session.id
           latest_device_status.touch
         else
           device_status = device.device_statuses.create!(status: status, pbm_session: pbm_session)
