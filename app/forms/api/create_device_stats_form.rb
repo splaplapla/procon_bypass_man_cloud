@@ -1,10 +1,10 @@
 class Api::CreateDeviceStatsForm
   include ActiveModel::Model
 
-  validates :status, presence: true
+  validates :status, :pbm_session_id, presence: true
   validate :validate_status, if: ->{ status.present? }
 
-  attr_accessor :status
+  attr_accessor :status, :pbm_session_id
 
   def initialize(attrs)
     super(attrs)

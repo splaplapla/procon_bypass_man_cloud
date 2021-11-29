@@ -14,10 +14,12 @@ ActiveRecord::Schema.define(version: 2021_11_28_011459) do
 
   create_table "device_statuses", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
+    t.bigint "pbm_session_id", null: false
     t.integer "status", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["device_id"], name: "index_device_statuses_on_device_id"
+    t.index ["pbm_session_id"], name: "index_device_statuses_on_pbm_session_id"
   end
 
   create_table "devices", charset: "utf8mb4", force: :cascade do |t|
