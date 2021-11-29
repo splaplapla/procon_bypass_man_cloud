@@ -74,7 +74,7 @@
     <% device.device_statuses.order(id: :desc).limit(10).each do |device_status| %>
       <tr>
         <td><%= device_status.status %></td>
-        <td><%= link_to pbm_session.uuid, admin_device_pbm_session_path(device, device_status.pbm_session_id) %></td>
+        <td><%= link_to device_status.pbm_session.uuid, admin_device_pbm_session_path(device, device_status.pbm_session_id) %></td>
         <td><%= device_status.created_at %></td>
         <td><%= time_ago_in_words(device_status.created_at) %></td>
       </tr>
