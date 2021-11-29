@@ -69,6 +69,7 @@
       <th>status</th>
       <th>pbm_session</th>
       <th>created_at</th>
+      <th>updated_at</th>
       <th>更新から経った時間</th>
     </tr>
     <% device.device_statuses.order(id: :desc).limit(10).each do |device_status| %>
@@ -76,7 +77,8 @@
         <td><%= device_status.status %></td>
         <td><%= link_to device_status.pbm_session.uuid, admin_device_pbm_session_path(device, device_status.pbm_session_id) %></td>
         <td><%= device_status.created_at %></td>
-        <td><%= time_ago_in_words(device_status.created_at) %></td>
+        <td><%= device_status.updated_at %></td>
+        <td><%= time_ago_in_words(device_status.updated_at) %></td>
       </tr>
     <% end %>
   </table>
