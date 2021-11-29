@@ -1,4 +1,5 @@
 <% if params[:device_id] || @device %>
+  <% device = devices.first %>
   <div>
     <%= link_to "saved_buttons_settings", admin_device_saved_buttons_settings_path(devices.first) %>
   </div>
@@ -36,3 +37,47 @@
     </tr>
   <% end %>
 </table>
+
+<% if params[:device_id] || @device %>
+  <h2>Actions</h2>
+  <table border=1>
+    <tr>
+      <th>action</th>
+      <th>status</th>
+      <th>uuid</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th>更新から経った時間</th>
+    </tr>
+    <% device.pbm_jobs.order(id: :desc).limit(10).each do |pbm_job| %>
+      <tr>
+        <td><%= pbm_job.action %></td>
+        <td><%= pbm_job.status %></td>
+        <td><%= pbm_job.uuid %></td>
+        <td><%= pbm_job.created_at %></td>
+        <td><%= pbm_job.updated_at %></td>
+        <td><%= time_ago_in_words(pbm_job.updated_at) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if params[:device_id] || @device %>
+  <h2>DeviceStatus</h2>
+  <table border=1>
+    <tr>
+      <th>status</th>
+      <th>created_at</th>
+      <th>更新から経った時間</th>
+    </tr>
+    <% device.device_statuses.order(id: :desc).limit(10).each do |device_status| %>
+      <tr>
+        <td><%= device_status.action %></td>
+        <td><%= device_status.status %></td>
+        <td><%= device_status.uuid %></td>
+        <td><%= device_status.created_at %></td>
+        <td><%= time_ago_in_words(device_status.created_at) %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
