@@ -72,9 +72,7 @@
     </tr>
     <% device.device_statuses.order(id: :desc).limit(10).each do |device_status| %>
       <tr>
-        <td><%= device_status.action %></td>
         <td><%= device_status.status %></td>
-        <td><%= device_status.uuid %></td>
         <td><%= device_status.created_at %></td>
         <td><%= time_ago_in_words(device_status.created_at) %></td>
       </tr>
