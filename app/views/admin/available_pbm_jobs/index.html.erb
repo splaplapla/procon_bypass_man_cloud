@@ -1,5 +1,5 @@
 <h1>実行可能なアクション</h1>
-<% if current_device_status.running? || current_device_status.connected_but_sleeping? %>
+<% if @device.current_device_status.running? || @device.current_device_status.connected_but_sleeping? %>
   <div>
     <%= link_to :change_pbm_version, admin_device_pbm_jobs_change_pbm_version_index_path(@device), method: :post %>
   </div>
