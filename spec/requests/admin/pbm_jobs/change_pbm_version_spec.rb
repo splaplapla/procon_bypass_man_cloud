@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
-  describe 'POST /reboot_pbm' do
+  describe 'POST /stop_pbm' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0") }
 
     subject { post admin_device_pbm_jobs_change_pbm_version_index_path(device, next_version: "0.1.1") }

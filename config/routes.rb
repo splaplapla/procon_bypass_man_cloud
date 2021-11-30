@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       namespace :pbm_jobs do
         resources :change_pbm_version, only: :create
         resources :reboot_os, only: :create
-        resources :reboot_pbm, only: :create
+        resources :stop_pbm, only: :create
       end
 
       resource :device_versions, only: [:show] do
