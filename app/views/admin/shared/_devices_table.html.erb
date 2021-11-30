@@ -7,7 +7,7 @@
     <%= link_to "current version", current_admin_device_device_versions_path(devices.first) %>
   </div>
   <div>
-    <%= link_to "アクション", admin_device_available_pbm_jobs_path(devices.first) %>
+    <%= link_to "actions", admin_device_available_pbm_jobs_path(devices.first) %>
   </div>
 <% end %>
 
@@ -32,7 +32,13 @@
       <td><%= device.hostname %></td>
       <td><%= device.created_at %></td>
       <td><%= device.updated_at %></td>
-      <td><%= device.current_device_status&.status %></td>
+      <td>
+        <% if device.current_device_status&.recent? %>
+          <%= device.current_device_status.status %>
+        <% else %>
+          <%= "#{device.current_device_status&.status}(old)" %>
+        <% end %>
+      </td>
       <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>
     </tr>
   <% end %>
