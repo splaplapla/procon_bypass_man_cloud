@@ -2,28 +2,48 @@ require 'rails_helper'
 
 RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   let(:device) { Device.create(uuid: :a, hostname: "aa") }
-  let(:pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save! } }
-  let(:failed_pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save!; x.failed! } }
 
   describe "GET /" do
+    let(:pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save! } }
     subject { get api_device_pbm_jobs_path(device.uuid) }
 
-    before do
-      pbm_job
+    context 'when pbm_job' do
+      before do
+        pbm_job
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        subject
+        expect(response.body).to eq([PbmJobSerializer.new(pbm_job)].to_json)
+      end
     end
 
-    it do
-      subject
-      expect(response).to be_ok
-    end
+    context 'when pbm_job_has_args' do
+      let(:pbm_job_has_args) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.args = { pbm_version: "0.1.1" }; x.save! } }
 
-    it do
-      subject
-      expect(response.body).to eq([PbmJobSerializer.new(pbm_job)].to_json)
+      before do
+        pbm_job_has_args
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        subject
+        expect(response.body).to eq([PbmJobSerializer.new(pbm_job_has_args)].to_json)
+      end
     end
   end
 
   describe 'PUT /:id' do
+    let(:pbm_job) { PbmJobFactory.new(device_id: device.id).build.tap{ |x| x.save! } }
     subject { put api_device_pbm_job_path(device.uuid, pbm_job.uuid, body: { status: status }) }
 
     context 'when in_progress' do
@@ -62,7 +82,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
       end
     end
 
-    context 'when processed' do
+    context 'when failed' do
       let(:status) { :failed }
 
       it do
