@@ -1,10 +1,22 @@
 <h1>実行可能なアクション</h1>
-<div>
-  <%= link_to :change_pbm_version, admin_device_pbm_jobs_change_pbm_version_index_path(@device), method: :post %>
-</div>
-<div>
-  <%= link_to :reboot_os, admin_device_pbm_jobs_reboot_os_path(@device), method: :post %>
-</div>
-<div>
-  <%= link_to :stop_pbm, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
-</div>
+<% if current_device_status.running? || current_device_status.connected_but_sleeping? %>
+  <div>
+    <%= link_to :change_pbm_version, admin_device_pbm_jobs_change_pbm_version_index_path(@device), method: :post %>
+  </div>
+  <div>
+    <%= link_to :reboot_os, admin_device_pbm_jobs_reboot_os_path(@device), method: :post %>
+  </div>
+  <div>
+    <%= link_to :stop_pbm, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
+  </div>
+<% else %>
+  <div>
+    <%= :change_pbm_version %>
+  </div>
+  <div>
+    <%= :reboot_os %>
+  </div>
+  <div>
+    <%= :stop_pbm %>
+  </div>
+<% end %>
