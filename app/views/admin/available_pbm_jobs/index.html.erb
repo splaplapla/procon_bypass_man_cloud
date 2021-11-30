@@ -9,9 +9,11 @@
   <div>
     <%= link_to :stop_pbm, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
   </div>
-  <div>
-    <%= link_to :reload_pbm_setting, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
-  </div>
+  <!--
+    <div>
+      <%= link_to :reload_pbm_setting, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
+    </div>
+  -->
 <% else %>
   <div>
     <%= :change_pbm_version %>
