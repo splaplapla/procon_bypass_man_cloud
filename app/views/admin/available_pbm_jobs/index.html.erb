@@ -1,5 +1,5 @@
 <h1>実行可能なアクション</h1>
-<% if @device.current_device_status&.running? || @device.current_device_status&.connected_but_sleeping? %>
+<% if @device.current_device_status&.running? %>
   <%= form_tag(admin_device_pbm_jobs_change_pbm_version_index_path(@device.id), method: :post) do %>
     <%= collection_select nil, :pbm_version, SupportPbmVersion.versions, :to_s, :to_s %>
     <%= submit_tag "バージョンを変更する", data: { confirm: "バージョンを変更しますがよろしいですか？" } %>
