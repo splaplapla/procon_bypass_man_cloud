@@ -2,4 +2,4 @@
 <%= render "admin/shared/devices_table", devices: [@device] %>
 
 <h2>Sessions</h2>
-<%= render "admin/shared/pbm_session_table", pbm_sessions: @device.pbm_sessions.limit(100).order(id: :desc) %>
+<%= render "admin/shared/pbm_session_table", pbm_sessions: @device.pbm_sessions.limit(50).order(id: :desc) %>
