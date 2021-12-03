@@ -14,7 +14,7 @@ bundle install
 ## 自分用サーバとして公開し、PBMから使う方法
 Use heroku
 
-```
+```ruby
 ProconBypassMan.configure do |config|
   # ...
   config.api_servers = 'https://your-heroku-app.herokuapp.com'
