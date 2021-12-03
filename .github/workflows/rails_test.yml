@@ -1,4 +1,4 @@
-name: github-actions-rails-mysql
+name: Run rspec
 
 on:
   pull_request:

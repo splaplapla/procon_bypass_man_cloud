@@ -1,7 +1,10 @@
-name: Rails - Install dependencies and run linters
+name: Run linters
 
 on:
-  [push]
+  pull_request:
+    branches: ['*']
+  push:
+    branches: [master]
 jobs:
   run-lint:
     runs-on: ubuntu-latest
