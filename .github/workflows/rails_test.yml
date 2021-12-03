@@ -1,0 +1,40 @@
+name: github-actions-rails-mysql
+
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: [master]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          DATABASE_HOST: 127.0.0.1
+          DATABASE_DB: github_actions_test
+          DATABASE_USERNAME: root
+          DATABASE_PASSWORD:
+        ports:
+          - "3306:3306"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0.2
+          bundler: default
+          bundler-cache: true
+      - name: Run tests
+        env:
+          RAILS_ENV: test
+          DATABASE_PORT: 3306
+          DATABASE_HOST: 127.0.0.1
+          DATABASE_DB: github_actions_test
+          DATABASE_USERNAME: root
+          DATABASE_PASSWORD:
+        run: |
+          bin/rails db:create
+          bin/rails db:schema:load
+          bin/rake

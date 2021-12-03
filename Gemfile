@@ -8,7 +8,6 @@ gem 'mysql2'
 gem 'puma'
 gem 'sass-rails'
 gem 'webpacker'
-gem 'jbuilder'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'kaminari'
 
@@ -31,4 +30,5 @@ end
 group :development do
   gem 'rack-mini-profiler'
   gem 'listen'
+  gem 'brakeman'
 end
