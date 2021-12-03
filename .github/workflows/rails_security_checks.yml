@@ -14,5 +14,5 @@ jobs:
           bundler-cache: true
       - name: Run security checks
         run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
+          bundle exec bundler-audit --update
+          bundle exec brakeman -q -w2
