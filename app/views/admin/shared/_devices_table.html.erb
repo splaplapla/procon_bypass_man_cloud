@@ -59,7 +59,7 @@
     <% device.pbm_jobs.order(id: :desc).limit(10).each do |pbm_job| %>
       <tr>
         <td><%= pbm_job.action %></td>
-        <td><%= pbm_job.args %></td>
+        <td><%= pbm_job.args.inspect.truncate(200) %></td>
         <td><%= pbm_job.status %></td>
         <td><%= pbm_job.uuid %></td>
         <td><%= pbm_job.created_at %></td>

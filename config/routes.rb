@@ -23,6 +23,7 @@ Rails.application.routes.draw do
         resources :reboot_os, only: :create
         resources :stop_pbm, only: :create
         resources :reload_pbm_setting, only: :create
+        resources :restore_pbm_setting, only: :create
       end
 
       resource :device_versions, only: [:show] do

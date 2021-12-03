@@ -6,4 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Device.create!(uuid: "a", hostname: "hoge", user_id: nil)
+device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
+device.saved_buttons_settings.create!(content: { a: 1 }, name: "title1")
+device.saved_buttons_settings.create!(content: { a: 1 }, name: "title2")

@@ -1,5 +1,5 @@
 <h1>実行可能なアクション</h1>
-<% if @device.current_device_status&.running? %>
+<% if true || @device.current_device_status&.running? %>
   <%= form_tag(admin_device_pbm_jobs_change_pbm_version_index_path(@device.id), method: :post) do %>
     <%= collection_select nil, :pbm_version, SupportPbmVersion.versions, :to_s, :to_s %>
     <%= submit_tag "バージョンを変更する", data: { confirm: "バージョンを変更しますがよろしいですか？" } %>
@@ -8,14 +8,11 @@
   <div>
     <%= link_to :reboot_os, admin_device_pbm_jobs_reboot_os_path(@device), method: :post %>
   </div>
-  <div>
-    <%= link_to :stop_pbm, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
-  </div>
-  <!--
-    <div>
-      <%= link_to :reload_pbm_setting, admin_device_pbm_jobs_stop_pbm_index_path(@device), method: :post %>
-    </div>
-  -->
+
+  <%= form_tag(admin_device_pbm_jobs_restore_pbm_setting_index_path(@device.id), method: :post) do %>
+    <%= collection_select nil, :saved_buttons_setting_id, @device.saved_buttons_settings, :id, :name %>
+    <%= submit_tag "設定ファイルを復元する", data: { confirm: "設定を変更しますがよろしいですか？" } %>
+  <% end %>
 <% else %>
   <div>runningではないのでアクションは実行できません</div>
 
@@ -26,6 +23,6 @@
     <%= :reboot_os %>
   </div>
   <div>
-    <%= :stop_pbm %>
+    <%= :restore_pbm_setting %>
   </div>
 <% end %>
