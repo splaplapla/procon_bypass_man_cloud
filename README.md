@@ -1,5 +1,6 @@
 # README
-[![Ruby](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/ruby.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/ruby.yml)
+[![Run rspec](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_test.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_test.yml)
+[![Run linters](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml)
 
 * https://github.com/splaplapla/procon_bypass_man のサーバです
 * 接続状況の可視化, PBM自体の再起動, PBMのバージョンアップ, 設定ファイルのバックアップなどができます
