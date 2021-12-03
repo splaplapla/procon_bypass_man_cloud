@@ -26,6 +26,8 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: |
+          bin/rails webpacker:install
+          bin/rails webpacker:compile
           bin/rails db:create
           bin/rails db:schema:load
           bin/rake
