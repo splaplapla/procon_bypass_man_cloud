@@ -12,9 +12,6 @@ jobs:
       mysql:
         image: mysql:5.7
         env:
-          DATABASE_HOST: 127.0.0.1
-          DATABASE_DB: github_actions_test
-          DATABASE_USERNAME: root
           DATABASE_PASSWORD:
         ports:
           - "3306:3306"

@@ -25,6 +25,7 @@ end
 
 group :test do
   gem 'factory_bot'
+  gem 'bundle-audit'
 end
 
 group :development do
