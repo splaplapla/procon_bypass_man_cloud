@@ -9,3 +9,5 @@
 device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
 device.saved_buttons_settings.create!(content: { a: 1 }, name: "title1")
 device.saved_buttons_settings.create!(content: { a: 1 }, name: "title2")
+
+User.create!(email: "admin@example.com", password: "hogehoge", password_confirmation: "hogehoge")

@@ -1,5 +1,6 @@
 class Device < ApplicationRecord
   belongs_to :current_device_status, class_name: DeviceStatus.name, required: false
+  belongs_to :user, required: false # あとでtrueにする
 
   has_many :pbm_sessions, dependent: :destroy
   has_many :saved_buttons_settings, dependent: :destroy
