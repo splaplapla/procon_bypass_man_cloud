@@ -24,7 +24,6 @@ end
 
 ## TODO
 * device.name, save_setting.nameを更新したい
-* 認証したい
 * ユーザ登録画面を作って、そこからdevice idを入力してユーザとのペアリングをしたい
 * webから設定を更新して反映できる
 * websocketで接続できてPBMへ命令をbroadcastできる
