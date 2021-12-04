@@ -1,33 +1,56 @@
 class PbmJobFactory
-  def initialize(device_id: )
+  class ValidationError < StandardError; end
+
+  INITIALIZED_STATUS = :queued
+
+  def initialize(device_id: , action: nil, job_args: {})
     @device_id = device_id
     @pbm_job = Device.find(device_id).pbm_jobs.build
+    @action = action
+    @job_args = job_args
   end
 
+
+  # @raise [ActiveRecord::RecordInvalid] when invalid
   def build
-    attributes = default_attributes.dup
-    attributes.merge!(args: @pbm_job.args) if @pbm_job.args.present?
-    attributes.merge!(action: @pbm_job.action) if @pbm_job.action.present?
+    attributes = default_attributes.dup.merge!(action: @action, args: @job_args)
+    validate!(attributes)
 
     @pbm_job.assign_attributes(attributes)
+    @pbm_job.validate!
     @pbm_job
-  end
-
-  def args=(val)
-    @pbm_job.args = val
-  end
-
-  def action=(val)
-    @pbm_job.action = val
   end
 
   private
 
   def default_attributes
-    { action: :change_pbm_version,
-      status: :queued,
+    { action: nil,
+      status: INITIALIZED_STATUS,
       uuid: "rpj_#{SecureRandom.uuid}",
-      args: {},
+      args: nil,
     }
+  end
+
+  # @param [Hash]
+  def validate!(attributes)
+    case attributes[:action]
+    when :restore_pbm_setting
+      if attributes[:args].key?(:setting) && attributes[:args].key?(:setting_name)
+      else
+        raise ValidationError, "invalid args(#{attributes})"
+      end
+    when :change_pbm_version
+      unless attributes[:args].key?(:pbm_version)
+        raise ValidationError, "invalid args(#{attributes})"
+      end
+    end
+
+    if attributes[:status] != INITIALIZED_STATUS
+      raise ValidationError, "invalid status(#{attributes})"
+    end
+
+    if attributes[:uuid].nil? || attributes[:uuid].empty?
+      raise ValidationError, "invalid uuid(#{attributes})"
+    end
   end
 end

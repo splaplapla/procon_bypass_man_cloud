@@ -13,11 +13,11 @@ class Device::ChangeVersionRequestService
     raise "need next_version" if next_version.nil?
     raise NeedPbmenvError, "pbmenvが必要です" unless device.enable_pbmenv
 
-    builder = PbmJobFactory.new(device_id: device.id)
-    # TODO これを消す
-    builder.action = :change_pbm_version
-    builder.args = { pbm_version: next_version }
-    pbm_job = builder.build
+    pbm_job = PbmJobFactory.new(
+      device_id: device.id,
+      action: :change_pbm_version,
+      job_args: { pbm_version: next_version },
+    ).build
     pbm_job.save!
     pbm_job
   end

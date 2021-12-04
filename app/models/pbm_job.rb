@@ -10,4 +10,7 @@ class PbmJob < ApplicationRecord
     restore_pbm_setting: 20,
   }
   enum status: { queued: 0, in_progress: 5, processed: 10, failed: 15 }
+
+  validates :args, presence: true, if: ->{ restore_pbm_setting? || change_pbm_version? }
+  validates :action, :uuid, presence: true
 end
