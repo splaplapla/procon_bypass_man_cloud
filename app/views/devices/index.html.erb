@@ -1,0 +1,37 @@
+<% if @devices.present? %>
+  <h2>登録中のデバイス</h2>
+  <table border=1>
+    <tr>
+      <th>id</th>
+      <th>name</th>
+      <th>uuid</th>
+      <th>ip_address</th>
+      <th>hostname</th>
+      <th>created_at</th>
+      <th>updated_at</th>
+      <th>current_status</th>
+      <th>last access at</th>
+    </tr>
+    <% @devices.each do |device| %>
+      <tr>
+        <td><%= link_to device.id, admin_device_path(device) %></td>
+        <td><%= device.name %></td>
+        <td><%= device.uuid %></td>
+        <td><%= device.ip_address %></td>
+        <td><%= device.hostname %></td>
+        <td><%= device.created_at %></td>
+        <td><%= device.updated_at %></td>
+        <td>
+          <% if device.current_device_status&.recent? %>
+            <%= device.current_device_status.status %>
+          <% else %>
+            <%= "#{device.current_device_status&.status}(old)" %>
+          <% end %>
+        </td>
+        <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  デバイスが未登録です。登録しましょう。
+<% end %>
