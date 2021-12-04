@@ -78,6 +78,7 @@ GEM
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
     ffi (1.15.4)
+    foreman (0.87.2)
     globalid (1.0.0)
       activesupport (>= 5.0)
     i18n (1.8.11)
@@ -218,6 +219,7 @@ DEPENDENCIES
   bundle-audit
   byebug
   factory_bot
+  foreman
   kaminari
   listen
   mysql2
