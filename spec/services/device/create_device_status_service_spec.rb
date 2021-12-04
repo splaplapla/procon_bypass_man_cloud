@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::CreateDeviceStatusService, type: :request do
+RSpec.describe Api::CreateDeviceStatusService do
   let(:device) { Device.create(uuid: :a, hostname: "aa") }
   let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a") }
 
