@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
+  include_context "login_with_admin_user"
+
   describe 'POST /restore_pbm_setting' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0") }
     let(:saved_buttons_setting) { device.saved_buttons_settings.create!(content: { a: 1 }, name: "title2") }
