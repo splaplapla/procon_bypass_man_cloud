@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/admin/devices", type: :request do
+  include_context "login_with_admin_user"
+
   describe 'GET /' do
     let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
 

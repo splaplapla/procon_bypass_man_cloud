@@ -10,6 +10,7 @@ gem 'sass-rails'
 gem 'webpacker'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'kaminari'
+gem 'sorcery'
 
 group :production do
   gem 'pg'
@@ -21,10 +22,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails'
   gem 'pry'
+  gem 'factory_bot_rails'
 end
 
 group :test do
-  gem 'factory_bot'
   gem 'bundle-audit'
 end
 
