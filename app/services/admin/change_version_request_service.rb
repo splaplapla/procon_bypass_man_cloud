@@ -1,4 +1,4 @@
-class Device::ChangeVersionRequestService
+class Admin::ChangeVersionRequestService
   class NeedPbmenvError < StandardError; end
 
   attr_accessor :device

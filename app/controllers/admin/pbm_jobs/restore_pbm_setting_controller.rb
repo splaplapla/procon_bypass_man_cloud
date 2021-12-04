@@ -1,15 +1,11 @@
 class Admin::PbmJobs::RestorePbmSettingController < Admin::PbmJobs
   def create
-    @device = Device.find(params[:device_id])
-
-    saved_buttons_setting = @device.saved_buttons_settings.find(params[:saved_buttons_setting_id])
-    pbm_job = PbmJobFactory.new(
-      device_id: @device.id,
-      action: :restore_pbm_setting,
-      job_args: { setting: saved_buttons_setting.content, setting_name: saved_buttons_setting.name },
-    ).build
-    pbm_job.save!
+    form = Admin::CreateRestorePbmSettingJobForm.new(device_id: params[:device_id], saved_buttons_setting_id: params[:saved_buttons_setting_id])
+    form.validate!
+    Admin::CreateRestorePbmSettingJobService.new(device: form.device, saved_buttons_setting: form.saved_buttons_setting).execute!
 
     redirect_to admin_device_path(@device), notice: "アクションを実行リクエストを作成しました"
+  rescue ActiveModel::ValidationError => e
+    redirect_to admin_device_path(@device), notice: "入力のバリデーションエラーになりました"
   end
 end

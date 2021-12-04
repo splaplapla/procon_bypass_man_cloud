@@ -1,4 +1,4 @@
-class Device::CreateDeviceStatusService
+class Api::CreateDeviceStatusService
   attr_accessor :device, :pbm_session_id
 
   def initialize(device: , pbm_session_id: )
