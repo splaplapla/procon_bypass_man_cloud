@@ -1,5 +1,5 @@
 <h1>Device</h1>
-<%= render "admin/shared/devices_table", devices: [@device] %>
+<%= render "admin/shared/devices_table", devices: [@device], device_statuses: @device_statuses %>
 
 <h2>Sessions</h2>
 <%= render "admin/shared/pbm_session_table", pbm_sessions: @pbm_sessions %>
