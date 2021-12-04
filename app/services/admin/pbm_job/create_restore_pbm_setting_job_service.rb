@@ -1,4 +1,6 @@
-class Admin::CreateRestorePbmSettingJobService
+class Admin::PbmJob::CreateRestorePbmSettingJobService
+  # @param [Device] device
+  # @param [SavedButtonsSetting] saved_buttons_setting
   def initialize(device: , saved_buttons_setting: )
     @device = device
     @saved_buttons_setting = saved_buttons_setting

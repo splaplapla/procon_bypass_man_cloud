@@ -1,4 +1,4 @@
-class Admin::CreateRestorePbmSettingJobForm
+class Admin::PbmJob::CreateRestorePbmSettingForm
   include ActiveModel::Model
 
   validates :device_id, :saved_buttons_setting_id, presence: true
