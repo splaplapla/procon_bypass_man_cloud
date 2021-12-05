@@ -12,10 +12,25 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
   end
 
+  describe 'PUT update' do
+    let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+    let(:saved_buttons_setting) { device.saved_buttons_settings.create!(content: "a") }
+
+    subject { put admin_saved_buttons_setting_path(saved_buttons_setting), params: { name: "hoge" } }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { saved_buttons_setting.reload.name }
+    end
+  end
+
   describe 'POST create' do
     let(:event) { 
       SaveEventService.execute!(session_id: "a", hostname: "b", event_type: "load_config", body: {a: 2 }, device_id: "aa")
-      Event.last
     }
 
     it do

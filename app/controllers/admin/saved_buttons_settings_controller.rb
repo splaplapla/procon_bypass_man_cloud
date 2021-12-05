@@ -16,9 +16,9 @@ class Admin::SavedButtonsSettingsController < Admin::Base
     form = Admin::SavedButtonsSetting::UpdateForm.new(name: params[:name], memo: params[:memo], content: params[:content])
     if form.valid?
       @setting.update!(form.to_h)
-      redirect_to admin_device_saved_buttons_settings_path, notice: "更新に成功しました"
+      redirect_to admin_device_saved_buttons_settings_path(@setting.device), notice: "更新に成功しました"
     else
-      redirect_to admin_device_saved_buttons_settings_path, notice: "更新に失敗しました"
+      redirect_to admin_device_saved_buttons_settings_path(@setting.device), notice: "更新に失敗しました"
     end
   end
 end

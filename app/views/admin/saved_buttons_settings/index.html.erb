@@ -13,7 +13,7 @@
     <tr>
       <td><%= setting.id %></td>
       <td>
-        <%= form_tag(admin_device_saved_buttons_setting_path(@device, setting), method: :patch) do %>
+        <%= form_tag(admin_saved_buttons_setting_path(setting), method: :patch) do %>
           <%= text_field_tag :name, setting.name %>
           <%= submit_tag '更新する' %>
         <% end %>
@@ -24,7 +24,7 @@
         </pre>
       </td>
       <td>
-        <%= form_tag(admin_device_saved_buttons_setting_path(@device, setting), method: :patch) do %>
+        <%= form_tag(admin_saved_buttons_setting_path(setting), method: :patch) do %>
           <%= text_area_tag :memo, setting.memo %>
           <%= submit_tag '更新する' %>
         <% end %>
