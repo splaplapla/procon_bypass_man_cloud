@@ -12,13 +12,23 @@
   <% @settings.each do |setting| %>
     <tr>
       <td><%= setting.id %></td>
-      <td><%= setting.name %></td>
+      <td>
+        <%= form_tag(admin_device_saved_buttons_setting_path(@device, setting), method: :patch) do %>
+          <%= text_field_tag :name, setting.name %>
+          <%= submit_tag '更新する' %>
+        <% end %>
+      </td>
       <td>
         <pre>
           <%= setting.content.to_yaml %>
         </pre>
       </td>
-      <td><%= setting.memo %></td>
+      <td>
+        <%= form_tag(admin_device_saved_buttons_setting_path(@device, setting), method: :patch) do %>
+          <%= text_area_tag :memo, setting.memo %>
+          <%= submit_tag '更新する' %>
+        <% end %>
+      </td>
       <td><%= setting.created_at %></td>
       <td><%= setting.updated_at %></td>
     </tr>

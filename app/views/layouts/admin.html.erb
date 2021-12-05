@@ -13,14 +13,9 @@
   <body>
     <% flash.each do |key, value| %>
       <p class="alert alert-<%= key %>">
-      <%= value %>
+        <%= value %>
       </p>
     <% end %>
-
-    <div>
-      <p id="notice"><%= flash[:notice] %></p>
-      <p id="alert"><%= flash[:alert] %></p>
-    </div>
 
     <%= render "admin/shared/header" %>
 
