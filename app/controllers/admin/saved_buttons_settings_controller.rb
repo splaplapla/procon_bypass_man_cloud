@@ -4,9 +4,7 @@ class Admin::SavedButtonsSettingsController < Admin::Base
     @settings = @device.saved_buttons_settings
   end
 
-  def show
-  end
-
+  # event由来で作成する
   def create
     event = Event.where(event_type: [:load_config, :reload_config]).find(params[:event_id])
     event.pbm_session.device.saved_buttons_settings.create!(content: event.body)
@@ -14,8 +12,7 @@ class Admin::SavedButtonsSettingsController < Admin::Base
   end
 
   def update
-    @device = Device.find(params[:device_id])
-    @setting = @device.saved_buttons_settings.find(params[:id])
+    @setting = SavedButtonsSetting.find(params[:id])
     form = Admin::SavedButtonsSetting::UpdateForm.new(name: params[:name], memo: params[:memo], content: params[:content])
     if form.valid?
       @setting.update!(form.to_h)
