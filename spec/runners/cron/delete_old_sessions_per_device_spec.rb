@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Cron::DeleteOldSessionsPerDevice do
-  let(:device) { Device.create(uuid: :a, hostname: "aa") }
+  let(:device) { FactoryBot.create(:device) }
   let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a", created_at: 7.days.ago) }
 
   before do

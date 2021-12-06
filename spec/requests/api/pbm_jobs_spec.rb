@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
-  let(:device) { Device.create(uuid: :a, hostname: "aa") }
+  let(:device) { FactoryBot.create(:device) }
 
   describe "GET /" do
     let(:pbm_job) { PbmJobFactory.new(device_id: device.id, action: :reboot_os).build.tap{ |x| x.save! } }

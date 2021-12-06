@@ -5,7 +5,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
 
   describe 'POST /change_pbm_version' do
     context 'when device.enable_pbmenvがfalseのとき' do
-      let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0", enable_pbmenv: false) }
+      let(:device) { FactoryBot.create(:device, enable_pbmenv: false) }
 
       subject { post admin_device_pbm_jobs_change_pbm_version_index_path(device, pbm_version: "0.1.1") }
 
@@ -21,7 +21,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
     end
 
     context 'when device.enable_pbmenvがtrueのとき' do
-      let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0", enable_pbmenv: true) }
+      let(:device) { FactoryBot.create(:device, enable_pbmenv: true) }
 
       subject { post admin_device_pbm_jobs_change_pbm_version_index_path(device, pbm_version: "0.1.1") }
 

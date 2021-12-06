@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
-  let(:device) { Device.create(uuid: :a, hostname: "aa") }
+  let(:device) { FactoryBot.create(:device) }
   let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a") }
 
   describe 'POST /' do

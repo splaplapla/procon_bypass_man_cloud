@@ -4,7 +4,7 @@ RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
   include_context "login_with_admin_user"
 
   describe 'POST /reboot_os' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0") }
+    let(:device) { FactoryBot.create(:device) }
 
     subject { post admin_device_pbm_jobs_reboot_os_path(device) }
 

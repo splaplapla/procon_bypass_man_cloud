@@ -4,7 +4,7 @@ RSpec.describe "/admin/devices", type: :request do
   include_context "login_with_admin_user"
 
   describe 'GET /' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+    let(:device) { FactoryBot.create(:device) }
 
     before do
       device
@@ -17,7 +17,7 @@ RSpec.describe "/admin/devices", type: :request do
   end
 
   describe 'GET /:id' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+    let(:device) { FactoryBot.create(:device) }
 
     before do
       device

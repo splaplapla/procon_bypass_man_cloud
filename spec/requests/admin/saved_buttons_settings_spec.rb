@@ -4,7 +4,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
   include_context "login_with_admin_user"
 
   describe 'GET index' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+    let(:device) { FactoryBot.create(:device) }
 
     it do
       get admin_device_saved_buttons_settings_path(device)
@@ -13,7 +13,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
   end
 
   describe 'PUT update' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge") }
+    let(:device) { FactoryBot.create(:device) }
     let(:saved_buttons_setting) { device.saved_buttons_settings.create!(content: "a") }
 
     subject { put admin_saved_buttons_setting_path(saved_buttons_setting), params: { name: "hoge" } }

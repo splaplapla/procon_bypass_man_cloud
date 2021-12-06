@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Events", type: :request do
   describe "POST /events" do
-    let(:device) { Device.create(uuid: :a, hostname: "aa") }
+    let(:device) { FactoryBot.create(:device) }
     let(:device_id) { device.uuid }
 
     subject do

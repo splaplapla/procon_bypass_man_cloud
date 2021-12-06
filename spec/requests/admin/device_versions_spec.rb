@@ -4,7 +4,7 @@ RSpec.describe "/admin/device_versions", type: :request do
   include_context "login_with_admin_user"
 
   describe 'GET /current' do
-    let(:device) { Device.create!(uuid: "a", hostname: "hoge", pbm_version: "1.0") }
+    let(:device) { FactoryBot.create(:device, pbm_version: "1.0") }
 
     before do
       device
