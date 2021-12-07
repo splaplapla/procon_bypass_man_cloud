@@ -4,7 +4,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   let(:device) { FactoryBot.create(:device) }
 
   describe "GET /" do
-    let(:pbm_job) { PbmJobFactory.new(device_id: device.id, action: :reboot_os).build.tap{ |x| x.save! } }
+    let(:pbm_job) { FactoryBot.create(:pbm_job, :action_reboot_os, device: device) }
     subject { get api_device_pbm_jobs_path(device.uuid) }
 
     context 'when pbm_job' do
@@ -24,7 +24,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
     end
 
     context 'when pbm_job_has_args' do
-      let(:pbm_job_has_args) { PbmJobFactory.new(device_id: device.id, action: :reboot_os, job_args: { pbm_version: "0.1.1" }).build.tap{ |x| x.save! } }
+      let(:pbm_job_has_args) { FactoryBot.create(:pbm_job, :action_reboot_os, device: device, args: { pbm_version: "0.1.1" }) }
 
       before do
         pbm_job_has_args
@@ -43,7 +43,7 @@ RSpec.describe "/api/devices/:device_id/pbm_jobs", type: :request do
   end
 
   describe 'PUT /:id' do
-    let(:pbm_job) { PbmJobFactory.new(device_id: device.id, action: :reboot_os).build.tap{ |x| x.save! } }
+    let(:pbm_job) { FactoryBot.create(:pbm_job, :action_reboot_os, device: device) }
     subject { put api_device_pbm_job_path(device.uuid, pbm_job.uuid, body: { status: status }) }
 
     context 'when in_progress' do

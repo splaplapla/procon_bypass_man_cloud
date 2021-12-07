@@ -13,4 +13,8 @@ class PbmJob < ApplicationRecord
 
   validates :args, presence: true, if: ->{ restore_pbm_setting? || change_pbm_version? }
   validates :action, :uuid, presence: true
+
+  def self.generate_uuid
+    "rpj_#{SecureRandom.uuid}"
+  end
 end

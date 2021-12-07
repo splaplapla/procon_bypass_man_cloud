@@ -26,7 +26,7 @@ class PbmJobFactory
   def default_attributes
     { action: nil,
       status: INITIALIZED_STATUS,
-      uuid: "rpj_#{SecureRandom.uuid}",
+      uuid: PbmJob.generate_uuid,
       args: nil,
     }
   end
