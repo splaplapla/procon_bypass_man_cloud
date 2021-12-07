@@ -14,7 +14,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
 
   describe 'PUT update' do
     let(:device) { FactoryBot.create(:device) }
-    let(:saved_buttons_setting) { device.saved_buttons_settings.create!(content: "a") }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device) }
 
     subject { put admin_saved_buttons_setting_path(saved_buttons_setting), params: { name: "hoge" } }
 
