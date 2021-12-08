@@ -15,6 +15,10 @@ Rails.application.routes.draw do
       resources :pbm_jobs, only: [:index, :update]
       resources :device_statuses, only: [:create]
     end
+
+    namespace :internal do
+      resource :info, only: :show
+    end
   end
 
   namespace :admin do
