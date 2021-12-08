@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
+RSpec.describe "Admin::PbmJobs::ChangePbmVersion", type: :request do
   include_context "login_with_admin_user"
 
-  describe 'POST /change_pbm_version' do
+  describe 'POST create' do
     context 'when device.enable_pbmenvがfalseのとき' do
       let(:device) { FactoryBot.create(:device, enable_pbmenv: false) }
 

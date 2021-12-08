@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
+RSpec.describe "Admin::PbmJobs::RebootOs", type: :request do
   include_context "login_with_admin_user"
 
-  describe 'POST /reboot_os' do
+  describe 'POST create' do
     let(:device) { FactoryBot.create(:device) }
 
     subject { post admin_device_pbm_jobs_reboot_os_path(device) }

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "/admin/devices/:device_id/pbm_jobs", type: :request do
+RSpec.describe "Admin::PbmJobs::RestorePbmSetting", type: :request do
   include_context "login_with_admin_user"
 
-  describe 'POST /restore_pbm_setting' do
+  describe 'POST create' do
     let(:device) { FactoryBot.create(:device) }
     let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device) }
 
