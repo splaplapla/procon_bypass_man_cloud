@@ -44,4 +44,18 @@ RSpec.describe "SavedButtonsSettings", type: :request do
       }.to change { SavedButtonsSetting.count }.by(1)
     end
   end
+
+  describe 'DELETE destroy' do
+    let(:device) { FactoryBot.create(:device) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device) }
+
+    subject { delete admin_saved_buttons_setting_path(saved_buttons_setting); response }
+
+    before do
+      saved_buttons_setting
+    end
+
+    it { is_expected.to be_redirect }
+    it { expect { subject }.to change { device.saved_buttons_settings.count }.by(-1) }
+  end
 end

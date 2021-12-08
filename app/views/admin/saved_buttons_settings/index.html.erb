@@ -8,6 +8,7 @@
     <th>memo</th>
     <th>created_at</th>
     <th>updated_at</th>
+    <th></th>
   </tr>
   <% @settings.each do |setting| %>
     <tr>
@@ -31,6 +32,7 @@
       </td>
       <td><%= setting.created_at %></td>
       <td><%= setting.updated_at %></td>
+      <td><%= link_to "削除", admin_saved_buttons_setting_path(setting), data: { confirm: "削除していいですか？" }, method: :delete %></td>
     </tr>
   <% end %>
 </table>

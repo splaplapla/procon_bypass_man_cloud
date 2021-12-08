@@ -38,7 +38,7 @@ Rails.application.routes.draw do
         post :change_request, on: :member
       end
 
-      resources :saved_buttons_settings, only: [:index, :update], shallow: true
+      resources :saved_buttons_settings, only: [:index, :update, :destroy], shallow: true
       resources :pbm_sessions, only: [:index, :show]
     end
   end

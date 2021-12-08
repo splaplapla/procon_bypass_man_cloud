@@ -21,4 +21,10 @@ class Admin::SavedButtonsSettingsController < Admin::Base
       redirect_to admin_device_saved_buttons_settings_path(@setting.device), notice: "更新に失敗しました"
     end
   end
+
+  def destroy
+    @setting = SavedButtonsSetting.find(params[:id])
+    @setting.destroy
+    redirect_to admin_device_saved_buttons_settings_path(@setting.device), notice: "削除に成功しました"
+  end
 end
