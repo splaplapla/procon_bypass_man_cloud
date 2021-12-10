@@ -21,6 +21,7 @@ Bundler.require(*Rails.groups)
 module ProconBypassManCloud
   class Application < Rails::Application
     config.action_cable.mount_path = '/websocket'
+    config.action_cable.disable_request_forgery_protection = true
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1

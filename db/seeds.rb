@@ -7,6 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
+device = Device.find_or_create_by!(uuid: "d1", hostname: "hoge", user_id: nil)
 device.saved_buttons_settings.create!(content: { a: 1 }, name: "title1")
 device.saved_buttons_settings.create!(content: { a: 1 }, name: "title2")
 
