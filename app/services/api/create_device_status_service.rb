@@ -8,7 +8,10 @@ class Api::CreateDeviceStatusService
 
   def execute(status: )
     raise "unknown status" unless DeviceStatus.statuses.keys.include?(status)
-    pbm_session = PbmSession.find_by!(uuid: pbm_session_id)
+    pbm_session = PbmSession.find_or_create_by!(uuid: pbm_session_id) do |s|
+      s.device = device
+      s.hostname = "unknown"
+    end
 
     ApplicationRecord.transaction do
       latest_device_status = device.device_statuses.last

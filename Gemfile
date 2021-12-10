@@ -11,6 +11,7 @@ gem 'webpacker'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'kaminari'
 gem 'sorcery'
+gem 'redis'
 
 group :production do
   gem 'pg'
@@ -33,4 +34,5 @@ group :development do
   gem 'listen'
   gem 'brakeman'
   gem 'foreman'
+  gem "action_cable_client"
 end
