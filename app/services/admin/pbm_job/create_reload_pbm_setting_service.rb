@@ -10,6 +10,7 @@ class Admin::PbmJob::CreateReloadPbmSettingService
       action: :reload_pbm_setting,
     ).build
     pbm_job.save!
+    pbm_job
   end
 end
 

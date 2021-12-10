@@ -13,5 +13,6 @@ class Admin::PbmJob::CreateRestorePbmSettingJobService
       job_args: { setting: @saved_buttons_setting.content, setting_name: @saved_buttons_setting.name },
     ).build
     pbm_job.save!
+    pbm_job
   end
 end

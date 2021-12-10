@@ -1,7 +1,8 @@
 class Admin::PbmJobs::ReloadPbmSettingController < Admin::PbmJobs
   def create
     @device = Device.find(params[:device_id])
-    Admin::PbmJob::CreateReloadPbmSettingService.new(device: @device).execute!
+    pbm_job = Admin::PbmJob::CreateReloadPbmSettingService.new(device: @device).execute!
+    ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
     redirect_to admin_device_path(@device), notice: "アクションを実行リクエストを作成しました"
   end
 end

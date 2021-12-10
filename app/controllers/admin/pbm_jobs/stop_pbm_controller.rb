@@ -1,3 +1,4 @@
+# 使っていない
 class Admin::PbmJobs::StopPbmController < Admin::PbmJobs
   def create
     @device = Device.find(params[:device_id])

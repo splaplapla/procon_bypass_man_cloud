@@ -9,6 +9,7 @@ class Admin::PbmJob::CreateChangePbmVersionService
   end
 
   # @param [String] next_version
+  # @return [PbmJob]
   def execute(next_version: )
     raise "need next_version" if next_version.nil?
     raise NeedPbmenvError, "pbmenvが必要です" unless device.enable_pbmenv
