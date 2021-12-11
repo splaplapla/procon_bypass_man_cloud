@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     resources :devices, only: [:index, :show] do
       resources :available_pbm_jobs, only: :index
 
+      resources :pbm_jobs, only: [], shallow: true do
+        resources :cancellation_pbm_jobs, only: :create
+      end
       namespace :pbm_jobs do
         resources :change_pbm_version, only: :create
         resources :reboot_os, only: :create

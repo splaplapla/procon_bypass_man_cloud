@@ -1,5 +1,5 @@
 # 使っていない
-class Admin::PbmJobs::ReloadPbmSettingController < Admin::PbmJobs
+class Admin::PbmJobs::ReloadPbmSettingController < Admin::PbmJobsBase
   def create
     device = Device.find(params[:device_id])
     pbm_job = Admin::PbmJob::CreateReloadPbmSettingService.new(device: device).execute!

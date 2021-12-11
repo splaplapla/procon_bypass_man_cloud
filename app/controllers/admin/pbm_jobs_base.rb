@@ -1,4 +1,4 @@
-class Admin::PbmJobs < Admin::Base
+class Admin::PbmJobsBase < Admin::Base
   before_action :require_empty_pending_job
 
   def require_empty_pending_job

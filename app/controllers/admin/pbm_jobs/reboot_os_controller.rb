@@ -1,4 +1,4 @@
-class Admin::PbmJobs::RebootOsController < Admin::PbmJobs
+class Admin::PbmJobs::RebootOsController < Admin::PbmJobsBase
   def create
     device = Device.find(params[:device_id])
     pbm_job = Admin::PbmJob::CreateRebootOsService.new(device: device).execute!

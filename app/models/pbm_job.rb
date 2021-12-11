@@ -9,12 +9,16 @@ class PbmJob < ApplicationRecord
     reload_pbm_setting: 15,
     restore_pbm_setting: 20,
   }
-  enum status: { queued: 0, in_progress: 5, processed: 10, failed: 15 }
+  enum status: { queued: 0, in_progress: 5, processed: 10, failed: 15, canceled: 20 }
 
   validates :args, presence: true, if: ->{ restore_pbm_setting? || change_pbm_version? }
   validates :action, :uuid, presence: true
 
   def self.generate_uuid
     "rpj_#{SecureRandom.uuid}"
+  end
+
+  def can_cancel?
+    queued? || in_progress?
   end
 end

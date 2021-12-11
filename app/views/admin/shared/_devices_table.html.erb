@@ -55,6 +55,7 @@
       <th>created_at</th>
       <th>updated_at</th>
       <th>更新から経った時間</th>
+      <th></th>
     </tr>
     <% device.pbm_jobs.order(id: :desc).limit(10).each do |pbm_job| %>
       <tr>
@@ -65,6 +66,7 @@
         <td><%= pbm_job.created_at %></td>
         <td><%= pbm_job.updated_at %></td>
         <td><%= time_ago_in_words(pbm_job.updated_at) %></td>
+        <td><%= link_to_if pbm_job.can_cancel?, "cancelにする", admin_pbm_job_cancellation_pbm_jobs_path(pbm_job), method: :post %></td>
       </tr>
     <% end %>
   </table>

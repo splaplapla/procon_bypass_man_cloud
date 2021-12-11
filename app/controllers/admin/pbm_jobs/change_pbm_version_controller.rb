@@ -1,4 +1,4 @@
-class Admin::PbmJobs::ChangePbmVersionController < Admin::PbmJobs
+class Admin::PbmJobs::ChangePbmVersionController < Admin::PbmJobsBase
   def create
     device = Device.find(params[:device_id])
     pbm_job = Admin::PbmJob::CreateChangePbmVersionService.new(device: device).execute(next_version: params[:pbm_version])

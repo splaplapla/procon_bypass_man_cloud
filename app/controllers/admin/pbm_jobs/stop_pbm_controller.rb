@@ -1,5 +1,5 @@
 # 使っていない
-class Admin::PbmJobs::StopPbmController < Admin::PbmJobs
+class Admin::PbmJobs::StopPbmController < Admin::PbmJobsBase
   def create
     device = Device.find(params[:device_id])
 

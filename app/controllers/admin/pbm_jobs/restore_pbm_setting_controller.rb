@@ -1,4 +1,4 @@
-class Admin::PbmJobs::RestorePbmSettingController < Admin::PbmJobs
+class Admin::PbmJobs::RestorePbmSettingController < Admin::PbmJobsBase
   def create
     device = Device.find(params[:device_id])
     form = Admin::PbmJob::CreateRestorePbmSettingForm.new(device_id: device.id, saved_buttons_setting_id: params[:saved_buttons_setting_id])
