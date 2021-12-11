@@ -1,8 +1,7 @@
 # 使っていない
 class Admin::PbmJobs::StopPbmController < Admin::PbmJobsBase
   def create
-    device = Device.find(params[:device_id])
-
+    device = find_device
     pbm_job = PbmJobFactory.new(
       device_id: device.id,
       action: :stop_pbm,

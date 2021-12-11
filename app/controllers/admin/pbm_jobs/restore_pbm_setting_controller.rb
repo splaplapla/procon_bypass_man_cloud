@@ -1,6 +1,6 @@
 class Admin::PbmJobs::RestorePbmSettingController < Admin::PbmJobsBase
   def create
-    device = Device.find(params[:device_id])
+    device = find_device
     form = Admin::PbmJob::CreateRestorePbmSettingForm.new(device_id: device.id, saved_buttons_setting_id: params[:saved_buttons_setting_id])
     form.validate!
     pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(device: form.device, saved_buttons_setting: form.saved_buttons_setting).execute!
