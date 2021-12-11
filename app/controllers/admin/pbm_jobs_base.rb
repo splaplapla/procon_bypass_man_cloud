@@ -10,6 +10,7 @@ class Admin::PbmJobsBase < Admin::Base
     end
   end
 
+  # @return [Devive]
   def find_device
     @device ||= Device.find(params[:device_id])
   end
