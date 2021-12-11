@@ -13,5 +13,10 @@ RSpec.describe "CancellationPbmJobs", type: :request do
       pbm_job
       expect { subject }.to change { pbm_job.reload.status }.to("canceled")
     end
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
   end
 end
