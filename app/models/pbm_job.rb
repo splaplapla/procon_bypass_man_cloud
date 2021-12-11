@@ -11,6 +11,9 @@ class PbmJob < ApplicationRecord
   }
   enum status: { queued: 0, in_progress: 5, processed: 10, failed: 15, canceled: 20 }
 
+  scope :recent, ->{ where("created_at > ?", 3.minutes.ago) }
+  scope :wip, ->{ where(status: [:queued, :in_progress]) }
+
   validates :args, presence: true, if: ->{ restore_pbm_setting? || change_pbm_version? }
   validates :action, :uuid, presence: true
 
