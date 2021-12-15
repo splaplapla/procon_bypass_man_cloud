@@ -47,6 +47,10 @@ Rails.application.routes.draw do
 
       resources :saved_buttons_settings, only: [:index, :update, :destroy], shallow: true
       resources :pbm_sessions, only: [:index, :show]
+
+      namespace :saved_buttons_settings, shallow: true do
+        resources :contents, only: [:edit, :update]
+      end
     end
   end
 end
