@@ -1,12 +1,14 @@
+<%= link_to "デバイス詳細に戻る", admin_device_path(@device) %>
+
 <h1>実行可能なアクション</h1>
-<% if true || @device.current_device_status&.running? %>
+<% if Rails.env.development? || @device.current_device_status&.running? %>
   <%= form_tag(admin_device_pbm_jobs_change_pbm_version_index_path(@device.id), method: :post) do %>
-    <%= collection_select nil, :pbm_version, SupportPbmVersion.versions, :to_s, :to_s %>
+    <%= collection_select nil, :pbm_version, @selectable_pbm_versions, :to_s, :to_s %>
     <%= submit_tag "バージョンを変更する", data: { confirm: "バージョンを変更しますがよろしいですか？" } %>
   <% end %>
 
   <div>
-    <%= link_to :reboot_os, admin_device_pbm_jobs_reboot_os_path(@device), method: :post %>
+    <%= link_to :reboot_os, admin_device_pbm_jobs_reboot_os_path(@device), method: :post, data: { confirm: "よろしいですか？" } %>
   </div>
 
   <%= form_tag(admin_device_pbm_jobs_restore_pbm_setting_index_path(@device.id), method: :post) do %>
@@ -15,7 +17,6 @@
   <% end %>
 <% else %>
   <div>runningではないのでアクションは実行できません</div>
-
   <div>
     <%= :change_pbm_version %>
   </div>
