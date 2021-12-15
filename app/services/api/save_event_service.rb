@@ -1,4 +1,4 @@
-class SaveEventService
+class Api::SaveEventService
   def self.execute!(session_id: , hostname: , event_type: , body: , device_id: )
     ApplicationRecord.transaction do
       device =

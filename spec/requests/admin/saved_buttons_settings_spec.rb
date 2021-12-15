@@ -30,7 +30,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
 
   describe 'POST create' do
     let(:event) { 
-      SaveEventService.execute!(session_id: "a", hostname: "b", event_type: "load_config", body: {a: 2 }, device_id: "aa")
+      Api::SaveEventService.execute!(session_id: "a", hostname: "b", event_type: "load_config", body: {a: 2 }, device_id: "aa")
     }
 
     it do

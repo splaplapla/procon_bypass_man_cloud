@@ -3,7 +3,7 @@ class Api::EventsController < Api::Base
     form = Api::CreateEventForm.new(event_params)
     form.validate!
 
-    SaveEventService.execute!(
+    Api::SaveEventService.execute!(
       session_id: form.session_id,
       hostname: form.hostname,
       event_type: form.event_type,
