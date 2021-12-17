@@ -26,11 +26,11 @@ jobs:
           bundler-cache: true
       - name: Run tests
         run: |
-          bin/rails webpacker:install
-          bin/rails webpacker:compile
-          bin/rails db:create
-          bin/rails db:schema:load
-          bin/rake
+          bundle exec rails yarn:install
+          bundle exec rails webpacker:compile
+          bundle exec rails db:create
+          bundle exec rails db:schema:load
+          bundle exec rake
         env:
           RAILS_ENV: test
           DATABASE_PORT: 3306
