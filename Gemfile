@@ -12,7 +12,7 @@ gem 'webpacker'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
-gem 'procon_bypass_man'
+gem 'procon_bypass_man' # 設定ファイルのパースとバリデーションのために使っている
 
 group :production do
   gem 'pg'
