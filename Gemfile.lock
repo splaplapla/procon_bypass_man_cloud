@@ -153,7 +153,10 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    pbmenv (0.1.6)
     pg (1.2.3)
+    procon_bypass_man (0.1.15)
+      pbmenv
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -274,6 +277,7 @@ DEPENDENCIES
   listen
   mysql2
   pg
+  procon_bypass_man
   pry
   puma
   rails

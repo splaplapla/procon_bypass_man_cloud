@@ -1,5 +1,6 @@
 <%= link_to "デバイス詳細に戻る", admin_device_path(@device) %>
 
 ここにedit content form
+<div id="config-prefix-keys" data-config-prefix-keys="<%= @config.prefix_keys.to_json %>"></div>
 
-<%= javascript_pack_tag 'hello_react' %>
+<%= javascript_pack_tag 'setting_editor' %>

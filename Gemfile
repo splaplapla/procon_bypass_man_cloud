@@ -12,6 +12,7 @@ gem 'webpacker'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
+gem 'procon_bypass_man'
 
 group :production do
   gem 'pg'
