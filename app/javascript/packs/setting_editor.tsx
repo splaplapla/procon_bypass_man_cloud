@@ -5,12 +5,20 @@ import { jsx, css } from '@emotion/react'
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
+import { Button, buttons } from "types/button";
+import { ModalProps, ButtonsModal } from "./setting_editor/components/buttons_modal";
+import { useModal } from "./setting_editor/hooks/use_modal";
 
 type Props = {
-  prefixKeys: Array<string>;
+  defaultPrefixKeys: Array<Button>;
 };
 
-export const ButtonsSettingPage = ({ prefixKeys }) => {
+export const ButtonsSettingPage = ({ defaultPrefixKeys }) => {
+  const [modalProps, openModal] = useModal();
+  const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
+  const handlePrefixKeysField = () => {
+    openModal({ title: "キープレフィックスの変更", prefill: prefixKeys, callbackOnSubmit: setPrefixKeys });
+  }
 
   return(
     <>
@@ -26,7 +34,8 @@ export const ButtonsSettingPage = ({ prefixKeys }) => {
           <h3>インストール可能なマクロ</h3>
 
           <h3>設定中のプレフィックスキー</h3>
-          {prefixKeys.join(", ")}
+          <input type="text" value={prefixKeys.join(", ")} readOnly={true} onClick={handlePrefixKeysField} />
+          {<ButtonsModal {...modalProps as ModalProps} />}
         </div>
         <div css={css`display: table-cell`}>
         </div>
@@ -35,11 +44,11 @@ export const ButtonsSettingPage = ({ prefixKeys }) => {
   )
 }
 
-const prefixKeys = JSON.parse(document.getElementById("config-prefix-keys").dataset.configPrefixKeys) as Array<string>
+const prefixKeys = JSON.parse(document.getElementById("config-prefix-keys").dataset.configPrefixKeys) as Array<Button>
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <ButtonsSettingPage prefixKeys={prefixKeys} />,
+    <ButtonsSettingPage defaultPrefixKeys={prefixKeys} />,
     document.body.appendChild(document.createElement('div')),
   )
 })

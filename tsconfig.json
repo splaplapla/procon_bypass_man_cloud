@@ -10,8 +10,13 @@
     "sourceMap": true,
     "target": "ES2021",
     "jsx": "preserve",
+    "baseUrl": "app/javascript/packs",
+    // "paths": {
+    //    "types_button": ["types/button"]
+    // },
     "noEmit": true
   },
+  "include": ["app/javascript/packs"],
   "exclude": [
     "**/*.spec.ts",
     "node_modules",
