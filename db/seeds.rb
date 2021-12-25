@@ -8,7 +8,7 @@
 
 
 content = <<~EOH
-prefix_keys_for_changing_layer [:zr, :r, :zl, :l]
+prefix_keys_for_changing_layer [:zr, :r, :zl, :l]\n
 set_neutral_position 1000, 1000
 EOH
 
