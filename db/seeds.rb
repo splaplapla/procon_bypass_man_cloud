@@ -8,11 +8,8 @@
 
 
 content = <<~EOH
----
-version: 1.0
-setting: |-
-  prefix_keys_for_changing_layer [:zr, :r, :zl, :l]
-  set_neutral_position 1000, 1000
+prefix_keys_for_changing_layer [:zr, :r, :zl, :l]
+set_neutral_position 1000, 1000
 EOH
 
 device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
@@ -20,8 +17,8 @@ device = Device.find_or_create_by!(uuid: "d1") do |d|
   d.hostname = "hoge"
   d user_id = nil
 end
-device.saved_buttons_settings.create!(content: content, name: "title1")
-device.saved_buttons_settings.create!(content: content, name: "title2")
+device.saved_buttons_settings.create!(content: { "setting" => content, "version" => 1.0, name: "title1")
+device.saved_buttons_settings.create!(content: { "setting" => content, "version" => 3.0, name: "title2")
 
 user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "hogehoge"

@@ -35,7 +35,7 @@ export const ButtonsSettingPage = ({ prefixKeys }) => {
   )
 }
 
-const prefixKeys = JSON.parse(document.getElementById("config-prefix-keys").dataset.configPrefixKeys) as Array<int>
+const prefixKeys = JSON.parse(document.getElementById("config-prefix-keys").dataset.configPrefixKeys) as Array<string>
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
