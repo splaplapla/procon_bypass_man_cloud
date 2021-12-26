@@ -3,7 +3,10 @@ class Admin::SavedButtonsSettings::ContentsController < Admin::Base
     @setting = SavedButtonsSetting.find(params[:id])
     @device = @setting.device
     if(setting_content = @setting.content["setting"])
-      @config = ProconBypassMan::ButtonsSettingConfiguration.instance.instance_eval(YAML.load(setting_content))
+      # TODO 悪意のある設定情報がクライアントから送られてきたらRCEになってしまう. どうしよ
+      @config = ProconBypassMan::ButtonsSettingConfiguration.instance.instance_eval(
+        YAML.safe_load(setting_content)
+      )
     else
       @config = ProconBypassMan::ButtonsSettingConfiguration.instance
     end

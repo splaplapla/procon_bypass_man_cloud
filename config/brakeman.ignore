@@ -1,0 +1,26 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dangerous Eval",
+      "warning_code": 13,
+      "fingerprint": "4ba0849a8972710c26e6886b5f8ebf557855636f83910368183aa8c2135e9866",
+      "check_name": "Evaluation",
+      "message": "User input in eval",
+      "file": "app/controllers/admin/saved_buttons_settings/contents_controller.rb",
+      "line": 8,
+      "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
+      "code": "ProconBypassMan::ButtonsSettingConfiguration.instance.instance_eval(YAML.safe_load(SavedButtonsSetting.find(params[:id]).content[\"setting\"]))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::SavedButtonsSettings::ContentsController",
+        "method": "edit"
+      },
+      "user_input": "SavedButtonsSetting.find(params[:id]).content",
+      "confidence": "High",
+      "note": ""
+    }
+  ],
+  "updated": "2021-12-26 22:32:11 +0900",
+  "brakeman_version": "5.1.2"
+}
