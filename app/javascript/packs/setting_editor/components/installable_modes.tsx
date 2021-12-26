@@ -2,7 +2,7 @@
 
 import { jsx, css } from '@emotion/react'
 import React, { useState, useEffect, useContext } from "react";
-import { Plugin, PluginBody, AvailablePlugins, ModeNameMap } from "../../types/plugin";
+import { Plugin, AvailablePlugins, ModeNameMap } from "../../types/plugin";
 
 const modeClassNamespaces = AvailablePlugins.map((v) => {
   return Object.entries(v).map((v) => {
