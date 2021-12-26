@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { Button, buttons } from "types/button";
 import { ModalProps, ButtonsModal } from "./setting_editor/components/buttons_modal";
+import { InstallableModes } from "./setting_editor/components/installable_modes";
 import { useModal } from "./setting_editor/hooks/use_modal";
 
 type Props = {
@@ -30,6 +31,7 @@ export const ButtonsSettingPage = ({ defaultPrefixKeys }) => {
           </div>
 
           <h3>インストール可能なモード</h3>
+          {<InstallableModes />}
 
           <h3>インストール可能なマクロ</h3>
 
