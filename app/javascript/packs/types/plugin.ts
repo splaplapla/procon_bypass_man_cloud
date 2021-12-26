@@ -54,21 +54,28 @@ export const AvailablePlugins: Array<Plugin> = [
           display_name: 'splatoon2.fast_return',
           class_namespace:
             'ProconBypassMan::Plugin::Splatoon2::Macro::FastReturn',
+          description: 'リスポーンにジャンプします',
         },
         {
           display_name: 'splatoon2.jump_right',
           class_namespace:
             'ProconBypassMan::Plugin::Splatoon2::Macro::JumpToRightKey',
+          description:
+            'マップを開いた時の右キーに割り当てられたの味方にジャンプします',
         },
         {
           display_name: 'splatoon2.jump_up',
           class_namespace:
             'ProconBypassMan::Plugin::Splatoon2::Macro::JumpToUpKey',
+          description:
+            'マップを開いた時の上キーに割り当てられたの味方にジャンプします',
         },
         {
           display_name: 'splatoon2.jump_left',
           class_namespace:
             'ProconBypassMan::Plugin::Splatoon2::Macro::JumpToLeftKey',
+          description:
+            'マップを開いた時の左キーに割り当てられたの味方にジャンプします',
         },
       ],
     },
