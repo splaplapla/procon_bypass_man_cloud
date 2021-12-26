@@ -1,14 +1,17 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react'
+import { jsx, css } from '@emotion/react';
 
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
-import { Button } from "types/button";
-import { ModalProps, ButtonsModal } from "./../../setting_editor/components/buttons_modal";
-import { InstallableModes } from "./../../setting_editor/components/installable_modes";
-import { useModal } from "../../setting_editor/hooks/use_modal";
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import { Button } from 'types/button';
+import {
+  ModalProps,
+  ButtonsModal,
+} from './../../setting_editor/components/buttons_modal';
+import { InstallableModes } from './../../setting_editor/components/installable_modes';
+import { useModal } from '../../setting_editor/hooks/use_modal';
 
 type Props = {
   defaultPrefixKeys: Array<Button>;
@@ -18,16 +21,29 @@ export const ButtonsSetting = ({ defaultPrefixKeys }) => {
   const [modalProps, openModal] = useModal();
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
   const handlePrefixKeysField = () => {
-    openModal({ title: "キープレフィックスの変更", prefill: prefixKeys, callbackOnSubmit: setPrefixKeys });
-  }
+    openModal({
+      title: 'キープレフィックスの変更',
+      prefill: prefixKeys,
+      callbackOnSubmit: setPrefixKeys,
+    });
+  };
 
-  return(
+  return (
     <>
-      <div css={css`display: table`}>
-        <div css={css`display: table-cell; width: 400px;`}>
+      <div
+        css={css`
+          display: table;
+        `}
+      >
+        <div
+          css={css`
+            display: table-cell;
+            width: 400px;
+          `}
+        >
           <h2>設定ファイルの変更</h2>
           <div>
-            <a href="#" >エクスポートする</a>
+            <a href="#">エクスポートする</a>
           </div>
 
           <h3>インストール可能なモード</h3>
@@ -36,12 +52,20 @@ export const ButtonsSetting = ({ defaultPrefixKeys }) => {
           <h3>インストール可能なマクロ</h3>
 
           <h3>設定中のプレフィックスキー</h3>
-          <input type="text" value={prefixKeys.join(", ")} readOnly={true} onClick={handlePrefixKeysField} />
-          {<ButtonsModal {...modalProps as ModalProps} />}
+          <input
+            type="text"
+            value={prefixKeys.join(', ')}
+            readOnly={true}
+            onClick={handlePrefixKeysField}
+          />
+          {<ButtonsModal {...(modalProps as ModalProps)} />}
         </div>
-        <div css={css`display: table-cell`}>
-        </div>
+        <div
+          css={css`
+            display: table-cell;
+          `}
+        ></div>
       </div>
     </>
-  )
-}
+  );
+};

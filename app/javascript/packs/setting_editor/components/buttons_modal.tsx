@@ -1,8 +1,8 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react'
-import React, { useState } from "react";
-import { Button, buttons } from "../../types/button";
+import { jsx, css } from '@emotion/react';
+import React, { useState } from 'react';
+import { Button, buttons } from '../../types/button';
 
 export type ModalProps = {
   callbackOnSubmit: any;
@@ -13,26 +13,43 @@ export type ModalProps = {
 };
 
 type CheckedButtons = {
-  [key in Button] : boolean
-}
+  [key in Button]: boolean;
+};
 
-export const ButtonsModal = ({ callbackOnSubmit, callbackOnClose, title, prefill, visible }: ModalProps) => {
-  if(!visible) { return null };
+export const ButtonsModal = ({
+  callbackOnSubmit,
+  callbackOnClose,
+  title,
+  prefill,
+  visible,
+}: ModalProps) => {
+  if (!visible) {
+    return null;
+  }
 
   const [checkedButtonMap, setCheckedButtonMap] = useState(
-    prefill.reduce((a, b) => { a[b] = true; return a },
-      buttons.reduce((a, b) => { a[b] = false; return a }, {} as CheckedButtons)
+    prefill.reduce(
+      (a, b) => {
+        a[b] = true;
+        return a;
+      },
+      buttons.reduce((a, b) => {
+        a[b] = false;
+        return a;
+      }, {} as CheckedButtons)
     )
-  )
+  );
   const callback = callbackOnSubmit;
   const handleSubmit = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const bs = Object.entries(checkedButtonMap).reduce((acc, item) => {
-      const checked: boolean = item[1];
-      const button = item[0] as Button;
-      checked && acc.push(button);
-      return acc;
-    }, [] as Array<Button>).sort();
+    const bs = Object.entries(checkedButtonMap)
+      .reduce((acc, item) => {
+        const checked: boolean = item[1];
+        const button = item[0] as Button;
+        checked && acc.push(button);
+        return acc;
+      }, [] as Array<Button>)
+      .sort();
 
     callbackOnSubmit(bs);
     callbackOnClose(false);
@@ -40,12 +57,12 @@ export const ButtonsModal = ({ callbackOnSubmit, callbackOnClose, title, prefill
   const handleCancel = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     callbackOnClose(false);
-  }
+  };
   const titlestyle = css(`
     margin-top: 10px;
     font-size: 1.17em;
     font-weight: bold;
-  `)
+  `);
   const style = () => {
     return css(`
       position: absolute;
@@ -57,14 +74,14 @@ export const ButtonsModal = ({ callbackOnSubmit, callbackOnClose, title, prefill
       border: solid;
       background-color: white;
     `);
-  }
+  };
   const aStyle = css`
     background-color: #4669ff;
     border-bottom: solid 2px #003aff;
     border-right: solid 2px #003aff;
     border-radius: 20px;
     font-weight: bold;
-    color: #FFF;
+    color: #fff;
     text-decoration: none;
     padding: 10px;
     display: inline-block;
@@ -75,8 +92,8 @@ export const ButtonsModal = ({ callbackOnSubmit, callbackOnClose, title, prefill
     setCheckedButtonMap((previousButtonStats) => {
       previousButtonStats[e.target.value as Button] = e.target.checked;
       return previousButtonStats;
-    })
-  }
+    });
+  };
 
   return (
     <>
@@ -85,16 +102,32 @@ export const ButtonsModal = ({ callbackOnSubmit, callbackOnClose, title, prefill
 
         {buttons.map((b, index) => (
           <div key={index}>
-            <label><input type="checkbox" value={b} defaultChecked={checkedButtonMap[b]} onChange={handleClick} />{b}</label>
+            <label>
+              <input
+                type="checkbox"
+                value={b}
+                defaultChecked={checkedButtonMap[b]}
+                onChange={handleClick}
+              />
+              {b}
+            </label>
           </div>
         ))}
 
         <hr />
-        <div css={css`display: flex`}>
-          <a href={"#"} onClick={handleCancel} css={aStyle}>変更せず閉じる</a>
-          <a href={"#"} onClick={handleSubmit} css={aStyle}>決定する</a>
+        <div
+          css={css`
+            display: flex;
+          `}
+        >
+          <a href={'#'} onClick={handleCancel} css={aStyle}>
+            変更せず閉じる
+          </a>
+          <a href={'#'} onClick={handleSubmit} css={aStyle}>
+            決定する
+          </a>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
