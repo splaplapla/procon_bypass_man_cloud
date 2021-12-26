@@ -2,52 +2,55 @@
 
 import { jsx, css } from '@emotion/react'
 import React, { useState, useEffect, useContext } from "react";
-import { Plugin, AvailablePlugins, ModeNameMap } from "../../types/plugin";
-
-const modeClassNamespaces = AvailablePlugins.map((v) => {
-  return Object.entries(v).map((v) => {
-    const name = v[0];
-    const plugin = v[1];
-    return plugin.modes.map((m) => {
-      return m.class_namespace
-    })
-  })
-}).flat().flat();
+import { PluginSpec, AvailablePlugins, FindNameByClassNamespace, ModeClassNamespace } from "../../types/plugin";
 
 type Props = {
-  modeKey: string;
+  modeClassNamespace: ModeClassNamespace;
 };
-export const InstallableMode = ({ modeKey }: Props) => {
-  const modeName = ModeNameMap[modeKey];
+export const InstallableMode = ({ modeClassNamespace }: Props) => {
+  const modeName = FindNameByClassNamespace(modeClassNamespace);
   const isChecked = (name: string) => {
     return true
   }
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(isChecked(modeKey)) {
+    if(isChecked(modeClassNamespace)) {
       // TODO update state
     }
   }
   return(
-    <div>
-      <input type="checkbox" onChange={handleClick} checked={isChecked(modeKey)} />{modeName}
-    </div>
+    <>
+      <label>
+        <input type="checkbox" onChange={handleClick} checked={isChecked(modeClassNamespace)} />{modeName}
+      </label>
+    </>
   )
 }
 
+
+
 export const InstallableModes = () => {
+  const renderModes = () => {
+    return AvailablePlugins.map((v, i) => {
+      return(
+        <div key={i}>
+          <h3>{Object.keys(v)[0]}</h3>
+          {
+            Object.entries(v).map((v) => {
+              {
+                return v[1].modes.map((mode: PluginSpec , i) => {
+                  return(<InstallableMode modeClassNamespace={mode.class_namespace as ModeClassNamespace} key={i} />);
+                })
+              }
+            })
+          }
+        </div>
+      )
+    })
+  }
+
   return(
     <>
-      {
-        modeClassNamespaces.map((classNamespace, i) => {
-          return(
-            <div key={i}>
-              <label>
-                <InstallableMode modeKey={classNamespace} />
-              </label>
-            </div>
-          );
-        })
-      }
+      {renderModes()}
     </>
   )
 }

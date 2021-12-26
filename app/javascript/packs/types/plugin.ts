@@ -1,10 +1,3 @@
-export type Plugin = {
-  [key in PluginTitle] : {
-    modes: Array<PluginSpec>;
-    macros: Array<PluginSpec>;
-  }
-}
-
 export const PluginTitles = [
   "splatoon2",
 ] as const;
@@ -41,27 +34,34 @@ export const MacroClassNamespaces = [
 export type MacroClassNamespace = typeof MacroClassNamespaces[number];
 
 
-type PluginSpec = {
+export type Plugin = {
+  [key in PluginTitle] : {
+    modes: Array<PluginSpec>;
+    macros: Array<PluginSpec>;
+  }
+}
+
+export type PluginSpec = {
   display_name: ModeDisplayName | MacroDisplayName,
   class_namespace: ModeClassNamespace | MacroClassNamespace,
-  description: undefined | string
+  description?: string,
 }
 
 // plugins.
-export const AvailablePlugins = [
+export const AvailablePlugins: Array<Plugin> = [
   {
     splatoon2: {
       modes: [
         { display_name: "splatoon2.guruguru", class_namespace: "ProconBypassMan::Splatoon2::Mode::Guruguru", description: "ぐるぐるします" },
-      ] as Array<PluginSpec>,
+      ],
       macros: [
         { display_name: "splatoon2.fast_return", class_namespace: "ProconBypassMan::Splatoon2::Macro::FastReturn" },
         { display_name: "splatoon2.jump_right", class_namespace: "ProconBypassMan::Splatoon2::Macro::JumpToRightKey" },
         { display_name: "splatoon2.jump_up", class_namespace: "ProconBypassMan::Splatoon2::Macro::JumpToUpKey" },
         { display_name: "splatoon2.jump_left", class_namespace: "ProconBypassMan::Splatoon2::Macro::JumpToLeftKey" },
-      ] as Array<PluginSpec>,
+      ],
     }
-  } as Plugin,
+  },
 ]
 
 export const MacroNameMap = AvailablePlugins.reduce((hash, item: Plugin) => {
@@ -73,11 +73,15 @@ export const MacroNameMap = AvailablePlugins.reduce((hash, item: Plugin) => {
   return hash;
 }, {} as any)
 
-export const ModeNameMap = AvailablePlugins.reduce((hash, item: Plugin) => {
-  for (var [name, plugin] of Object.entries(item)) {
-    plugin.modes.forEach((mode: PluginSpec) => {
-      hash[mode.class_namespace] = mode.display_name
-    })
-  };
-  return hash;
-}, {} as any)
+
+export const FindNameByClassNamespace = (mode_class_namespace: ModeClassNamespace): ModeDisplayName => {
+  const classNamespaceMap = AvailablePlugins.reduce((hash, item: Plugin) => {
+    for (var [name, plugin] of Object.entries(item)) {
+      plugin.modes.forEach((mode: PluginSpec) => {
+        hash[mode.class_namespace] = mode.display_name
+      })
+    };
+    return hash;
+  }, {})
+  return classNamespaceMap[mode_class_namespace];
+}
