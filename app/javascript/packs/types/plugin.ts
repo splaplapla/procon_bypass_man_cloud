@@ -32,6 +32,10 @@ export type Plugin = {
   };
 };
 
+export type InstalledModeMap = {
+  [key in ModeClassNamespace]: boolean | undefined;
+};
+
 export type PluginSpec = {
   display_name: ModeDisplayName | MacroDisplayName;
   class_namespace: ModeClassNamespace | MacroClassNamespace;

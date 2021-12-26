@@ -5,7 +5,7 @@ class Admin::SavedButtonsSettings::ContentsController < Admin::Base
     if(setting_content = @setting.content["setting"])
       # TODO 悪意のある設定情報がクライアントから送られてきたらRCEになってしまう. どうしよ
       @config = ProconBypassMan::ButtonsSettingConfiguration.instance.instance_eval(
-        YAML.safe_load(setting_content)
+        setting_content
       )
     else
       @config = ProconBypassMan::ButtonsSettingConfiguration.instance

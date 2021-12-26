@@ -6,20 +6,33 @@ import {
   PluginSpec,
   AvailablePlugins,
   FindNameByClassNamespace,
+  InstalledModeMap,
   ModeClassNamespace,
 } from '../../types/plugin';
+import { SettingContext } from './../setting_context';
 
 type Props = {
   modeClassNamespace: ModeClassNamespace;
 };
 export const InstallableMode = ({ modeClassNamespace }: Props) => {
   const modeName = FindNameByClassNamespace(modeClassNamespace);
-  const isChecked = (name: string) => {
-    return true;
+  const { installedModes, setInstalledModes } = useContext(SettingContext);
+
+  const isChecked = (modeClassNamespace: ModeClassNamespace): boolean => {
+    return !!installedModes[modeClassNamespace];
   };
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const handleClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (isChecked(modeClassNamespace)) {
-      // TODO update state
+      setInstalledModes((prev) => {
+        prev[modeClassNamespace] = false;
+        return prev;
+      });
+    } else {
+      setInstalledModes((prev) => {
+        prev[modeClassNamespace] = true;
+        return prev;
+      });
     }
   };
   return (
