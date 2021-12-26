@@ -13,9 +13,15 @@ const SettingProvider = ({ children }) => {
   const initLayers: Layers = {
     installed_modes: {},
   };
-  const [prefixKeys, setPrefixKeys] = useState([] as Array<Button>);
+  const defaultPrefixKeys: Array<Button> = JSON.parse(
+    document.getElementById('config-prefix-keys').dataset.configPrefixKeys
+  );
+
+  const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
+
   const value = {
     prefixKeys,
+    setPrefixKeys,
   };
   return (
     <SettingContext.Provider value={value}>{children}</SettingContext.Provider>
@@ -23,14 +29,10 @@ const SettingProvider = ({ children }) => {
 };
 
 export const ButtonsSettingPage = () => {
-  const prefixKeys = JSON.parse(
-    document.getElementById('config-prefix-keys').dataset.configPrefixKeys
-  ) as Array<Button>;
-
   return (
     <>
       <SettingProvider>
-        <ButtonsSetting defaultPrefixKeys={prefixKeys} />
+        <ButtonsSetting />
       </SettingProvider>
     </>
   );

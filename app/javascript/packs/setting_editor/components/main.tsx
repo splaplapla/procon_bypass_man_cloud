@@ -2,7 +2,7 @@
 
 import { jsx, css } from '@emotion/react';
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Button } from 'types/button';
@@ -12,14 +12,13 @@ import {
 } from './../../setting_editor/components/buttons_modal';
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
 import { useModal } from '../../setting_editor/hooks/use_modal';
+import { SettingContext } from './../setting_context';
 
-type Props = {
-  defaultPrefixKeys: Array<Button>;
-};
+type Props = {};
 
-export const ButtonsSetting = ({ defaultPrefixKeys }) => {
+export const ButtonsSetting = () => {
+  const { prefixKeys, setPrefixKeys } = useContext(SettingContext);
   const [modalProps, openModal] = useModal();
-  const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
   const handlePrefixKeysField = () => {
     openModal({
       title: 'キープレフィックスの変更',
