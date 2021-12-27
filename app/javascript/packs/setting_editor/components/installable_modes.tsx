@@ -12,25 +12,25 @@ import {
 import { SettingContext } from './../setting_context';
 
 type Props = {
-  modeClassNamespace: ModeClassNamespace;
+  classNamespace: ModeClassNamespace;
 };
-export const InstallableMode = ({ modeClassNamespace }: Props) => {
-  const modeName = FindNameByClassNamespace(modeClassNamespace);
+export const InstallableMode = ({ classNamespace }: Props) => {
+  const modeName = FindNameByClassNamespace(classNamespace);
   const { installedModeMap, setInstalledModeMap } = useContext(SettingContext);
 
-  const isChecked = (modeClassNamespace: ModeClassNamespace): boolean => {
-    return !!installedModeMap[modeClassNamespace];
+  const isChecked = (classNamespace: ModeClassNamespace): boolean => {
+    return !!installedModeMap[classNamespace];
   };
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (isChecked(modeClassNamespace)) {
+    if (isChecked(classNamespace)) {
       setInstalledModeMap((prev) => {
-        prev[modeClassNamespace] = false;
+        prev[classNamespace] = false;
         return Object.assign({}, prev);;
       });
     } else {
       setInstalledModeMap((prev) => {
-        prev[modeClassNamespace] = true;
+        prev[classNamespace] = true;
         return Object.assign({}, prev);;
       });
     }
@@ -41,7 +41,7 @@ export const InstallableMode = ({ modeClassNamespace }: Props) => {
         <input
           type="checkbox"
           onChange={handleClick}
-          checked={isChecked(modeClassNamespace)}
+          checked={isChecked(classNamespace)}
         />
         {modeName}
       </label>
@@ -60,7 +60,7 @@ export const InstallableModes = () => {
               return v[1].modes.map((mode: PluginSpec, i) => {
                 return (
                   <InstallableMode
-                    modeClassNamespace={
+                    classNamespace={
                       mode.class_namespace as ModeClassNamespace
                     }
                     key={i}
