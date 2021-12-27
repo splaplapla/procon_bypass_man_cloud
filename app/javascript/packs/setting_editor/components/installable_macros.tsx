@@ -2,24 +2,13 @@
 
 import { jsx, css } from '@emotion/react'
 import React, { useState, useEffect, useContext } from "react";
-import { Plugin, AvailablePlugins } from "../../types/plugin";
-
-const macroClassNamespaces = AvailablePlugins.map((v) => {
-  return Object.entries(v).map((v) => {
-    const name = v[0];
-    const plugin = v[1];
-    return plugin.macros.map((m) => {
-      return m.class_namespace
-    })
-  })
-}).flat().flat();
-
+import { PluginSpec, AvailablePlugins, MacroClassNamespace } from "../../types/plugin";
 
 type Props = {
-  classNamespace: string;
+  classNamespace: MacroClassNamespace;
 };
 export const InstallableMacro = ({ classNamespace }: Props) => {
-  const isChecked = (name: string) => {
+  const isChecked = (name: any) => {
     return false;
   }
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,25 +18,35 @@ export const InstallableMacro = ({ classNamespace }: Props) => {
   }
   return(
     <>
-      <input type="checkbox" onChange={handleClick} checked={isChecked(classNamespace)} /> {classNamespace}
+      <label>
+        <input type="checkbox" onChange={handleClick} checked={isChecked(classNamespace)} /> {classNamespace}
+      </label>
     </>
   )
 }
 
 export const InstallableMacros = () => {
-  return(
-    <>
-      {
-        macroClassNamespaces.map((classNamespace, i) => {
-          return(
-            <div key={i}>
-              <label>
-                <InstallableMacro classNamespace={classNamespace} />
-              </label>
-            </div>
-          );
-        })
-      }
-    </>
-  )
+  const renderJsx = () => {
+    return AvailablePlugins.map((v, i) => {
+      return (
+        <div key={i}>
+          <h3>{Object.keys(v)[0]}</h3>
+          {Object.entries(v).map((v) => {
+            {
+              return v[1].macros.map((macro: PluginSpec, i) => {
+                return (
+                  <InstallableMacro
+                    classNamespace={macro.class_namespace as MacroClassNamespace}
+                    key={i}
+                  />
+                );
+              });
+            }
+          })}
+        </div>
+      );
+    });
+
+  }
+  return(<>{renderJsx()}</>);
 }
