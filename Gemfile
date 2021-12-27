@@ -12,7 +12,9 @@ gem 'webpacker'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
-gem 'procon_bypass_man' # 設定ファイルのパースとバリデーションのために使っている
+
+# 設定ファイルのパースとバリデーションのために使っている
+gem 'procon_bypass_man', github: 'splaplapla/procon_bypass_man', branch: :edge
 
 group :production do
   gem 'pg'

@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/splaplapla/procon_bypass_man.git
+  revision: 6686069a33831be2882d6bb9b9125829ad60515e
+  branch: edge
+  specs:
+    procon_bypass_man (0.1.17)
+      action_cable_client
+      pbmenv
+      sorted_set
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -155,10 +165,6 @@ GEM
       rack (>= 1.2, < 3)
     pbmenv (0.1.6)
     pg (1.2.3)
-    procon_bypass_man (0.1.16)
-      action_cable_client
-      pbmenv
-      sorted_set
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -284,7 +290,7 @@ DEPENDENCIES
   listen
   mysql2
   pg
-  procon_bypass_man
+  procon_bypass_man!
   pry
   puma
   rails
