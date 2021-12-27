@@ -16,22 +16,22 @@ type Props = {
 };
 export const InstallableMode = ({ modeClassNamespace }: Props) => {
   const modeName = FindNameByClassNamespace(modeClassNamespace);
-  const { installedModes, setInstalledModes } = useContext(SettingContext);
+  const { installedModeMap, setInstalledModeMap } = useContext(SettingContext);
 
   const isChecked = (modeClassNamespace: ModeClassNamespace): boolean => {
-    return !!installedModes[modeClassNamespace];
+    return !!installedModeMap[modeClassNamespace];
   };
 
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
     if (isChecked(modeClassNamespace)) {
-      setInstalledModes((prev) => {
+      setInstalledModeMap((prev) => {
         prev[modeClassNamespace] = false;
-        return prev;
+        return Object.assign({}, prev);;
       });
     } else {
-      setInstalledModes((prev) => {
+      setInstalledModeMap((prev) => {
         prev[modeClassNamespace] = true;
-        return prev;
+        return Object.assign({}, prev);;
       });
     }
   };

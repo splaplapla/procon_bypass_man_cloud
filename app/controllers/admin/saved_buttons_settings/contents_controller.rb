@@ -4,11 +4,11 @@ class Admin::SavedButtonsSettings::ContentsController < Admin::Base
     @device = @setting.device
     if(setting_content = @setting.content["setting"])
       # TODO 悪意のある設定情報がクライアントから送られてきたらRCEになってしまう. どうしよ
-      @config = ProconBypassMan::ButtonsSettingConfiguration.instance.instance_eval(
+      @config = ProconBypassMan::ButtonsSettingConfiguration.new.instance_eval(
         setting_content
       )
     else
-      @config = ProconBypassMan::ButtonsSettingConfiguration.instance
+      @config = ProconBypassMan::ButtonsSettingConfiguration.new
     end
   end
 
