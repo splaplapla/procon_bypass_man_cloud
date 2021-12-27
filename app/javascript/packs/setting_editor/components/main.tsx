@@ -11,6 +11,7 @@ import {
   ButtonsModal,
 } from './../../setting_editor/components/buttons_modal';
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
+import { InstallableMacros } from  './../../setting_editor/components/installable_macros';
 import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
 
@@ -49,6 +50,7 @@ export const ButtonsSetting = () => {
           {<InstallableModes />}
 
           <h3>インストール可能なマクロ</h3>
+          {<InstallableMacros />}
 
           <h3>設定中のプレフィックスキー</h3>
           <input
