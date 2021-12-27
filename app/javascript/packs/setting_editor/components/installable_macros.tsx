@@ -3,17 +3,28 @@
 import { jsx, css } from '@emotion/react'
 import React, { useState, useEffect, useContext } from "react";
 import { PluginSpec, AvailablePlugins, MacroClassNamespace } from "../../types/plugin";
+import { SettingContext } from './../setting_context';
 
 type Props = {
   classNamespace: MacroClassNamespace;
 };
 export const InstallableMacro = ({ classNamespace }: Props) => {
+  const { installedMacroMap, setInstalledMacroMap } = useContext(SettingContext);
+
   const isChecked = (name: any) => {
-    return false;
+    return !!installedMacroMap[classNamespace];
   }
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if(isChecked(classNamespace)) {
-      // TODO
+    if (isChecked(classNamespace)) {
+      setInstalledMacroMap((prev) => {
+        prev[classNamespace] = false;
+        return Object.assign({}, prev);;
+      });
+    } else {
+      setInstalledMacroMap((prev) => {
+        prev[classNamespace] = true;
+        return Object.assign({}, prev);;
+      });
     }
   }
   return(

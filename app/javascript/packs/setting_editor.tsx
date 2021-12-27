@@ -46,6 +46,8 @@ const SettingProvider = ({ children }) => {
     setPrefixKeys,
     installedModeMap,
     setInstalledModeMap,
+    installedMacroMap,
+    setInstalledMacroMap,
   };
   return (
     <>

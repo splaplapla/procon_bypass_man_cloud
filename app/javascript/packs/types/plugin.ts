@@ -1,9 +1,6 @@
 export const PluginTitles = ['splatoon2'] as const;
 export type PluginTitle = typeof PluginTitles[number];
 
-export const ModeDisplayNames = ['splatoon2.guruguru'] as const;
-export type ModeDisplayName = typeof ModeDisplayNames[number];
-
 export const ModeClassNamespaces = [
   'ProconBypassMan::Plugin::Splatoon2::Mode::Guruguru',
 ] as const;
@@ -41,7 +38,7 @@ export type InstalledMacroMap = {
 };
 
 export type PluginSpec = {
-  display_name: ModeDisplayName | MacroDisplayName;
+  display_name: string
   class_namespace: ModeClassNamespace | MacroClassNamespace;
   description?: string;
 };
@@ -52,7 +49,7 @@ export const AvailablePlugins: Array<Plugin> = [
     splatoon2: {
       modes: [
         {
-          display_name: 'splatoon2.guruguru',
+          display_name: 'その場でピチャピチャ',
           class_namespace: 'ProconBypassMan::Plugin::Splatoon2::Mode::Guruguru',
           description: 'ぐるぐるします',
         },
@@ -101,7 +98,7 @@ export const MacroNameMap = AvailablePlugins.reduce((hash, item: Plugin) => {
 
 export const FindNameByClassNamespace = (
   mode_class_namespace: ModeClassNamespace
-): ModeDisplayName => {
+): string => {
   const classNamespaceMap = AvailablePlugins.reduce((hash, item: Plugin) => {
     for (var [name, plugin] of Object.entries(item)) {
       plugin.modes.forEach((mode: PluginSpec) => {
