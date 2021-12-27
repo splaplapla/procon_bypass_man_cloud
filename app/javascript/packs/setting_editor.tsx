@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ButtonsSetting } from './setting_editor/components/main';
 import { Button } from 'types/button';
-import { InstalledModeMap } from 'types/plugin';
+import { InstalledModeMap, InstalledMacroMap } from 'types/plugin';
 import { Layers } from 'types/layer';
 import { SettingContext } from './setting_editor/setting_context';
 
@@ -15,11 +15,15 @@ const SettingProvider = ({ children }) => {
     installed_modes: {},
   };
 
+  const sourceElem = document.getElementById('config-prefix-keys');
   const defaultPrefixKeys: Array<Button> = JSON.parse(
-    document.getElementById('config-prefix-keys').dataset.configPrefixKeys
+    sourceElem.dataset.configPrefixKeys
   );
   const defaultInstalledModes: Array<Button> = JSON.parse(
-    document.getElementById('config-prefix-keys').dataset.configInstalledModes
+    sourceElem.dataset.configInstalledModes
+  );
+  const defaultInstalledMacros: Array<Button> = JSON.parse(
+    sourceElem.dataset.configInstalledMacros
   );
 
   const [installedModeMap, setInstalledModeMap] = useState(
@@ -27,6 +31,13 @@ const SettingProvider = ({ children }) => {
       hash[item] = true;
       return hash;
     }, {}) as InstalledModeMap
+  );
+
+  const [installedMacroMap, setInstalledMacroMap] = useState(
+    defaultInstalledMacros.reduce((hash, item) => {
+      hash[item] = true;
+      return hash;
+    }, {}) as InstalledMacroMap
   );
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
 
@@ -47,6 +58,8 @@ const SettingProvider = ({ children }) => {
       prefixKeys: {prefixKeys.join(',')}
       <br />
       installedModeMap: {Object.entries(installedModeMap).join(',')}
+      <br />
+      installedMacroMap: {Object.entries(installedMacroMap).join(',')}
       <br />
     </>
   );

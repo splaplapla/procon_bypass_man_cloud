@@ -33,7 +33,11 @@ export type Plugin = {
 };
 
 export type InstalledModeMap = {
-  [key in ModeClassNamespace]: boolean | undefined;
+  [key in ModeClassNamespace]: boolean;
+};
+
+export type InstalledMacroMap = {
+  [key in MacroClassNamespace]: boolean;
 };
 
 export type PluginSpec = {
