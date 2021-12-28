@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/splaplapla/procon_bypass_man.git
-  revision: ee2de9c01bdcd2b9b01f3de4f5ab38aa92380fe1
+  revision: ead00b803dbcdc7fecc4b7e8a1f5e671e5281568
   branch: edge
   specs:
     procon_bypass_man (0.1.17)
