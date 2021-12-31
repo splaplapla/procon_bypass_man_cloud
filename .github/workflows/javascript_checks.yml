@@ -1,4 +1,5 @@
 name: Check Javascripts
+
 on:
   pull_request:
     branches: ['*']
@@ -15,4 +16,4 @@ jobs:
       - name: Prettier
         run: yarn format-check
       - name: Lint
-        run: # yarn lint
+        run: yarn lint
