@@ -2,6 +2,7 @@
 
 import { jsx, css } from '@emotion/react';
 
+import React from 'react';
 import { useContext } from 'react';
 import {
   ModalProps,
