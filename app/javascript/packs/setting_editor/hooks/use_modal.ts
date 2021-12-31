@@ -1,5 +1,5 @@
-import React, { useState, useReducer } from 'react';
-import { Button, buttons } from 'types/button';
+import { useState, useReducer } from 'react';
+import { Button } from 'types/button';
 import { ModalProps } from 'setting_editor/components/buttons_modal';
 
 export type ModalSetting = {
@@ -42,13 +42,6 @@ export const useModal = () => {
     callbackOnClose,
     title,
     prefill,
-  };
-  const modalSetting: ModalSetting = {
-    toggleModal,
-    setCallbackOnSubmit,
-    setCallbackOnClose,
-    setTitle,
-    setPrefillButtons,
   };
 
   return [modalProps, openModal] as const;
