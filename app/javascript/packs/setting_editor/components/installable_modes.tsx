@@ -26,12 +26,12 @@ export const InstallableMode = ({ classNamespace }: Props) => {
     if (isChecked(classNamespace)) {
       setInstalledModeMap((prev) => {
         prev[classNamespace] = false;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     } else {
       setInstalledModeMap((prev) => {
         prev[classNamespace] = true;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     }
   };

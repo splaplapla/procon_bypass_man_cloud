@@ -87,20 +87,11 @@ export const AvailablePlugins: Array<Plugin> = [
   },
 ];
 
-export const MacroNameMap = AvailablePlugins.reduce((hash, item: Plugin) => {
-  for (var [name, plugin] of Object.entries(item)) {
-    plugin.macros.forEach((macro: PluginSpec) => {
-      hash[macro.class_namespace] = macro.display_name;
-    });
-  }
-  return hash;
-}, {} as any);
-
 export const FindNameByClassNamespace = (
   mode_class_namespace: ModeClassNamespace
 ): string => {
   const classNamespaceMap = AvailablePlugins.reduce((hash, item: Plugin) => {
-    for (var [name, plugin] of Object.entries(item)) {
+    for (const [, plugin] of Object.entries(item)) {
       plugin.modes.forEach((mode: PluginSpec) => {
         hash[mode.class_namespace] = mode.display_name;
       });

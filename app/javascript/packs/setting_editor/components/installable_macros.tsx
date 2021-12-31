@@ -18,12 +18,12 @@ export const InstallableMacro = ({ classNamespace }: Props) => {
     if (isChecked(classNamespace)) {
       setInstalledMacroMap((prev) => {
         prev[classNamespace] = false;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     } else {
       setInstalledMacroMap((prev) => {
         prev[classNamespace] = true;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     }
   }

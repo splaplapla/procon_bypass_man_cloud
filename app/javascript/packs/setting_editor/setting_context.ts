@@ -1,2 +1,2 @@
 import { createContext } from 'react';
-export const SettingContext = createContext<any>(null);
+export const SettingContext = createContext(null);
