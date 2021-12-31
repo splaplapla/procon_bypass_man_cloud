@@ -2,7 +2,9 @@
   "name": "procon-bypass-man-cloud",
   "private": true,
   "scripts": {
-    "format": "prettier --write './app/javascript/packs/**/*.{ts,tsx}'"
+    "format": "prettier --write './app/javascript/packs/**/*.{ts,tsx}'",
+    "format-check": "prettier --check './app/javascript/packs/**/*.{ts,tsx}'",
+    "lint": "eslint ./app/javascript/packs"
   },
   "dependencies": {
     "@babel/preset-react": "^7.16.5",
@@ -30,6 +32,11 @@
   },
   "version": "0.1.0",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "fork-ts-checker-webpack-plugin": "^6.5.0",
     "webpack-dev-server": "^3"
   }

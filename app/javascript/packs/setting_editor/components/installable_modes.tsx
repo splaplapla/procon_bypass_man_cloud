@@ -1,12 +1,11 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react';
-import React, { useState, useEffect, useContext } from 'react';
+import { jsx } from '@emotion/react';
+import React, { useContext } from 'react';
 import {
   PluginSpec,
   AvailablePlugins,
   FindNameByClassNamespace,
-  InstalledModeMap,
   ModeClassNamespace,
 } from '../../types/plugin';
 import { SettingContext } from './../setting_context';
@@ -22,16 +21,16 @@ export const InstallableMode = ({ classNamespace }: Props) => {
     return !!installedModeMap[classNamespace];
   };
 
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleClick = (): void => {
     if (isChecked(classNamespace)) {
       setInstalledModeMap((prev) => {
         prev[classNamespace] = false;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     } else {
       setInstalledModeMap((prev) => {
         prev[classNamespace] = true;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     }
   };
@@ -60,9 +59,7 @@ export const InstallableModes = () => {
               return v[1].modes.map((mode: PluginSpec, i) => {
                 return (
                   <InstallableMode
-                    classNamespace={
-                      mode.class_namespace as ModeClassNamespace
-                    }
+                    classNamespace={mode.class_namespace as ModeClassNamespace}
                     key={i}
                   />
                 );

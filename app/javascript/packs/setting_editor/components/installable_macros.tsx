@@ -1,40 +1,46 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react'
-import React, { useState, useEffect, useContext } from "react";
-import { PluginSpec, AvailablePlugins, MacroClassNamespace } from "../../types/plugin";
+import { jsx } from '@emotion/react';
+import React, { useContext } from 'react';
+import {
+  PluginSpec,
+  AvailablePlugins,
+  MacroClassNamespace,
+} from '../../types/plugin';
 import { SettingContext } from './../setting_context';
 
 type Props = {
   classNamespace: MacroClassNamespace;
 };
 export const InstallableMacro = ({ classNamespace }: Props) => {
-  const { installedMacroMap, setInstalledMacroMap } = useContext(SettingContext);
+  const { installedMacroMap, setInstalledMacroMap } =
+    useContext(SettingContext);
 
-  const isChecked = (name: any) => {
+  const isChecked = () => {
     return !!installedMacroMap[classNamespace];
-  }
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isChecked(classNamespace)) {
+  };
+  const handleClick = () => {
+    if (isChecked()) {
       setInstalledMacroMap((prev) => {
         prev[classNamespace] = false;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     } else {
       setInstalledMacroMap((prev) => {
         prev[classNamespace] = true;
-        return Object.assign({}, prev);;
+        return Object.assign({}, prev);
       });
     }
-  }
-  return(
+  };
+  return (
     <>
       <label>
-        <input type="checkbox" onChange={handleClick} checked={isChecked(classNamespace)} /> {classNamespace}
+        <input type="checkbox" onChange={handleClick} checked={isChecked()} />{' '}
+        {classNamespace}
       </label>
     </>
-  )
-}
+  );
+};
 
 export const InstallableMacros = () => {
   const renderJsx = () => {
@@ -47,7 +53,9 @@ export const InstallableMacros = () => {
               return v[1].macros.map((macro: PluginSpec, i) => {
                 return (
                   <InstallableMacro
-                    classNamespace={macro.class_namespace as MacroClassNamespace}
+                    classNamespace={
+                      macro.class_namespace as MacroClassNamespace
+                    }
                     key={i}
                   />
                 );
@@ -57,7 +65,6 @@ export const InstallableMacros = () => {
         </div>
       );
     });
-
-  }
-  return(<>{renderJsx()}</>);
-}
+  };
+  return <>{renderJsx()}</>;
+};

@@ -1,20 +1,19 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react';
+import { jsx } from '@emotion/react';
 
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ButtonsSetting } from './setting_editor/components/main';
 import { Button } from 'types/button';
 import { InstalledModeMap, InstalledMacroMap } from 'types/plugin';
-import { Layers } from 'types/layer';
 import { SettingContext } from './setting_editor/setting_context';
 
-const SettingProvider = ({ children }) => {
-  const initLayers: Layers = {
-    installed_modes: {},
-  };
+export interface SettingProviderProps {
+  children: React.ReactNode;
+}
 
+const SettingProvider = ({ children }: SettingProviderProps) => {
   const sourceElem = document.getElementById('config-prefix-keys');
   const defaultPrefixKeys: Array<Button> = JSON.parse(
     sourceElem.dataset.configPrefixKeys
@@ -54,7 +53,6 @@ const SettingProvider = ({ children }) => {
       <SettingContext.Provider value={value}>
         {children}
       </SettingContext.Provider>
-
       <hr />
       <h1>debug</h1>
       prefixKeys: {prefixKeys.join(',')}

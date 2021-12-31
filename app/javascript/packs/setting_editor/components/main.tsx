@@ -2,20 +2,15 @@
 
 import { jsx, css } from '@emotion/react';
 
-import React, { useState, useContext } from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import { Button } from 'types/button';
+import { useContext } from 'react';
 import {
   ModalProps,
   ButtonsModal,
 } from './../../setting_editor/components/buttons_modal';
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
-import { InstallableMacros } from  './../../setting_editor/components/installable_macros';
+import { InstallableMacros } from './../../setting_editor/components/installable_macros';
 import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
-
-type Props = {};
 
 export const ButtonsSetting = () => {
   const { prefixKeys, setPrefixKeys } = useContext(SettingContext);

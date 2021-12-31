@@ -2,18 +2,10 @@ import { useState, useReducer } from 'react';
 import { Button } from 'types/button';
 import { ModalProps } from 'setting_editor/components/buttons_modal';
 
-export type ModalSetting = {
-  toggleModal: any;
-  setCallbackOnSubmit: any;
-  setCallbackOnClose: any;
-  setTitle: any;
-  setPrefillButtons: any;
-};
-
 type openModalParams = {
   title: string;
-  prefill: any;
-  callbackOnSubmit: any;
+  prefill: Array<Button>;
+  callbackOnSubmit: (param: Array<Button>) => void;
 };
 
 export const useModal = () => {
