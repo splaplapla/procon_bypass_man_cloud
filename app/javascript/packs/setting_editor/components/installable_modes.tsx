@@ -1,12 +1,11 @@
 /** @jsx jsx */
 
-import { jsx, css } from '@emotion/react';
-import React, { useState, useEffect, useContext } from 'react';
+import { jsx } from '@emotion/react';
+import React, { useContext } from 'react';
 import {
   PluginSpec,
   AvailablePlugins,
   FindNameByClassNamespace,
-  InstalledModeMap,
   ModeClassNamespace,
 } from '../../types/plugin';
 import { SettingContext } from './../setting_context';
@@ -22,7 +21,7 @@ export const InstallableMode = ({ classNamespace }: Props) => {
     return !!installedModeMap[classNamespace];
   };
 
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleClick = (): void => {
     if (isChecked(classNamespace)) {
       setInstalledModeMap((prev) => {
         prev[classNamespace] = false;
