@@ -9,8 +9,8 @@ import { Button } from 'types/button';
 import { InstalledModeMap, InstalledMacroMap } from 'types/plugin';
 import { SettingContext } from './setting_editor/setting_context';
 
-export interface SettingProviderProps  {
-   children: React.ReactNode
+export interface SettingProviderProps {
+  children: React.ReactNode;
 }
 
 const SettingProvider = ({ children }: SettingProviderProps) => {
@@ -53,7 +53,6 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
       <SettingContext.Provider value={value}>
         {children}
       </SettingContext.Provider>
-
       <hr />
       <h1>debug</h1>
       prefixKeys: {prefixKeys.join(',')}

@@ -1,0 +1,18 @@
+name: Check Javascripts
+on:
+  pull_request:
+    branches: ['*']
+  push:
+    branches: [master]
+jobs:
+  test:
+    name: Check Javascripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install packages
+        run: yarn
+      - name: Prettier
+        run: yarn format-check
+      - name: Lint
+        run: # yarn lint

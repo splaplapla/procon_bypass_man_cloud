@@ -38,7 +38,7 @@ export type InstalledMacroMap = {
 };
 
 export type PluginSpec = {
-  display_name: string
+  display_name: string;
   class_namespace: ModeClassNamespace | MacroClassNamespace;
   description?: string;
 };

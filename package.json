@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "format": "prettier --write './app/javascript/packs/**/*.{ts,tsx}'",
+    "format-check": "prettier --check './app/javascript/packs/**/*.{ts,tsx}'",
     "lint": "eslint ./app/javascript/packs"
   },
   "dependencies": {

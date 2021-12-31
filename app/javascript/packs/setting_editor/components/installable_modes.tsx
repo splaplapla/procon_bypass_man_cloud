@@ -59,9 +59,7 @@ export const InstallableModes = () => {
               return v[1].modes.map((mode: PluginSpec, i) => {
                 return (
                   <InstallableMode
-                    classNamespace={
-                      mode.class_namespace as ModeClassNamespace
-                    }
+                    classNamespace={mode.class_namespace as ModeClassNamespace}
                     key={i}
                   />
                 );

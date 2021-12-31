@@ -8,7 +8,7 @@ import {
   ButtonsModal,
 } from './../../setting_editor/components/buttons_modal';
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
-import { InstallableMacros } from  './../../setting_editor/components/installable_macros';
+import { InstallableMacros } from './../../setting_editor/components/installable_macros';
 import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
 
