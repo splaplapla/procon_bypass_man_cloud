@@ -13,6 +13,9 @@ gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
 
+# 設定ファイルのパースとバリデーションのために使っている
+gem 'procon_bypass_man', github: 'splaplapla/procon_bypass_man', branch: :edge
+
 group :production do
   gem 'pg'
 end
