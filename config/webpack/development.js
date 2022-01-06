@@ -6,6 +6,8 @@ const ForkTSCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
 // console.log(environment.config.resolve.alias)
 
+environment.config.delete("devtool");
+
 module.exports = merge(environment.toWebpackConfig(), {
   plugins: [new ForkTSCheckerWebpackPlugin()],
 })
