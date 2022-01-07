@@ -5,10 +5,11 @@ import React from 'react';
 import { LayerKey } from 'types/layer';
 
 type Props = {
-  activeTab: any;
+  activeTab: LayerKey;
+  switchTab: (param: LayerKey) => void;
 };
 
-export const LayerTab = ({ activeTab }: Props) => {
+export const LayerTab = ({ activeTab, switchTab }: Props) => {
   const layersTabStyle = () => {
     return css`
       list-style: none;
@@ -49,16 +50,16 @@ export const LayerTab = ({ activeTab }: Props) => {
     <>
       <ul css={layersTabStyle()}>
         <li className={getLiClassName('up')}>
-          <a>up</a>
+          <a onClick={() => switchTab('up')}>up</a>
         </li>
         <li className={getLiClassName('down')}>
-          <a>down</a>
+          <a onClick={() => switchTab('down')}>down</a>
         </li>
         <li className={getLiClassName('left')}>
-          <a>left</a>
+          <a onClick={() => switchTab('left')}>left</a>
         </li>
         <li className={getLiClassName('right')}>
-          <a>right</a>
+          <a onClick={() => switchTab('right')}>right</a>
         </li>
       </ul>
     </>

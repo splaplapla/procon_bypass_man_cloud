@@ -67,7 +67,7 @@ export const ButtonsSetting = () => {
         `}
       />
 
-      <LayerTab activeTab={activeTab} />
+      <LayerTab activeTab={activeTab} switchTab={setActiveTab} />
     </>
   );
 };
