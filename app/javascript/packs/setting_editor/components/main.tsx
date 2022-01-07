@@ -10,13 +10,14 @@ import {
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
 import { InstallableMacros } from './../../setting_editor/components/installable_macros';
 import { LayerTab } from './../../setting_editor/components/layer_tab';
+import { LayerBlock } from './../../setting_editor/components/layer_block';
 import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
 import { LayerKey } from 'types/layer';
 
 export const ButtonsSetting = () => {
   const { prefixKeys, setPrefixKeys } = useContext(SettingContext);
-  const [activeTab, setActiveTab] = useState<LayerKey>('up');
+  const [activeKey, setActiveKey] = useState<LayerKey>('up');
   const [modalProps, openModal] = useModal();
   const handlePrefixKeysField = () => {
     openModal({
@@ -67,7 +68,35 @@ export const ButtonsSetting = () => {
         `}
       />
 
-      <LayerTab activeTab={activeTab} switchTab={setActiveTab} />
+      <LayerTab activeTab={activeKey} switchTab={setActiveKey} />
+      <div
+        css={css`
+          ${activeKey !== 'up' && 'display: none'}
+        `}
+      >
+        <LayerBlock layerKey={'up'} />
+      </div>
+      <div
+        css={css`
+          ${activeKey !== 'down' && 'display: none'}
+        `}
+      >
+        <LayerBlock layerKey={'down'} />
+      </div>
+      <div
+        css={css`
+          ${activeKey !== 'left' && 'display: none'}
+        `}
+      >
+        <LayerBlock layerKey={'left'} />
+      </div>
+      <div
+        css={css`
+          ${activeKey !== 'right' && 'display: none'}
+        `}
+      >
+        <LayerBlock layerKey={'right'} />
+      </div>
     </>
   );
 };
