@@ -8,7 +8,7 @@ type Props = {
   activeTab: any;
 };
 
-export const LayerTab = ({ activeTab}: Props) => {
+export const LayerTab = ({ activeTab }: Props) => {
   const layersTabStyle = () => {
     return css`
       list-style: none;
@@ -37,30 +37,30 @@ export const LayerTab = ({ activeTab}: Props) => {
     `;
   };
 
-  const getLiClassName= (key: LayerKey) => {
+  const getLiClassName = (key: LayerKey) => {
     if (key === activeTab) {
-      return "active";
+      return 'active';
     } else {
-      return "inactive";
+      return 'inactive';
     }
-  }
+  };
 
-  return(
+  return (
     <>
       <ul css={layersTabStyle()}>
-        <li className={getLiClassName("up")}>
+        <li className={getLiClassName('up')}>
           <a>up</a>
         </li>
-        <li className={getLiClassName("down")}>
+        <li className={getLiClassName('down')}>
           <a>down</a>
         </li>
-        <li className={getLiClassName("left")}>
+        <li className={getLiClassName('left')}>
           <a>left</a>
         </li>
-        <li className={getLiClassName("right")}>
+        <li className={getLiClassName('right')}>
           <a>right</a>
         </li>
       </ul>
     </>
-  )
-}
+  );
+};

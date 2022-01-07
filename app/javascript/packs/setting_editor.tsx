@@ -54,7 +54,6 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
         {children}
       </SettingContext.Provider>
       <hr />
-
       <h1>debug</h1>
       prefixKeys: {prefixKeys.join(',')}
       <br />

@@ -14,7 +14,6 @@ import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
 import { LayerKey } from 'types/layer';
 
-
 export const ButtonsSetting = () => {
   const { prefixKeys, setPrefixKeys } = useContext(SettingContext);
   const [activeTab, setActiveTab] = useState<LayerKey>('up');
@@ -62,7 +61,11 @@ export const ButtonsSetting = () => {
         </div>
       </div>
 
-      <div css={css`margin-top: 30px;`} />
+      <div
+        css={css`
+          margin-top: 30px;
+        `}
+      />
 
       <LayerTab activeTab={activeTab} />
     </>
