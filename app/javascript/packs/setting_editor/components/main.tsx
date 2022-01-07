@@ -10,7 +10,7 @@ import {
 import { InstallableModes } from './../../setting_editor/components/installable_modes';
 import { InstallableMacros } from './../../setting_editor/components/installable_macros';
 import { LayerTab } from './../../setting_editor/components/layer_tab';
-import { LayerBlock } from './../../setting_editor/components/layer_block';
+import { LayerContent } from './../../setting_editor/components/layer_content';
 import { useModal } from '../../setting_editor/hooks/use_modal';
 import { SettingContext } from './../setting_context';
 import { LayerKey } from 'types/layer';
@@ -74,28 +74,28 @@ export const ButtonsSetting = () => {
           ${activeKey !== 'up' && 'display: none'}
         `}
       >
-        <LayerBlock layerKey={'up'} />
+        <LayerContent layerKey={'up'} />
       </div>
       <div
         css={css`
           ${activeKey !== 'down' && 'display: none'}
         `}
       >
-        <LayerBlock layerKey={'down'} />
+        <LayerContent layerKey={'down'} />
       </div>
       <div
         css={css`
           ${activeKey !== 'left' && 'display: none'}
         `}
       >
-        <LayerBlock layerKey={'left'} />
+        <LayerContent layerKey={'left'} />
       </div>
       <div
         css={css`
           ${activeKey !== 'right' && 'display: none'}
         `}
       >
-        <LayerBlock layerKey={'right'} />
+        <LayerContent layerKey={'right'} />
       </div>
     </>
   );

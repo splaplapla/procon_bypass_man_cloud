@@ -8,10 +8,12 @@ type Props = {
   layerKey: LayerKey;
 };
 
-export const LayerBlock = ({ layerKey }: Props) => {
-  return (
+export const LayerContent = ({ layerKey }: Props) => {
+  return(
     <>
-      <div>ここに{layerKey}のボタンの設定が並びます</div>
+      <div>
+        ここに{layerKey}のボタンの設定が並びます
+      </div>
     </>
-  );
-};
+  )
+}
