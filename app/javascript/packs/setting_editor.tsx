@@ -6,7 +6,11 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ButtonsSetting } from './setting_editor/components/main';
 import { Button } from 'types/button';
-import { InstalledModeMap, InstalledMacroMap, ModeClassNamespace } from 'types/plugin';
+import {
+  InstalledModeMap,
+  InstalledMacroMap,
+  ModeClassNamespace,
+} from 'types/plugin';
 import { Layer } from 'types/layer';
 import { SettingContext } from './setting_editor/setting_context';
 
@@ -33,10 +37,15 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     }, {}) as InstalledModeMap
   );
 
-  const availableModes = Object.keys(installedModeMap).reduce((acc, modeName: ModeClassNamespace) => {
-    if (installedModeMap[modeName]) { acc.push(modeName); }
-    return acc;
-  }, []);
+  const availableModes = Object.keys(installedModeMap).reduce(
+    (acc, modeName: ModeClassNamespace) => {
+      if (installedModeMap[modeName]) {
+        acc.push(modeName);
+      }
+      return acc;
+    },
+    []
+  );
 
   const [installedMacroMap, setInstalledMacroMap] = useState(
     defaultInstalledMacros.reduce((hash, item) => {
@@ -64,7 +73,6 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
         {children}
       </SettingContext.Provider>
       <hr />
-
       <h1>debug</h1>
       prefixKeys: {prefixKeys.join(',')}
       <br />

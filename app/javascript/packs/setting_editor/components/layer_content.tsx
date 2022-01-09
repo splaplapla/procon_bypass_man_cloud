@@ -10,7 +10,7 @@ type Props = {
 };
 
 export const LayerContent = ({ layerKey }: Props) => {
-  return(
+  return (
     <>
       <div>
         ここに{layerKey}のボタンの設定が並びます
@@ -18,5 +18,5 @@ export const LayerContent = ({ layerKey }: Props) => {
         <ModeSetting layerKey={layerKey} />
       </div>
     </>
-  )
-}
+  );
+};
