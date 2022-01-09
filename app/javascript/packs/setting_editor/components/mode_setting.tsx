@@ -2,10 +2,8 @@
 
 import { jsx, css } from '@emotion/react';
 import React, { useContext } from 'react';
-import { LayerKey } from 'types/layer';
+import { LayerKey, ReservedMode } from 'types/layer';
 import { SettingContext } from './../../setting_editor/setting_context';
-
-const ManualValue = 'manual';
 
 type ModeItemProps = {
   modeName: string;
@@ -35,7 +33,7 @@ type Props = {
 export const ModeSetting = ({ layerKey }: Props) => {
   const { availableModes } = useContext(SettingContext);
   const available = () => {
-    const l = [ManualValue];
+    const l = ['manual' as ReservedMode];
     availableModes.forEach((modeName) => {
       l.push(modeName);
     });
