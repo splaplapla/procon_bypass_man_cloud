@@ -16,17 +16,13 @@ const ModeItem = ({ modeName, layerKey }: ModeItemProps) => {
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const isChecked = () => {
-    return layers[layerKey].mode === modeName
+    return layers[layerKey].mode === modeName;
   };
 
   return (
     <>
       <label>
-        <input
-          type="radio"
-          onChange={handleClick}
-          checked={isChecked()}
-        />
+        <input type="radio" onChange={handleClick} checked={isChecked()} />
         {modeName}
       </label>
     </>
