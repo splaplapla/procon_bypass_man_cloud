@@ -29,6 +29,7 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
   const defaultInstalledMacros: Array<Button> = JSON.parse(
     sourceElem.dataset.configInstalledMacros
   );
+  const sourceLayers = JSON.parse(sourceElem.dataset.configLayers);
 
   const [installedModeMap, setInstalledModeMap] = useState(
     defaultInstalledModes.reduce((hash, item) => {
@@ -54,7 +55,14 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     }, {}) as InstalledMacroMap
   );
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
-  const [layer, setLayer] = useState({} as Layer);
+  const defaultLayer = {
+    up: { mode: sourceLayers.up.mode } as Layer,
+    down: { mode: sourceLayers.down.mode } as Layer,
+    left: { mode: sourceLayers.left.mode } as Layer,
+    right: { mode: sourceLayers.right.mode } as Layer,
+  };
+
+  const [layers, setLayers] = useState(defaultLayer);
 
   const value = {
     prefixKeys,
@@ -63,8 +71,8 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     setInstalledModeMap,
     installedMacroMap,
     setInstalledMacroMap,
-    layer,
-    setLayer,
+    layers,
+    setLayers,
     availableModes,
   };
   return (

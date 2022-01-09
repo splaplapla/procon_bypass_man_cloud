@@ -1,8 +1,8 @@
-import { InstalledModeMap, InstalledMacroMap } from 'types/plugin';
+import { Button } from 'types/button';
+import { ModeClassNamespace } from 'types/plugin';
 
 export type Layer = {
-  installed_macros: InstalledMacroMap;
-  installed_modes: InstalledModeMap;
+  mode: string | ModeClassNamespace;
 };
 
 export const layer_keys = ['up', 'down', 'left', 'right'] as const;

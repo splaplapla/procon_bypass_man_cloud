@@ -5,20 +5,28 @@ import React, { useContext } from 'react';
 import { LayerKey } from 'types/layer';
 import { SettingContext } from './../../setting_editor/setting_context';
 
+const ManualValue = 'manual';
+
 type ModeItemProps = {
   modeName: string;
+  layerKey: LayerKey;
 };
-const ModeItem = ({ modeName }: ModeItemProps) => {
+const ModeItem = ({ modeName, layerKey }: ModeItemProps) => {
+  const { layers } = useContext(SettingContext);
   const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
   const isChecked = () => {
-    return false;
+    return layers[layerKey].mode === modeName
   };
 
   return (
     <>
       <label>
-        <input type="radio" onChange={handleClick} checked={isChecked()} />
+        <input
+          type="radio"
+          onChange={handleClick}
+          checked={isChecked()}
+        />
         {modeName}
       </label>
     </>
@@ -31,7 +39,7 @@ type Props = {
 export const ModeSetting = ({ layerKey }: Props) => {
   const { availableModes } = useContext(SettingContext);
   const available = () => {
-    const l = ['マニュアルモード'];
+    const l = [ManualValue];
     availableModes.forEach((modeName) => {
       l.push(modeName);
     });
@@ -46,7 +54,7 @@ export const ModeSetting = ({ layerKey }: Props) => {
         {available().map((modeName) => {
           return (
             <li key={modeName}>
-              <ModeItem modeName={modeName} />
+              <ModeItem modeName={modeName} layerKey={layerKey} />
             </li>
           );
         })}
