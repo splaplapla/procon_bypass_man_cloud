@@ -11,7 +11,9 @@ type ModeItemProps = {
 };
 const ModeItem = ({ modeName, layerKey }: ModeItemProps) => {
   const { layers } = useContext(SettingContext);
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return false;
+  };
 
   const isChecked = () => {
     return layers[layerKey].mode === modeName;
