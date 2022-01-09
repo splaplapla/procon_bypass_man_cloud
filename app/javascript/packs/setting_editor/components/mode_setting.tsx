@@ -9,7 +9,20 @@ type ModeItemProps = {
   modeName: string;
 };
 const ModeItem = ({ modeName }: ModeItemProps) => {
-  return <>{modeName}</>;
+  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
+  const isChecked = () => {
+    return false;
+  };
+
+  return (
+    <>
+      <label>
+        <input type="radio" onChange={handleClick} checked={isChecked()} />
+        {modeName}
+      </label>
+    </>
+  );
 };
 
 type Props = {
@@ -33,7 +46,7 @@ export const ModeSetting = ({ layerKey }: Props) => {
         {available().map((modeName) => {
           return (
             <li key={modeName}>
-              <ModeItem modeName={modeName}/>
+              <ModeItem modeName={modeName} />
             </li>
           );
         })}
