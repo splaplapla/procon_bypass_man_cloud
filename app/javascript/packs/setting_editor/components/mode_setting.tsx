@@ -10,8 +10,12 @@ type ModeItemProps = {
   layerKey: LayerKey;
 };
 const ModeItem = ({ modeName, layerKey }: ModeItemProps) => {
-  const { layers } = useContext(SettingContext);
-  const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { layers, setLayers } = useContext(SettingContext);
+  const handleClick = () => {
+    setLayers((prev) => {
+      prev[layerKey].mode = modeName;
+      return Object.assign({}, prev);
+    });
     return false;
   };
 
