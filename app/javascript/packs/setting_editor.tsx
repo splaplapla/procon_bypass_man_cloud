@@ -6,7 +6,8 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { ButtonsSetting } from './setting_editor/components/main';
 import { Button } from 'types/button';
-import { InstalledModeMap, InstalledMacroMap } from 'types/plugin';
+import { InstalledModeMap, InstalledMacroMap, ModeClassNamespace } from 'types/plugin';
+import { Layer } from 'types/layer';
 import { SettingContext } from './setting_editor/setting_context';
 
 export interface SettingProviderProps {
@@ -32,6 +33,11 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     }, {}) as InstalledModeMap
   );
 
+  const availableModes = Object.keys(installedModeMap).reduce((acc, modeName: ModeClassNamespace) => {
+    if (installedModeMap[modeName]) { acc.push(modeName); }
+    return acc;
+  }, []);
+
   const [installedMacroMap, setInstalledMacroMap] = useState(
     defaultInstalledMacros.reduce((hash, item) => {
       hash[item] = true;
@@ -39,6 +45,7 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     }, {}) as InstalledMacroMap
   );
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
+  const [layer, setLayer] = useState({} as Layer);
 
   const value = {
     prefixKeys,
@@ -47,6 +54,9 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     setInstalledModeMap,
     installedMacroMap,
     setInstalledMacroMap,
+    layer,
+    setLayer,
+    availableModes,
   };
   return (
     <>
@@ -54,12 +64,15 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
         {children}
       </SettingContext.Provider>
       <hr />
+
       <h1>debug</h1>
       prefixKeys: {prefixKeys.join(',')}
       <br />
       installedModeMap: {Object.entries(installedModeMap).join(',')}
       <br />
       installedMacroMap: {Object.entries(installedMacroMap).join(',')}
+      <br />
+      availableModes: {availableModes}
       <br />
     </>
   );
