@@ -9,7 +9,7 @@ import { Button } from 'types/button';
 import {
   InstalledModeMap,
   InstalledMacroMap,
-  ModeClassNamespace,
+  PluginClassNamespace,
 } from 'types/plugin';
 import { Layer } from 'types/layer';
 import { SettingContext } from './setting_editor/setting_context';
@@ -18,52 +18,48 @@ export interface SettingProviderProps {
   children: React.ReactNode;
 }
 
+// { a => true, b => false, c => true } を [a, c] にする
+const toArrayOnlyTrue = (obj: InstalledMacroMap | InstalledModeMap): Array<PluginClassNamespace> => {
+  return Object.keys(obj).reduce((acc, EntreyName: PluginClassNamespace) => {
+    if (!!obj[EntreyName]) {
+      acc.push(EntreyName);
+    }
+    return acc;
+  }, []);
+};
+
+// [a, c] を { a => true, c => true } にする
+const toMapAndFillingWithTrue = (array: Array<PluginClassNamespace>): InstalledModeMap | InstalledMacroMap => {
+  return array.reduce((hash, item) => {
+    hash[item] = true;
+    return hash;
+  }, {} as InstalledModeMap | InstalledMacroMap);
+};
+
 const SettingProvider = ({ children }: SettingProviderProps) => {
   const sourceElem = document.getElementById('config-prefix-keys');
   const defaultPrefixKeys: Array<Button> = JSON.parse(
     sourceElem.dataset.configPrefixKeys
   );
-  const defaultInstalledModes: Array<Button> = JSON.parse(
+  const defaultInstalledModes: Array<PluginClassNamespace> = JSON.parse(
     sourceElem.dataset.configInstalledModes
   );
-  const defaultInstalledMacros: Array<Button> = JSON.parse(
+  const defaultInstalledMacros: Array<PluginClassNamespace> = JSON.parse(
     sourceElem.dataset.configInstalledMacros
   );
   const sourceLayers = JSON.parse(sourceElem.dataset.configLayers);
 
   const [installedModeMap, setInstalledModeMap] = useState(
-    defaultInstalledModes.reduce((hash, item) => {
-      hash[item] = true;
-      return hash;
-    }, {}) as InstalledModeMap
+    toMapAndFillingWithTrue(defaultInstalledModes)
   );
 
-  const availableModes = Object.keys(installedModeMap).reduce(
-    (acc, modeName: ModeClassNamespace) => {
-      if (installedModeMap[modeName]) {
-        acc.push(modeName);
-      }
-      return acc;
-    },
-    []
-  );
+  const availableModes = toArrayOnlyTrue(installedModeMap);
 
   const [installedMacroMap, setInstalledMacroMap] = useState(
-    defaultInstalledMacros.reduce((hash, item) => {
-      hash[item] = true;
-      return hash;
-    }, {}) as InstalledMacroMap
+    toMapAndFillingWithTrue(defaultInstalledMacros)
   );
 
-  const availableMacros = Object.keys(installedMacroMap).reduce(
-    (acc, modeName) => {
-      if (installedMacroMap[modeName]) {
-        acc.push(modeName);
-      }
-      return acc;
-    },
-    []
-  );
+  const availableMacros = toArrayOnlyTrue(installedMacroMap);
 
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
   const defaultLayer = {
