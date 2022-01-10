@@ -60,7 +60,7 @@ export const InstallableMacros = () => {
                         }
                       />
                     </li>
-                    );
+                  );
                 });
               }
             })}
