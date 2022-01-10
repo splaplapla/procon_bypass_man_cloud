@@ -90,8 +90,6 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
       <br />
       availableModes: {availableModes}
       <br />
-      layers
-      <br />
       <ul>
         <li>layers.up.mode: {layers.up.mode}</li>
         <li>layers.down.mode: {layers.down.mode}</li>
