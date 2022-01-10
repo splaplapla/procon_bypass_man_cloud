@@ -48,20 +48,23 @@ export const InstallableMacros = () => {
       return (
         <div key={i}>
           <h3>{Object.keys(v)[0]}</h3>
-          {Object.entries(v).map((v) => {
-            {
-              return v[1].macros.map((macro: PluginSpec, i) => {
-                return (
-                  <InstallableMacro
-                    classNamespace={
-                      macro.class_namespace as MacroClassNamespace
-                    }
-                    key={i}
-                  />
-                );
-              });
-            }
-          })}
+          <ul>
+            {Object.entries(v).map((v) => {
+              {
+                return v[1].macros.map((macro: PluginSpec, i) => {
+                  return (
+                    <li key={i}>
+                      <InstallableMacro
+                        classNamespace={
+                          macro.class_namespace as MacroClassNamespace
+                        }
+                      />
+                    </li>
+                    );
+                });
+              }
+            })}
+          </ul>
         </div>
       );
     });

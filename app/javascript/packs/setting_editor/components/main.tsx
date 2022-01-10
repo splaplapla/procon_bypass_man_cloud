@@ -37,7 +37,7 @@ export const ButtonsSetting = () => {
         <div
           css={css`
             display: table-cell;
-            width: 400px;
+            width: 600px;
           `}
         >
           <h2>設定ファイルの変更</h2>
