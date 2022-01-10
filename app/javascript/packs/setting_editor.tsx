@@ -54,6 +54,17 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
       return hash;
     }, {}) as InstalledMacroMap
   );
+
+  const availableMacros = Object.keys(installedMacroMap).reduce(
+    (acc, modeName) => {
+      if (installedMacroMap[modeName]) {
+        acc.push(modeName);
+      }
+      return acc;
+    },
+    []
+  );
+
   const [prefixKeys, setPrefixKeys] = useState(defaultPrefixKeys);
   const defaultLayer = {
     up: { mode: sourceLayers.up.mode } as Layer,
@@ -74,6 +85,7 @@ const SettingProvider = ({ children }: SettingProviderProps) => {
     layers,
     setLayers,
     availableModes,
+    availableMacros,
   };
   return (
     <>
