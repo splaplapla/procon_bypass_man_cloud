@@ -5,7 +5,7 @@ import React, { useContext } from 'react';
 import {
   PluginSpec,
   AvailablePlugins,
-  FindNameByClassNamespace,
+  FindModeNameByClassNamespace,
   ModeClassNamespace,
 } from '../../types/plugin';
 import { SettingContext } from './../setting_context';
@@ -14,7 +14,7 @@ type Props = {
   classNamespace: ModeClassNamespace;
 };
 export const InstallableMode = ({ classNamespace }: Props) => {
-  const modeName = FindNameByClassNamespace(classNamespace);
+  const modeName = FindModeNameByClassNamespace(classNamespace);
   const { installedModeMap, setInstalledModeMap } = useContext(SettingContext);
 
   const isChecked = (classNamespace: ModeClassNamespace): boolean => {

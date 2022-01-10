@@ -19,7 +19,9 @@ export interface SettingProviderProps {
 }
 
 // { a => true, b => false, c => true } を [a, c] にする
-const toArrayOnlyTrue = (obj: InstalledMacroMap | InstalledModeMap): Array<PluginClassNamespace> => {
+const toArrayOnlyTrue = (
+  obj: InstalledMacroMap | InstalledModeMap
+): Array<PluginClassNamespace> => {
   return Object.keys(obj).reduce((acc, EntreyName: PluginClassNamespace) => {
     if (!!obj[EntreyName]) {
       acc.push(EntreyName);
@@ -29,7 +31,9 @@ const toArrayOnlyTrue = (obj: InstalledMacroMap | InstalledModeMap): Array<Plugi
 };
 
 // [a, c] を { a => true, c => true } にする
-const toMapAndFillingWithTrue = (array: Array<PluginClassNamespace>): InstalledModeMap | InstalledMacroMap => {
+const toMapAndFillingWithTrue = (
+  array: Array<PluginClassNamespace>
+): InstalledModeMap | InstalledMacroMap => {
   return array.reduce((hash, item) => {
     hash[item] = true;
     return hash;

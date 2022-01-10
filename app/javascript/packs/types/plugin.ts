@@ -89,7 +89,7 @@ export const AvailablePlugins: Array<Plugin> = [
   },
 ];
 
-export const FindNameByClassNamespace = (
+export const FindModeNameByClassNamespace = (
   mode_class_namespace: ModeClassNamespace
 ): string => {
   const classNamespaceMap = AvailablePlugins.reduce((hash, item: Plugin) => {
