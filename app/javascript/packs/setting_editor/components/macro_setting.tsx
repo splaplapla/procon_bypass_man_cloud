@@ -19,7 +19,7 @@ export const MacroSetting = ({ layerKey }: Props) => {
     <>
       <ul>
         {available().map((name) => {
-          return <li>{name}</li>;
+          return <li key={name}>{name}</li>;
         })}
       </ul>
     </>
