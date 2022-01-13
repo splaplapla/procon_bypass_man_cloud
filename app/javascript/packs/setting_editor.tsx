@@ -23,7 +23,7 @@ const toArrayOnlyTrue = (
   obj: InstalledMacroMap | InstalledModeMap
 ): Array<PluginClassNamespace> => {
   return Object.keys(obj).reduce((acc, EntreyName: PluginClassNamespace) => {
-    if (!!obj[EntreyName]) {
+    if (obj[EntreyName]) {
       acc.push(EntreyName);
     }
     return acc;
