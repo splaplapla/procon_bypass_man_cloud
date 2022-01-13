@@ -37,9 +37,11 @@ export type InstalledMacroMap = {
   [key in MacroClassNamespace]: boolean;
 };
 
+export type PluginClassNamespace = ModeClassNamespace | MacroClassNamespace;
+
 export type PluginSpec = {
   display_name: string;
-  class_namespace: ModeClassNamespace | MacroClassNamespace;
+  class_namespace: PluginClassNamespace;
   description?: string;
 };
 
@@ -87,7 +89,7 @@ export const AvailablePlugins: Array<Plugin> = [
   },
 ];
 
-export const FindNameByClassNamespace = (
+export const FindModeNameByClassNamespace = (
   mode_class_namespace: ModeClassNamespace
 ): string => {
   const classNamespaceMap = AvailablePlugins.reduce((hash, item: Plugin) => {
