@@ -14,8 +14,19 @@ RSpec.describe "Devices", type: :request do
     context 'ログインしていない' do
       it  do
         get devices_path
-        expect(response).to be_redirect
+        expect(response).to redirect_to(root_path)
       end
+    end
+  end
+
+  describe "GET /show" do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    it  do
+      get device_path(device.uuid)
+      expect(response).to be_ok
     end
   end
 end
