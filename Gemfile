@@ -11,7 +11,6 @@ gem 'webpacker'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
-gem 'bootstrap'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man', github: 'splaplapla/procon_bypass_man', branch: :edge
