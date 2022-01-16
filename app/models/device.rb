@@ -13,4 +13,12 @@ class Device < ApplicationRecord
   def push_token
     "pbm_job_#{uuid}"
   end
+
+  # @return [Event, NilClass]
+  def latest_loading_config_event
+    sessions_has_config = pbm_sessions.
+      joins(:events).
+      where(events: { event_type: [:reload_config, :load_config]})
+    Event.where(pbm_sessions: sessions_has_config).where(event_type: [:reload_config, :load_config]).order(created_at: :desc).limit(1).first
+  end
 end
