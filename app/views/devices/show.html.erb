@@ -1,9 +1,34 @@
-<%= link_to "一覧に戻る",  devices_path %>
+<%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.name ||@device.hostname %>
+<div>
 <h1>
   <%= @device.name ||@device.hostname %>
 </h1>
 
+</div>
+
+<h2>
+  デバイスの詳細
+</h2>
+
+<div>
+デバイスの設定<br>
+- PBMバージョンアップ<br>
+- 設定ファイル一覧<br>
+</div>
+
 <table border="1">
+  <tr>
+    <th>
+      現在のステータス
+    </th>
+    <td>
+      <% if @device.current_device_status&.recent? %>
+        <%= @device.current_device_status.status %>
+      <% else %>
+        <%= "信号なし" %>
+      <% end %>
+    </td>
+  <tr>
   <tr>
     <th>
       pbm version
@@ -45,3 +70,13 @@
     </td>
   <tr>
 </table>
+
+<h2>
+  現在のボタン設定
+</h2>
+
+<%= link_to "現在の設定を保存する", nil %>
+
+<pre style="background-color: #F0F0F0;">
+<%= @device.latest_loading_config_event&.body %>
+</pre>

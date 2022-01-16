@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :device do
     hostname { "hai" }
-    uuid { SecureRandom.uuid }
+    uuid { "m_#{SecureRandom.uuid}" }
   end
 end

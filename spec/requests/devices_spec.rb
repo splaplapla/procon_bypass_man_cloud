@@ -25,7 +25,7 @@ RSpec.describe "Devices", type: :request do
     let(:device) { FactoryBot.create(:device, user: user) }
 
     it  do
-      get device_path(device.uuid)
+      get device_path(device.unique_key)
       expect(response).to be_ok
     end
   end

@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-content = <<~EOH
+pbm_setting_content = <<~EOH
   fast_return = ProconBypassMan::Plugin::Splatoon2::Macro::FastReturn
   guruguru = ProconBypassMan::Plugin::Splatoon2::Mode::Guruguru
 
@@ -51,8 +51,8 @@ device = Device.find_or_create_by!(uuid: "d1") do |d|
   d.hostname = "hoge"
   d.user_id = nil
 end
-device.saved_buttons_settings.create!(content: { "setting" => content, "version" => 1.0, name: "title1" })
-device.saved_buttons_settings.create!(content: { "setting" => content, "version" => 3.0, name: "title2" })
+device.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 1.0, name: "title1" })
+device.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 3.0, name: "title2" })
 
 user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "hogehoge"
@@ -60,3 +60,7 @@ user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.admin = true
 end
 user.devices << device
+
+pbm_session = device.pbm_sessions.create!(uuid: SecureRandom.uuid, hostname: "foo")
+pbm_session.events.create!(event_type: :reload_config, body: pbm_setting_content)
+pbm_session.events.create!(event_type: :load_config, body: pbm_setting_content)
