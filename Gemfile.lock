@@ -72,9 +72,15 @@ GEM
       minitest (>= 5.1)
       tzinfo (~> 2.0)
       zeitwerk (~> 2.3)
+    autoprefixer-rails (10.4.2.0)
+      execjs (~> 2)
     bcrypt (3.1.16)
     bootsnap (1.9.3)
       msgpack (~> 1.0)
+    bootstrap (5.1.3)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.9.3, < 3)
+      sassc-rails (>= 2.0.0)
     brakeman (5.1.2)
     builder (3.2.4)
     bundle-audit (0.1.0)
@@ -89,6 +95,7 @@ GEM
     diff-lcs (1.4.4)
     erubi (1.10.0)
     eventmachine (1.2.7)
+    execjs (2.8.1)
     factory_bot (6.2.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
@@ -119,6 +126,10 @@ GEM
       activesupport (>= 5.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
+    jquery-rails (4.4.0)
+      rails-dom-testing (>= 1, < 3)
+      railties (>= 4.2.0)
+      thor (>= 0.14, < 2.0)
     jwt (2.3.0)
     kaminari (1.2.1)
       activesupport (>= 4.1.0)
@@ -165,6 +176,7 @@ GEM
       rack (>= 1.2, < 3)
     pbmenv (0.1.7)
     pg (1.2.3)
+    popper_js (2.9.3)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -281,11 +293,13 @@ PLATFORMS
 DEPENDENCIES
   action_cable_client
   bootsnap
+  bootstrap
   brakeman
   bundle-audit
   byebug
   factory_bot_rails
   foreman
+  jquery-rails
   kaminari
   listen
   mysql2

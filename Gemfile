@@ -8,10 +8,10 @@ gem 'mysql2'
 gem 'puma'
 gem 'sass-rails'
 gem 'webpacker'
-# gem 'bcrypt', '~> 3.1.7'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
+gem 'bootstrap'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man', github: 'splaplapla/procon_bypass_man', branch: :edge
