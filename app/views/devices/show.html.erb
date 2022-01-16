@@ -1,22 +1,30 @@
 <%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.name ||@device.hostname %>
-<div>
-<h1>
-  <%= @device.name ||@device.hostname %>
-</h1>
-
-</div>
-
-<h2>
-  デバイスの詳細
-</h2>
 
 <div>
-デバイスの設定<br>
-- PBMバージョンアップ<br>
-- 設定ファイル一覧<br>
+  <div class="row">
+    <div class="col-md-8 col-lg-8">
+      <h1>
+        <%= @device.name ||@device.hostname %>
+      </h1>
+    </div>
+
+    <div class="col-md-2 col-lg-2">
+      <div class="dropdown text-end">
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="setting" data-bs-toggle="dropdown" aria-expanded="false">
+          デバイスの設定
+        </a>
+        <ul class="dropdown-menu text-small" aria-labelledby="setting">
+          <li><a class="dropdown-item" href="#">このデバイス名を変更する</a></li>
+          <li><a class="dropdown-item" href="#">PBMバージョンアップ</a></li>
+          <li><a class="dropdown-item" href="#">デバイスのOSを再起動する</a></li>
+          <li><a class="dropdown-item" href="#">設定ファイル一覧</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
 
-<table border="1">
+<table class="table">
   <tr>
     <th>
       現在のステータス
