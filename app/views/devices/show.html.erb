@@ -10,10 +10,16 @@
   デバイスの詳細
 </h2>
 
+<div>
+デバイスの設定<br>
+- PBMバージョンアップ<br>
+- 設定ファイル一覧<br>
+</div>
+
 <table border="1">
   <tr>
     <th>
-      ステータス
+      現在のステータス
     </th>
     <td>
       <% if @device.current_device_status&.recent? %>
@@ -66,8 +72,10 @@
 </table>
 
 <h2>
-  現在の設定
+  現在のボタン設定
 </h2>
+
+<%= link_to "現在の設定を保存する", nil %>
 
 <pre style="background-color: #F0F0F0;">
 <%= @device.latest_loading_config_event&.body %>
