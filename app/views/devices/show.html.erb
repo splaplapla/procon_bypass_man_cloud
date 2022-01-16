@@ -1,3 +1,47 @@
+<%= link_to "一覧に戻る",  devices_path %>
 <h1>
-  <%= @device.name %>
+  <%= @device.name ||@device.hostname %>
 </h1>
+
+<table border="1">
+  <tr>
+    <th>
+      pbm version
+    </th>
+    <td>
+      <%= @device.pbm_version || "undefined" %>
+    </td>
+  <tr>
+  </tr>
+    <th>
+      last access at
+    </th>
+    <td>
+      <%= @device.last_access_at %>
+    </td>
+  <tr>
+  </tr>
+    <th>
+      hostname
+    </th>
+    <td>
+      <%= @device.hostname %>
+    </td>
+  <tr>
+  </tr>
+    <th>
+      ip_address
+    </th>
+    <td>
+      <%= @device.ip_address %>
+    </td>
+  <tr>
+  </tr>
+    <th>
+      device_id
+    </th>
+    <td>
+      <%= @device.uuid %>
+    </td>
+  <tr>
+</table>
