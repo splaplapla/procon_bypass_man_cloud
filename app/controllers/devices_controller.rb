@@ -4,6 +4,6 @@ class DevicesController < ApplicationController
   end
 
   def show
-    @device = current_user.devices.find_by!(uuid: params[:id])
+    @device = current_user.devices.find_by!(unique_key: params[:id])
   end
 end

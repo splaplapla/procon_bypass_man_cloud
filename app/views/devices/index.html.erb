@@ -12,7 +12,7 @@
     </tr>
     <% @devices.each do |device| %>
       <tr>
-        <td><%= link_to device.name || '名前未設定', device_path(device.uuid) %></td>
+        <td><%= link_to device.name || '名前未設定', device_path(device.unique_key) %></td>
         <td><%= device.uuid %></td>
         <td><%= device.ip_address %></td>
         <td><%= device.hostname %></td>
