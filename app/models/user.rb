@@ -8,4 +8,9 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :devices
+
+  def profile_image_url
+    hash = Digest::MD5.hexdigest(email)
+    "https://www.gravatar.com/avatar/#{hash}"
+  end
 end

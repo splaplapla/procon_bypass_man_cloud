@@ -1,6 +1,5 @@
 <% if @devices.present? %>
-  <h2>登録中のデバイス</h2>
-  <table border=1>
+  <table class="table">
     <tr>
       <th>name</th>
       <th>uuid</th>
@@ -8,7 +7,7 @@
       <th>hostname</th>
       <th>登録日</th>
       <th>現在のステータス</th>
-      <th>最後に接続のあった日時</th>
+      <th>最終接続日時</th>
     </tr>
     <% @devices.each do |device| %>
       <tr>
