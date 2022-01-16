@@ -1,4 +1,6 @@
 class Device < ApplicationRecord
+  include HasUniqueKey
+
   belongs_to :current_device_status, class_name: DeviceStatus.name, required: false
   belongs_to :user, required: false # あとでtrueにする
 

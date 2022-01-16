@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_04_150333) do
+ActiveRecord::Schema.define(version: 2022_01_16_075737) do
 
   create_table "device_statuses", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 2021_12_04_150333) do
     t.bigint "current_device_status_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "unique_key", comment: "自動生成する値"
     t.index ["user_id"], name: "index_devices_on_user_id"
     t.index ["uuid"], name: "index_devices_on_uuid", unique: true
   end
