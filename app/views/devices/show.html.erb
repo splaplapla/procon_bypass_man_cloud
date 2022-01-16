@@ -78,5 +78,5 @@
 <%= link_to "現在の設定を保存する", nil %>
 
 <pre style="background-color: #F0F0F0;">
-<%= @device.latest_loading_config_event&.body %>
+<%= @device.latest_loading_config_event&.body&.to_yaml %>
 </pre>

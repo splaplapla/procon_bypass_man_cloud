@@ -62,5 +62,5 @@ end
 user.devices << device
 
 pbm_session = device.pbm_sessions.create!(uuid: SecureRandom.uuid, hostname: "foo")
-pbm_session.events.create!(event_type: :reload_config, body: pbm_setting_content)
-pbm_session.events.create!(event_type: :load_config, body: pbm_setting_content)
+pbm_session.events.create!(event_type: :reload_config, body: { "setting" => pbm_setting_content })
+pbm_session.events.create!(event_type: :load_config, body: { "setting" => pbm_setting_content })
