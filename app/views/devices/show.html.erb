@@ -1,4 +1,4 @@
-<%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.name ||@device.hostname %>
+<%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.uuid %>
 
 <div>
   <div class="row">
@@ -89,4 +89,4 @@
 <%= @device.latest_loading_config_event&.body&.to_yaml %>
 </pre>
 
-<%= render "device_name_modal" %>
+<%= render "device_name_modal", default_device_name: @device.name, device: @device %>

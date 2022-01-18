@@ -29,4 +29,21 @@ RSpec.describe "Devices", type: :request do
       expect(response).to be_ok
     end
   end
+
+  describe 'PUT /update_name' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
+
+    subject { put update_name_device_path(device.unique_key), params: { device_name: "foo" } }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { device.reload.name }.from("bar").to("foo")
+    end
+  end
 end
