@@ -16,7 +16,7 @@
         <ul class="dropdown-menu text-small" aria-labelledby="setting">
           <li><a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#deviceNameModal" href="#">このデバイス名を変更する</a></li>
           <li><a class="dropdown-item" href="#">PBMバージョンアップ</a></li>
-          <li><a class="dropdown-item" href="#">デバイスのOSを再起動する</a></li>
+          <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
           <li><a class="dropdown-item" href="#">設定ファイル一覧</a></li>
         </ul>
       </div>
@@ -89,4 +89,13 @@
 <%= @device.latest_loading_config_event&.body&.to_yaml %>
 </pre>
 
+<script>
+  function openRestartModal() {
+    $("#restartModal").modal("show");
+    $.post("<%= ping_device_path(@device.unique_key) %>");
+    return false;
+  }
+</script>
+
+<%= render "restart_modal", device: @device %>
 <%= render "device_name_modal", default_device_name: @device.name, device: @device %>

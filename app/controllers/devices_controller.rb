@@ -17,7 +17,7 @@ class DevicesController < ApplicationController
   end
 
   def ping
-    @device = current_user.devices.find_by!(unique_key: params[:id])
+    device = current_user.devices.find_by!(unique_key: params[:id])
     ActionCable.server.broadcast(device.push_token, { action: :ping })
     head :ok
   end
