@@ -27,9 +27,7 @@
 
 <table class="table">
   <tr>
-    <th>
-      現在のステータス
-    </th>
+    <th>現在のステータス</th>
     <td>
       <% if @device.current_device_status&.recent? %>
         <%= @device.current_device_status.status %>
@@ -39,40 +37,24 @@
     </td>
   <tr>
   <tr>
-    <th>
-      pbm version
-    </th>
-    <td>
-      <%= @device.pbm_version || "undefined" %>
-    </td>
+    <th>pbm version</th>
+    <td><%= @device.pbm_version || "undefined" %></td>
   <tr>
   </tr>
     <th>最終接続日時</th>
     <td><%= time_ago_in_words(@device.last_access_at) if @device.last_access_at.present? %></td>
   <tr>
   </tr>
-    <th>
-      hostname
-    </th>
-    <td>
-      <%= @device.hostname %>
-    </td>
+    <th>hostname</th>
+    <td><%= @device.hostname %></td>
   <tr>
   </tr>
-    <th>
-      ip_address
-    </th>
-    <td>
-      <%= @device.ip_address %>
-    </td>
+    <th>ip_address</th>
+    <td><%= @device.ip_address %></td>
   <tr>
   </tr>
-    <th>
-      device_id
-    </th>
-    <td>
-      <%= @device.uuid %>
-    </td>
+    <th>device_id</th>
+    <td><%= @device.uuid %></td>
   <tr>
 </table>
 
