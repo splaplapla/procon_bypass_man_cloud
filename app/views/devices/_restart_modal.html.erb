@@ -21,7 +21,7 @@
 <script>
   function beInProgressStatus(deviceId) {
     $("[data-id='message']").attr("data-unique-key", "inProgress-" + deviceId)
-    $(`[data-unique-key='inProgress-${deviceId}']`).html("通信中...");
+    $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信確認中です。");
     $("[data-id=submit]").prop("disabled", true)
   }
   function beActiveStatus(deviceId) {
