@@ -47,12 +47,8 @@
     </td>
   <tr>
   </tr>
-    <th>
-      last access at
-    </th>
-    <td>
-      <%= @device.last_access_at %>
-    </td>
+    <th>最終接続日時</th>
+    <td><%= time_ago_in_words(@device.last_access_at) if @device.last_access_at.present? %></td>
   <tr>
   </tr>
     <th>
