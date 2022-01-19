@@ -2,12 +2,12 @@
   <table class="table">
     <tr>
       <th>name</th>
-      <th>uuid</th>
+      <th>device_id</th>
       <th>ip_address</th>
       <th>hostname</th>
       <th>登録日</th>
       <th>現在のステータス</th>
-      <th>最終接続日時</th>
+      <th>最後にアクセスしてから経過した時間</th>
     </tr>
     <% @devices.each do |device| %>
       <tr>
@@ -20,7 +20,7 @@
           <% if device.current_device_status&.recent? %>
             <%= device.current_device_status.status %>
           <% else %>
-            <%= "#{device.current_device_status&.status}(old)" %>
+            不明
           <% end %>
         </td>
         <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>

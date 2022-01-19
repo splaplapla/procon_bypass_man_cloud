@@ -41,7 +41,7 @@
     <td><%= @device.pbm_version || "undefined" %></td>
   <tr>
   </tr>
-    <th>最終接続日時</th>
+    <th>最後にアクセスしてから経過した時間</th>
     <td>
       <% if @device.last_access_at.present? %>
         <%= time_ago_in_words(@device.last_access_at) %>
