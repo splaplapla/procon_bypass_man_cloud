@@ -32,6 +32,8 @@ module ProconBypassManCloud
     # in config/environments, which are processed later.
     #
     config.time_zone = "Asia/Tokyo"
+
+    config.i18n.default_locale = :ja
     # config.eager_load_paths << Rails.root.join("extras")
 
     # Don't generate system test files.
