@@ -15,4 +15,10 @@ class DevicesController < ApplicationController
       redirect_to device_path(@device.unique_key), alert: "デバイスの名前を変更できませんでした"
     end
   end
+
+  def ping
+    @device = current_user.devices.find_by!(unique_key: params[:id])
+    ActionCable.server.broadcast(device.push_token, { action: :ping })
+    head :ok
+  end
 end

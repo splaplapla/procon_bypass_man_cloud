@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   post 'login' => "user_sessions#create"
   post 'logout' => 'user_sessions#destroy', as: :logout
   resources :devices, only: [:index, :show, :edit] do
-    put :update_name, on: :member
+    member do
+      put :update_name
+      post :ping
+    end
   end
 
   namespace :api do
