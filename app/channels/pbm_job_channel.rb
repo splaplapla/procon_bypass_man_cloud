@@ -8,6 +8,11 @@ class PbmJobChannel < ActionCable::Channel::Base
   def pong
     Rails.logger.info "ping with #{params} in pbm_job"
     device = Device.find_by!(uuid: params["device_id"])
+
+    Rails.cache.fetch([device.cache_key, :pong], expires_in: 50.seconds) do
+      device.update_columns(last_access_at: Time.zone.now)
+      nil
+    end
     ActionCable.server.broadcast(device.web_push_token, { result: :ok })
   end
 end
