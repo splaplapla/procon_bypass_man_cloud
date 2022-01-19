@@ -7,6 +7,7 @@ class PbmJobChannel < ActionCable::Channel::Base
 
   def pong
     Rails.logger.info "ping with #{params} in pbm_job"
+    device = Device.find_by!(uuid: params["device_id"])
     ActionCable.server.broadcast(device.web_push_token, { result: :ok })
   end
 end
