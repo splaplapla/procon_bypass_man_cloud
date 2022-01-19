@@ -44,7 +44,7 @@
     <th>最終接続日時</th>
     <td>
       <% if @device.last_access_at.present? %>
-        <%= time_ago_in_words(@device.last_access_at) %>前
+        <%= time_ago_in_words(@device.last_access_at) %>
       <% end %>
     </td>
   <tr>
