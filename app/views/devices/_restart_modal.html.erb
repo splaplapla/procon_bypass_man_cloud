@@ -7,9 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p data-id="message">
-            通信中...
-          </p>
+          <p data-id="message"></p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -21,20 +19,26 @@
 </div>
 
 <script>
-  $(function(){
-    function beInProgressStatus() {
-      $("[data-id='message']").html("通信中...")
-      // TODO
-    }
-    function beActiveStatus() {
-      // TODO
-    }
-    function beInactiveStatus() {
-      // TODO
-    }
+  function beInProgressStatus(deviceId) {
+    $("[data-id='message']").attr("data-unique-key", "inProgress-" + deviceId)
+    $(`[data-unique-key='inProgress-${deviceId}']`).html("通信中...");
+    $("[data-id=submit]").prop("disabled", true)
+  }
+  function beActiveStatus(deviceId) {
+    $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信に成功しました。再起動が可能です。");
+    $("[data-id=submit]").prop("disabled", false);
+  }
+  function beInactiveStatus() {
+    // TODO
+  }
 
-    document.getElementById('restartModal').addEventListener('hidden.bs.modal', function (event) {
-      beInProgressStatus();
+  $(function(){
+    var deviceId = $("[data-device-id]").data("device-id")
+    document.getElementById('restartModal').addEventListener('hidden.bs.modal', function(event) {
+      beInProgressStatus(deviceId);
+      });
+    document.getElementById('restartModal').addEventListener('show.bs.modal', function(event) {
+      beInProgressStatus(deviceId);
     })
   })
 </script>

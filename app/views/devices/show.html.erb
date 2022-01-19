@@ -1,10 +1,11 @@
 <%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.uuid %>
+<div data-device-id="<%= @device.uuid %>"></div>
 
 <div>
   <div class="row">
     <div class="col-md-10 col-lg-10">
       <h1>
-        <%= @device.name ||@device.hostname %>
+        <%= @device.name || @device.hostname %>
       </h1>
     </div>
 

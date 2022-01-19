@@ -7,6 +7,6 @@ class PbmJobChannel < ActionCable::Channel::Base
 
   def pong
     Rails.logger.info "ping with #{params} in pbm_job"
-    # ActionCable.server.broadcast(device.web_push_token, PbmJobSerializer.new(pbm_job).attributes)
+    ActionCable.server.broadcast(device.web_push_token, { result: :ok })
   end
 end

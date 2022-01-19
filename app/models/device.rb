@@ -14,6 +14,11 @@ class Device < ApplicationRecord
     "pbm_job_#{uuid}"
   end
 
+  # @return [String]
+  def web_push_token
+    unique_key
+  end
+
   # @return [Event, NilClass]
   def latest_loading_config_event
     sessions_has_config = pbm_sessions.
