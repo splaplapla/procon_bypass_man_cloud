@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     member do
       put :update_name
       post :ping
+      post :restart
     end
   end
 

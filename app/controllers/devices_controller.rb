@@ -21,4 +21,7 @@ class DevicesController < ApplicationController
     ActionCable.server.broadcast(device.push_token, { action: :ping })
     head :ok
   end
+
+  def restart
+  end
 end

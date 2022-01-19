@@ -7,14 +7,34 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <p>
+          <p data-id="message">
+            通信中...
           </p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <%= submit_tag "再起動する", class: "btn btn-primary" %>
+          <%= submit_tag "再起動する", class: "btn btn-primary", data: { id: :submit }, disabled: true  %>
         </div>
       <% end %>
     </div>
   </div>
 </div>
+
+<script>
+  $(function(){
+    function beInProgressStatus() {
+      $("[data-id='message']").html("通信中...")
+      // TODO
+    }
+    function beActiveStatus() {
+      // TODO
+    }
+    function beInactiveStatus() {
+      // TODO
+    }
+
+    document.getElementById('restartModal').addEventListener('hidden.bs.modal', function (event) {
+      beInProgressStatus();
+    })
+  })
+</script>
