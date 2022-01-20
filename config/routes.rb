@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       put :update_name
       post :ping
       post :restart
+      post :pbm_upgrade
     end
   end
 

@@ -28,4 +28,8 @@ class DevicesController < ApplicationController
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
     redirect_to device_path(device.unique_key), notice: "デバイスの再起動処理を開始しました"
   end
+
+  def pbm_upgrade
+    # TODO
+  end
 end
