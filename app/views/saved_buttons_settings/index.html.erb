@@ -1,0 +1,10 @@
+<table class="table">
+  <tr>
+    <th>登録日</th>
+  </tr>
+  <% @saved_buttons_settings.each do |saved_buttons_setting| %>
+    <tr>
+      <td><%= saved_buttons_setting.created_at.to_s(:db) %></td>
+    </tr>
+  <% end %>
+</table>
