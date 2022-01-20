@@ -18,7 +18,7 @@
           <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deviceNameModal" href="#">このデバイス名を変更する</a></li>
           <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#pbmUpgradeModal" href="#">PBMのバージョンアップ</a></li>
           <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
-          <li><a class="dropdown-item" href="#">設定ファイルを復元する</a></li>
+          <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#restoreSettingModal" href="#">設定ファイルを復元する</a></li>
         </ul>
       </div>
     </div>
@@ -76,6 +76,7 @@
   }
 </script>
 
-<%= render "pbm_upgrade_modal", device: @device %>
+<%= render "restore_setting_modal", device: @device %>
+<%= render "upgrade_pbm_modal", device: @device %>
 <%= render "restart_modal", device: @device %>
 <%= render "device_name_modal", default_device_name: @device.name, device: @device %>
