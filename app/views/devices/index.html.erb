@@ -2,7 +2,6 @@
   <table class="table">
     <tr>
       <th>name</th>
-      <th>device_id</th>
       <th>ip_address</th>
       <th>hostname</th>
       <th>登録日</th>
@@ -12,7 +11,6 @@
     <% @devices.each do |device| %>
       <tr>
         <td><%= link_to device.name || '名前未設定', device_path(device.unique_key) %></td>
-        <td><%= device.uuid %></td>
         <td><%= device.ip_address %></td>
         <td><%= device.hostname %></td>
         <td><%= device.created_at.to_s(:db) %></td>
