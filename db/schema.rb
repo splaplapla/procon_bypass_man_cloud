@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(version: 2022_01_20_131321) do
     t.text "memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_hash", null: false
+    t.string "content_hash"
     t.index ["device_id"], name: "index_saved_buttons_settings_on_device_id"
   end
 
