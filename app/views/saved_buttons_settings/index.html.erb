@@ -1,10 +1,16 @@
 <table class="table">
   <tr>
+    <th>名前</th>
+    <th>メモ</th>
     <th>登録日</th>
+    <th></th>
   </tr>
   <% @saved_buttons_settings.each do |saved_buttons_setting| %>
     <tr>
+      <td><%= saved_buttons_setting.name || '未設定' %></td>
+      <td><%= simple_format saved_buttons_setting.memo %></td>
       <td><%= saved_buttons_setting.created_at.to_s(:db) %></td>
+      <td>編集</td>
     </tr>
   <% end %>
 </table>
