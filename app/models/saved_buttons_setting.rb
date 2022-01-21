@@ -1,5 +1,4 @@
 class SavedButtonsSetting < ApplicationRecord
-  belongs_to :device, required: false # 非推奨
   belongs_to :user
 
   serialize :content, JSON

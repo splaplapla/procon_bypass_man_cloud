@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_125529) do
+ActiveRecord::Schema.define(version: 2022_01_21_134515) do
 
   create_table "device_statuses", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -73,15 +73,13 @@ ActiveRecord::Schema.define(version: 2022_01_21_125529) do
   end
 
   create_table "saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "device_id", null: false
     t.text "content", null: false
     t.string "name"
     t.text "memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_hash"
+    t.string "content_hash", null: false
     t.bigint "user_id"
-    t.index ["device_id"], name: "index_saved_buttons_settings_on_device_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|

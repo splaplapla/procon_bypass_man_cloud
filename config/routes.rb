@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     resources :events, only: [:index] do
       resources :saved_buttons_settings, only: [:create]
     end
+    resources :saved_buttons_settings, only: [:index, :update, :destroy]
 
     resources :devices, only: [:index, :show] do
       resources :available_pbm_jobs, only: :index
@@ -50,7 +51,6 @@ Rails.application.routes.draw do
         post :change_request, on: :member
       end
 
-      resources :saved_buttons_settings, only: [:index, :update, :destroy], shallow: true
       resources :pbm_sessions, only: [:index, :show]
 
       namespace :saved_buttons_settings, shallow: true do

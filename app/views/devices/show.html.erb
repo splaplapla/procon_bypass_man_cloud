@@ -75,7 +75,9 @@
   }
 </script>
 
-<%= render "save_setting_modal", form: @saved_buttons_setting_form %>
+<% if @saved_buttons_setting_form %>
+  <%= render "save_setting_modal", form: @saved_buttons_setting_form %>
+<% end %>
 <%= render "restore_setting_modal", device: @device %>
 <%= render "upgrade_pbm_modal", device: @device %>
 <%= render "restart_modal", device: @device %>

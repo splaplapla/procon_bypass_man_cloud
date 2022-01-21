@@ -1,7 +1,7 @@
 <% if params[:device_id] || @device %>
   <% device = devices.first %>
   <div>
-    <%= link_to "saved_buttons_settings", admin_device_saved_buttons_settings_path(devices.first) %>
+    <%= link_to "saved_buttons_settings", admin_saved_buttons_settings_path %>
   </div>
   <div>
     <%= link_to "current version", current_admin_device_device_versions_path(devices.first) %>
