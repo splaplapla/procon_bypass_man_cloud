@@ -5,6 +5,8 @@ class DevicesController < ApplicationController
 
   def show
     @device = current_user.devices.find_by!(unique_key: params[:id])
+    @latest_loading_config_event = @device.latest_loading_config_event
+    @saved_buttons_setting_form = SavedButtonsSettingForm.new(event_id: @latest_loading_config_event.id)
   end
 
   def update_name

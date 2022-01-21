@@ -61,11 +61,10 @@
 <h2>
   現在のボタン設定
 </h2>
-
-<%= link_to "現在の設定を保存する", nil %>
+<%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" } %>
 
 <pre style="background-color: #F0F0F0;">
-<%= @device.latest_loading_config_event&.body&.to_yaml %>
+<%= @latest_loading_config_event&.body&.to_yaml %>
 </pre>
 
 <script>
@@ -76,6 +75,7 @@
   }
 </script>
 
+<%= render "save_setting_modal", form: @saved_buttons_setting_form %>
 <%= render "restore_setting_modal", device: @device %>
 <%= render "upgrade_pbm_modal", device: @device %>
 <%= render "restart_modal", device: @device %>
