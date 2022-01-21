@@ -48,13 +48,20 @@
       </div>
     </header>
 
-    <% flash.each do |key, value| %>
-      <p class="alert alert-<%= key %>">
-      <%= value %>
-      </p>
-    <% end %>
-
     <div class="container">
+      <% flash.each do |key, value| %>
+        <% case key %>
+        <% when 'notice' %>
+          <p class="alert alert-success" role="success">
+            <%= value %>
+          </p>
+        <% when 'alert' %>
+          <p class="alert alert-danger" role="danger">
+            <%= value %>
+          </p>
+        <% end %>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>
