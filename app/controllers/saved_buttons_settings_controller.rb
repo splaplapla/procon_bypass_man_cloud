@@ -4,9 +4,12 @@ class SavedButtonsSettingsController < ApplicationController
   end
 
   def create
-    form = SavedButtonsSettingForm.new(params.require(:saved_buttons_setting_form).permit(:event_id, :name, :memo))
+    form = SavedButtonsSettingForm.new(params.permit(:event_id, :name, :memo))
+    event = current_user.events.find_by(id: form.event_id, event_type: [:reload_config, :load_config])
+    if event.nil?
+      return redirect_to "/saved_buttons_settings", alert: "設定ファイルを作成できませんでした"
+    end
 
-    event = current_user.events.find(form.event_id)
     setting = current_user.saved_buttons_settings.build(content: event.body, name: form.name, memo: form.memo)
     if setting.save
       redirect_to "/saved_buttons_settings", notice: "設定ファイルを作成できました"

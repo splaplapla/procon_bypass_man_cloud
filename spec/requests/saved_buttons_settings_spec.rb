@@ -16,6 +16,32 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
   end
 
+  describe 'POST /create' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user) }
+    let(:event) do
+      Api::SaveEventService.execute!(
+        session_id: "session_id",
+        hostname: "hostname",
+        event_type: "load_config",
+        body: "hjk",
+        device_id: device.uuid,
+      )
+    end
+
+    subject { post saved_buttons_settings_path, params: { event_id: event.id, name: "a", memo: "b" } }
+
+    it do
+      expect { subject }.to change { user.saved_buttons_settings.count }.by(1)
+    end
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+  end
+
   describe "DELETE /destroy" do
     include_context "login_with_user"
 
