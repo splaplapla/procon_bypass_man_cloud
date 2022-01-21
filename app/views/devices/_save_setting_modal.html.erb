@@ -1,0 +1,28 @@
+<div class="modal fade" tabindex="-1" id="saveSettingModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_tag(saved_buttons_settings_path, method: :post, remote: false) do %>
+        <%= hidden_field_tag :event_id, form.event_id %>
+        <div class="modal-header">
+          <h5 class="modal-title">設定ファイルの保存</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= label_tag :name, '設定の名前', class: "form-label" %>
+            <%= text_field_tag :name, form.name, class: "form-control" %>
+          </div>
+
+          <div class="mb-3">
+            <%= label_tag :name, 'メモ', class: "form-label" %>
+            <%= text_area_tag :memo, form.memo, class: "form-control", rows: 3 %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= submit_tag "保存する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

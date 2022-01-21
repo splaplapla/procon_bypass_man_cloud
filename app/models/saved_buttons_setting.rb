@@ -1,5 +1,5 @@
 class SavedButtonsSetting < ApplicationRecord
-  belongs_to :device
+  belongs_to :user
 
   serialize :content, JSON
 

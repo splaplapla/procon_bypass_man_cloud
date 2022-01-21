@@ -8,7 +8,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :devices
-  has_many :saved_buttons_settings, through: :devices
+  has_many :events, through: :devices
+  has_many :saved_buttons_settings
 
   def profile_image_url
     hash = Digest::MD5.hexdigest(email)

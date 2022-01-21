@@ -5,7 +5,7 @@ RSpec.describe "Admin::PbmJobs::RestorePbmSetting", type: :request do
 
   describe 'POST create' do
     let(:device) { FactoryBot.create(:device) }
-    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device, content: { a: 1 }) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: admin_user, content: { a: 1 }) }
 
     subject { post admin_device_pbm_jobs_restore_pbm_setting_index_path(device, saved_buttons_setting_id: saved_buttons_setting.id) }
 

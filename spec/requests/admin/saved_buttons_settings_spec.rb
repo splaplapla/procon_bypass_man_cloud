@@ -7,14 +7,14 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     let(:device) { FactoryBot.create(:device) }
 
     it do
-      get admin_device_saved_buttons_settings_path(device)
+      get admin_saved_buttons_settings_path
       expect(response).to be_ok
     end
   end
 
   describe 'PUT update' do
     let(:device) { FactoryBot.create(:device) }
-    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: admin_user) }
 
     subject { put admin_saved_buttons_setting_path(saved_buttons_setting), params: { name: "hoge" } }
 
@@ -28,26 +28,8 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
   end
 
-  describe 'POST create' do
-    let(:event) { 
-      Api::SaveEventService.execute!(session_id: "a", hostname: "b", event_type: "load_config", body: {a: 2 }, device_id: "aa")
-    }
-
-    it do
-      post admin_event_saved_buttons_settings_path(event)
-      expect(response).to be_redirect
-    end
-
-    it do
-      expect {
-        post admin_event_saved_buttons_settings_path(event)
-      }.to change { SavedButtonsSetting.count }.by(1)
-    end
-  end
-
   describe 'DELETE destroy' do
-    let(:device) { FactoryBot.create(:device) }
-    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, device: device) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: admin_user) }
 
     subject { delete admin_saved_buttons_setting_path(saved_buttons_setting); response }
 
@@ -56,6 +38,6 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
 
     it { is_expected.to be_redirect }
-    it { expect { subject }.to change { device.saved_buttons_settings.count }.by(-1) }
+    it { expect { subject }.to change { SavedButtonsSetting.count }.by(-1) }
   end
 end
