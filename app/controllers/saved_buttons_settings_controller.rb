@@ -3,6 +3,7 @@ class SavedButtonsSettingsController < ApplicationController
     @saved_buttons_settings = current_user.saved_buttons_settings
   end
 
+  # 別controller配下のview(modal)から送られる
   def create
     form = SavedButtonsSettingForm.new(params.permit(:event_id, :name, :memo))
     event = current_user.events.find_by(id: form.event_id, event_type: [:reload_config, :load_config])
@@ -15,6 +16,15 @@ class SavedButtonsSettingsController < ApplicationController
       redirect_to "/saved_buttons_settings", notice: "設定ファイルを作成できました"
     else
       redirect_to "/saved_buttons_settings", alert: "設定ファイルを作成できませんでした"
+    end
+  end
+
+  def update
+    setting = current_user.saved_buttons_settings.find(params[:id])
+    if setting.update(params.require(:saved_buttons_setting).permit(:name, :memo))
+      redirect_to "/saved_buttons_settings", notice: "設定ファイルを更新できました"
+    else
+      redirect_to "/saved_buttons_settings", alert: "設定ファイルを更新できませんでした"
     end
   end
 

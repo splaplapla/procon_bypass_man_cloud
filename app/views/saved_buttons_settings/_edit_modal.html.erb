@@ -1,0 +1,27 @@
+<div class="modal fade" tabindex="-1" id="<%= dom_id(saved_buttons_setting) %>">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <%= form_for saved_buttons_setting, method: :put, remote: false do |f| %>
+        <div class="modal-header">
+          <h5 class="modal-title">設定ファイルの保存</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= f.label :name, '設定の名前', class: "form-label", for: "#{dom_id(saved_buttons_setting)}_name" %>
+            <%= f.text_field :name, value: saved_buttons_setting.name, class: "form-control", id: "#{dom_id(saved_buttons_setting)}_name" %>
+          </div>
+
+          <div class="mb-3">
+            <%= f.label :memo, 'メモ', class: "form-label", for: "#{dom_id(saved_buttons_setting)}_memo" %>
+            <%= f.text_area :memo, value: saved_buttons_setting.memo, class: "form-control", rows: 3, id: "#{dom_id(saved_buttons_setting)}_memo" %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= submit_tag "保存する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

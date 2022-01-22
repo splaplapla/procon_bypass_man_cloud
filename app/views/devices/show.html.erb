@@ -1,5 +1,5 @@
 <%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.uuid %>
-<div data-device-id="<%= @device.uuid %>" style="margin-bottom: 20px"></div>
+<div data-device-id="<%= @device.uuid %>" class="mb-4"></div>
 
 <div>
   <div class="row">
@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<table class="table">
+<table class="table mb-4">
   <tr>
     <th>現在のステータス</th>
     <td>
