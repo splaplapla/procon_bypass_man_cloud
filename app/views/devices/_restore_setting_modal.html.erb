@@ -10,7 +10,7 @@
           <% current_user.saved_buttons_settings.each do |saved_buttons_setting| %>
             <div>
               <label>
-                <%= radio_button_tag :saved_buttons_setting_id, saved_buttons_setting.id %><%= saved_buttons_setting.name %>
+                <%= radio_button_tag :saved_buttons_setting_id, saved_buttons_setting.id, false, required: 'required' %><%= saved_buttons_setting.name %>
               </label>
             </div>
           <% end %>
