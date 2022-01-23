@@ -1,5 +1,6 @@
 <%= link_to "デバイス一覧に戻る",  devices_path %> <%= ">" %> <%= @device.uuid %>
 <div data-device-id="<%= @device.uuid %>" class="mb-4"></div>
+<div data-refresh-page-url="<%= current_status_device_path(@device.unique_key, format: :js) %>" class="mb-4"></div>
 
 <% if not @device.enable_pbmenv %>
   <div class="alert alert-danger">
@@ -42,11 +43,9 @@
   <tr>
     <th>現在のステータス</th>
     <td>
-      <% if @device.current_device_status&.recent? %>
-        <%= @device.current_device_status.status %>
-      <% else %>
-        <%= "信号なし" %>
-      <% end %>
+      <div id="device_current_device_status">
+        <%= @device.current_device_status_name %>
+      </div>
     </td>
   <tr>
   <tr>
@@ -56,9 +55,11 @@
   </tr>
     <th>デバイスからの最後のアクセスから経過した時間</th>
     <td>
-      <% if @device.last_access_at.present? %>
-        <%= time_ago_in_words(@device.last_access_at) %>
-      <% end %>
+      <div id="device_current_last_access_at">
+        <% if @device.last_access_at.present? %>
+          <%= time_ago_in_words(@device.last_access_at) %>
+        <% end %>
+      </div>
     </td>
   <tr>
   </tr>

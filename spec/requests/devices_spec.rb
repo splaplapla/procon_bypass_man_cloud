@@ -72,4 +72,17 @@ RSpec.describe "Devices", type: :request do
       expect(response).to be_redirect
     end
   end
+
+  describe 'GET /current_status' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
+    # ActionController::InvalidCrossOriginRequestになるのでroutesのテストだけでいいのでheadにする
+    subject { head current_status_device_path(device.unique_key, format: :js) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+  end
 end

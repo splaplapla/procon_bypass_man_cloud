@@ -20,6 +20,9 @@ class DevicesController < ApplicationController
     end
   end
 
+  # pingを叩くと、device(pbm)へwebsocket経由で送信する
+  # device(pbm)で受信すると、 device(pbm)から`PbmJobChannel#pong` へ送信する
+  # PbmJobChannel#pongからwebへ送信する
   def ping
     device = current_user.devices.find_by!(unique_key: params[:id])
     ActionCable.server.broadcast(device.push_token, { action: :ping })
@@ -35,5 +38,12 @@ class DevicesController < ApplicationController
 
   def pbm_upgrade
     # TODO
+  end
+
+  def current_status
+    @device = current_user.devices.find_by!(unique_key: params[:id])
+    respond_to do |format|
+      format.js
+    end
   end
 end

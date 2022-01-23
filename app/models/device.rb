@@ -27,4 +27,13 @@ class Device < ApplicationRecord
       where(events: { event_type: [:reload_config, :load_config]})
     Event.where(pbm_sessions: sessions_has_config).where(event_type: [:reload_config, :load_config]).order(created_at: :desc).limit(1).first
   end
+
+  # @return [String]
+  def current_device_status_name
+    if current_device_status&.recent?
+      current_device_status.status
+    else
+      "信号なし"
+    end
+  end
 end
