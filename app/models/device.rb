@@ -36,4 +36,9 @@ class Device < ApplicationRecord
       "信号なし"
     end
   end
+
+  # @return [String]
+  def name_or_hostname
+    name.presence || hostname
+  end
 end
