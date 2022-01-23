@@ -42,9 +42,8 @@ class DevicesController < ApplicationController
 
   def restore_setting
     device = current_user.devices.find_by!(unique_key: params[:id])
-    form = Admin::PbmJob::CreateRestorePbmSettingForm.new(user_id: current_user.id, saved_buttons_setting_id: params[:saved_buttons_setting_id])
-    form.validate!
-    pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(device: device, saved_buttons_setting: form.saved_buttons_setting).execute!
+    saved_buttons_setting = current_user.saved_buttons_settings.find_by!(id: params[:saved_buttons_setting_id])
+    pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(device: device, saved_buttons_setting: saved_buttons_setting).execute!
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
     redirect_to device_path(device.unique_key), notice: "設定ファイルの復元処理を開始しました"
   end
