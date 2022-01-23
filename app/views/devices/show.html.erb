@@ -23,15 +23,15 @@
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="setting">
           <% if @device.enable_pbmenv %>
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deviceNameModal" href="#">このデバイス名を変更する</a></li>
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#pbmUpgradeModal" href="#">PBMのバージョンアップ</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deviceNameModal">このデバイス名を変更する</a></li>
+            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#pbmUpgradeModal">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
-            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#restoreSettingModal" href="#">設定ファイルを復元する</a></li>
+            <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
           <% else %>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deviceNameModal" href="#">このデバイス名を変更する</a></li>
             <li><a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#pbmUpgradeModal" href="#">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item disabled" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
-            <li><a class="dropdown-item disabled" data-bs-toggle="modal" data-bs-target="#restoreSettingModal" href="#">設定ファイルを復元する</a></li>
+            <li><a class="dropdown-item disabled" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
           <% end %>
         </ul>
       </div>
@@ -84,6 +84,11 @@
 <script>
   function openRestartModal() {
     $("#restartModal").modal("show");
+    $.post("<%= ping_device_path(@device.unique_key) %>");
+    return false;
+  }
+  function openRestoreSettingModal() {
+    $("#restoreSettingModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");
     return false;
   }
