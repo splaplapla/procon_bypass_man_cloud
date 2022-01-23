@@ -85,4 +85,34 @@ RSpec.describe "Devices", type: :request do
       expect(response).to be_ok
     end
   end
+
+  describe 'POST /restore_setting' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
+
+    subject { post restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id) }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.args).to eq({ "content" => {"a"=>1}, "setting_name" => "title2" })
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.action).to eq("restore_pbm_setting")
+    end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
+    end
+  end
 end

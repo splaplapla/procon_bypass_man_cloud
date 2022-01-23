@@ -9,10 +9,6 @@ RSpec.describe "Admin::PbmJobs::RestorePbmSetting", type: :request do
 
     subject { post admin_device_pbm_jobs_restore_pbm_setting_index_path(device, saved_buttons_setting_id: saved_buttons_setting.id) }
 
-    before do
-      device
-    end
-
     it do
       subject
       expect(response).to be_redirect
@@ -25,7 +21,7 @@ RSpec.describe "Admin::PbmJobs::RestorePbmSetting", type: :request do
     it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq({ "setting" => {"a"=>1}, "setting_name" => "title2" })
+      expect(pbm_job.args).to eq({ "content" => {"a"=>1}, "setting_name" => "title2" })
     end
 
     it do

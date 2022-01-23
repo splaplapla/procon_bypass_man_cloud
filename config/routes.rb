@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       post :ping
       post :restart
       post :pbm_upgrade
+      post :restore_setting
       get :current_status
     end
   end

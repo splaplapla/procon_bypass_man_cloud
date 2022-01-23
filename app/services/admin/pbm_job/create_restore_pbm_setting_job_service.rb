@@ -10,7 +10,7 @@ class Admin::PbmJob::CreateRestorePbmSettingJobService
     pbm_job = PbmJobFactory.new(
       device_id: @device.id,
       action: :restore_pbm_setting,
-      job_args: { setting: @saved_buttons_setting.content, setting_name: @saved_buttons_setting.name },
+      job_args: { content: @saved_buttons_setting.content, setting_name: @saved_buttons_setting.name },
     ).build
     pbm_job.save!
     pbm_job
