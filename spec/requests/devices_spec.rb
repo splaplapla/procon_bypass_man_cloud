@@ -102,7 +102,7 @@ RSpec.describe "Devices", type: :request do
     it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq({ "content" => {"a"=>1}, "setting_name" => "title2" })
+      expect(pbm_job.args).to eq({ "setting" => {"a"=>1}, "setting_name" => "title2" })
     end
 
     it do
