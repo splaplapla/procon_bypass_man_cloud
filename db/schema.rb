@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_21_134515) do
+ActiveRecord::Schema.define(version: 2022_01_23_115131) do
 
   create_table "device_statuses", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 2022_01_21_134515) do
   create_table "pbm_jobs", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.integer "action", null: false
-    t.string "args", null: false
+    t.text "args", null: false
     t.integer "status", null: false
     t.string "uuid", null: false
     t.text "job_stdout"
