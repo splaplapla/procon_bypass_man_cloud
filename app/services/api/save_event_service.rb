@@ -21,7 +21,8 @@ class Api::SaveEventService
           event_type: event_type,
         )
 
-        device.update_columns(pbm_version: body["pbm_version"], enable_pbmenv: body["root_path"].start_with?("/usr/share/pbm/"))
+        enable_pbmenv = body["root_path"].start_with?("/usr/share/pbm/") && (body["use_pbmenv"] == "true")
+        device.update_columns(pbm_version: body["pbm_version"], enable_pbmenv: enable_pbmenv)
       when "reload_config", "load_config"
         pbm_session.events.create!(
           body: body,
