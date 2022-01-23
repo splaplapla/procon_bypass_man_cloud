@@ -17,26 +17,53 @@ RSpec.describe "Events", type: :request do
     end
 
     context 'when provide event_type is boot' do
-      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
       let(:event_type) { :boot }
 
-      it do
-        expect { subject }.to \
-          change { Event.count }.by(1).and \
-          change { Device.count }.by(1)
-        event = Event.last
-        expect(event.pbm_session.hostname).to eq("foo")
-        expect(event.body).to be_a(Hash)
-        expect(event.pbm_session.hostname).to be_a(String)
-        expect(event.event_type).to eq('boot')
+      context 'when using pbmenv' do
+        let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true, root_path: "/usr/share/pbm/v0.11" } }
+
+        it do
+          expect { subject }.to \
+            change { Event.count }.by(1).and \
+            change { Device.count }.by(1)
+          event = Event.last
+          expect(event.pbm_session.hostname).to eq("foo")
+          expect(event.body).to be_a(Hash)
+          expect(event.pbm_session.hostname).to be_a(String)
+          expect(event.event_type).to eq('boot')
+        end
+
+        it do
+          expect { subject }.to change { device.reload.pbm_version }.to("1.1")
+        end
+
+        it do
+          expect { subject }.to change { device.reload.enable_pbmenv }.to(true)
+        end
       end
 
-      it do
-        expect { subject }.to change { device.reload.pbm_version }.to("1.1")
-      end
+      context 'when do not using pbmenv' do
+        let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true, root_path: "/home/pi/sample" } }
 
-      it do
-        expect { subject }.to change { device.reload.enable_pbmenv }.to(true)
+        it do
+          expect { subject }.to \
+            change { Event.count }.by(1).and \
+            change { Device.count }.by(1)
+          event = Event.last
+          expect(event.pbm_session.hostname).to eq("foo")
+          expect(event.body).to be_a(Hash)
+          expect(event.pbm_session.hostname).to be_a(String)
+          expect(event.event_type).to eq('boot')
+        end
+
+        it do
+          expect { subject }.to change { device.reload.pbm_version }.to("1.1")
+        end
+
+        it do
+          expect { subject }.not_to change { device.reload.enable_pbmenv }
+          expect(device.reload.enable_pbmenv).to eq(false)
+        end
       end
     end
 
