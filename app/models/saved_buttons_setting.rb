@@ -8,7 +8,7 @@ class SavedButtonsSetting < ApplicationRecord
     self.content_hash ||= Digest::SHA1.hexdigest(setting || '');
   end
 
-  def text_of_content
-    content["setting"]
+  def setting_of_content
+    content.dig("setting")
   end
 end

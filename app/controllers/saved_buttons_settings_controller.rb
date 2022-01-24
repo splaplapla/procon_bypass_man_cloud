@@ -29,9 +29,9 @@ class SavedButtonsSettingsController < ApplicationController
   end
 
   def update_content
-    setting = current_user.saved_buttons_settings.find(params[:id])
-    setting.content['content'] = params.permit(:text_of_content)
-    if setting.save
+    saved_buttons_setting = current_user.saved_buttons_settings.find(params[:id])
+    saved_buttons_setting.content['setting'] = params.require(:setting_of_content)
+    if saved_buttons_setting.save
       redirect_to "/saved_buttons_settings", notice: "設定ファイルの内容を更新できました"
     else
       redirect_to "/saved_buttons_settings", alert: "設定ファイルの内容を更新できませんでした"
