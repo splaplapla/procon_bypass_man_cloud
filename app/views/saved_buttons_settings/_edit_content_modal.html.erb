@@ -1,0 +1,21 @@
+<div class="modal fade" tabindex="-1" id="<%= dom_id(saved_buttons_setting) %>_content">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <%= form_tag update_content_saved_buttons_setting_path(saved_buttons_setting), method: :put, remote: false do %>
+        <div class="modal-header">
+          <h5 class="modal-title">設定ファイルの内容の更新</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <%= text_area_tag :setting_of_content, saved_buttons_setting.setting_of_content, class: "form-control", rows: 30, cols: 40 %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <%= submit_tag "保存する", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

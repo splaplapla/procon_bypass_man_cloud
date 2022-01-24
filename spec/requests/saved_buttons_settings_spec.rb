@@ -56,6 +56,20 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
   end
 
+  describe 'PUT /update_content' do
+    include_context "login_with_user"
+
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, name: "foo") }
+
+    subject { put update_content_saved_buttons_setting_path(saved_buttons_setting), params: { setting_of_content: "a\nb" } }
+
+    it { expect { subject }.to change { saved_buttons_setting.reload.content }.to('setting' => "a\nb") }
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+  end
+
   describe "DELETE /destroy" do
     include_context "login_with_user"
 
