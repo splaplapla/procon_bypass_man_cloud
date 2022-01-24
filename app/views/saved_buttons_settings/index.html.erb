@@ -8,6 +8,7 @@
   </tr>
   <% @saved_buttons_settings.each do |saved_buttons_setting| %>
     <%= render 'edit_modal', saved_buttons_setting: saved_buttons_setting %>
+    <%= render 'edit_content_modal', saved_buttons_setting: saved_buttons_setting %>
     <tr>
       <td><%= saved_buttons_setting.name || '未設定' %></td>
       <td><%= simple_format saved_buttons_setting.memo %></td>
@@ -19,7 +20,7 @@
               <%= link_to "名前とメモを変更", "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}" } %>
             </div>
             <div class="col-5">
-              <%= link_to "設定本文を変更(TODO)", "#", class: 'btn btn-info', data: { bs_toggle: "modal" } %>
+              <%= link_to "設定本文を変更", "#", class: 'btn btn-info', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}_content" } %>
             </div>
             <div class="col-2">
               <%= link_to "削除", saved_buttons_setting_path(saved_buttons_setting.id), method: :delete, class: 'btn btn-danger', data: { confirm: "削除しますがよろしいですか？" } %>

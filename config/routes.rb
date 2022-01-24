@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   get 'login' => 'user_sessions#new', as: :login
   post 'login' => "user_sessions#create"
   post 'logout' => 'user_sessions#destroy', as: :logout
-  resources :saved_buttons_settings, only: [:index, :show, :create, :update, :destroy]
+  resources :saved_buttons_settings, only: [:index, :show, :create, :update, :destroy] do
+    member do
+      put :update_content
+    end
+  end
 
   resources :devices, only: [:index, :show, :edit] do
     member do
