@@ -18,7 +18,7 @@
 
     <div class="col-md-2 col-lg-2">
       <div class="dropdown text-end">
-        <a href="#" class="d-block text-decoration-none dropdown-toggle btn btn-secondary" id="setting" data-bs-toggle="dropdown" aria-expanded="false">
+        <a href="#" class="d-block text-decoration-none dropdown-toggle btn btn-success" id="setting" data-bs-toggle="dropdown" aria-expanded="false">
           デバイスの設定
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="setting">
@@ -71,7 +71,17 @@
 <h2>
   現在のボタン設定
 </h2>
-<%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" } %>
+
+<div class="mb-2">
+<% if current_user.can_create_saved_buttons_settings? %>
+  <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
+<% else %>
+  <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
+  <div class="alert alert-danger">
+    保存数の上限である<%= User::MAX_SAVED_BUTTONS_SETTINGS_COUNT %>件に達したため、新しく保存することができません。
+  </div>
+<% end %>
+</div>
 
 <pre style="background-color: #F0F0F0;">
 <%= @latest_loading_config_event&.body&.to_yaml %>
