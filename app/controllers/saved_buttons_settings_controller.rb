@@ -1,6 +1,6 @@
 class SavedButtonsSettingsController < ApplicationController
   def index
-    @saved_buttons_settings = current_user.saved_buttons_settings
+    @saved_buttons_settings = current_user.saved_buttons_settings.order(id: :asc)
   end
 
   # 別controller配下のview(modal)から送られる
