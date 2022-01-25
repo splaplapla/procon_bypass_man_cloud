@@ -40,6 +40,21 @@ RSpec.describe "SavedButtonsSettings", type: :request do
       subject
       expect(response).to be_redirect
     end
+
+    context 'saved_buttons_settingsを10件保存済みのとき' do
+      before do
+        10.times { FactoryBot.create(:saved_buttons_setting, user: user) }
+      end
+
+      it do
+        expect { subject }.not_to change { user.saved_buttons_settings.count }
+      end
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
+    end
   end
 
   describe 'PUT /update' do
