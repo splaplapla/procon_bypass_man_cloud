@@ -1,4 +1,4 @@
-$("#device_current_device_status").html("<%= wrap_device_status_with_style(status: @device.current_device_status_name) %>");
+$("#device_current_device_status").html('<%= wrap_device_status_with_style(status: @device.current_device_status_name) %>');
 
 <% if @device.last_access_at.present? %>
   $("#device_current_last_access_at").html("<%= time_ago_in_words(@device.last_access_at) %>");
