@@ -91,11 +91,13 @@
   function openRestartModal() {
     $("#restartModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");
+    startWatchdogOfPing();
     return false;
   }
   function openRestoreSettingModal() {
     $("#restoreSettingModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");
+    startWatchdogOfPing();
     return false;
   }
 

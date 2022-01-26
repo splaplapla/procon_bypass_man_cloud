@@ -9,6 +9,7 @@ $(function(){
         const refreshUrl = $("[data-refresh-page-url]").data("refresh-page-url")
         $.get(refreshUrl);
         beActiveStatus(deviceId);
+        stopWatchdogOfPing();
       },
     })
   }
