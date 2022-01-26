@@ -44,7 +44,7 @@
     <th>現在のステータス</th>
     <td>
       <div id="device_current_device_status">
-        <%= @device.current_device_status_name %>
+        <%= wrap_device_status_with_style(status: @device.current_device_status_name) %>
       </div>
     </td>
   <tr>

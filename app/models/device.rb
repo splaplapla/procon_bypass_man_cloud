@@ -30,14 +30,14 @@ class Device < ApplicationRecord
 
   # @return [String]
   def current_device_status_name
-    if current_device_status_id.nil?
-      return :offline
+    if offline?
+      return 'offline'
     end
 
     if current_device_status.recent?
       current_device_status.status
     else
-      :offline
+       'offline'
     end
   end
 
@@ -47,8 +47,8 @@ class Device < ApplicationRecord
   end
 
   # @return [Boolean]
-  def online?
-    current_device_status_id?
+  def offline?
+    current_device_status_id.nil?
   end
 
   # @return [void]
