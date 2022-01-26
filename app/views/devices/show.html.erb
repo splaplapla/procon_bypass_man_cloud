@@ -98,6 +98,11 @@
     $.post("<%= ping_device_path(@device.unique_key) %>");
     return false;
   }
+
+  // ページを表示したときにdeviceへ疎通する
+  $(function(){
+    $.post("<%= ping_device_path(@device.unique_key) %>");
+  });
 </script>
 
 <% if @saved_buttons_setting_form %>
