@@ -15,13 +15,7 @@
         <td><%= device.ip_address %></td>
         <td><%= device.hostname %></td>
         <td><%= device.created_at.to_s(:db) %></td>
-        <td>
-          <% if device.current_device_status&.recent? %>
-            <%= device.current_device_status.status %>
-          <% else %>
-            不明
-          <% end %>
-        </td>
+        <td><%= device.current_device_status_name %></td>
         <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>
       </tr>
     <% end %>
