@@ -6,9 +6,9 @@
     <th class="col-md-2">登録日</th>
     <th class="col-md-4"></th>
   </tr>
+  <%= render partial: 'edit_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
+  <%= render partial: 'edit_content_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
   <% @saved_buttons_settings.each do |saved_buttons_setting| %>
-    <%= render 'edit_modal', saved_buttons_setting: saved_buttons_setting %>
-    <%= render 'edit_content_modal', saved_buttons_setting: saved_buttons_setting %>
     <tr>
       <td><%= saved_buttons_setting.name || '未設定' %></td>
       <td><%= simple_format saved_buttons_setting.memo %></td>
