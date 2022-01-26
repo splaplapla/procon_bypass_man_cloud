@@ -17,14 +17,14 @@ class Api::CreateDeviceStatusService
       latest_device_status = device.device_statuses.last
       if latest_device_status.nil?
         device_status = device.device_statuses.create!(status: status, pbm_session: pbm_session)
-        device.update!(current_device_status: device_status)
+        device.update!(current_device_status: device_status, last_access_at: Time.now)
       else
         if latest_device_status.status == status && latest_device_status.pbm_session_id == pbm_session.id
           latest_device_status.touch
           device.update_columns(last_access_at: Time.now)
         else
           device_status = device.device_statuses.create!(status: status, pbm_session: pbm_session)
-          device.update!(current_device_status: device_status)
+          device.update!(current_device_status: device_status, last_access_at: Time.now)
         end
       end
     end
