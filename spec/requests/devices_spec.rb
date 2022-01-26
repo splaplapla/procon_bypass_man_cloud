@@ -115,4 +115,22 @@ RSpec.describe "Devices", type: :request do
       expect { subject }.to have_broadcasted_to(device.push_token)
     end
   end
+
+  describe 'POST /offline' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar", current_device_status_id: 0) }
+    let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a") }
+
+    subject { post offline_device_path(device.unique_key) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+
+    it do
+      expect { subject }.to change { device.reload.current_device_status_id }.to(nil)
+    end
+  end
 end

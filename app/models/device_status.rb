@@ -12,6 +12,6 @@ class DeviceStatus < ApplicationRecord
   }
 
   def recent?
-    self.last_access_at > 120.seconds.ago
+    self.updated_at > 120.seconds.ago
   end
 end

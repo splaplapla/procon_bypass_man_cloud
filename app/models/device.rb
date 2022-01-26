@@ -41,4 +41,14 @@ class Device < ApplicationRecord
   def name_or_hostname
     name.presence || hostname
   end
+
+  # @return [Boolean]
+  def online?
+    current_device_status_id?
+  end
+
+  # @return [void]
+  def offline!
+    update!(current_device_status_id: nil)
+  end
 end

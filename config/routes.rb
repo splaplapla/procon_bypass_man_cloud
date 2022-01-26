@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       post :pbm_upgrade
       post :restore_setting
       get :current_status
+      post :offline
     end
   end
 
