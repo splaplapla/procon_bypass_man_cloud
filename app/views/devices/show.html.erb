@@ -44,7 +44,7 @@
     <th>現在のステータス</th>
     <td>
       <div id="device_current_device_status">
-        <%= @device.current_device_status_name %>
+        <%= wrap_device_status_with_style(status: @device.current_device_status_name) %>
       </div>
     </td>
   <tr>
@@ -91,13 +91,20 @@
   function openRestartModal() {
     $("#restartModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");
+    startWatchdogOfPing();
     return false;
   }
   function openRestoreSettingModal() {
     $("#restoreSettingModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");
+    startWatchdogOfPing();
     return false;
   }
+
+  // ページを表示したときにdeviceへ疎通する
+  $(function(){
+    $.post("<%= ping_device_path(@device.unique_key) %>");
+  });
 </script>
 
 <% if @saved_buttons_setting_form %>

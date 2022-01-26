@@ -19,6 +19,14 @@
 </div>
 
 <script>
+  // TODO jdファイルに移動する
+  function startWatchdogOfPing() {
+    var deviceId = $("[data-device-id]").data("device-id");
+    window.watchdogOfPing = setTimeout(beInactiveStatus, 5000, deviceId);
+  }
+  function stopWatchdogOfPing() {
+    window.watchdogOfPing && clearTimeout(window.watchdogOfPing);
+  }
   function beInProgressStatus(deviceId) {
     $("[data-id='message']").attr("data-unique-key", "inProgress-" + deviceId)
     $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信確認中です。");
@@ -28,15 +36,17 @@
     $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信に成功しました。再起動が可能です。");
     $("[data-id=submit]").prop("disabled", false);
   }
-  function beInactiveStatus() {
-    // TODO タイムアウトでここが呼ばれるようにしたい
+  function beInactiveStatus(deviceId) {
+    $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信がタイムアウトしました。再起動ができません。");
+    $.post("<%= offline_device_path(@device.unique_key) %>");
+    $.get($("[data-refresh-page-url]").data("refresh-page-url"));
   }
 
   $(function(){
     var deviceId = $("[data-device-id]").data("device-id")
     document.getElementById('restartModal').addEventListener('hidden.bs.modal', function(event) {
       beInProgressStatus(deviceId);
-      });
+    });
     document.getElementById('restartModal').addEventListener('show.bs.modal', function(event) {
       beInProgressStatus(deviceId);
     })

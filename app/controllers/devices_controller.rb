@@ -54,4 +54,11 @@ class DevicesController < ApplicationController
       format.js
     end
   end
+
+  # websocketの疎通確認に失敗したら呼ばれる
+  def offline
+    @device = current_user.devices.find_by!(unique_key: params[:id])
+    @device.offline!
+    head :ok
+  end
 end
