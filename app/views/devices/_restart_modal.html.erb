@@ -46,7 +46,7 @@
     var deviceId = $("[data-device-id]").data("device-id")
     document.getElementById('restartModal').addEventListener('hidden.bs.modal', function(event) {
       beInProgressStatus(deviceId);
-      });
+    });
     document.getElementById('restartModal').addEventListener('show.bs.modal', function(event) {
       beInProgressStatus(deviceId);
     })
