@@ -19,6 +19,7 @@
 </div>
 
 <script>
+  // TODO jdファイルに移動する
   function beInProgressStatus(deviceId) {
     $("[data-id='message']").attr("data-unique-key", "inProgress-" + deviceId)
     $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信確認中です。");
