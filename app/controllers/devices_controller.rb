@@ -11,6 +11,22 @@ class DevicesController < ApplicationController
     end
   end
 
+  def new
+    @device = current_user.devices.build
+  end
+
+  def create
+    uuid = params.required(:device)[:uuid]
+    if device = Device.find_by(user_id: nil, uuid: uuid)
+      device.update!(user: current_user)
+      redirect_to device_path(device.unique_key), notice: "デバイスの登録が完了しました"
+    else
+      @device = current_user.devices.build
+      @error_message = "デバイスが見つかりませんでした"
+      render :new
+    end
+  end
+
   def update_name
     @device = current_user.devices.find_by!(unique_key: params[:id])
     if @device.update(name: params[:device_name])

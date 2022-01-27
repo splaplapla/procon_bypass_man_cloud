@@ -3,17 +3,15 @@
   <table class="table">
     <tr>
       <th>name</th>
-      <th>ip_address</th>
       <th>hostname</th>
       <th>登録日</th>
       <th>現在のステータス</th>
       <th>pbm version</th>
-      <th>デバイスからの最後のアクセスから経過した時間</th>
+      <th>アクセスから経過した時間</th>
     </tr>
     <% @devices.each do |device| %>
       <tr>
         <td><%= link_to device.name.presence || '名前未設定', device_path(device.unique_key) %></td>
-        <td><%= device.ip_address %></td>
         <td><%= device.hostname %></td>
         <td><%= device.created_at.to_s(:db) %></td>
         <td><%= wrap_device_status_with_style(status: device.current_device_status_name) %></td>
@@ -22,9 +20,13 @@
       </tr>
     <% end %>
   </table>
-  <p>
-  デバイスを新規登録する
-  </p>
 <% else %>
-  デバイスが未登録です。登録しましょう。
+  デバイスが未登録です。
 <% end %>
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "デバイスを新規登録する", new_device_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

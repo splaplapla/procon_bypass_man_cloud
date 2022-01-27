@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :devices, only: [:index, :show, :edit] do
+  resources :devices, only: [:new, :index, :show, :edit, :create] do
     member do
       put :update_name
       post :ping
