@@ -30,6 +30,42 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
+  describe "GET /new" do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    it  do
+      get new_device_path
+      expect(response).to be_ok
+    end
+  end
+
+  describe "GET /create" do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: nil) }
+
+    subject { post devices_path, params: { device: { uuid: device_uuid } } }
+
+    context 'デバイスが見つかったとき' do
+      let(:device_uuid) { device.uuid }
+      it  do
+        subject
+        expect(response).to be_redirect
+      end
+      it { expect { subject }.to change { user.devices.count }.by(1) }
+    end
+    context 'デバイスが見つからなかったとき' do
+      let(:device_uuid) { "foo" }
+      it  do
+        subject
+        expect(response).to be_ok
+      end
+      it { expect { subject }.not_to change { user.devices.count } }
+    end
+  end
+
   describe 'PUT /update_name' do
     include_context "login_with_user"
 
