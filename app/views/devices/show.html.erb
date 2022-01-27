@@ -10,13 +10,13 @@
 
 <div>
   <div class="row">
-    <div class="col-md-10 col-lg-10">
+    <div class="col-md-9 col-lg-9">
       <h1>
         <%= @device.name_or_hostname %>
       </h1>
     </div>
 
-    <div class="col-md-2 col-lg-2">
+    <div class="col-md-3 col-lg-3">
       <div class="dropdown text-end">
         <a href="#" class="d-block text-decoration-none dropdown-toggle btn btn-success" id="setting" data-bs-toggle="dropdown" aria-expanded="false">
           デバイスの設定
@@ -73,7 +73,9 @@
 </h2>
 
 <div class="mb-2">
-<% if current_user.can_create_saved_buttons_settings? %>
+<% if @latest_loading_config_event&.body.nil? %>
+  <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
+<% elsif current_user.can_create_saved_buttons_settings? %>
   <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
 <% else %>
   <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
@@ -83,9 +85,13 @@
 <% end %>
 </div>
 
-<pre style="background-color: #F0F0F0;">
+<% if @latest_loading_config_event&.body %>
+  <pre style="background-color: #F0F0F0;">
 <%= @latest_loading_config_event&.body&.to_yaml %>
-</pre>
+  </pre>
+<% else %>
+  <p>表示できる設定ファイルがありません</p>
+<% end %>
 
 <script>
   function openRestartModal() {
