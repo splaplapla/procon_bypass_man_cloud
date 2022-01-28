@@ -1,7 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe "User", type: :request do
-  describe "GET /update" do
+  describe "GET /edit" do
+    include_context "login_with_user"
+
+    subject { get edit_user_path }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+  end
+
+  describe "PUT /update" do
     include_context "login_with_user"
 
     subject { put user_path, params: { user: user_params } }
