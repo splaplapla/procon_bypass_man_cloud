@@ -10,6 +10,7 @@ RSpec.describe "UserSessions", type: :request do
 
   describe 'POST /destroy' do
     include_context "login_with_user"
+
     subject { post logout_path }
 
     context 'ログインしているとき' do
