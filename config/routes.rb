@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root "devices#index"
+  root "root#index"
 
   resources :users
-  resources :user_sessions, only: [:new, :create, :destroy]
+  resources :user_sessions, only: [:new, :create]
   get 'login' => 'user_sessions#new', as: :login
   post 'login' => "user_sessions#create"
   post 'logout' => 'user_sessions#destroy', as: :logout
