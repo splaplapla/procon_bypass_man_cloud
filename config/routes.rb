@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "root#index"
 
-  resources :users
+  resource :user, only: [:new, :edit, :update, :post]
   resources :user_sessions, only: [:new, :create]
   get 'login' => 'user_sessions#new', as: :login
   post 'login' => "user_sessions#create"
