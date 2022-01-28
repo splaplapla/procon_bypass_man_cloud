@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(current_user.id)
     if @user.update(params.require(:user).permit(:email))
-      redirect_to edit_user_path, notice: "更新に成功しました"
+      redirect_to edit_user_path, notice: "更新できました"
     else
       render :edit
     end
