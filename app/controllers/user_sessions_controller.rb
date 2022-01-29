@@ -10,8 +10,8 @@ class UserSessionsController < ApplicationController
     if @user
       redirect_back_or_to(:devices, notice: 'Login successful')
     else
-      flash.now[:alert] = 'ログインできました'
-      render action: 'new'
+      flash.now[:alert] = 'ログインに失敗しました'
+      render :new
     end
   end
 
