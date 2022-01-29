@@ -10,7 +10,13 @@ class DemosController < ApplicationController
     end
 
     @is_demo = true
-    @saved_buttons_settings = []
+    @saved_buttons_settings = [
+      "スマブラ用",
+      "[スプラ] ボトル",
+      "[スプラ] パブロ",
+      "ニンジャラ用",
+      "APEX用",
+    ].map { |x| SavedButtonsSetting.new(name: x) }
     @latest_loading_config_event = @device.latest_loading_config_event
     if @latest_loading_config_event
       @saved_buttons_setting_form = SavedButtonsSettingForm.new(event_id: @latest_loading_config_event.id)
