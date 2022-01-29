@@ -1,4 +1,6 @@
 <h1>設定ファイルの一覧</h1>
+
+<% if @saved_buttons_settings.present? %>
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
@@ -20,7 +22,7 @@
               <%= link_to "名前とメモを変更", "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}" } %>
             </div>
             <div class="col-5">
-              <%= link_to "設定本文を変更", "#", class: 'btn btn-primary', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}_content" } %>
+              <%= link_to "設定本文を変更", "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}_content" } %>
             </div>
             <div class="col-2">
               <%= link_to "削除", saved_buttons_setting_path(saved_buttons_setting.id), method: :delete, class: 'btn btn-danger', data: { confirm: "削除しますがよろしいですか？" } %>
@@ -31,3 +33,6 @@
     </tr>
   <% end %>
 </table>
+<% else %>
+  <p>設定ファイルが未登録です</p>
+<% end %>
