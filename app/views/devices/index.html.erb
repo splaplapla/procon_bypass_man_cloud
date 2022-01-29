@@ -1,5 +1,6 @@
+<h1>デバイス一覧</h1>
+
 <% if @devices.present? %>
-  <h1>デバイス一覧</h1>
   <table class="table">
     <tr>
       <th>name</th>
@@ -21,8 +22,9 @@
     <% end %>
   </table>
 <% else %>
-  デバイスが未登録です。
+  デバイスが未登録です
 <% end %>
+
 <div class="container-fluid">
   <div class="d-flex flex-row-reverse bd-highlight">
     <div class="p-2 bd-highlight">

@@ -1,4 +1,6 @@
 <h1>設定ファイルの一覧</h1>
+
+<% if @saved_buttons_settings.present? %>
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
@@ -31,3 +33,6 @@
     </tr>
   <% end %>
 </table>
+<% else %>
+  <p>設定ファイルが未登録です</p>
+<% end %>
