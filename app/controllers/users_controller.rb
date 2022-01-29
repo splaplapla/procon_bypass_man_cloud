@@ -15,7 +15,6 @@ class UsersController < ApplicationController
     if @user.update(params.require(:user).permit(:email))
       redirect_to edit_user_path, notice: "更新できました"
     else
-      # TODO validation errorを表示する
       render :edit
     end
   end
