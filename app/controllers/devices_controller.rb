@@ -1,6 +1,6 @@
 class DevicesController < ApplicationController
   def index
-    @devices = current_user.devices
+    @devices = current_user.devices.order(id: :asc)
   end
 
   def show
