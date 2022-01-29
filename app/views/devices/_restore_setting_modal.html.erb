@@ -7,7 +7,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <% current_user.saved_buttons_settings.each do |saved_buttons_setting| %>
+          <% saved_buttons_settings.each do |saved_buttons_setting| %>
             <div class="form-check">
               <label class="form-check-label">
                 <%= radio_button_tag :saved_buttons_setting_id, saved_buttons_setting.id, false, required: 'required', class: "form-check-input" %>

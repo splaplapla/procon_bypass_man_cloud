@@ -8,6 +8,12 @@
   </div>
 <% end %>
 
+<% if @is_demo %>
+  <div class="alert alert-danger">
+    デモページでは書き込みはできません
+  </div>
+<% end %>
+
 <div>
   <div class="row">
     <div class="col-md-9 col-lg-9">
@@ -75,7 +81,7 @@
 <div class="mb-2">
 <% if @latest_loading_config_event&.body.nil? %>
   <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
-<% elsif current_user.can_create_saved_buttons_settings? %>
+<% elsif (@is_demo || current_user.can_create_saved_buttons_settings?) %>
   <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
 <% else %>
   <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
@@ -114,9 +120,9 @@
 </script>
 
 <% if @saved_buttons_setting_form %>
-  <%= render "save_setting_modal", form: @saved_buttons_setting_form %>
+  <%= render "devices/save_setting_modal", form: @saved_buttons_setting_form %>
 <% end %>
-<%= render "restore_setting_modal", device: @device %>
-<%= render "upgrade_pbm_modal", device: @device %>
-<%= render "restart_modal", device: @device %>
-<%= render "device_name_modal", default_device_name: @device.name, device: @device %>
+<%= render "devices/restore_setting_modal", device: @device, saved_buttons_settings: @saved_buttons_settings %>
+<%= render "devices/upgrade_pbm_modal", device: @device %>
+<%= render "devices/restart_modal", device: @device %>
+<%= render "devices/device_name_modal", default_device_name: @device.name, device: @device %>

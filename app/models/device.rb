@@ -10,6 +10,8 @@ class Device < ApplicationRecord
   has_many :pbm_jobs, dependent: :destroy
   has_many :device_statuses, dependent: :destroy
 
+  has_one :demo_device, dependent: :destroy
+
   # @return [String]
   def push_token
     "pbm_job_#{uuid}"
