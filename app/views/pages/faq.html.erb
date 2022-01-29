@@ -1,0 +1,29 @@
+<h1 class="mb-5">FAQ</h1>
+
+<h2>手元のRaspberry Piを登録するにはどうすればいいですか？</h2>
+app.rb にある `config.api_servers = ['https://pbm-cloud.herokuapp.com']` の行を追加して起動してください。<br>
+その後、device_idというファイル名の中身を https://pbm-cloud.herokuapp.com/devices/new に入力してください。<br>
+
+<hr>
+<pre>
+#!/usr/bin/env ruby
+
+require 'bundler/inline'
+
+gemfile do
+  source 'https://rubygems.org'
+  git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+  gem 'procon_bypass_man', '0.1.18'
+end
+
+ProconBypassMan.configure do |config|
+  config.root = File.expand_path(__dir__)
+  config.logger = Logger.new("#{ProconBypassMan.root}/app.log", 5, 1024 * 1024 * 10)
+  config.logger.level = :debug
+  config.api_servers = ['https://pbm-cloud.herokuapp.com'] # ここを追加する
+  config.enable_critical_error_logging = true
+end
+
+ProconBypassMan.run(setting_path: "/usr/share/pbm/current/setting.yml")
+</pre>
+<hr>
