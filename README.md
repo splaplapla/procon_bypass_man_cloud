@@ -6,7 +6,7 @@
 * 接続状況の可視化, PBM自体の再起動, PBMのバージョンアップ, 設定ファイルのバックアップなどができます
 * https://pbm-cloud.herokuapp.com で公開しています
 
-## 使い方
+## procon_bypass_manを登録する方法
 * `app.rb` の `config.api_servers` の行に `https://pbm-cloud.herokuapp.com` を追加する
 * `procon_bypass_man` を起動する
 * https://pbm-cloud.herokuapp.com でユーザ登録をする
