@@ -115,6 +115,7 @@
 
   // ページを表示したときにdeviceへ疎通する
   $(function(){
+    $('.toast').toast({});
     $.post("<%= ping_device_path(@device.unique_key) %>");
   });
 </script>
@@ -126,3 +127,4 @@
 <%= render "devices/upgrade_pbm_modal", device: @device %>
 <%= render "devices/restart_modal", device: @device %>
 <%= render "devices/device_name_modal", default_device_name: @device.name, device: @device %>
+<%= render "devices/toast" %>
