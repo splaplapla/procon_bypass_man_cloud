@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   serialize :body, JSON
 
-  enum event_type: { boot: 0, reload_config: 10, load_config: 20, heartbeat: 30, error: 40 }
+  enum event_type: { boot: 0, reload_config: 10, load_config: 20, heartbeat: 30, error: 40, start_reboot: 50, }
 
   belongs_to :pbm_session
 
