@@ -5,7 +5,7 @@ class Api::DeviceStatusesController < Api::Base
 
     device = get_device
     Api::CreateDeviceStatusService.new(device: device, pbm_session_id: form.pbm_session_id).execute(status: form.status)
-    ActionCable.server.broadcast(device.web_push_token, { result: :ok, description: 'device is active' })
+    ActionCable.server.broadcast(device.web_push_token, { type: 'device_is_active' })
 
     render json: {}, status: :ok
   rescue ActiveModel::ValidationError => e

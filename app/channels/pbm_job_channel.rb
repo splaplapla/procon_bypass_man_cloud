@@ -13,6 +13,6 @@ class PbmJobChannel < ActionCable::Channel::Base
       device.update_columns(last_access_at: Time.zone.now)
       nil
     end
-    ActionCable.server.broadcast(device.web_push_token, { result: :ok, description: 'device is active' })
+    ActionCable.server.broadcast(device.web_push_token, { type: 'device_is_active' })
   end
 end
