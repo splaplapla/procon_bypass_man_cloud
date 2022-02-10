@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Events", type: :request do
+RSpec.describe Api::EventsController, type: :request do
   describe "POST /events" do
     let(:device) { FactoryBot.create(:device) }
     let(:device_id) { device.uuid }
@@ -119,6 +119,48 @@ RSpec.describe "Events", type: :request do
       it do
         subject
         expect(response).to be_ok
+      end
+    end
+
+    context 'when provide event_type is reload_config' do
+      let(:event_type) { :reload_config }
+      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
+
+      it do
+        expect { subject }.to change { Event.count }.by(1)
+        event = Event.last
+        expect(event.body).to be_a(Hash)
+        expect(event.event_type).to eq('reload_config')
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        expect { subject }.to have_broadcasted_to(device.web_push_token)
+      end
+    end
+
+    context 'when provide event_type is reload_config' do
+      let(:event_type) { :error_reload_config }
+      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
+
+      it do
+        expect { subject }.to change { Event.count }.by(1)
+        event = Event.last
+        expect(event.body).to be_a(Hash)
+        expect(event.event_type).to eq('error')
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        expect { subject }.to have_broadcasted_to(device.web_push_token)
       end
     end
   end
