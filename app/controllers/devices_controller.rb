@@ -62,7 +62,10 @@ class DevicesController < ApplicationController
     saved_buttons_setting = current_user.saved_buttons_settings.find_by!(id: params[:saved_buttons_setting_id])
     pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(device: device, saved_buttons_setting: saved_buttons_setting).execute!
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
-    redirect_to device_path(device.unique_key), notice: "設定ファイルの復元処理を開始しました"
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def current_status

@@ -128,11 +128,11 @@ RSpec.describe "Devices", type: :request do
     let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
     let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
 
-    subject { post restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id) }
+    subject { post restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id, format: :js) }
 
     it do
       subject
-      expect(response).to be_redirect
+      expect(response).to be_ok
     end
 
     it do
