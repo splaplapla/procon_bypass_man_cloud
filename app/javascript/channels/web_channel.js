@@ -14,7 +14,7 @@ $(function(){
           stopWatchdogOfPing();
         } else if (data.type === "reload_config" ) {
           $("#ok-toast").toast("show");
-        } else if (data.type === "failed_to_reload_config" ) {
+        } else if (data.type === "error_reload_config" ) {
           $("#ng-toast").toast("show");
         } else {
           console.log("unknown type!!!!!")

@@ -144,7 +144,7 @@ RSpec.describe Api::EventsController, type: :request do
     end
 
     context 'when provide event_type is reload_config' do
-      let(:event_type) { :failed_to_reload_config }
+      let(:event_type) { :error_reload_config }
       let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
 
       it do
