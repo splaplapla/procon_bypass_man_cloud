@@ -1,7 +1,7 @@
 <div class="modal fade" tabindex="-1" id="restoreSettingModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <%= form_tag restore_setting_device_path(device.unique_key), method: :post, remote: false do %>
+      <%= form_tag restore_setting_device_path(device.unique_key), method: :post, remote: true do %>
         <div class="modal-header">
           <h5 class="modal-title">設定ファイルを復元する</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
