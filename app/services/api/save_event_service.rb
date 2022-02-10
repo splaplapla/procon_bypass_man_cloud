@@ -16,18 +16,17 @@ class Api::SaveEventService
 
       case event_type
       when "boot"
-        pbm_session.events.create!(
-          body: body,
-          event_type: event_type,
-        )
-
+        pbm_session.events.create!(body: body, event_type: event_type)
         enable_pbmenv = body["root_path"].start_with?("/usr/share/pbm/") && body["use_pbmenv"]
         device.update_columns(pbm_version: body["pbm_version"], enable_pbmenv: enable_pbmenv)
-      when "reload_config", "load_config"
-        pbm_session.events.create!(
-          body: body,
-          event_type: event_type,
-        )
+      when "load_config"
+        pbm_session.events.create!(body: body, event_type: event_type)
+      when "reload_config"
+        pbm_session.events.create!(body: body, event_type: event_type)
+        ActionCable.server.broadcast(device.web_push_token, { result: :ok, type: :reload_config })
+      when "failed_to_reload_config"
+        pbm_session.events.create!(event_type: :error, body: body)
+        ActionCable.server.broadcast(device.web_push_token, { result: :ok, type: :failed_to_reload_config })
       when "heartbeat"
         if(heartbeat_event = pbm_session.events.find_by(event_type: event_type))
           heartbeat_event.update!(body: body)
