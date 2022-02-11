@@ -1,6 +1,7 @@
 <%= link_to "デバイス一覧に戻る",  devices_path %>
 <div data-device-id="<%= @device.uuid %>" class="mb-4"></div>
-<div data-refresh-page-url="<%= current_status_device_path(@device.unique_key, format: :js) %>" class="mb-4"></div>
+<div data-refresh-action-url="<%= current_status_device_path(@device.unique_key, format: :js) %>"></div>
+<div data-offline-action-url="<%= offline_device_path(@device.unique_key, format: :js) %>"></div>
 
 <% if not @device.enable_pbmenv %>
   <div class="alert alert-danger">

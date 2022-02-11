@@ -39,7 +39,7 @@
   function beInactiveStatus(deviceId) {
     $(`[data-unique-key='inProgress-${deviceId}']`).html("デバイスとの通信がタイムアウトしました。再起動ができません。");
     $.post("<%= offline_device_path(@device.unique_key) %>");
-    $.get($("[data-refresh-page-url]").data("refresh-page-url"));
+    $.get($("[data-refresh-action-url]").data("refresh-action-url"));
   }
 
   $(function(){

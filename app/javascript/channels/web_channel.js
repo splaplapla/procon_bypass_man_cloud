@@ -7,8 +7,8 @@ $(function(){
       received(data) {
         console.log(data)
 
+        const refreshUrl = $("[data-refresh-action-url]").data("refresh-action-url");
         if(data.type === "device_is_active" ) {
-          const refreshUrl = $("[data-refresh-page-url]").data("refresh-page-url")
           $.get(refreshUrl);
           beActiveStatus(deviceId);
           stopWatchdogOfPing();
@@ -19,6 +19,8 @@ $(function(){
           $("#ng-toast-reason").text(data.reason);
         } else if (data.type === "start_reboot" ) {
           $("#reboot-toast").toast("show");
+          $.post($("[data-offline-action-url]").data("offline-action-url"));
+          $.get(refreshUrl);
         } else {
           console.log("unknown type!!!!!")
         }
