@@ -67,6 +67,27 @@ RSpec.describe Api::EventsController, type: :request do
       end
     end
 
+    context 'when provide event_type is start_reboot' do
+      let(:event_type) { :start_reboot }
+      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
+
+      it do
+        expect { subject }.to change { Event.count }.by(1)
+        event = Event.last
+        expect(event.body).to be_a(Hash)
+        expect(event.event_type).to eq('start_reboot')
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        expect { subject }.to have_broadcasted_to(device.web_push_token)
+      end
+    end
+
     context 'when provide event_type is heartbeat' do
       let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
       let(:event_type) { :heartbeat }
