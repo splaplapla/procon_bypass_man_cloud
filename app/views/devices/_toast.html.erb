@@ -1,22 +1,23 @@
 <div class="position-fixed position-absolute top-0 start-50 translate-middle-x" style="z-index: 11">
   <div class="toast-container">
-    <div class="toast" id="ok-toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
+    <div class="toast  bg-primary text-white fade" id="ok-toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-primary text-white">
         <strong class="me-auto">設定ファイルの復元結果</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
       <div class="toast-body">
-        読み込みに成功しました。
+        成功しました。
       </div>
     </div>
 
-    <div class="toast" id="ng-toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
+    <div class="toast bg-warning text-dark" id="ng-toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header bg-warning text-dark">
         <strong class="me-auto">設定ファイルの復元結果</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
       </div>
       <div class="toast-body">
-        読み込みに失敗しました。
+        失敗しました。<br>
+        理由: <span id="ng-toast-reason"></span>
       </div>
     </div>
   </div>

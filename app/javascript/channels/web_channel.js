@@ -16,6 +16,7 @@ $(function(){
           $("#ok-toast").toast("show");
         } else if (data.type === "error_reload_config" ) {
           $("#ng-toast").toast("show");
+          $("#ng-toast-reason").text(data.reason);
         } else {
           console.log("unknown type!!!!!")
         }
