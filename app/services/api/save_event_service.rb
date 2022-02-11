@@ -29,7 +29,7 @@ class Api::SaveEventService
         ActionCable.server.broadcast(device.web_push_token, { type: :reload_config })
       when "error_reload_config"
         pbm_session.events.create!(event_type: :error, body: body)
-        ActionCable.server.broadcast(device.web_push_token, { type: :error_reload_config })
+        ActionCable.server.broadcast(device.web_push_token, { type: :error_reload_config, reason: body["text"] || '不明' })
       when "heartbeat"
         if(heartbeat_event = pbm_session.events.find_by(event_type: event_type))
           heartbeat_event.update!(body: body)
