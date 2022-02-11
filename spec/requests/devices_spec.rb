@@ -101,11 +101,15 @@ RSpec.describe "Devices", type: :request do
 
     let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
 
-    subject { post restart_device_path(device.unique_key) }
+    subject { post restart_device_path(device.unique_key, format: :js) }
 
     it do
       subject
-      expect(response).to be_redirect
+      expect(response).to be_ok
+    end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
     end
   end
 

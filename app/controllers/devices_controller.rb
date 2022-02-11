@@ -50,7 +50,10 @@ class DevicesController < ApplicationController
     device = current_user.devices.find_by!(unique_key: params[:id])
     pbm_job = Admin::PbmJob::CreateRebootOsService.new(device: device).execute!
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
-    redirect_to device_path(device.unique_key), notice: "デバイスの再起動処理を開始しました"
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def pbm_upgrade
@@ -70,6 +73,7 @@ class DevicesController < ApplicationController
 
   def current_status
     @device = current_user.devices.find_by!(unique_key: params[:id])
+
     respond_to do |format|
       format.js
     end

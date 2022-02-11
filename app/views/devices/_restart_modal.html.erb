@@ -1,7 +1,7 @@
 <div class="modal fade" tabindex="-1" id="restartModal">
   <div class="modal-dialog">
     <div class="modal-content">
-      <%= form_tag restart_device_path(device.unique_key), method: :post, remote: false do %>
+      <%= form_tag restart_device_path(device.unique_key), method: :post, remote: true do %>
         <div class="modal-header">
           <h5 class="modal-title">デバイスの再起動</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
