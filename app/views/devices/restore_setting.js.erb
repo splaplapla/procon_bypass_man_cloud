@@ -1,1 +1,9 @@
-$("#restoreSettingModal").modal("hide")
+var $modal = $('#progress-modal'),
+$bar = $modal.find('.progress-bar');
+$modal.modal('show');
+$bar.addClass('animate');
+
+setTimeout(function() {
+  $bar.removeClass('animate');
+  $modal.modal('hide');
+}, 10000);
