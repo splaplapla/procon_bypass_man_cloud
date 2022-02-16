@@ -6,6 +6,7 @@ $(function(){
     consumer.subscriptions.create({ channel: "WebChannel", device_id: deviceId }, {
       received(data) {
         console.log(data)
+        $('#progress-modal').modal("hide");
 
         const refreshUrl = $("[data-refresh-action-url]").data("refresh-action-url");
         if(data.type === "device_is_active" ) {
