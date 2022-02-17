@@ -15,6 +15,10 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :internal do
+    resources :procon_bypass_man_versions, only: [:show]
+  end
+
   resources :devices, only: [:new, :index, :show, :edit, :create] do
     member do
       put :update_name
