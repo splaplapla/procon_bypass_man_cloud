@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_29_081608) do
+ActiveRecord::Schema.define(version: 2022_02_17_103708) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -79,13 +79,19 @@ ActiveRecord::Schema.define(version: 2022_01_29_081608) do
     t.index ["uuid"], name: "index_pbm_sessions_on_uuid", unique: true
   end
 
+  create_table "procon_bypass_man_versions", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
     t.text "content", null: false
     t.string "name"
     t.text "memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_hash", null: false
+    t.string "content_hash"
     t.bigint "user_id"
   end
 
