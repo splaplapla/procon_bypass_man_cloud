@@ -125,7 +125,9 @@
     $('.toast').toast({});
     $.post("<%= ping_device_path(@device.unique_key) %>");
 
-    $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");
+    <% if @device.pbm_version %>
+      $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");
+    <% end %>
   });
 </script>
 
