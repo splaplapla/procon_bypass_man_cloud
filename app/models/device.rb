@@ -57,4 +57,9 @@ class Device < ApplicationRecord
   def offline!
     update!(current_device_status_id: nil)
   end
+
+  def has_available_new_pbm_version?
+    return false unless pbm_version
+    not ProconBypassManVersion.latest(name: pbm_version)[:is_latest]
+  end
 end

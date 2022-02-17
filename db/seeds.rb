@@ -46,6 +46,8 @@ pbm_setting_content = <<~EOH
   end
 EOH
 
+ProconBypassManVersion.create!(name: "0.1.3")
+
 device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
 device = Device.find_or_create_by!(uuid: "d1") do |d|
   d.hostname = "hoge"

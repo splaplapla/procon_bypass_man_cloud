@@ -13,7 +13,8 @@ class ProconBypassManVersion < ApplicationRecord
 
   # idがautoincrimentを使っている前提
   def self.latest(name: )
-    latest_name = ProconBypassManVersion.last.name
+    latest_name = ProconBypassManVersion.last&.name
+    return {} unless latest_name
     { is_latest: Gem::Version.new(latest_name) <= Gem::Version.new(name),
       latest_version: latest_name,
     }
