@@ -57,7 +57,13 @@
   <tr>
   <tr>
     <th>pbm version</th>
-    <td><%= @device.pbm_version || "undefined" %></td>
+    <td class="col-2">
+      <%= @device.pbm_version || "undefined" %>
+      <% if @device.has_available_new_pbm_version? %>
+        <br>
+        <span class="badge bg-warning">新しいバージョンが利用可能です</span>
+      <% end %>
+    </td>
   <tr>
   </tr>
     <th>デバイスからの最後のアクセスから経過した時間</th>
@@ -118,6 +124,10 @@
   $(function(){
     $('.toast').toast({});
     $.post("<%= ping_device_path(@device.unique_key) %>");
+
+    <% if @device.pbm_version %>
+      $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");
+    <% end %>
   });
 </script>
 

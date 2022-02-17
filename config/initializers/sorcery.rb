@@ -80,7 +80,7 @@ Rails.application.config.sorcery.configure do |config|
   # Will register the time of last user action, every action.
   # Default: `true`
   #
-  # config.register_last_activity_time =
+  config.register_last_activity_time = false
 
   # -- external --
   # What providers are supported by this app
