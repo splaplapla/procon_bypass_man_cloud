@@ -24,46 +24,4 @@ describe ProconBypassManVersion, type: :model do
       end
     end
   end
-
-  describe '.is_latest?' do
-    subject { ProconBypassManVersion.is_latest?(name: version_name) }
-    context '引数のバージョンが存在しないとき' do
-      let(:version_name) { "0.1.3" }
-      before do
-        ProconBypassManVersion.create!(name: "0.1.1")
-        ProconBypassManVersion.create!(name: "0.1.2")
-      end
-
-      it do
-        expect(subject).to eq(true)
-      end
-    end
-
-    context '古いバージョンのみが存在するとき' do
-      let(:version_name) { "0.1.3" }
-      before do
-        ProconBypassManVersion.create!(name: "0.1.1")
-        ProconBypassManVersion.create!(name: "0.1.2")
-        ProconBypassManVersion.create!(name: "0.1.3")
-      end
-
-      it do
-        expect(subject).to eq(false)
-      end
-    end
-
-    context '新しいバージョンが存在するとき' do
-      let(:version_name) { "0.1.3" }
-      before do
-        ProconBypassManVersion.create!(name: "0.1.1")
-        ProconBypassManVersion.create!(name: "0.1.2")
-        ProconBypassManVersion.create!(name: "0.1.3")
-        ProconBypassManVersion.create!(name: "0.1.4")
-      end
-
-      it do
-        expect(subject).to eq(true)
-      end
-    end
-  end
 end

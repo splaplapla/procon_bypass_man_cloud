@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   namespace :internal do
-    resources :procon_bypass_man_versions, only: [:show]
+    resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }
   end
 
   resources :devices, only: [:new, :index, :show, :edit, :create] do

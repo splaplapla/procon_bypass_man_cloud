@@ -12,8 +12,10 @@ class ProconBypassManVersion < ApplicationRecord
   end
 
   # idがautoincrimentを使っている前提
-  def self.is_latest?(name: )
-    version = ProconBypassManVersion.find_by(name: name) or return true
-    ProconBypassManVersion.where("id > ?", version.id).exists?
+  def self.latest(name: )
+    latest_name = ProconBypassManVersion.last.name
+    { is_latest: Gem::Version.new(latest_name) <= Gem::Version.new(name),
+      latest_version: latest_name,
+    }
   end
 end
