@@ -5,6 +5,7 @@ class Internal::ProconBypassManVersionsController < ApplicationController
     # 問い合わせは遅いのでキャッシュする
     Rails.cache.fetch([:pbm_version], expires_in: 1.hours) do
       ProconBypassManVersion.fetch_latest_version
+      nil
     end
 
     render json: ProconBypassManVersion.latest(name: params[:id])

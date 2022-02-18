@@ -2,7 +2,8 @@
   <div class="modal fade" tabindex="-1" id="pbmUpgradeModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <%= form_tag pbm_upgrade_device_path(device.unique_key), method: :post, remote: false do %>
+        <%= form_tag pbm_upgrade_device_path(device.unique_key), method: :post, remote: true do %>
+          <%= hidden_field_tag :pbm_version, ProconBypassManVersion.latest_name %>
           <div class="modal-header">
             <h5 class="modal-title">PBMのバージョンアップ</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -24,18 +25,16 @@
   <div class="modal fade" tabindex="-1" id="pbmUpgradeModal">
     <div class="modal-dialog">
       <div class="modal-content">
-        <%= form_tag pbm_upgrade_device_path(device.unique_key), method: :post, remote: false do %>
-          <div class="modal-header">
-            <h5 class="modal-title">PBMのバージョンアップ</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            最新です。アップグレード可能なバージョンはありません。最新です。
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          </div>
-        <% end %>
+        <div class="modal-header">
+          <h5 class="modal-title">PBMのバージョンアップ</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          最新です。アップグレード可能なバージョンはありません。
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

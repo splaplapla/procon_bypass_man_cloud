@@ -138,6 +138,34 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
+  describe 'POST /pbm_upgrade' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar", current_device_status_id: 0, enable_pbmenv: true) }
+    let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a") }
+
+    subject { post pbm_upgrade_device_path(device.unique_key, format: :js), params: { pbm_version: "0.1.1" } }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+
+    it do
+      expect { subject }.to change { device.pbm_jobs.count }.by(1)
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.action).to eq("change_pbm_version")
+    end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
+    end
+  end
+
   describe 'GET /current_status' do
     include_context "login_with_user"
 

@@ -13,6 +13,8 @@ $(function(){
           $.get(refreshUrl);
           beActiveStatus(deviceId);
           stopWatchdogOfPing();
+        } else if (data.type === "completed_upgrade_pbm" ) {
+          $("#ok-toast").toast("show");
         } else if (data.type === "reload_config" ) {
           $("#ok-toast").toast("show");
         } else if (data.type === "error_reload_config" ) {
