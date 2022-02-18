@@ -31,7 +31,7 @@
         <ul class="dropdown-menu text-small" aria-labelledby="setting">
           <% if @device.enable_pbmenv %>
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deviceNameModal">このデバイス名を変更する</a></li>
-            <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#pbmUpgradeModal">PBMのバージョンアップ</a></li>
+            <li><a class="dropdown-item" href="#" onClick="openUpgradeModal()">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
           <% else %>
@@ -107,6 +107,12 @@
 <% end %>
 
 <script>
+  function openUpgradeModal() {
+    $("#pbmUpgradeModal").modal("show");
+    $.post("<%= ping_device_path(@device.unique_key) %>");
+    startWatchdogOfPing();
+    return false;
+  }
   function openRestartModal() {
     $("#restartModal").modal("show");
     $.post("<%= ping_device_path(@device.unique_key) %>");

@@ -184,5 +184,23 @@ RSpec.describe Api::EventsController, type: :request do
         expect { subject }.to have_broadcasted_to(device.web_push_token)
       end
     end
+
+    context 'when provide event_type is completed_upgrade_pbm' do
+      let(:event_type) { :completed_upgrade_pbm }
+      let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
+
+      it do
+        expect { subject }.not_to change { Event.count }
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+
+      it do
+        expect { subject }.to have_broadcasted_to(device.web_push_token)
+      end
+    end
   end
 end

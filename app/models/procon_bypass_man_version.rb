@@ -19,4 +19,8 @@ class ProconBypassManVersion < ApplicationRecord
       latest_version: latest_name,
     }
   end
+
+  def self.latest_name
+    ProconBypassManVersion.last&.name
+  end
 end

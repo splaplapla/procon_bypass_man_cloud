@@ -57,7 +57,13 @@ class DevicesController < ApplicationController
   end
 
   def pbm_upgrade
-    # TODO
+    device = current_user.devices.find_by!(unique_key: params[:id])
+    pbm_job = Admin::PbmJob::CreateChangePbmVersionService.new(device: device).execute(next_version: params[:pbm_version])
+    ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def restore_setting

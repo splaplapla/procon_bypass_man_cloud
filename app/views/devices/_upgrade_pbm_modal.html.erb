@@ -1,19 +1,41 @@
-<div class="modal fade" tabindex="-1" id="pbmUpgradeModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <%= form_tag pbm_upgrade_device_path(device.unique_key), method: :post, remote: false do %>
+<% if @device.has_available_new_pbm_version? %>
+  <div class="modal fade" tabindex="-1" id="pbmUpgradeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <%= form_tag pbm_upgrade_device_path(device.unique_key), method: :post, remote: true do %>
+          <%= hidden_field_tag :pbm_version, ProconBypassManVersion.latest_name %>
+          <div class="modal-header">
+            <h5 class="modal-title">PBMのバージョンアップ</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <%= ProconBypassManVersion.latest_name %> へのアップグレードができます。<br><br>
+            アップグレードを実行すると新しいバージョンを適用後、デバイスが再起動します。<br><br>
+            ※設定ファイルは初期状態に戻るので適宜復元してください。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <%= submit_tag "バージョンアップする", class: "btn btn-primary", data: { id: :submit }, disabled: true  %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="modal fade" tabindex="-1" id="pbmUpgradeModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">PBMのバージョンアップ</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          アップグレード可能なバージョンはありません。(未実装)
+          最新です。アップグレード可能なバージョンはありません。
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <%= submit_tag "このバージョンでバージョンアップする", class: "btn btn-primary", data: { id: :submit }, disabled: true  %>
         </div>
-      <% end %>
+      </div>
     </div>
   </div>
-</div>
+<% end %>
