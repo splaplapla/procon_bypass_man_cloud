@@ -22,11 +22,36 @@ RSpec.describe "Devices", type: :request do
   describe "GET /show" do
     include_context "login_with_user"
 
-    let(:device) { FactoryBot.create(:device, user: user) }
+    describe do
+      let(:device) { FactoryBot.create(:device, user: user) }
 
-    it  do
-      get device_path(device.unique_key)
-      expect(response).to be_ok
+      it do
+        get device_path(device.unique_key)
+        expect(response).to be_ok
+      end
+    end
+
+    describe '利用可能なバージョン' do
+      before do
+        ProconBypassManVersion.create!(name: "0.1.2")
+        ProconBypassManVersion.create!(name: "0.1.3")
+      end
+
+      context '利用可能なバージョンがあるとき' do
+        let(:device) { FactoryBot.create(:device, user: user, pbm_version: "0.1.2") }
+
+        it do
+          get device_path(device.unique_key)
+        end
+      end
+
+      context '利用可能なバージョンがないとき' do
+        let(:device) { FactoryBot.create(:device, user: user, pbm_version: "0.1.3") }
+
+        it do
+          get device_path(device.unique_key)
+        end
+      end
     end
   end
 
