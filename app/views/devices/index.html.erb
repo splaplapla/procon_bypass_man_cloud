@@ -4,8 +4,6 @@
   <table class="table">
     <tr>
       <th>name</th>
-      <th>hostname</th>
-      <th>登録日</th>
       <th>現在のステータス</th>
       <th>pbm version</th>
       <th>アクセスから経過した時間</th>
@@ -13,8 +11,6 @@
     <% @devices.each do |device| %>
       <tr>
         <td><%= link_to device.name.presence || '名前未設定', device_path(device.unique_key) %></td>
-        <td><%= device.hostname %></td>
-        <td><%= device.created_at.to_s(:db) %></td>
         <td><%= wrap_device_status_with_style(status: device.current_device_status_name) %></td>
         <td><%= device.pbm_version || "undefined" %></td>
         <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>
