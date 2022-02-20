@@ -6,7 +6,7 @@ module ApplicationHelper
     when "running"
       content_tag(:span, status, class: "badge bg-success")
     when "connected_but_sleeping"
-      content_tag(:span, "Switchとの接続に失敗しました。PBMを再起動してください。", class: "badge bg-danger")
+      content_tag(:span, "接続失敗", class: "badge bg-danger")
     when "device_error", "connected_but_error", "setting_syntax_error_and_shutdown"
       content_tag(:span, status, class: "badge bg-danger")
     else
