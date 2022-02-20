@@ -11,5 +11,5 @@ Rails.start()
 ActiveStorage.start()
 
 $(function() { // eslint-disable-line
-  $('[data-bs-toggle="tooltip"]').popover(); // eslint-disable-line
+  $('[data-bs-toggle="tooltip"]').tooltip(); // eslint-disable-line
 })
