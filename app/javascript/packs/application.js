@@ -6,11 +6,10 @@ import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "bootstrap"
-import jQuery from 'jquery'
 
 Rails.start()
 ActiveStorage.start()
 
-jQuery(function() {
-  jQuery('[data-bs-toggle="tooltip"]').tooltip();
+$(function() { // eslint-disable-line
+  $('[data-bs-toggle="tooltip"]').popover(); // eslint-disable-line
 })
