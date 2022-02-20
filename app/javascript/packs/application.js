@@ -9,3 +9,7 @@ import "bootstrap"
 
 Rails.start()
 ActiveStorage.start()
+
+$(function() {
+  $('[data-bs-toggle="tooltip"]').tooltip()
+})
