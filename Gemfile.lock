@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/splaplapla/procon_bypass_man.git
-  revision: 081b9d2197a8183c2086ea8fdca2044f66407ff3
+  revision: 5ee1c0c6f3aa6421d096a2b63c9c4297022348e6
   branch: edge
   specs:
-    procon_bypass_man (0.1.17)
+    procon_bypass_man (0.1.21)
       action_cable_client
       pbmenv
       sorted_set
@@ -164,7 +164,7 @@ GEM
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
-    pbmenv (0.1.7)
+    pbmenv (0.1.9)
     pg (1.2.3)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -207,7 +207,7 @@ GEM
     rb-fsevent (0.11.0)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbtree (0.4.4)
+    rbtree (0.4.5)
     redis (4.5.1)
     rspec-core (3.10.1)
       rspec-support (~> 3.10.0)
