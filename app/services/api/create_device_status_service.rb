@@ -26,6 +26,11 @@ class Api::CreateDeviceStatusService
           device_status = device.device_statuses.create!(status: status, pbm_session: pbm_session)
           device.update!(current_device_status: device_status, last_access_at: Time.now)
         end
+
+        # offlineになったらnilになる. その後デバイスからrunningが送られてきたらステータスを更新したい
+        if device.current_device_status_id.nil?
+          device.update!(current_device_status: device.device_statuses.last)
+        end
       end
     end
   end

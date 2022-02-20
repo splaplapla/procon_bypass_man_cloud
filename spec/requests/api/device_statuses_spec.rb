@@ -26,6 +26,24 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
     end
 
     context '定義にあるstatusを渡すとき' do
+      context 'すでにrunningが記録済みのとき' do
+        let(:params) { { body: { status: "running", pbm_session_id: pbm_session.uuid } } }
+
+        before do
+          device.device_statuses.create!(status: :running, pbm_session: pbm_session)
+        end
+
+        context 'その後、current_device_status_idがnilになるとき' do
+          before do
+            device.update!(current_device_status_id: nil)
+          end
+
+          it do
+            expect { subject }.to change { device.reload.current_device_status_id }
+          end
+        end
+      end
+
       context 'when running' do
         let(:params) { { body: { status: "running", pbm_session_id: pbm_session.uuid } } }
 
@@ -36,6 +54,10 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
 
         it do
           expect { subject }.to change { device.device_statuses.count }.by(1)
+        end
+
+        it do
+          expect { subject }.to change { device.reload.current_device_status_id }
         end
       end
     end
