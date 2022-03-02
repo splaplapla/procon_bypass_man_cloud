@@ -1,4 +1,6 @@
 class SavedButtonsSetting < ApplicationRecord
+  has_one :public_saved_buttons_setting, dependent: :destroy
+
   belongs_to :user
 
   serialize :content, JSON

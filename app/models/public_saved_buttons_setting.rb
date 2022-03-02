@@ -1,0 +1,2 @@
+class PublicSavedButtonsSetting < ApplicationRecord
+end
