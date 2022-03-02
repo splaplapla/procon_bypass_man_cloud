@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }
   end
 
+  get 'p/:id' => 'public_saved_buttons_settings#show', as: :public_saved_buttons_setting
+
   resources :devices, only: [:new, :index, :show, :edit, :create] do
     member do
       put :update_name
