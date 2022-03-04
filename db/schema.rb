@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2022_03_02_140355) do
     t.text "memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_hash"
+    t.string "content_hash", null: false
     t.bigint "user_id"
   end
 

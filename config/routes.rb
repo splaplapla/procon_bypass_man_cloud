@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     member do
       put :update_content
     end
+
+    resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
   namespace :internal do
