@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_17_103708) do
+ActiveRecord::Schema.define(version: 2022_03_02_140355) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -83,6 +83,16 @@ ActiveRecord::Schema.define(version: 2022_02_17_103708) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "public_saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "saved_buttons_setting_id", null: false
+    t.string "unique_key", null: false
+    t.text "memo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["saved_buttons_setting_id"], name: "index_public_saved_buttons_settings_on_saved_buttons_setting_id", unique: true
+    t.index ["unique_key"], name: "index_public_saved_buttons_settings_on_unique_key", unique: true
   end
 
   create_table "saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|

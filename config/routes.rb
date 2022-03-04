@@ -13,11 +13,15 @@ Rails.application.routes.draw do
     member do
       put :update_content
     end
+
+    resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
   namespace :internal do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }
   end
+
+  get 'p/:id' => 'public_saved_buttons_settings#show', as: :public_saved_buttons_setting
 
   resources :devices, only: [:new, :index, :show, :edit, :create] do
     member do
