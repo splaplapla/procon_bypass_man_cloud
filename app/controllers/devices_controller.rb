@@ -9,6 +9,9 @@ class DevicesController < ApplicationController
     @saved_buttons_settings = current_user.saved_buttons_settings.order(id: :asc)
     if @latest_loading_config_event
       @saved_buttons_setting_form = SavedButtonsSettingForm.new(event_id: @latest_loading_config_event.id)
+
+      latest_loading_setting_hash = Digest::SHA1.hexdigest(@latest_loading_config_event.body.dig('setting'))
+      @same_saved_buttons_settings = current_user.saved_buttons_settings.where(content_hash: latest_loading_setting_hash)
     end
   end
 
