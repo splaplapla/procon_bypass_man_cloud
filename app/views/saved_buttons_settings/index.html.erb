@@ -15,6 +15,8 @@
       <td>
         <% if saved_buttons_setting.public_saved_buttons_setting %>
           <%= link_to saved_buttons_setting.name || '未設定', public_saved_buttons_setting_path(saved_buttons_setting.public_saved_buttons_setting.unique_key) %>
+          <br>
+          <%= saved_buttons_setting.public_saved_buttons_setting.created_at.to_s(:db) %> から公開
         <% else %>
           <%= saved_buttons_setting.name || '未設定' %>
         <% end %>
