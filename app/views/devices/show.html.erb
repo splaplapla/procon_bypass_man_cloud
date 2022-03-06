@@ -84,7 +84,7 @@
 <h2>
   現在のボタン設定
 </h2>
-<% if @same_saved_buttons_settings %>
+<% if @same_saved_buttons_settings.present? %>
   ※ <%= @same_saved_buttons_settings.map(&:name).join(", ") %> の保存済み設定ファイルと同じ内容です
 <% end %>
 
