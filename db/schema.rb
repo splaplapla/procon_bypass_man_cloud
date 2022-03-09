@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_09_051838) do
+ActiveRecord::Schema.define(version: 2022_03_09_102124) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 2022_03_09_051838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["uuid"], name: "index_pbm_jobs_on_uuid", unique: true
+  end
+
+  create_table "pbm_remote_macro_jobs", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "device_id", null: false
+    t.string "steps", null: false
+    t.string "name", null: false
+    t.string "uuid", null: false
+    t.integer "status", null: false
+    t.text "job_stdout"
+    t.text "job_stderr"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["uuid"], name: "index_pbm_remote_macro_jobs_on_uuid", unique: true
   end
 
   create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|

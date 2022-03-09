@@ -1,0 +1,2 @@
+class PbmRemoteMacroJob < ApplicationRecord
+end
