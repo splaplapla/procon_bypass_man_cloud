@@ -1,4 +1,5 @@
-<h1 class="mb-5">リモートマクロのグループ「<%= @remote_macro_group.name %>」</h1>
+<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", remote_macro_groups_path %> -＞</span>
+<h1 class="mb-5">リモートマクロの一覧</h1>
 
 <% if @remote_macros.present? %>
   <table class="table">
@@ -6,12 +7,14 @@
       <th>名前</th>
       <th>ステップ</th>
       <th></th>
+      <th></th>
     </tr>
     <% @remote_macros.each do |remote_macro| %>
       <tr>
         <td><%= link_to remote_macro.name.presence || '名前未設定', remote_macro_path(remote_macro) %></td>
         <td><%= remote_macro.steps %></td>
         <td><%= link_to "テスト送信", "#" %></td>
+        <td><%= link_to "削除する", remote_macro_path(remote_macro) %></td>
       </tr>
     <% end %>
   </table>

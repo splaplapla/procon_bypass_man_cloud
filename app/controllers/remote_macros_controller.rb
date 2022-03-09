@@ -14,6 +14,13 @@ class RemoteMacrosController < ApplicationController
     end
   end
 
+  def destroy
+    remote_macro = current_user.remote_macros.find(params[:id])
+    remote_macro_group = remote_macro.remote_macro_group
+    remote_macro.destroy
+    redirect_to remote_macro_group_path(remote_macro_group), notice: "リモートマクロの削除に成功しました"
+  end
+
   private
 
   def remote_macro_params

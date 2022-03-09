@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create, :destroy], shallow: true do
-    resources :remote_macros, only: [:new, :create, :show]
+    resources :remote_macros, only: [:new, :create, :destroy]
   end
 
   namespace :internal do

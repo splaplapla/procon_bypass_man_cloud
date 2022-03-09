@@ -1,3 +1,5 @@
+<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", remote_macro_groups_path %> -＞</span>
+
 <h1 class="mb-5">リモートマクロの新規登録</h1>
 <%= form_for([@remote_macro_group, @remote_macro]) do |f| %>
   <%= render "shared/validation_errors", f: f %>

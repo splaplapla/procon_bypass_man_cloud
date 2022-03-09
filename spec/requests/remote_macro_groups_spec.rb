@@ -27,7 +27,7 @@ RSpec.describe RemoteMacroGroupsController, type: :request do
     end
   end
 
-  describe "GET #create" do
+  describe "POST #create" do
     subject { post remote_macro_groups_path, params: { remote_macro_group: { name: "foo" } } }
 
     it do
@@ -49,7 +49,7 @@ RSpec.describe RemoteMacroGroupsController, type: :request do
     end
   end
 
-  describe "GET #destroy" do
+  describe "DELETE #destroy" do
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
 
     subject { delete remote_macro_group_path(remote_macro_group) }

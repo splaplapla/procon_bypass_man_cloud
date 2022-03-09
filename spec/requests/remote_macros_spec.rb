@@ -14,7 +14,7 @@ RSpec.describe RemoteMacrosController, type: :request do
     end
   end
 
-  describe "GET #create" do
+  describe "POST #create" do
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
 
     subject { post remote_macro_group_remote_macros_path(remote_macro_group), params: { remote_macro: { name: "foo", steps: "x" } } }
@@ -29,4 +29,23 @@ RSpec.describe RemoteMacrosController, type: :request do
     end
   end
 
+  describe "DELETE #destroy" do
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+
+    subject { delete remote_macro_path(remote_macro) }
+
+    before do
+      remote_macro
+    end
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { user.remote_macros.count }.by(-1)
+    end
+  end
 end
