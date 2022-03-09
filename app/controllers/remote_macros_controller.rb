@@ -23,7 +23,7 @@ class RemoteMacrosController < ApplicationController
 
   def test_emit
     remote_macro = current_user.remote_macros.find(params[:id])
-    remote_macro_job = RemoteMacro::CreateJobService.new(device: device).execute
+    remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute
     # ActionCable.server.broadcast(device.push_token, RemoteMacroJobSerializer.new(remote_macro_job).attributes)
     redirect_to remote_macro_group_path(remote_macro.remote_macro_group), notice: "テスト実行を行いました"
   end
