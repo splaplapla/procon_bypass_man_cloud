@@ -64,5 +64,9 @@ RSpec.describe RemoteMacrosController, type: :request do
     it do
       expect { subject }.to change { device.pbm_remote_macro_jobs.count }.by(1)
     end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
+    end
   end
 end
