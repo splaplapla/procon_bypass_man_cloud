@@ -42,6 +42,13 @@ RSpec.describe RemoteMacroGroupsController, type: :request do
 
   describe "GET #show" do
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    before do
+      remote_macro
+      device
+    end
 
     it do
       get remote_macro_group_path(remote_macro_group)

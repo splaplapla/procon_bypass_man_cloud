@@ -1,5 +1,6 @@
 class PbmJob < ApplicationRecord
   belongs_to :device
+
   serialize :args, JSON
 
   enum action: {

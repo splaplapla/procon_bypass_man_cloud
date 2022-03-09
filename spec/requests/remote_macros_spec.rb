@@ -48,4 +48,21 @@ RSpec.describe RemoteMacrosController, type: :request do
       expect { subject }.to change { user.remote_macros.count }.by(-1)
     end
   end
+
+  describe 'POST #test_emit' do
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    subject { post remote_macro_test_emit_path(remote_macro, device.unique_key) }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { device.pbm_remote_macro_jobs.count }.by(1)
+    end
+  end
 end
