@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
-  resources :remote_macro_groups, only: [:index, :show. :edit, :new, :create]
+  resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create]
 
   namespace :internal do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }
