@@ -10,9 +10,10 @@ class User < ApplicationRecord
 
   validates :email, uniqueness: true
 
-  has_many :devices
+  has_many :devices, dependent: :destroy
   has_many :events, through: :devices
-  has_many :saved_buttons_settings
+  has_many :saved_buttons_settings, dependent: :destroy
+  has_many :remote_macro_groups, dependent: :destroy
 
   # @return [String]
   def profile_image_url
