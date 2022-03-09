@@ -30,6 +30,6 @@ class RemoteMacroGroupsController < ApplicationController
   private
 
   def remote_macro_group_params
-    params.require(:remote_macro_group).permit(:name)
+    params.require(:remote_macro_group).permit(:name, :steps, :memo)
   end
 end

@@ -106,8 +106,8 @@ ActiveRecord::Schema.define(version: 2022_03_09_051838) do
   create_table "remote_macros", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "remote_macro_group_id", null: false
     t.string "name"
-    t.text "text"
-    t.text "steps", null: false
+    t.text "memo"
+    t.string "steps", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
