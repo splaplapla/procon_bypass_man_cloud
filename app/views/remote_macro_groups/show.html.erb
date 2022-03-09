@@ -1,0 +1,28 @@
+<h1 class="mb-5">リモートマクロのグループ「<%= @remote_macro_group.name %>」</h1>
+
+<% if @remote_macros.present? %>
+  <table class="table">
+    <tr>
+      <th>名前</th>
+      <th>ステップ</th>
+      <th></th>
+    </tr>
+    <% @remote_macros.each do |remote_macro| %>
+      <tr>
+        <td><%= link_to remote_macro.name.presence || '名前未設定', remote_macro_path(remote_macro) %></td>
+        <td><%= remote_macro.steps %></td>
+        <td><%= link_to "テスト送信", "#" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  リモートマクロのグループが未登録です
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "リモートマクロの新規登録する", new_remote_macro_group_remote_macro_path(@remote_macro_group), class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

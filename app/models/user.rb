@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :events, through: :devices
   has_many :saved_buttons_settings, dependent: :destroy
   has_many :remote_macro_groups, dependent: :destroy
+  has_many :remote_macros, through: :remote_macro_groups
 
   # @return [String]
   def profile_image_url

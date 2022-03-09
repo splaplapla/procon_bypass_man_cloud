@@ -8,7 +8,7 @@ class RemoteMacroGroupsController < ApplicationController
   end
 
   def create
-    @remote_macro_group = current_user.remote_macro_groups.build(remote_macro_group_param)
+    @remote_macro_group = current_user.remote_macro_groups.build(remote_macro_group_params)
     if @remote_macro_group.save
       redirect_to remote_macro_group_path(@remote_macro_group), notice: "新規作成に成功しました"
     else
@@ -17,11 +17,13 @@ class RemoteMacroGroupsController < ApplicationController
   end
 
   def show
+    @remote_macro_group = current_user.remote_macro_groups.find(params[:id])
+    @remote_macros = @remote_macro_group.remote_macros
   end
 
   private
 
-  def remote_macro_group_param
+  def remote_macro_group_params
     params.require(:remote_macro_group).permit(:name)
   end
 end
