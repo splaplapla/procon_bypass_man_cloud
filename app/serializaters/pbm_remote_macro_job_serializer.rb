@@ -1,6 +1,4 @@
 class PbmRemoteMacroJobSerializer
-  include ActiveModel::Serializers::JSON
-
   attr_accessor :action, :uuid, :steps, :created_at
 
   def initialize(remote_macro_job)
