@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_02_140355) do
+ActiveRecord::Schema.define(version: 2022_03_09_051838) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -95,13 +95,30 @@ ActiveRecord::Schema.define(version: 2022_03_02_140355) do
     t.index ["unique_key"], name: "index_public_saved_buttons_settings_on_unique_key", unique: true
   end
 
+  create_table "remote_macro_groups", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name"
+    t.text "memo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "remote_macros", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "remote_macro_group_id", null: false
+    t.string "name"
+    t.text "text"
+    t.text "steps", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
     t.text "content", null: false
     t.string "name"
     t.text "memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "content_hash", null: false
+    t.string "content_hash"
     t.bigint "user_id"
   end
 
