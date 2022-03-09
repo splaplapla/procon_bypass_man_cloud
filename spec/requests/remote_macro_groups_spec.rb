@@ -48,4 +48,23 @@ RSpec.describe RemoteMacroGroupsController, type: :request do
       expect(response).to be_ok
     end
   end
+
+  describe "GET #destroy" do
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+
+    subject { delete remote_macro_group_path(remote_macro_group) }
+
+    before do
+      remote_macro_group
+    end
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { user.remote_macro_groups.count }.by(-1)
+    end
+  end
 end

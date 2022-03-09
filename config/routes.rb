@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
-  resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create], shallow: true do
+  resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create, :destroy], shallow: true do
     resources :remote_macros, only: [:new, :create, :show]
   end
 

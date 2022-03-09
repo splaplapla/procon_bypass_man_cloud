@@ -4,12 +4,14 @@
   <table class="table">
     <tr>
       <th>名前</th>
+      <th>メモ</th>
       <th></th>
     </tr>
     <% @remote_macro_groups.each do |remote_macro_group| %>
       <tr>
         <td><%= link_to remote_macro_group.name.presence || '名前未設定', remote_macro_group_path(remote_macro_group) %></td>
-        <td></td>
+        <td><%= remote_macro_group.memo %></td>
+        <td><%= link_to "削除する", remote_macro_group_path(remote_macro_group), method: :delete, data: { confirm: "削除しますがいいですか？" } %></td>
       </tr>
     <% end %>
   </table>
