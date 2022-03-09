@@ -21,6 +21,13 @@ class RemoteMacrosController < ApplicationController
     redirect_to remote_macro_group_path(remote_macro_group), notice: "リモートマクロの削除に成功しました"
   end
 
+  def test_emit
+    remote_macro = current_user.remote_macros.find(params[:id])
+    remote_macro_job = RemoteMacro::CreateJobService.new(device: device).execute
+    # ActionCable.server.broadcast(device.push_token, RemoteMacroJobSerializer.new(remote_macro_job).attributes)
+    redirect_to remote_macro_group_path(remote_macro.remote_macro_group), notice: "テスト実行を行いました"
+  end
+
   private
 
   def remote_macro_params

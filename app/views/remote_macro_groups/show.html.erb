@@ -19,7 +19,7 @@
           </a>
           <ul class="dropdown-menu text-small" aria-labelledby="test-emit">
             <% current_user.devices.each do |device| %>
-              <li><a class="dropdown-item" href="#" ><%= device.name %></a></li>
+              <li><a class="dropdown-item" href="<%= test_emit_remote_macro_path(remote_macro) %>" data-method="post" ><%= device.name %></a></li>
             <% end %>
         </td>
         <td><%= link_to "削除する", remote_macro_path(remote_macro), method: :delete, data: { confirm: "削除しますがいいですか？" } %></td>

@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   end
 
   resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create, :destroy], shallow: true do
-    resources :remote_macros, only: [:new, :create, :destroy]
+    resources :remote_macros, only: [:new, :create, :destroy] do
+      post :test_emit, on: :member
+    end
   end
 
   namespace :internal do
