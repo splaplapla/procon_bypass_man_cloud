@@ -3,7 +3,7 @@ require 'rails_helper'
 describe PbmRemoteMacroJobSerializer do
   describe "#attributes" do
     let(:device) { FactoryBot.create(:device) }
-    let(:remote_macro_job) { RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: [:a], name: "foo") }
+    let(:remote_macro_job) { RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: "a", name: "foo") }
 
     subject { described_class.new(remote_macro_job).attributes }
 
