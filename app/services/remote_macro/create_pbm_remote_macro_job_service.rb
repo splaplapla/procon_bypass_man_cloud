@@ -9,10 +9,16 @@ class RemoteMacro::CreatePbmRemoteMacroJobService
     remote_macro_job = @device.pbm_remote_macro_jobs.build(
       name: name.presence || "入力なし",
       status: :queued,
-      steps: steps,
+      steps: split_steps(steps),
       uuid: PbmRemoteMacroJob.generate_uuid,
     )
     remote_macro_job.save!
     remote_macro_job
+  end
+
+  private
+
+  def split_steps(steps)
+    steps.split(/[,\s]+/)
   end
 end
