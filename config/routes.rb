@@ -17,6 +17,12 @@ Rails.application.routes.draw do
     resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
+  resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create, :destroy], shallow: true do
+    resources :remote_macros, only: [:new, :create, :destroy] do
+      post 'devices/:device_unique_key/test_emit' => 'remote_macros#test_emit', as: :test_emit
+    end
+  end
+
   namespace :internal do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }
   end

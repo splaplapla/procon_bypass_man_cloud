@@ -1,8 +1,7 @@
 <h1 class="mb-5">デバイスの新規登録</h1>
 <%= form_for @device do |f| %>
-  <% @device.errors.full_messages.each do |message| %>
-    <%= message %>
-  <% end %>
+  <%= render "shared/validation_errors", f: f %>
+
   <% if @error_message %>
     <div class="alert alert-danger">
       <%= @error_message %>

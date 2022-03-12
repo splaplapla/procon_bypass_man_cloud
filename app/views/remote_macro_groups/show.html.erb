@@ -1,0 +1,37 @@
+<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", remote_macro_groups_path %> -＞</span>
+<h1 class="mb-5">リモートマクロの一覧</h1>
+
+<% if @remote_macros.present? %>
+  <table class="table">
+    <tr>
+      <th>名前</th>
+      <th>ステップ</th>
+      <th class="col-md-2"></th>
+      <th class="col-md-2"></th>
+    </tr>
+    <% @remote_macros.each do |remote_macro| %>
+      <tr>
+        <td><%= remote_macro.name.presence || '名前未設定' %></td>
+        <td><%= remote_macro.steps %></td>
+        <td>
+          <a href="#" class="text-decoration-none dropdown-toggle btn btn-success" id="test-emit" data-bs-toggle="dropdown" aria-expanded="false">テスト送信をする</a>
+          <ul class="dropdown-menu text-small" aria-labelledby="test-emit">
+            <% current_user.devices.each do |device| %>
+              <li><a class="dropdown-item" href="<%= remote_macro_test_emit_path(remote_macro, device.unique_key) %>" data-method="post" ><%= device.name %></a></li>
+            <% end %>
+        </td>
+        <td><%= link_to "削除する", remote_macro_path(remote_macro), method: :delete, data: { confirm: "削除しますがいいですか？" }, class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  リモートマクロのグループが未登録です
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "リモートマクロの新規登録する", new_remote_macro_group_remote_macro_path(@remote_macro_group), class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
