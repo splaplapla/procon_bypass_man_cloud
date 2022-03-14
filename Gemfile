@@ -14,7 +14,7 @@ gem 'redis'
 gem 'newrelic_rpm'
 
 # 設定ファイルのパースとバリデーションのために使っている
-gem 'procon_bypass_man', github: 'splaplapla/procon_bypass_man', branch: :edge
+gem 'procon_bypass_man'
 
 group :production do
   gem 'pg'
