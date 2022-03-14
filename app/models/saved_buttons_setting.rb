@@ -11,6 +11,10 @@ class SavedButtonsSetting < ApplicationRecord
     content.dig("setting")
   end
 
+  def explained_lines
+    SettingExplainService.new(self).execute
+  end
+
   private
 
   def update_content_hash
