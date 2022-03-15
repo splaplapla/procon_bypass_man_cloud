@@ -39,10 +39,8 @@ describe SettingExplainService do
         TEXT
       end
 
-      it do
-      end
+      it { is_expected.to eq(["試合中に左キーに割り当てられている味方へのスーパージャンプのマクロを設定"]) }
     end
-
 
     context '連射の行があるとき' do
       let(:text) do
@@ -51,7 +49,7 @@ describe SettingExplainService do
         TEXT
       end
 
-      it { is_expected.to eq(["ZRを連打"]) }
+      it { is_expected.to eq(["ZRボタンを連打"]) }
     end
 
     it do
@@ -66,8 +64,7 @@ describe SettingExplainService do
         TEXT
       end
 
-      it do
-      end
+      it { is_expected.to eq(["ZRボタンを連打", "Aボタンを連打"]) }
     end
 
 
@@ -78,8 +75,7 @@ describe SettingExplainService do
         TEXT
       end
 
-      it do
-      end
+      it { is_expected.to eq(["LボタンをZボタンへリマップ"]) }
     end
   end
 end

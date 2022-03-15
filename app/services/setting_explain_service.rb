@@ -20,10 +20,22 @@ class SettingExplainService
 
     lines.each do |line|
       if /^flip :(\w+?),/ =~ line && $1
-        @explaining << "#{$1.upcase}を連打"
+        @explaining << "#{$1.upcase}ボタンを連打"
       end
     end
 
-    @explaining
+    lines.each do |line|
+      if /^remap :(\w+?), to: :(\w+?)/ =~ line && $1 && $2
+        @explaining << "#{$1.upcase}ボタンを#{$2.upcase}ボタンへリマップ"
+      end
+    end
+
+    lines.each do |line|
+      if /^macro ([\w:]+?),/ =~ line && $1
+        @explaining << "#{Object.const_get($1).description}のマクロを設定"
+      end
+    end
+
+    @explaining.uniq
   end
 end
