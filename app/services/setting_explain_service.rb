@@ -1,6 +1,7 @@
 class SettingExplainService
   def initialize(text: )
     @text = text
+    @explaining = []
   end
 
   def execute
@@ -17,6 +18,12 @@ class SettingExplainService
     # remove empty lines
     lines = lines_exclude_prefix_space.compact.reject { |x| x == '' }
 
-    lines
+    lines.each do |line|
+      if /^flip :(\w+?),/ =~ line && $1
+        @explaining << "#{$1.upcase}を連打"
+      end
+    end
+
+    @explaining
   end
 end

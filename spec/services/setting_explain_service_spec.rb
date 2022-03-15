@@ -50,6 +50,8 @@ describe SettingExplainService do
           flip :zr, if_pressed: :zr, force_neutral: :zl
         TEXT
       end
+
+      it { is_expected.to eq(["ZRを連打"]) }
     end
 
     it do
