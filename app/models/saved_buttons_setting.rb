@@ -12,7 +12,7 @@ class SavedButtonsSetting < ApplicationRecord
   end
 
   def explained_lines
-    SettingExplainService.new(text: content["text"]).execute
+    @explained_lines ||= SettingExplainService.new(text: content["setting"]).execute
   end
 
   private
