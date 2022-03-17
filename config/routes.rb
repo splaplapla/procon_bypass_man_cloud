@@ -47,6 +47,7 @@ Rails.application.routes.draw do
     resources :devices, only: :show do
       resources :pbm_jobs, only: [:index, :update]
       resources :device_statuses, only: [:create]
+      resources :completed_pbm_remote_macro_jobs, only: [:create]
     end
   end
 
