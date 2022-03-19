@@ -1,2 +1,29 @@
-<h1>連携しているストリーミングサービス</h1>
+<h1>連携中のストリーミングサービス「<%= @streaming_service.name %>」</h1>
 
+<table class="table mb-4">
+  <tr>
+    <th>連携先</th>
+    <td>
+      <div>
+        <%= @streaming_service.service_type %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>接続するデバイス</th>
+    <td>
+      <div>
+        <%= @streaming_service.device&.name %>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>連携するリモートマクロのグループ</th>
+    <td>
+      <div>
+        <%= @streaming_service.remote_macro_group&.name %>
+      </div>
+    </td>
+  </tr>
+
+</table>

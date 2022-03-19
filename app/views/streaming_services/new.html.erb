@@ -1,4 +1,4 @@
-<h1 class="mb-5">ストリーミングサービスの登録</h1>
+<h1 class="mb-5">ストリーミングサービスの登t録</h1>
 <%= form_for @streaming_service, remote: false do |f| %>
   <%= render "shared/validation_errors", f: f %>
 
@@ -20,14 +20,14 @@
   <div class="mb-3 row">
     <%= f.label :device_id, "接続するデバイス", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.select :name, current_user.devices.map { |d| [d.name, d.id] }, include_blank: true %>
+      <%= f.select :device_id, current_user.devices.map { |d| [d.name, d.id] }, include_blank: true %>
     </div>
   </div>
 
   <div class="mb-3 row">
     <%= f.label :remote_macro_group_id, "連携するリモートマクロのグループ", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
-      <%= f.select :name, current_user.remote_macro_groups.map { |r| [r.name, r.id] }, include_blank: true %>
+      <%= f.select :remote_macro_group_id, current_user.remote_macro_groups.map { |r| [r.name, r.id] }, include_blank: true %>
     </div>
   </div>
 

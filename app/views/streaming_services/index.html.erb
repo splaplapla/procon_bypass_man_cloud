@@ -4,13 +4,27 @@
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
-    <th class="col-md-1">登録日</th>
+    <th class="col-md-2">連携先サービス</th>
+    <th class="col-md-2">接続先デバイス</th>
+    <th class="col-md-2">連携するリモートマクロのグループ</th>
+    <th class="col-md-2"></th>
   </tr>
-  <% @streaming_services.each do |streaming_services| %>
+  <% @streaming_services.each do |streaming_service| %>
     <tr>
       <td>
+        <%= link_to streaming_service.name.presence || '未入力', streaming_service %>
       </td>
       <td>
+        <%= streaming_service.service_type %>
+      </td>
+      <td>
+        <%= streaming_service.device&.name %>
+      </td>
+      <td>
+        <%= streaming_service.remote_macro_group&.name %>
+      </td>
+      <td>
+        <%= link_to '削除する', streaming_service, method: :delete, class: "btn btn-danger", data: { confirm: "削除しますがいいですか？" } %>
       </td>
     </tr>
   <% end %>
