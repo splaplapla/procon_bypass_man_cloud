@@ -39,7 +39,23 @@
   </tr>
 </table>
 
-<h2>コマンド一覧</h2>
-<div class="alert alert-info">
-  <%= api_device_streaming_service_enqueue_remote_macro_commands_path(@streaming_service.device&.uuid || ":uuid", @streaming_service.unique_key, ":word") %>
-</div>
+<h2>リモートマクロ一覧</h2>
+
+<% @streaming_service.remote_macro_group.remote_macros.each do |remote_macro| %>
+  <h4>
+    <%= remote_macro.name %>(<%= remote_macro.steps %>)
+  </h4>
+
+  <p>トリガーワード</p>
+  <ul>
+    <% remote_macro.trigger_word_list.each do |word| %>
+      <li><%= word %></li>
+    <% end %>
+  </ul>
+
+  <% remote_macro.trigger_word_list.each do |word| %>
+    <div class="alert alert-info">
+      <%= URI.decode_www_form_component api_device_streaming_service_enqueue_remote_macro_commands_url(@streaming_service.device&.uuid || ":uuid", @streaming_service.unique_key, word) %>
+    </div>
+  <% end %>
+<% end %>

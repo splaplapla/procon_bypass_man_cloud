@@ -6,6 +6,7 @@
     <tr>
       <th>名前</th>
       <th>ステップ</th>
+      <th>トリガーワード</th>
       <th class="col-md-2"></th>
       <th class="col-md-2"></th>
       <th class="col-md-1"></th>
@@ -14,6 +15,7 @@
       <tr>
         <td><%= remote_macro.name.presence || '名前未設定' %></td>
         <td><%= remote_macro.steps %></td>
+        <td><%= remote_macro.trigger_words.join(", ") %></td>
         <td>
           <%= link_to "トリガーキーワードを登録・更新する", edit_trigger_words_remote_macro_path(remote_macro), class: "btn btn-success" %>
         </td>
