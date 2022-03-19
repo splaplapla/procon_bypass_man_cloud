@@ -55,7 +55,7 @@
 
   <% remote_macro.trigger_word_list.each do |word| %>
     <div class="alert alert-info">
-      <%= URI.decode_www_form_component api_device_streaming_service_enqueue_remote_macro_commands_url(@streaming_service.device&.uuid || ":uuid", @streaming_service.unique_key, word) %>
+      <%= URI.decode_www_form_component api_device_streaming_service_enqueue_pbm_remote_macro_jobs_url(@streaming_service.device&.uuid || ":uuid", @streaming_service.unique_key, word) %>
     </div>
   <% end %>
 <% end %>
