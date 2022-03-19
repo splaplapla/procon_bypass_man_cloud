@@ -20,7 +20,7 @@ class RemoteMacroGroupsController < ApplicationController
   def destroy
     remote_macro_group = current_user.remote_macro_groups.find(params[:id])
     remote_macro_group.destroy
-    redirect_to remote_macro_groups_path, notice: "削除に成功しました"
+    redirect_to streaming_services_path, notice: "削除に成功しました"
   end
 
   private

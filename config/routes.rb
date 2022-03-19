@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   resources :remote_macro_groups, only: [:show, :edit, :new, :create, :destroy], shallow: true do
     resources :remote_macros, only: [:new, :create, :destroy] do
       post 'devices/:device_unique_key/test_emit' => 'remote_macros#test_emit', as: :test_emit
+      get :edit_trigger_words, on: :member
+      patch :update_trigger_words, on: :member
     end
   end
 

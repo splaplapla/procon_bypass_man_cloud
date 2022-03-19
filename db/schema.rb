@@ -108,13 +108,6 @@ ActiveRecord::Schema.define(version: 2022_03_19_064537) do
     t.index ["unique_key"], name: "index_public_saved_buttons_settings_on_unique_key", unique: true
   end
 
-  create_table "remote_macro_commands", charset: "utf8mb4", force: :cascade do |t|
-    t.bigint "remote_macro_id", null: false
-    t.string "name", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "remote_macro_groups", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"

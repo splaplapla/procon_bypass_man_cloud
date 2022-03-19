@@ -30,6 +30,18 @@ class RemoteMacrosController < ApplicationController
     redirect_to remote_macro_group_path(remote_macro.remote_macro_group), notice: "テスト実行を行いました"
   end
 
+  def edit_trigger_words
+    @remote_macro = current_user.remote_macros.find(params[:id])
+    @remote_macro_group = @remote_macro.remote_macro_group
+  end
+
+  def update_trigger_words
+    @remote_macro = current_user.remote_macros.find(params[:id])
+    trigger_word_list = params.required(:remote_macro).permit(:trigger_word_list).fetch(:trigger_word_list, nil)
+    @remote_macro.update!(trigger_word_list: trigger_word_list)
+    redirect_to remote_macro_group_path(@remote_macro.remote_macro_group), notice: "トリガーワードを更新しました"
+  end
+
   private
 
   def remote_macro_params
