@@ -20,8 +20,8 @@
     <th>接続するデバイス</th>
     <td>
       <div>
-        <%= @streaming_service.device&.name %>
         <% if @streaming_service.device %>
+          <%= link_to @streaming_service.device.name, device_path(@streaming_service.device.unique_key) %>
           <%= wrap_device_status_with_style(status: @streaming_service.device.current_device_status_name) %>
         <% end %>
       </div>
