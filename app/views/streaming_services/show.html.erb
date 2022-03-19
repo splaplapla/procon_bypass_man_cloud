@@ -21,6 +21,9 @@
     <td>
       <div>
         <%= @streaming_service.device&.name %>
+        <% if @streaming_service.device %>
+          <%= wrap_device_status_with_style(status: @streaming_service.device.current_device_status_name) %>
+        <% end %>
       </div>
     </td>
   </tr>
@@ -28,7 +31,9 @@
     <th>連携するリモートマクロのグループ</th>
     <td>
       <div>
-        <%= @streaming_service.remote_macro_group&.name %>
+        <% if @streaming_service.remote_macro_group %>
+          <%= link_to @streaming_service.remote_macro_group.name, @streaming_service.remote_macro_group %>
+        <% end %>
       </div>
     </td>
   </tr>
