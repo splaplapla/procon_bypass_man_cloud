@@ -12,6 +12,7 @@ gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
 gem 'newrelic_rpm'
+gem 'acts-as-taggable-on'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
