@@ -4,6 +4,8 @@ class StreamingServicesController < ApplicationController
       streaming_services.
       preload(:device, :remote_macro_group).
       order(id: :asc)
+
+    @remote_macro_groups = current_user.remote_macro_groups
   end
 
   def new

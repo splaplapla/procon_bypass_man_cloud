@@ -40,3 +40,33 @@
     </div>
   </div>
 </div>
+
+<h1>リモートマクロのグループ一覧</h1>
+<% if @remote_macro_groups.present? %>
+  <table class="table">
+    <tr>
+      <th>名前</th>
+      <th>メモ</th>
+      <th>登録数マクロ</th>
+      <th class="col-md-2"></th>
+    </tr>
+    <% @remote_macro_groups.each do |remote_macro_group| %>
+      <tr>
+        <td><%= link_to remote_macro_group.name.presence || '名前未設定', remote_macro_group_path(remote_macro_group) %></td>
+        <td><%= remote_macro_group.memo %></td>
+        <td><%= remote_macro_group.remote_macros.count %>個</td>
+        <td><%= link_to "削除する", remote_macro_group_path(remote_macro_group), method: :delete, data: { confirm: "削除しますがいいですか？" }, class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  リモートマクロのグループが未登録です
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "リモートマクロのグループを新規登録する", new_remote_macro_group_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
