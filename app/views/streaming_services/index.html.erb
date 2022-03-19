@@ -1,0 +1,28 @@
+<h1>連携しているストリーミングサービスの一覧</h1>
+
+<% if @streaming_services.present? %>
+<table class="table">
+  <tr>
+    <th class="col-md-2">名前</th>
+    <th class="col-md-1">登録日</th>
+  </tr>
+  <% @streaming_services.each do |streaming_services| %>
+    <tr>
+      <td>
+      </td>
+      <td>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% else %>
+  <p>連携しているストリーミングサービスが未登録です</p>
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "ストリーミングサービスを連携する", new_streaming_service_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

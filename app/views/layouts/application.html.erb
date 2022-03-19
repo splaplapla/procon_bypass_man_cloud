@@ -26,7 +26,7 @@
               <li><a href="/" class="nav-link px-2 link-secondary">デバイス一覧</a></li>
               <li><a href="/saved_buttons_settings" class="nav-link px-2 link-secondary">設定ファイル一覧</a></li>
               <% if current_user.admin? %>
-                <li><a href="/remote_macro_groups" class="nav-link px-2 link-secondary">リモートマクロ</a></li>
+                <li><a href="<%= streaming_services_path %>" class="nav-link px-2 link-secondary">ストリーミングサービス連携</a></li>
               <% end %>
             </ul>
 

@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :remote_macro_groups, dependent: :destroy
   has_many :remote_macros, through: :remote_macro_groups
 
+  has_many :streaming_services
+
   # @return [String]
   def profile_image_url
     hash = Digest::MD5.hexdigest(email)
