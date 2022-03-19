@@ -1,6 +1,7 @@
 class SavedButtonsSettingsController < ApplicationController
   def index
     @saved_buttons_settings = current_user.saved_buttons_settings.preload(:public_saved_buttons_setting).order(id: :asc)
+    @devices = current_user.devices
   end
 
   # 別controller配下のview(modal)から送られる

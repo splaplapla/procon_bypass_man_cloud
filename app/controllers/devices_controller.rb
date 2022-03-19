@@ -76,6 +76,9 @@ class DevicesController < ApplicationController
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
 
     respond_to do |format|
+      format.html do
+        redirect_to saved_buttons_settings_path, notice: '復元処理を開始しました'
+      end
       format.js
     end
   end

@@ -4,9 +4,9 @@
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
-    <th class="col-md-2">メモ</th>
-    <th class="col-md-2">登録日</th>
-    <th class="col-md-4"></th>
+    <th class="col-md-1">メモ</th>
+    <th class="col-md-1">登録日</th>
+    <th class="col-md-8"></th>
   </tr>
   <%= render partial: 'edit_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
   <%= render partial: 'edit_content_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
@@ -16,7 +16,10 @@
         <% if saved_buttons_setting.public_saved_buttons_setting %>
           <%= link_to saved_buttons_setting.name || '未設定', public_saved_buttons_setting_path(saved_buttons_setting.public_saved_buttons_setting.unique_key) %>
           <br>
-          <%= saved_buttons_setting.public_saved_buttons_setting.created_at.to_s(:db) %> から公開
+          <span class="badge bg-success">
+            <%= saved_buttons_setting.public_saved_buttons_setting.created_at.to_s(:jp) %>
+          </span>
+          から公開
         <% else %>
           <%= saved_buttons_setting.name || '未設定' %>
         <% end %>
@@ -26,10 +29,10 @@
       <td>
         <div class="container">
           <div class="row">
-            <div class="col-4">
-              <%= link_to "名前とメモを変更", "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}" } %>
+            <div class="col-3">
+              <%= link_to "名前とメモを変更".html_safe, "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}" } %>
             </div>
-            <div class="col-4">
+            <div class="col-2">
               <%= link_to "本文を変更", "#", class: 'btn btn-success', data: { bs_toggle: "modal", bs_target: "##{dom_id(saved_buttons_setting)}_content" } %>
             </div>
             <div class="col-2">
@@ -38,11 +41,21 @@
 
             <div class="col-2">
               <% if saved_buttons_setting.public_saved_buttons_setting %>
-              <%= link_to "公開をやめる", saved_buttons_setting_public_saved_buttons_setting_path(saved_buttons_setting, saved_buttons_setting.public_saved_buttons_setting), class: 'btn btn-danger', data: { method: :delete, confirm: "公開をやめますがよろしいですか？" } %>
+                <%= link_to "公開をやめる", saved_buttons_setting_public_saved_buttons_setting_path(saved_buttons_setting, saved_buttons_setting.public_saved_buttons_setting), class: 'btn btn-danger', data: { method: :delete, confirm: "公開をやめますがよろしいですか？" } %>
               <% else %>
-              <%= link_to "公開する", saved_buttons_setting_public_saved_buttons_settings_path(saved_buttons_setting), class: 'btn btn-primary', data: { method: :post, confirm: "この設定ファイルの公開ページを作成しますがよろしいですか？" } %>
-            <% end %>
+                <%= link_to "公開する", saved_buttons_setting_public_saved_buttons_settings_path(saved_buttons_setting), class: 'btn btn-primary', data: { method: :post, confirm: "この設定ファイルの公開ページを作成しますがよろしいですか？" } %>
+              <% end %>
             </div>
+
+            <div class="col-2">
+              <a href="#" class="text-decoration-none dropdown-toggle btn btn-success" id="test-emit" data-bs-toggle="dropdown" aria-expanded="false">デバイスに復元する</a>
+              <ul class="dropdown-menu text-small" aria-labelledby="test-emit">
+                <% @devices.each do |device| %>
+                  <li><a class="dropdown-item <%= :disabled if device.offline? %>" href="<%= restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id) %>" data-method="post" ><%= device.name %></a></li>
+                <% end %>
+              </ul>
+            </div>
+
           </div>
         </div>
       </td>
