@@ -13,6 +13,7 @@ gem 'sorcery'
 gem 'redis'
 gem 'newrelic_rpm'
 gem 'acts-as-taggable-on'
+gem 'google-api-client'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
