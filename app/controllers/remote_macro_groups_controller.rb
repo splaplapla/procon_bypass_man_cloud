@@ -1,8 +1,4 @@
 class RemoteMacroGroupsController < ApplicationController
-  def index
-    @remote_macro_groups = RemoteMacroGroup.all
-  end
-
   def new
     @remote_macro_group = current_user.remote_macro_groups.build
   end
