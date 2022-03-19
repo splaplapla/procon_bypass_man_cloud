@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_060306) do
+ActiveRecord::Schema.define(version: 2022_03_19_062709) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -140,6 +140,15 @@ ActiveRecord::Schema.define(version: 2022_03_19_060306) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "content_hash"
     t.bigint "user_id"
+  end
+
+  create_table "steaming_services", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.integer "service_type", null: false
+    t.bigint "remote_macro_group_id", null: false
+    t.bigint "device_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "taggings", charset: "utf8mb4", force: :cascade do |t|
