@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(version: 2022_03_19_064537) do
     t.integer "service_type", null: false
     t.bigint "remote_macro_group_id"
     t.bigint "device_id"
+    t.boolean "enabled", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

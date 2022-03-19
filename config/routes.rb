@@ -23,7 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :streaming_services, only: [:index, :new, :create]
+  resources :streaming_services, only: [:index, :new, :create, :show, :edit, :update, :destroy]
 
   namespace :internal do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }

@@ -1,5 +1,5 @@
 <h1 class="mb-5">ストリーミングサービスの登録</h1>
-<%= form_for @streaming_service do |f| %>
+<%= form_for @streaming_service, remote: false do |f| %>
   <%= render "shared/validation_errors", f: f %>
 
   <div class="mb-3 row">
@@ -13,7 +13,7 @@
     <%= f.label :service_type, "連携先", class: "col-sm-2 col-form-label" %>
     <div class="col-sm-10">
       youtube live
-      <%= f.hidden_field :service_type, value: 10, class: "form-control", required: true %>
+      <%= f.hidden_field :service_type, value: :youtube_live, class: "form-control", required: true %>
     </div>
   </div>
 
