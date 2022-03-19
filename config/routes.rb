@@ -91,4 +91,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  post '/auth/:provider/callback', to: 'omniauth_callbacks#create'
+  get '/auth/:provider/callback', to: 'omniauth_callbacks#create'
 end
