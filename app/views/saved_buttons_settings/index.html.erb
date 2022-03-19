@@ -4,9 +4,9 @@
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
-    <th class="col-md-2">メモ</th>
-    <th class="col-md-2">登録日</th>
-    <th class="col-md-4"></th>
+    <th class="col-md-1">メモ</th>
+    <th class="col-md-1">登録日</th>
+    <th class="col-md-7"></th>
   </tr>
   <%= render partial: 'edit_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
   <%= render partial: 'edit_content_modal', collection: @saved_buttons_settings, as: :saved_buttons_setting %>
@@ -16,7 +16,10 @@
         <% if saved_buttons_setting.public_saved_buttons_setting %>
           <%= link_to saved_buttons_setting.name || '未設定', public_saved_buttons_setting_path(saved_buttons_setting.public_saved_buttons_setting.unique_key) %>
           <br>
-          <%= saved_buttons_setting.public_saved_buttons_setting.created_at.to_s(:db) %> から公開
+          <span class="badge bg-success">
+            <%= saved_buttons_setting.public_saved_buttons_setting.created_at.to_s(:jp) %>
+          </span>
+          から公開
         <% else %>
           <%= saved_buttons_setting.name || '未設定' %>
         <% end %>
