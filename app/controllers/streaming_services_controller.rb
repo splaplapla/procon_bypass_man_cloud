@@ -25,6 +25,19 @@ class StreamingServicesController < ApplicationController
     @streaming_service = current_user.streaming_services.find(params[:id])
   end
 
+  def edit
+    @streaming_service = current_user.streaming_services.find(params[:id])
+  end
+
+  def update
+    @streaming_service = current_user.streaming_services.find(params[:id])
+    if @streaming_service.update(streaming_service_param)
+      redirect_to @streaming_service, notice: "更新できました"
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @streaming_service = current_user.streaming_services.find(params[:id]).destroy
     redirect_to streaming_services_path, notice: "削除できました"

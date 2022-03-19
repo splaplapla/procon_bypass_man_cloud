@@ -1,4 +1,11 @@
-<h1>連携中のストリーミングサービス「<%= @streaming_service.name %>」</h1>
+<div class="row">
+  <div class="col-11">
+    <h1>連携中のストリーミングサービス「<%= @streaming_service.name %>」</h1>
+  </div>
+  <div class="col-1">
+    <%= link_to "編集", edit_streaming_service_path(@streaming_service), class: "btn btn-success" %>
+  </div>
+</div>
 
 <table class="table mb-4">
   <tr>
