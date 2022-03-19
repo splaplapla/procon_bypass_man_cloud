@@ -50,7 +50,10 @@ Rails.application.routes.draw do
       resources :pbm_jobs, only: [:index, :update]
       resources :device_statuses, only: [:create]
       resources :completed_pbm_remote_macro_jobs, only: [:create]
-      resources :queued_remote_macro_commands, only: [:create]
+
+      resources :streaming_services, only: [:show] do
+        post "remote_macro_commands/:word/enqueue" => "remote_macro_commands#enqueue", as: :enqueue_remote_macro_commands
+      end
     end
   end
 

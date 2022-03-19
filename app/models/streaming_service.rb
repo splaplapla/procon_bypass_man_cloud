@@ -1,4 +1,6 @@
 class StreamingService < ApplicationRecord
+  include HasUniqueKey
+
   belongs_to :user
   belongs_to :device, optional: true
   belongs_to :remote_macro_group, optional: true

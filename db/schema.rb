@@ -149,8 +149,10 @@ ActiveRecord::Schema.define(version: 2022_03_19_064537) do
     t.bigint "remote_macro_group_id"
     t.bigint "device_id"
     t.boolean "enabled", default: false
+    t.string "unique_key"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["unique_key"], name: "index_streaming_services_on_unique_key", unique: true
   end
 
   create_table "taggings", charset: "utf8mb4", force: :cascade do |t|
