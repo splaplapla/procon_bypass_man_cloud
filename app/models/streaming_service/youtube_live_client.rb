@@ -52,7 +52,7 @@ class StreamingService::YoutubeLiveClient
     return nil unless chat_id_of_live_stream
 
     uri = URI.parse("#{BASE}/v3/liveChat/messages")
-    uri.query = "id=#{live_stream_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{pageToken}"
+    uri.query = "id=#{video_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{pageToken}"
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     req = Net::HTTP::Get.new(uri.request_uri)
@@ -69,10 +69,10 @@ class StreamingService::YoutubeLiveClient
 
   # @return [String, NilClass]
   def chat_id_of_live_stream
-    return nil unless live_stream_id
+    return nil unless video_id
 
     uri = URI.parse("#{BASE}/v3/videos")
-    uri.query = "id=#{live_stream_id}&part=liveStreamingDetails"
+    uri.query = "id=#{video_id}&part=liveStreamingDetails"
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     req = Net::HTTP::Get.new(uri.request_uri)
@@ -90,24 +90,20 @@ class StreamingService::YoutubeLiveClient
     retry
   end
 
-  def live_stream_id=(id)
-    @live_stream_id = id
+  def video_id=(id)
+    @video_id = id
   end
 
   # @return [String, NilClass]
-  def live_stream_id
-    @live_stream_id
-  end
-
-  def video_id=(id)
-    @live_stream_id = id
+  def video_id
+    @video_id
   end
 
   # video_idに従った動画の情報を返す
   def video
-    return nil unless live_stream_id
+    return nil unless video_id
 
-    response = SearchRequest.request(video_id: live_stream_id, access_token: access_token)
+    response = SearchRequest.request(video_id: video_id, access_token: access_token)
     puts response.body
     response
     handle_error(response) do
