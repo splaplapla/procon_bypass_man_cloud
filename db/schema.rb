@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_19_064537) do
+ActiveRecord::Schema.define(version: 2022_03_20_052520) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -133,6 +133,16 @@ ActiveRecord::Schema.define(version: 2022_03_19_064537) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "content_hash"
     t.bigint "user_id"
+  end
+
+  create_table "streaming_service_accounts", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "streaming_service_id", null: false
+    t.string "access_token", null: false
+    t.string "refresh_token", null: false
+    t.datetime "expires_at", null: false
+    t.string "uid", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "streaming_services", charset: "utf8mb4", force: :cascade do |t|
