@@ -1,6 +1,8 @@
 class StreamingService::YoutubeLiveClient
-  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high); end
+  BASE = "https://www.googleapis.com/youtube"
 
+  class UnexpectedError < StandardError; end
+  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high); end
   class LiveStreamRequest
     def self.request(my_channel_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/search")
@@ -13,17 +15,43 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  class UnexpectedError < StandardError; end
-
-  BASE = "https://www.googleapis.com/youtube"
-
   def initialize(streaming_service_account)
     @streaming_service_account = streaming_service_account
   end
 
+  # @return [Array<String>, NilClass]
+  def get_chat_messages(pageToken: nil)
+    return nil unless chat_id_of_live_stream
+
+    raw = get_raw_chat_messages(pageToken: pageToken)
+    pageToken = raw["nextPageToken"]
+    messages = raw["items"].map do |item|
+      item.dig("snippet", "textMessageDetails", "messageText")
+    end
+    return [pageToken, messages]
+  end
+
+  # @return [Array<String>, NilClass]
+  def get_raw_chat_messages(pageToken: nil)
+    return nil unless chat_id_of_live_stream
+
+    uri = URI.parse("#{BASE}/v3/liveChat/messages")
+    uri.query = "id=#{live_stream_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{pageToken}"
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    req = Net::HTTP::Get.new(uri.request_uri)
+    req["Authorization"] = "Bearer #{access_token}"
+    res = http.request(req)
+    if res.code == '200'
+      return json = JSON.parse(res.body)
+    else
+      Rails.logger.error "get_chat_messagesをcallしたら#{response.code}が帰ってきました。"
+    end
+  end
+
   # @return [String, NilClass]
   def chat_id_of_live_stream
-    # return nil unless live_stream_id
+    return nil unless live_stream_id
 
     uri = URI.parse("#{BASE}/v3/videos")
     uri.query = "id=#{live_stream_id}&part=liveStreamingDetails"
@@ -32,6 +60,16 @@ class StreamingService::YoutubeLiveClient
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
+    if res.code == '200'
+      json = JSON.parse(res.body)
+      if(item = json["items"].first)
+        return item.dig("liveStreamingDetails", "activeLiveChatId")
+      end
+
+      return nil
+    else
+      Rails.logger.error "chat_id_of_live_streamをcallしたら#{response.code}が帰ってきました。"
+    end
   end
 
   # @return [String, NilClass]
@@ -56,7 +94,8 @@ class StreamingService::YoutubeLiveClient
 
       return nil
     else
-      Rails.logger.error "live_streamをcallしたら#{response.code}が帰ってきました。"
+      Rails.logger.error "live_streamをcallしたら#{response.code}が帰ってきました。(#{response.body})"
+      return nil
     end
   end
 
