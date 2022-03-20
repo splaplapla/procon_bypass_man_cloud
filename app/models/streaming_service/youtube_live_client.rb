@@ -44,10 +44,9 @@ class StreamingService::YoutubeLiveClient
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
-    if res.code == '200'
+
+    handle_error(res) do
       return json = JSON.parse(res.body)
-    else
-      Rails.logger.error "get_chat_messagesをcallしたら#{response.code}が帰ってきました。"
     end
   end
 
@@ -62,15 +61,12 @@ class StreamingService::YoutubeLiveClient
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
-    if res.code == '200'
+
+    handle_error(res) do
       json = JSON.parse(res.body)
       if(item = json["items"].first)
         return item.dig("liveStreamingDetails", "activeLiveChatId")
       end
-
-      return nil
-    else
-      Rails.logger.error "chat_id_of_live_streamをcallしたら#{response.code}が帰ってきました。"
     end
   end
 
@@ -82,7 +78,7 @@ class StreamingService::YoutubeLiveClient
   # @return [Video, NilClass]
   def live_stream
     response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
-    if response.code == '200'
+    handle_error(response) do
       json = JSON.parse(response.body)
       if(item = json["items"].first)
         return Video.new(
@@ -93,15 +89,10 @@ class StreamingService::YoutubeLiveClient
           item.dig("snippet", "thumbnails", "high"),
         )
       end
-
-      return nil
-    else
-      Rails.logger.error "live_streamをcallしたら#{response.code}が帰ってきました。(#{response.body})"
-      return nil
     end
   end
 
-  def refresh
+  def refresh!
     uri = URI.parse("https://accounts.google.com/o/oauth2/token")
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = uri.scheme === "https"
@@ -114,19 +105,20 @@ class StreamingService::YoutubeLiveClient
     headers = { 'Content-Type' => 'application/json' }
     response = http.post(uri.path, params.to_json, headers)
 
-    if response.code == '200'
+    handle_error(response) do
       json = JSON.parse(response.body)
       @streaming_service_account.update!(
         access_token: json['access_token'],
         expires_at: Time.zone.now + json['expires_in'],
       )
-    else
-      Rails.logger.error "refreshをしたら#{response.code}が帰ってきました。"
     end
   end
 
   # @return [String]
   def my_channel_id
+    if @streaming_service_account.my_channel_id.present?
+      return @streaming_service_account.my_channel_id
+    end
     return @my_channel_id if defined?(@my_channel_id)
 
     uri = URI.parse("#{BASE}/v3/channels")
@@ -137,14 +129,23 @@ class StreamingService::YoutubeLiveClient
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
 
-    if res.code == "200"
+    handle_error(res) do
       @my_channel_id = JSON.parse(res.body)["items"].first["id"]
       return @my_channel_id
+    end
+  end
+
+  private
+
+  def handle_error(response, &block)
+    if response.code == "200"
+      block.call
     elsif res.code == "401"
-      refresh
-      return my_channel_id
+      refresh!
+      return block.call
     elsif res.code == "403"
       errors = parse_error(res.body)
+
       case
       when errors.include?("youtube.quota")
         raise ExceededYoutubeQuotaError
@@ -155,8 +156,6 @@ class StreamingService::YoutubeLiveClient
       raise UnexpectedError
     end
   end
-
-  private
 
   # @return [String]
   def access_token
