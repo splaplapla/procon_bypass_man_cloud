@@ -4,7 +4,7 @@ class StreamingService::YoutubeLiveClient
   class UnexpectedError < StandardError; end
   class ExceededYoutubeQuotaError < StandardError; end
 
-  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high); end
+  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url); end
   class LiveStreamRequest
     def self.request(my_channel_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/search")
@@ -89,7 +89,7 @@ class StreamingService::YoutubeLiveClient
           item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo') ,
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
-          item.dig("snippet", "thumbnails", "high"),
+          item.dig("snippet", "thumbnails", "high", "url"),
         )
       end
     end

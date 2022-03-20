@@ -78,7 +78,7 @@ describe StreamingService::YoutubeLiveClient do
       it { expect(subject.published_at).to eq("2022-03-20 04:08:09 +0000".to_time) }
       it { expect(subject.title).to eq("テスト") }
       it { expect(subject.description).to eq("https://github.com/splaplapla/procon_bypass_man を使っています 使用中の設定は  です ...") }
-      it { expect(subject.thumbnails_high).to eq({"url"=>"https://i.ytimg.com/vi/oBDMO5ehSWM/hqdefault_live.jpg", "width"=>480, "height"=>360}) }
+      it { expect(subject.thumbnails_high_url).to eq("https://i.ytimg.com/vi/oBDMO5ehSWM/hqdefault_live.jpg") }
     end
   end
 end
