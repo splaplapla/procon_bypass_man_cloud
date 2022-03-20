@@ -37,7 +37,7 @@ describe StreamingService::ShowVideoService do
       end
 
       it do
-        expect(subject.last.to_h.values).to eq(["a", "b", "c", "d", "e"])
+        expect(subject.to_h.values).to eq(["a", "b", "c", "d", "e"])
       end
     end
 
@@ -73,7 +73,7 @@ describe StreamingService::ShowVideoService do
 
       it do
         expect(subject).to match(
-          ["aa", an_instance_of(StreamingService::YoutubeLiveClient::Video)]
+          an_instance_of(StreamingService::YoutubeLiveClient::Video)
         )
       end
     end
@@ -85,7 +85,7 @@ describe StreamingService::ShowVideoService do
 
       it do
         expect(subject).to match(
-          ["a", an_instance_of(StreamingService::YoutubeLiveClient::Video)]
+          an_instance_of(StreamingService::YoutubeLiveClient::Video)
         )
       end
     end

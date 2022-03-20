@@ -5,6 +5,8 @@ class StreamingService::YoutubeLiveClient
   class ExceededYoutubeQuotaError < StandardError; end
   class OldAccessTokenError < StandardError; end
   class VideoNotFoundError < StandardError; end
+  class NotOwnerVideoError < StandardError; end
+  class NotLiveStreamError < StandardError; end
 
   class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url); end
   class SearchRequest
