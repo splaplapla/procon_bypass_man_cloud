@@ -28,7 +28,7 @@ class StreamingService::ShowLiveStreamService
       @streaming_service_account.save!
     end
     my_channel_id = decorated_streaming_service_account.my_channel_id
-    live_stream = client.live_stream
+    live_stream = client.available_live_stream
     [my_channel_id, live_stream]
   end
 end

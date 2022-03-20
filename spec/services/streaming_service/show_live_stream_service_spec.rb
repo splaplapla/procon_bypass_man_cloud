@@ -13,7 +13,7 @@ describe StreamingService::ShowLiveStreamService do
     before do
       allow(StreamingService::YoutubeLiveClient).to receive(:new) { youtube_live_client }
       allow(youtube_live_client).to receive(:my_channel_id) { "a" }
-      allow(youtube_live_client).to receive(:live_stream) { "b" }
+      allow(youtube_live_client).to receive(:available_live_stream) { "b" }
     end
 
     context 'cached_dataにmy_channel_idがあるとき' do

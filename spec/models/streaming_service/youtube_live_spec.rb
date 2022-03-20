@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 describe StreamingService::YoutubeLiveClient do
-  describe '#live_stream' do
+  describe '#available_live_stream' do
     let(:client) { described_class.new(streaming_service_account) }
 
-    subject { client.live_stream }
+    subject { client.available_live_stream }
 
     context 'レスポンスが入っていないとき' do
       let(:user) { FactoryBot.create(:user) }

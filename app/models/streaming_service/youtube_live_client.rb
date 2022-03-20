@@ -72,13 +72,17 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
+  def live_stream_id=(id)
+    @live_stream_id = id
+  end
+
   # @return [String, NilClass]
   def live_stream_id
-    live_stream&.id
+    @live_stream_id
   end
 
   # @return [Video, NilClass]
-  def live_stream
+  def available_live_stream
     response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     handle_error(response) do
       json = JSON.parse(response.body)
