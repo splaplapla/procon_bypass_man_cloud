@@ -3,12 +3,12 @@ require 'rails_helper'
 RSpec.describe OmniauthCallbacksController, type: :request do
   include_context "login_with_user"
 
-  describe 'GET #google' do
+  describe 'GET #google_oauth2' do
     let(:user) { FactoryBot.create(:user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
     let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, user: user) }
 
-    subject { get "/auth/google/callback" }
+    subject { get "/auth/google_oauth2/callback" }
 
     before do
       allow_any_instance_of(OmniauthCallbacksController).to receive(:auth_hash) {
@@ -34,8 +34,8 @@ RSpec.describe OmniauthCallbacksController, type: :request do
         streaming_service_account
       end
 
-      it '作り直す' do
-        expect { subject }.to change { streaming_service.reload_streaming_service_account.id }
+      it do
+        expect { subject }.not_to change { streaming_service.reload_streaming_service_account.id }
       end
 
       it do
@@ -45,7 +45,7 @@ RSpec.describe OmniauthCallbacksController, type: :request do
     end
 
     it do
-      expect { subject }.to change { streaming_service.reload_streaming_service_account }
+      expect { subject }.not_to change { streaming_service.reload_streaming_service_account }
     end
 
     it do

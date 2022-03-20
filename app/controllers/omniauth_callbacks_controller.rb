@@ -1,8 +1,11 @@
 class OmniauthCallbacksController < ApplicationController
-  def google
-    StreamingServiceAccount.find_by(uid: auth_hash.uid)&.destroy
-
+  def google_oauth2
     if streaming_service = current_user.streaming_services.find_by(id: current_streaming_service_id)
+      if streaming_service.streaming_service_account
+        redirect_to(back_to, notice: "このサービスではすでに連携済みです。")
+        return
+      end
+
       streaming_service.create_streaming_service_account!(
         name: auth_hash.info.name,
         image_url: auth_hash.info.image,
