@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(version: 2022_03_20_052520) do
     t.string "refresh_token", null: false
     t.datetime "expires_at", null: false
     t.string "uid", null: false
+    t.text "cached_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["access_token"], name: "index_streaming_service_accounts_on_access_token", unique: true
