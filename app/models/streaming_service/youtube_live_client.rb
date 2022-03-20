@@ -4,6 +4,7 @@ class StreamingService::YoutubeLiveClient
   class UnexpectedError < StandardError; end
   class ExceededYoutubeQuotaError < StandardError; end
   class OldAccessTokenError < StandardError; end
+  class VideoNotFoundError < StandardError; end
 
   class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url); end
   class SearchRequest
@@ -104,9 +105,20 @@ class StreamingService::YoutubeLiveClient
     return nil unless video_id
 
     response = SearchRequest.request(video_id: video_id, access_token: access_token)
-    puts response.body
-    response
+    puts response.body # TODO 後で消す
     handle_error(response) do
+      json = JSON.parse(response.body)
+      if(item = json["items"].first)
+        return Video.new(
+          item.dig("id", "videoId"),
+          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
+          item.dig("snippet", "title"),
+          item.dig("snippet", "description"),
+          item.dig("snippet", "thumbnails", "high", "url"),
+        )
+      else
+        raise VideoNotFoundError
+      end
     end
   rescue OldAccessTokenError
     retry
@@ -120,7 +132,7 @@ class StreamingService::YoutubeLiveClient
       if(item = json["items"].first)
         return Video.new(
           item.dig("id", "videoId"),
-          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo') ,
+          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
           item.dig("snippet", "thumbnails", "high", "url"),
