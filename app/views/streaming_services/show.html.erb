@@ -42,10 +42,25 @@
     </td>
   </tr>
   <tr>
-    <th></th>
+    <th>連携しているyoutubeチャンネル
+    </th>
     <td>
       <div>
-        <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+        <% if @streaming_service.streaming_service_account %>
+          <p>
+          <%= image_tag @streaming_service.streaming_service_account.image_url %>
+          「<%= @streaming_service.streaming_service_account.name %>」と連携中です。
+          </p>
+
+          <% if @streaming_service.streaming_service_account.expired_access_token? %>
+            アクセストークンの期限が切れています。
+          <% end %>
+
+          <%= link_to "Googleで再ログイン", "/auth/google_oauth2", method: :post %><br>
+          <%= link_to "連携解除", unlink_streaming_service_account_streaming_service_path(@streaming_service), method: :delete %>
+        <% else %>
+          <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+        <% end %>
       </div>
     </td>
   </tr>

@@ -136,6 +136,8 @@ ActiveRecord::Schema.define(version: 2022_03_20_052520) do
   end
 
   create_table "streaming_service_accounts", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "image_url"
     t.bigint "streaming_service_id", null: false
     t.string "access_token", null: false
     t.string "refresh_token", null: false

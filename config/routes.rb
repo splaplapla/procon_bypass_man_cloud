@@ -25,7 +25,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :streaming_services, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+  resources :streaming_services, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    delete :unlink_streaming_service_account, on: :member
+  end
 
   namespace :internal do
     resources :procon_bypass_man_versions, only: [:show], constraints: { id: /[^\/]+/ }

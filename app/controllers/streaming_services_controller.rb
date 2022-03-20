@@ -23,6 +23,7 @@ class StreamingServicesController < ApplicationController
 
   def show
     @streaming_service = current_user.streaming_services.find(params[:id])
+    session[:current_streaming_service_id] = @streaming_service.id
   end
 
   def edit
@@ -41,6 +42,11 @@ class StreamingServicesController < ApplicationController
   def destroy
     @streaming_service = current_user.streaming_services.find(params[:id]).destroy
     redirect_to streaming_services_path, notice: "削除できました"
+  end
+
+  def unlink_streaming_service_account
+    current_user.streaming_services.find_by(id: params[:id]).streaming_service_account&.destroy
+    redirect_to streaming_service_path(params[:id]), notice: "連携解除しました"
   end
 
   private
