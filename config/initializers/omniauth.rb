@@ -1,3 +1,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :google_oauth2, ENV.fetch('GOOGLE_OAUTH2_CLIENT_ID'), ENV.fetch('GOOGLE_OAUTH2_SECRET')
+  provider :google_oauth2, ENV.fetch('GOOGLE_OAUTH2_CLIENT_ID'), ENV.fetch('GOOGLE_OAUTH2_SECRET'), {
+    scope: 'userinfo.email, userinfo.profile, http://gdata.youtube.com',
+    prompt: 'select_account',
+    image_aspect_ratio: 'square',
+    image_size: 50
+  }
 end
