@@ -49,6 +49,11 @@ class StreamingServicesController < ApplicationController
     redirect_to streaming_service_path(params[:id]), notice: "連携解除しました"
   end
 
+  def outdated_refresh_token
+    current_user.streaming_services.find_by(id: params[:id]).streaming_service_account&.destroy
+    redirect_to streaming_service_path(params[:id]), notice: "認証情報が古くなっていたので連携解除しました"
+  end
+
   private
 
   def streaming_service_param

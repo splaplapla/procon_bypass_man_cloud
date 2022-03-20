@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="col-11">
-    <h1>連携中のストリーミングサービス「<%= @streaming_service.name %>」</h1>
+    <h1>連携中ストリーミングサービス「<%= @streaming_service.name %>」</h1>
   </div>
   <div class="col-1">
     <%= link_to "編集", edit_streaming_service_path(@streaming_service), class: "btn btn-success" %>
@@ -51,13 +51,17 @@
           <%= image_tag @streaming_service.streaming_service_account.image_url %>
           「<%= @streaming_service.streaming_service_account.name %>」と連携中です。
           </p>
+          <%= link_to "配信中のライブ配信の動画を選択する", new_streaming_service_youtube_live_path(@streaming_service) %>
+          <br>
 
           <% if @streaming_service.streaming_service_account.expired_access_token? %>
-            アクセストークンの期限が切れています。
+            <p>アクセストークンの期限が切れています。</p>
           <% end %>
 
+          <hr>
+
           <%= link_to "Googleで再ログイン", "/auth/google_oauth2", method: :post %><br>
-          <%= link_to "連携解除", unlink_streaming_service_account_streaming_service_path(@streaming_service), method: :delete %>
+          <%= link_to "連携解除", unlink_streaming_service_account_streaming_service_path(@streaming_service), method: :delete, class: "btn btn-danger" %>
         <% else %>
           <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
         <% end %>
