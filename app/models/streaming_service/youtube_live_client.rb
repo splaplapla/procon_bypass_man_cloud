@@ -77,9 +77,13 @@ class StreamingService::YoutubeLiveClient
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
-    if res.code.to_s == "200"
+
+    if res.code == "200"
       @my_channel_id = JSON.parse(res.body)["items"].first["id"]
       return @my_channel_id
+    elsif res.code == "401"
+      refresh
+      return my_channel_id
     else
       raise UnexpectedError
     end
