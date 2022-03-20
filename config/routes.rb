@@ -99,6 +99,5 @@ Rails.application.routes.draw do
     end
   end
 
-  post '/auth/:provider/callback', to: 'omniauth_callbacks#create'
-  get '/auth/:provider/callback', to: 'omniauth_callbacks#create'
+  get '/auth/google/callback', to: 'omniauth_callbacks#google'
 end

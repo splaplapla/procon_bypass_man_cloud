@@ -1,8 +1,8 @@
 class OmniauthCallbacksController < ApplicationController
-  def create
+  def google
     StreamingServiceAccount.find_by(uid: auth_hash.uid)&.destroy
 
-    if streaming_service = current_user.streaming_services.find_by(id: session[:current_streaming_service_id])
+    if streaming_service = current_user.streaming_services.find_by(id: current_streaming_service_id)
       streaming_service.create_streaming_service_account!(
         name: auth_hash.info.name,
         image_url: auth_hash.info.image,
@@ -15,7 +15,7 @@ class OmniauthCallbacksController < ApplicationController
       raise "もう一度ログインしてください"
     end
 
-    redirect_to(back_to, notice: "アカウントの連携ができました")  || root_path
+    redirect_to(back_to, notice: "アカウントの連携ができました")
   end
 
   private
@@ -25,6 +25,10 @@ class OmniauthCallbacksController < ApplicationController
   end
 
   def back_to
-    request.env['omniauth.origin']
+    request.env['omniauth.origin'] || root_path
+  end
+
+  def current_streaming_service_id
+    session[:current_streaming_service_id]
   end
 end
