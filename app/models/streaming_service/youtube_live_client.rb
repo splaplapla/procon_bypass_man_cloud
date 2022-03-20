@@ -74,7 +74,6 @@ class StreamingService::YoutubeLiveClient
     uri.query = "mine=true&part=contentDetails"
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
