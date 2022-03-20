@@ -1,0 +1,7 @@
+<h1>「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+<% if @live_stream %>
+  配信中のライブが見つかりました。<br>
+  <%= @live_stream.title %>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>
