@@ -1,7 +1,45 @@
 <h1>「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
 <% if @live_stream %>
   配信中のライブが見つかりました。<br>
-  <%= @live_stream.title %>
+
+  <table class="table mb-4">
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <div>
+          <%= image_tag @live_stream.thumbnails_high["url"] %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <div>
+          <%= @live_stream.title %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <div>
+          <%= @live_stream.published_at.to_s(:jp) %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td>
+        <div>
+          <%= @live_stream.description %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <p class="text-center">
+  <%= link_to "この配信に投稿されるコメントと連携する", streaming_service_youtube_live_path(@streaming_service, @my_channel_id), class: "btn btn-success btn-lg" %>
+  </p>
 <% else %>
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
 <% end %>

@@ -25,12 +25,10 @@ class StreamingService::YoutubeLiveClient
   def live_stream
     response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     if response.code == '200'
-      json = JSON.parse(response.body)
-
       if(item = json["items"].first)
         return Video.new(
           item.dig("id", "videoId"),
-          item.dig("snippet", "publishedAt").to_time,
+          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo') ,
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
           item.dig("snippet", "thumbnails", "high"),
@@ -67,15 +65,10 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  private
-
-  # @return [String]
-  def access_token
-    @streaming_service_account.access_token
-  end
-
   # @return [String]
   def my_channel_id
+    return @my_channel_id if defined?(@my_channel_id)
+
     uri = URI.parse("#{BASE}/v3/channels")
     uri.query = "mine=true&part=contentDetails"
     http = Net::HTTP.new(uri.host, uri.port)
@@ -85,9 +78,17 @@ class StreamingService::YoutubeLiveClient
     req["Authorization"] = "Bearer #{access_token}"
     res = http.request(req)
     if res.code.to_s == "200"
-      return JSON.parse(res.body)["items"].first["id"]
+      @my_channel_id = JSON.parse(res.body)["items"].first["id"]
+      return @my_channel_id
     else
       raise UnexpectedError
     end
+  end
+
+  private
+
+  # @return [String]
+  def access_token
+    @streaming_service_account.access_token
   end
 end

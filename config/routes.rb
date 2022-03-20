@@ -29,7 +29,7 @@ Rails.application.routes.draw do
     delete :unlink_streaming_service_account, on: :member
     get :outdated_refresh_token, on: :member
 
-    resources :youtube_live, only: [:new], module: :streaming_services
+    resources :youtube_live, only: [:new, :show], module: :streaming_services
   end
 
   namespace :internal do
