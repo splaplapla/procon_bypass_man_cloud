@@ -7,6 +7,10 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     def my_channel_id
       @streaming_service_account.cached_data["my_channel_id"]
     end
+
+    def method_missing(name, *arg)
+      @streaming_service_account.send(name, *arg)
+    end
   end
 
   def new

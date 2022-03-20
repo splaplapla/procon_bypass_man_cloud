@@ -140,17 +140,17 @@ class StreamingService::YoutubeLiveClient
   def handle_error(response, &block)
     if response.code == "200"
       block.call
-    elsif res.code == "401"
+    elsif response.code == "401"
       refresh!
       return block.call
-    elsif res.code == "403"
-      errors = parse_error(res.body)
+    elsif response.code == "403"
+      errors = parse_error(response.body)
 
       case
       when errors.include?("youtube.quota")
         raise ExceededYoutubeQuotaError
       else
-        raise "知らないエラーです(#{res.body})"
+        raise "知らないエラーです(#{response.body})"
       end
     else
       raise UnexpectedError
