@@ -2,6 +2,8 @@ class StreamingService::YoutubeLiveClient
   BASE = "https://www.googleapis.com/youtube"
 
   class UnexpectedError < StandardError; end
+  class ExceededYoutubeQuotaError < StandardError; end
+
   class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high); end
   class LiveStreamRequest
     def self.request(my_channel_id: , access_token: )
@@ -141,6 +143,14 @@ class StreamingService::YoutubeLiveClient
     elsif res.code == "401"
       refresh
       return my_channel_id
+    elsif res.code == "403"
+      errors = parse_error(res.body)
+      case
+      when errors.include?("youtube.quota")
+        raise ExceededYoutubeQuotaError
+      else
+        raise "知らないエラーです(#{res.body})"
+      end
     else
       raise UnexpectedError
     end
@@ -151,5 +161,9 @@ class StreamingService::YoutubeLiveClient
   # @return [String]
   def access_token
     @streaming_service_account.access_token
+  end
+
+  def parse_error(body)
+    return JSON.parse(body).dig("error", "errors").map {|x| x["domain"] }
   end
 end
