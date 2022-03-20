@@ -12,4 +12,10 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     streaming_service = current_user.streaming_services.find(params[:streaming_service_id])
     video_id = params[:id]
   end
+
+  def update_chat_page_token_as_read
+  end
+
+  def chat_messages
+  end
 end

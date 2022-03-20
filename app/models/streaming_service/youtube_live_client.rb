@@ -22,7 +22,6 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account = streaming_service_account
   end
 
-  # @return [Array<String>, NilClass]
   def get_chat_messages(pageToken: nil)
     return nil unless chat_id_of_live_stream
 
