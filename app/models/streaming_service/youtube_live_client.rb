@@ -25,6 +25,7 @@ class StreamingService::YoutubeLiveClient
   def live_stream
     response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     if response.code == '200'
+      json = JSON.parse(response.body)
       if(item = json["items"].first)
         return Video.new(
           item.dig("id", "videoId"),
