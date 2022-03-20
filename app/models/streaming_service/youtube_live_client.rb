@@ -1,6 +1,18 @@
 class StreamingService::YoutubeLiveClient
   class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high); end
 
+  class LiveStreamRequest
+    def self.request(my_channel_id: , access_token: )
+      uri = URI.parse("#{BASE}/v3/search")
+      uri.query = "channelId=#{my_channel_id}&part=id,snippet&type=video&eventType=live&maxResults=2"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      req = Net::HTTP::Get.new(uri.request_uri)
+      req["Authorization"] = "Bearer #{access_token}"
+      http.request(req)
+    end
+  end
+
   class UnexpectedError < StandardError; end
 
   BASE = "https://www.googleapis.com/youtube"
@@ -11,16 +23,9 @@ class StreamingService::YoutubeLiveClient
 
   # @return [Video, NilClass]
   def live_stream
-    uri = URI.parse("#{BASE}/v3/search")
-    uri.query = "channelId=#{my_channel_id}&part=id,snippet&type=video&eventType=live&maxResults=2"
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    req = Net::HTTP::Get.new(uri.request_uri)
-    req["Authorization"] = "Bearer #{access_token}"
-    res = http.request(req)
-
+    response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     if response.code == '200'
-      json = JSON.parse(res.body)
+      json = JSON.parse(response.body)
 
       if(item = json["items"].first)
         return Video.new(
