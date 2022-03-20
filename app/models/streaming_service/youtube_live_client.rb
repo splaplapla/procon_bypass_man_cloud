@@ -21,6 +21,24 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account = streaming_service_account
   end
 
+  # @return [String, NilClass]
+  def chat_id_of_live_stream
+    # return nil unless live_stream_id
+
+    uri = URI.parse("#{BASE}/v3/videos")
+    uri.query = "id=#{live_stream_id}&part=liveStreamingDetails"
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    req = Net::HTTP::Get.new(uri.request_uri)
+    req["Authorization"] = "Bearer #{access_token}"
+    res = http.request(req)
+  end
+
+  # @return [String, NilClass]
+  def live_stream_id
+    live_stream&.id
+  end
+
   # @return [Video, NilClass]
   def live_stream
     response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
