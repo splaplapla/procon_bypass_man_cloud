@@ -54,10 +54,6 @@
           <%= link_to "配信中のライブ配信の動画を選択する", new_streaming_service_youtube_live_path(@streaming_service) %>
           <br>
 
-          <% if @streaming_service.streaming_service_account.expired_access_token? %>
-            <p>アクセストークンの期限が切れています。</p>
-          <% end %>
-
           <hr>
 
           <%= link_to "Googleで再ログイン", "/auth/google_oauth2", method: :post %><br>
