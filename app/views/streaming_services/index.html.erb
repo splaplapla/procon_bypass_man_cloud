@@ -4,10 +4,11 @@
 <table class="table">
   <tr>
     <th class="col-md-2">名前</th>
-    <th class="col-md-2">連携先サービス</th>
-    <th class="col-md-2">接続先デバイス</th>
-    <th class="col-md-2">連携するリモートマクロのグループ</th>
-    <th class="col-md-2"></th>
+    <th class="col-md-1">連携先サービス</th>
+    <th class="col-md-1">連携中アカウント</th>
+    <th class="col-md-1">接続先デバイス</th>
+    <th class="col-md-2">連携するマクロのグループ</th>
+    <th class="col-md-1"></th>
   </tr>
   <% @streaming_services.each do |streaming_service| %>
     <tr>
@@ -16,6 +17,15 @@
       </td>
       <td>
         <%= streaming_service.service_type %>
+      </td>
+      <td>
+        <% if streaming_service&.streaming_service_account %>
+          <span class="badge bg-success">
+            <%= streaming_service.streaming_service_account.name %>
+          </span>
+        <% else %>
+          <span class="badge bg-warning">未連携</span>
+        <% end %>
       </td>
       <td>
         <%= streaming_service.device&.name %>

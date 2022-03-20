@@ -2,7 +2,7 @@ class StreamingServicesController < ApplicationController
   def index
     @streaming_services = current_user.
       streaming_services.
-      preload(:device, :remote_macro_group).
+      preload(:device, :remote_macro_group, :streaming_service_account).
       order(id: :asc)
 
     @remote_macro_groups = current_user.remote_macro_groups
