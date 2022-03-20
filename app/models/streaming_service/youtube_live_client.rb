@@ -3,8 +3,22 @@ class StreamingService::YoutubeLiveClient
 
   class UnexpectedError < StandardError; end
   class ExceededYoutubeQuotaError < StandardError; end
+  class OldAccessTokenError < StandardError; end
 
   class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url); end
+  class SearchRequest
+    def self.request(video_id: , access_token: )
+      uri = URI.parse("#{BASE}/v3/search")
+      uri.query = "id=#{video_id}&part=id,snippet&maxResults=2"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      req = Net::HTTP::Get.new(uri.request_uri)
+      req["Authorization"] = "Bearer #{access_token}"
+      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+      http.request(req)
+    end
+  end
+
   class LiveStreamRequest
     def self.request(my_channel_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/search")
@@ -49,6 +63,8 @@ class StreamingService::YoutubeLiveClient
     handle_error(res) do
       return json = JSON.parse(res.body)
     end
+  rescue OldAccessTokenError
+    retry
   end
 
   # @return [String, NilClass]
@@ -70,6 +86,8 @@ class StreamingService::YoutubeLiveClient
         return item.dig("liveStreamingDetails", "activeLiveChatId")
       end
     end
+  rescue OldAccessTokenError
+    retry
   end
 
   def live_stream_id=(id)
@@ -79,6 +97,23 @@ class StreamingService::YoutubeLiveClient
   # @return [String, NilClass]
   def live_stream_id
     @live_stream_id
+  end
+
+  def video_id=(id)
+    @live_stream_id = id
+  end
+
+  # video_idに従った動画の情報を返す
+  def video
+    return nil unless live_stream_id
+
+    response = SearchRequest.request(video_id: live_stream_id, access_token: access_token)
+    puts response.body
+    response
+    handle_error(response) do
+    end
+  rescue OldAccessTokenError
+    retry
   end
 
   # @return [Video, NilClass]
@@ -96,6 +131,8 @@ class StreamingService::YoutubeLiveClient
         )
       end
     end
+  rescue OldAccessTokenError
+    retry
   end
 
   def refresh!
@@ -123,7 +160,7 @@ class StreamingService::YoutubeLiveClient
 
   # @return [String]
   def my_channel_id
-    if @streaming_service_account.my_channel_id.present?
+    if @streaming_service_account.respond_to?(:my_channel_id) && @streaming_service_account.my_channel_id.present?
       return @streaming_service_account.my_channel_id
     end
     return @my_channel_id if defined?(@my_channel_id)
@@ -141,16 +178,19 @@ class StreamingService::YoutubeLiveClient
       @my_channel_id = JSON.parse(res.body)["items"].first["id"]
       return @my_channel_id
     end
+  rescue OldAccessTokenError
+    retry
   end
 
   private
 
+  # @raise [OldAccessTokenError] access_tokenを作成し直したら投げる
   def handle_error(response, &block)
     if response.code == "200"
       block.call
     elsif response.code == "401"
       refresh!
-      return block.call
+      raise OldAccessTokenError
     elsif response.code == "403"
       errors = parse_error(response.body)
 

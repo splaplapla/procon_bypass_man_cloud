@@ -14,7 +14,6 @@ class StreamingServices::YoutubeLiveController < ApplicationController
 
     client = StreamingService::YoutubeLiveClient.new(@streaming_service_account)
     client.live_stream_id = params[:id]
-
   end
 
   def update_chat_page_token_as_read
