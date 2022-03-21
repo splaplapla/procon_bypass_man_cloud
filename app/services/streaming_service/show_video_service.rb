@@ -35,5 +35,15 @@ class StreamingService::ShowVideoService
         client.active_streaming_video
       end
     return video
+  rescue StreamingService::YoutubeLiveClient::UnexpectedError
+    raise # TODO
+  rescue StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError
+    raise # TODO
+  rescue StreamingService::YoutubeLiveClient::VideoNotFoundError
+    raise # TODO
+  rescue StreamingService::YoutubeLiveClient::NotOwnerVideoError
+    raise # TODO
+  rescue StreamingService::YoutubeLiveClient::NotLiveStreamError
+    raise # TODO
   end
 end
