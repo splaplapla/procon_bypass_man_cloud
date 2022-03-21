@@ -1,18 +1,57 @@
 require 'rails_helper'
 
 describe StreamingService::YoutubeLiveClient do
+  describe '#active_streaming_video' do
+    let(:client) { described_class.new(streaming_service_account) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:device) { FactoryBot.create(:device, user: user) }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
+
+    subject { client.active_streaming_video }
+
+    context '配信が見つからなかったとき' do
+      before do
+        allow(client).to receive(:my_channel_id) { "foo" }
+        allow(StreamingService::YoutubeLiveClient::LiveStreamDetailRequest).to receive(:request) do
+          OpenStruct.new(
+            code: '200',
+            body: {
+              "kind"=>"youtube#videoListResponse",
+              "etag"=>"TKGl1LDXcI8VcOBvBt0DiSIrfe0",
+              "items"=>[],
+              "pageInfo"=>{"totalResults"=>1, "resultsPerPage"=>1},
+            }.to_json
+          )
+        end
+        client.video_id = "foo"
+      end
+
+      it { expect { subject }.to raise_error(StreamingService::YoutubeLiveClient::VideoNotFoundError) }
+    end
+
+    context '別チャンネルの動画のとき' do
+    end
+
+    context '配信が終了した動画のとき' do
+    end
+
+    context '有効な配信が見つかったとき' do
+    end
+  end
+
   describe '#available_live_stream' do
     let(:client) { described_class.new(streaming_service_account) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:device) { FactoryBot.create(:device, user: user) }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, user: user) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
 
     subject { client.available_live_stream }
 
-    context 'レスポンスが入っていないとき' do
-      let(:user) { FactoryBot.create(:user) }
-      let(:device) { FactoryBot.create(:device, user: user) }
-      let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
-      let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
-      let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
-
+    context '配信が見つからなかったとき' do
       before do
         allow(client).to receive(:my_channel_id) { "foo" }
         allow(StreamingService::YoutubeLiveClient::AvailableLiveStreamRequest).to receive(:request) do
@@ -32,13 +71,7 @@ describe StreamingService::YoutubeLiveClient do
       it { expect(subject).to be_nil }
     end
 
-    context 'レスポンスが入っているとき' do
-      let(:user) { FactoryBot.create(:user) }
-      let(:device) { FactoryBot.create(:device, user: user) }
-      let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
-      let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
-      let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
-
+    context '有効な配信が見つかったとき' do
       before do
         allow(client).to receive(:my_channel_id) { "foo" }
         allow(StreamingService::YoutubeLiveClient::AvailableLiveStreamRequest).to receive(:request) do

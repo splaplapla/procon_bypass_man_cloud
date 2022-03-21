@@ -35,6 +35,9 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
+  attr_accessor :video_id
+  attr_writer :my_channel_id
+
   def initialize(streaming_service_account)
     @streaming_service_account = streaming_service_account
   end
@@ -93,17 +96,11 @@ class StreamingService::YoutubeLiveClient
     retry
   end
 
-  def video_id=(id)
-    @video_id = id
-  end
-
-  # @return [String, NilClass]
-  def video_id
-    @video_id
-  end
-
   # @return [Video, NilClass]
-  # video_idを使ってVideoを返す
+  # @raise [NotLiveStreamError] chat_idがない場合は配信中ではないと判断する
+  # @raise [NotOwnerVideoError] 別チャンネルの配信のとき
+  # @raise [VideoNotFoundError] video_idに一致するvideoが返ってこないとき
+  # video_idを使ってchat_idを含むVideoを返す. chat_idがない場合は配信中ではないと判断してエラーを返す
   def active_streaming_video
     raise "need video_id" if video_id.nil?
 
@@ -133,7 +130,7 @@ class StreamingService::YoutubeLiveClient
   end
 
   # @return [Video, NilClass]
-  # 公開しているライブ配信のみを返す. 限定公開だと帰ってこない
+  # 公開しているライブ配信のみを返す. 限定公開だと返ってこない. chat_idはない
   def available_live_stream
     response = AvailableLiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     handle_error(response) do
@@ -173,10 +170,6 @@ class StreamingService::YoutubeLiveClient
         expires_at: Time.zone.now + json['expires_in'],
       )
     end
-  end
-
-  def my_channel_id=(value)
-    @my_channel_id = value
   end
 
   # @return [String]
