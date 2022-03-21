@@ -15,7 +15,7 @@ describe StreamingService::YoutubeLiveClient do
 
       before do
         allow(client).to receive(:my_channel_id) { "foo" }
-        allow(StreamingService::YoutubeLiveClient::LiveStreamRequest).to receive(:request) do
+        allow(StreamingService::YoutubeLiveClient::AvailableLiveStreamRequest).to receive(:request) do
           OpenStruct.new(
             code: '200',
             body: {
@@ -41,7 +41,7 @@ describe StreamingService::YoutubeLiveClient do
 
       before do
         allow(client).to receive(:my_channel_id) { "foo" }
-        allow(StreamingService::YoutubeLiveClient::LiveStreamRequest).to receive(:request) do
+        allow(StreamingService::YoutubeLiveClient::AvailableLiveStreamRequest).to receive(:request) do
           OpenStruct.new(
             code: '200',
             body: {

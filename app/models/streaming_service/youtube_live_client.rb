@@ -8,11 +8,11 @@ class StreamingService::YoutubeLiveClient
   class NotOwnerVideoError < StandardError; end
   class NotLiveStreamError < StandardError; end
 
-  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url); end
-  class SearchRequest
+  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url, :chat_id); end
+  class LiveStreamDetailRequest
     def self.request(video_id: , access_token: )
-      uri = URI.parse("#{BASE}/v3/search")
-      uri.query = "id=#{video_id}&part=id,snippet&maxResults=2"
+      uri = URI.parse("#{BASE}/v3/videos")
+      uri.query = "id=#{video_id}&part=snippet,liveStreamingDetails&maxResults=2"
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       req = Net::HTTP::Get.new(uri.request_uri)
@@ -22,7 +22,7 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  class LiveStreamRequest
+  class AvailableLiveStreamRequest
     def self.request(my_channel_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/search")
       uri.query = "channelId=#{my_channel_id}&part=id,snippet&type=video&eventType=live&maxResults=2"
@@ -102,24 +102,30 @@ class StreamingService::YoutubeLiveClient
     @video_id
   end
 
-  # video_idに従った動画の情報を返す
-  def video
-    return nil unless video_id
+  # @return [Video, NilClass]
+  # video_idを使ってVideoを返す
+  def active_streaming_video
+    raise "need video_id" if video_id.nil?
 
-    response = SearchRequest.request(video_id: video_id, access_token: access_token)
-    puts response.body # TODO 後で消す
+    response = LiveStreamDetailRequest.request(video_id: video_id, access_token: access_token)
     handle_error(response) do
       json = JSON.parse(response.body)
       if(item = json["items"].first)
+        chat_id = item.dig("liveStreamingDetails", "activeLiveChatId") or raise(NotLiveStreamError, "Could not find a chat_id")
+        if channel_id = item.dig("snippet", "channelId") && my_channel_id != channel_id
+          raise NotOwnerVideoError, "This video is Not Owner. Check the video id."
+        end
+
         return Video.new(
-          item.dig("id", "videoId"),
+          item.dig("id"),
           item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
           item.dig("snippet", "thumbnails", "high", "url"),
+          chat_id,
         )
       else
-        raise VideoNotFoundError
+        raise VideoNotFoundError, "Check the video_id"
       end
     end
   rescue OldAccessTokenError
@@ -127,8 +133,9 @@ class StreamingService::YoutubeLiveClient
   end
 
   # @return [Video, NilClass]
+  # 公開しているライブ配信のみを返す. 限定公開だと帰ってこない
   def available_live_stream
-    response = LiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
+    response = AvailableLiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     handle_error(response) do
       json = JSON.parse(response.body)
       if(item = json["items"].first)
@@ -166,6 +173,10 @@ class StreamingService::YoutubeLiveClient
         expires_at: Time.zone.now + json['expires_in'],
       )
     end
+  end
+
+  def my_channel_id=(value)
+    @my_channel_id = value
   end
 
   # @return [String]
@@ -211,7 +222,7 @@ class StreamingService::YoutubeLiveClient
         raise "知らないエラーです(#{response.body})"
       end
     else
-      raise UnexpectedError
+      raise UnexpectedError, JSON.parse(response.body)
     end
   end
 

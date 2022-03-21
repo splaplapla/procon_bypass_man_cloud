@@ -13,6 +13,7 @@ describe StreamingService::ShowVideoService do
     before do
       allow(StreamingService::YoutubeLiveClient).to receive(:new) { youtube_live_client }
       allow(youtube_live_client).to receive(:video_id=) { "a" }
+      allow(youtube_live_client).to receive(:my_channel_id=) { "a" }
       allow(youtube_live_client).to receive(:video) { StreamingService::YoutubeLiveClient::Video.new(:a, :b, :c, :d, :e) }
       allow(youtube_live_client).to receive(:my_channel_id) { "a" }
       allow(youtube_live_client).to receive(:available_live_stream) { "b" }
@@ -29,7 +30,7 @@ describe StreamingService::ShowVideoService do
 
       it do
         subject
-        expect(streaming_service_account.cached_data["video"]).to eq({"id"=>"foo", "value"=>["a", "b", "c", "d", "e"] })
+        expect(streaming_service_account.cached_data["video"]).to eq({"id"=>"foo", "value"=>["a", "b", "c", "d", "e", nil] })
       end
 
       it do
@@ -37,7 +38,7 @@ describe StreamingService::ShowVideoService do
       end
 
       it do
-        expect(subject.to_h.values).to eq(["a", "b", "c", "d", "e"])
+        expect(subject.to_h.values).to eq(["a", "b", "c", "d", "e", nil])
       end
     end
 
@@ -58,7 +59,7 @@ describe StreamingService::ShowVideoService do
 
       it do
         subject
-        expect(streaming_service_account.cached_data["video"]).to eq({"id"=>"foo", "value"=>["a", "b", "c", "d", "e"] })
+        expect(streaming_service_account.cached_data["video"]).to eq({"id"=>"foo", "value"=>["a", "b", "c", "d", "e", nil] })
       end
     end
 
