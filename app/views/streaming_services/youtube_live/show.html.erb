@@ -43,6 +43,8 @@
       </td>
     </tr>
   </table>
+
+  <%= link_to "chatを取得する", chat_messages_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), remote: true %>
 <% else %>
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
 <% end %>

@@ -3,6 +3,7 @@ class StreamingService::YoutubeLiveClient
 
   class UnexpectedError < StandardError; end
   class ExceededYoutubeQuotaError < StandardError; end
+  class LiveChatRateLimitError < StandardError; end
   class OldAccessTokenError < StandardError; end
   class VideoNotFoundError < StandardError; end
   class NotOwnerVideoError < StandardError; end
@@ -12,7 +13,6 @@ class StreamingService::YoutubeLiveClient
     def published_at
       super.to_time # cached_dataからdeserializeすると文字列になっているので
     end
-
   end
 
   class LiveStreamDetailRequest
@@ -41,30 +41,31 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  attr_accessor :video_id
+  attr_accessor :video_id, :chat_id
   attr_writer :my_channel_id
 
   def initialize(streaming_service_account)
     @streaming_service_account = streaming_service_account
   end
 
-  def get_chat_messages(pageToken: nil)
+  def chat_messages(page_token: nil)
     return nil unless chat_id_of_live_stream
 
-    raw = get_raw_chat_messages(pageToken: pageToken)
-    pageToken = raw["nextPageToken"]
+    raw = get_raw_chat_messages(page_token: page_token)
+    page_token = raw["nextPageToken"]
     messages = raw["items"].map do |item|
       item.dig("snippet", "textMessageDetails", "messageText")
     end
-    return [pageToken, messages]
+    return [page_token, messages]
   end
 
+  # @raise [LiveChatRateLimitError]
   # @return [Array<String>, NilClass]
-  def get_raw_chat_messages(pageToken: nil)
+  def get_raw_chat_messages(page_token: nil)
     return nil unless chat_id_of_live_stream
 
     uri = URI.parse("#{BASE}/v3/liveChat/messages")
-    uri.query = "id=#{video_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{pageToken}"
+    uri.query = "id=#{video_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{page_token}"
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     req = Net::HTTP::Get.new(uri.request_uri)
@@ -82,24 +83,8 @@ class StreamingService::YoutubeLiveClient
   # @return [String, NilClass]
   def chat_id_of_live_stream
     return nil unless video_id
-
-    uri = URI.parse("#{BASE}/v3/videos")
-    uri.query = "id=#{video_id}&part=liveStreamingDetails"
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    req = Net::HTTP::Get.new(uri.request_uri)
-    req["Authorization"] = "Bearer #{access_token}"
-    Rails.logger.debug { "[youtube api] #{uri.to_s}" }
-    res = http.request(req)
-
-    handle_error(res) do
-      json = JSON.parse(res.body)
-      if(item = json["items"].first)
-        return item.dig("liveStreamingDetails", "activeLiveChatId")
-      end
-    end
-  rescue OldAccessTokenError
-    retry
+    return @chat_id if defined?(@chat_id) && @chat_id
+    raise "active_streaming_videoで取得したchat_idを使ってください"
   end
 
   # @return [Video, NilClass]
@@ -217,6 +202,8 @@ class StreamingService::YoutubeLiveClient
       case
       when errors.include?("youtube.quota")
         raise ExceededYoutubeQuotaError
+      when errors.include?("youtube.liveChat")
+        raise LiveChatRateLimitError
       else
         raise "知らないエラーです(#{response.body})"
       end
@@ -230,6 +217,8 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account.access_token
   end
 
+  # "domain": "youtube.liveChat", "reason": "rateLimitExceeded"
+  # TODO reasonもとる
   def parse_error(body)
     return JSON.parse(body).dig("error", "errors").map {|x| x["domain"] }
   end

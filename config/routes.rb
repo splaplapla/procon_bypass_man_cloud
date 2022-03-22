@@ -30,7 +30,6 @@ Rails.application.routes.draw do
 
     resources :youtube_live, only: [:new, :show], module: :streaming_services do
       get :chat_messages, on: :member
-      patch :update_chat_page_token_as_read, on: :member
     end
   end
 
