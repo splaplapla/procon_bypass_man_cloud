@@ -32,12 +32,97 @@ describe StreamingService::YoutubeLiveClient do
     end
 
     context '別チャンネルの動画のとき' do
+      before do
+        allow(client).to receive(:my_channel_id) { "foo" }
+        allow(StreamingService::YoutubeLiveClient::LiveStreamDetailRequest).to receive(:request) do
+          OpenStruct.new(
+            code: '200',
+            body: {
+              "kind"=>"youtube#videoListResponse",
+              "etag"=>"T",
+              "items"=>[
+                { "snippet" => { "channelId" => "abv" },
+                  "liveStreamingDetails" => { "activeLiveChatId" => "foo" }
+                }
+              ],
+              "pageInfo"=>{"totalResults"=>1, "resultsPerPage"=>1},
+            }.to_json
+          )
+        end
+        client.video_id = "foo"
+      end
+
+      it { expect { subject }.to raise_error(StreamingService::YoutubeLiveClient::NotOwnerVideoError) }
     end
 
     context '配信が終了した動画のとき' do
+      before do
+        allow(client).to receive(:my_channel_id) { "foo" }
+        allow(StreamingService::YoutubeLiveClient::LiveStreamDetailRequest).to receive(:request) do
+          OpenStruct.new(
+            code: '200',
+            body: {
+              "kind"=>"youtube#videoListResponse",
+              "etag"=>"TKGl1LDXcI8VcOBvBt0DiSIrfe0",
+              "items"=>[
+                { "snippet" => { "channelId" => "abv" },
+                  "liveStreamingDetails" => { "activeLiveChatId" => nil }
+                }
+              ],
+              "pageInfo"=>{"totalResults"=>1, "resultsPerPage"=>1},
+            }.to_json
+          )
+        end
+        client.video_id = "foo"
+      end
+
+      it { expect { subject }.to raise_error(StreamingService::YoutubeLiveClient::NotLiveStreamError) }
     end
 
     context '有効な配信が見つかったとき' do
+      let(:my_channel_id) { "foo" }
+      before do
+        allow(StreamingService::YoutubeLiveClient::LiveStreamDetailRequest).to receive(:request) do
+          OpenStruct.new(
+            code: '200',
+            body: {
+              "kind"=>"youtube#videoListResponse",
+              "etag"=>"TKGl1LDXcI8VcOBvBt0DiSIrfe0",
+              "items"=> [
+                { "kind"=>"youtube#video",
+                  "etag"=>"vpC4MoKGqV8eqtTuoN1aWNXKeDM",
+                  "id"=>"eU3QvsjEH18",
+                  "snippet"=> {
+                    "publishedAt"=>"2022-03-21T07:21:17Z",
+                    "channelId" => my_channel_id,
+                    "title"=>"テスト",
+                    "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.herokuapp.com/p/bc059b14-662a-431a-b310-7949435dbdc3",
+                    "thumbnails"=> {
+                      "default"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/default_live.jpg", "width"=>120, "height"=>90},
+                      "medium"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/mqdefault_live.jpg", "width"=>320, "height"=>180},
+                      "high"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/hqdefault_live.jpg", "width"=>480, "height"=>360},
+                      "standard"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/sddefault_live.jpg", "width"=>640, "height"=>480},
+                      "maxres"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/maxresdefault_live.jpg", "width"=>1280, "height"=>720}},
+                    "channelTitle"=>"スプラトゥーン2をやっていく猫",
+                    "tags"=>["スプラトゥーン2", "ガチマッチ"],
+                    "categoryId"=>"20",
+                    "liveBroadcastContent"=>"live",
+                    "localized"=> {
+                      "title"=>"テスト", "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.herokuapp.com/p/bc059b14-662a-431a-b310-7949435dbdc3"},
+                      "defaultAudioLanguage"=>"ja"},
+                      "liveStreamingDetails"=>{"actualStartTime"=>"2022-03-21T07:22:06Z", "activeLiveChatId"=>"C" }
+                },
+              ],
+              "pageInfo"=>{"totalResults"=>1, "resultsPerPage"=>1},
+            }.to_json
+          )
+        end
+        client.video_id = "foo"
+        client.my_channel_id = my_channel_id
+      end
+
+      it { expect(subject.id).to eq("eU3QvsjEH18") }
+      it { expect(subject.chat_id).to eq("C") }
     end
   end
 
