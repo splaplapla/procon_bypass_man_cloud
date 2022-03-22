@@ -109,7 +109,7 @@ class StreamingService::YoutubeLiveClient
       json = JSON.parse(response.body)
       if(item = json["items"].first)
         chat_id = item.dig("liveStreamingDetails", "activeLiveChatId") or raise(NotLiveStreamError, "Could not find a chat_id")
-        if(channel_id = item.dig("snippet", "channelId")) && my_channel_id != channel_id
+        if(channel_id = item.dig("snippet", "channelId")) && my_channel_id != channel_id && !Rails.env.development?
           raise NotOwnerVideoError, "This video is Not Owner. Check the video id."
         end
 

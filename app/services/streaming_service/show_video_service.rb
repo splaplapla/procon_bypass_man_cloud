@@ -17,7 +17,7 @@ class StreamingService::ShowVideoService
       @streaming_service_account.cached_data["video"] = {}
     end
     if @streaming_service_account.cached_data.fetch("video") && @streaming_service_account.cached_data.dig("video", "id") != @video_id
-      @streaming_service_account.cached_data["video"] = { 'id' => @video_id, 'value' => client.video.to_h.values }
+      @streaming_service_account.cached_data["video"] = { 'id' => @video_id, 'value' => client.active_streaming_video.to_h.values }
       # TODO 引数の数が変わったら再取得したい. 実装が変わったときに起きる
     end
 
