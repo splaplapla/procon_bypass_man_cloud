@@ -12,7 +12,7 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     streaming_service = current_user.streaming_services.find(params[:streaming_service_id])
     @streaming_service_account = streaming_service.streaming_service_account
 
-    @video = StreamingService::ShowVideoService.new(@streaming_service_account, video_id: params[:id]).execute
+    @live_stream = StreamingService::ShowVideoService.new(@streaming_service_account, video_id: params[:id]).execute
   rescue StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError
     render plain: "リクエストのリミットに達しました。時間を空けて再度試してください。"
   rescue StreamingService::YoutubeLiveClient::VideoNotFoundError

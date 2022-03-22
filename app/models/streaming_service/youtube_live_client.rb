@@ -8,7 +8,13 @@ class StreamingService::YoutubeLiveClient
   class NotOwnerVideoError < StandardError; end
   class NotLiveStreamError < StandardError; end
 
-  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url, :chat_id); end
+  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url, :chat_id)
+    def published_at
+      super.to_time # cached_dataからdeserializeすると文字列になっているので
+    end
+
+  end
+
   class LiveStreamDetailRequest
     def self.request(video_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/videos")
@@ -115,7 +121,7 @@ class StreamingService::YoutubeLiveClient
 
         return Video.new(
           item.dig("id"),
-          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
+          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo').to_s,
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
           item.dig("snippet", "thumbnails", "high", "url"),
@@ -138,7 +144,7 @@ class StreamingService::YoutubeLiveClient
       if(item = json["items"].first)
         return Video.new(
           item.dig("id", "videoId"),
-          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
+          item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo').to_s,
           item.dig("snippet", "title"),
           item.dig("snippet", "description"),
           item.dig("snippet", "thumbnails", "high", "url"),
