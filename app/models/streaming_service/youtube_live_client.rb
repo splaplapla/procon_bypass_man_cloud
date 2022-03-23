@@ -48,20 +48,29 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account = streaming_service_account
   end
 
+  class Message < Struct.new(:body, :author_channel_id,:author_name, :owner, :moderator, :published_at); end
+
   def chat_messages(page_token: nil)
     return nil unless chat_id_of_live_stream
 
-    raw = get_raw_chat_messages(page_token: page_token)
+    raw = raw_chat_messages(page_token: page_token)
     page_token = raw["nextPageToken"]
     messages = raw["items"].map do |item|
-      item.dig("snippet", "textMessageDetails", "messageText")
+      Message.new(
+        item.dig("snippet", "textMessageDetails", "messageText"),
+        item.dig("snippet", "authorChannelId"),
+        item.dig("authorDetails", "displayName"),
+        item.dig("authorDetails", "isChatOwner"),
+        item.dig("authorDetails", "isChatModerator"),
+        item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo'),
+      )
     end
     return [page_token, messages]
   end
 
   # @raise [LiveChatRateLimitError]
   # @return [Array<String>, NilClass]
-  def get_raw_chat_messages(page_token: nil)
+  def raw_chat_messages(page_token: nil)
     return nil unless chat_id_of_live_stream
 
     uri = URI.parse("#{BASE}/v3/liveChat/messages")
