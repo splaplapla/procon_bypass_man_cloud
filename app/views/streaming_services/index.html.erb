@@ -28,10 +28,14 @@
         <% end %>
       </td>
       <td>
-        <%= streaming_service.device&.name %>
+        <% if streaming_service.device %>
+          <%= link_to streaming_service.device.name, device_path(streaming_service.device.unique_key) %>
+        <% end %>
       </td>
       <td>
-        <%= streaming_service.remote_macro_group&.name %>
+        <% if streaming_service.remote_macro_group %>
+          <%= link_to streaming_service.remote_macro_group.name, streaming_service.remote_macro_group %>
+        <% end %>
       </td>
       <td>
         <%= link_to '削除する', streaming_service, method: :delete, class: "btn btn-danger", data: { confirm: "削除しますがいいですか？" } %>
