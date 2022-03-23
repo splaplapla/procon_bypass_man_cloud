@@ -41,6 +41,19 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
+  class ChatMessagesRequest
+    def self.request(video_id: , chat_id: , page_token: , access_token: )
+      uri = URI.parse("#{BASE}/v3/liveChat/messages")
+      uri.query = "id=#{video_id}&liveChatId=#{chat_id}&part=id,snippet,authorDetails&pageToken=#{page_token}"
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      req = Net::HTTP::Get.new(uri.request_uri)
+      req["Authorization"] = "Bearer #{access_token}"
+      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+      res = http.request(req)
+    end
+  end
+
   attr_accessor :video_id, :chat_id
   attr_writer :my_channel_id
 
@@ -51,7 +64,8 @@ class StreamingService::YoutubeLiveClient
   class Message < Struct.new(:body, :author_channel_id,:author_name, :owner, :moderator, :published_at); end
 
   def chat_messages(page_token: nil)
-    return nil unless chat_id_of_live_stream
+    raise "need chat_id" if chat_id.nil?
+    raise "need video_id" if video_id.nil?
 
     raw = raw_chat_messages(page_token: page_token)
     page_token = raw["nextPageToken"]
@@ -71,27 +85,19 @@ class StreamingService::YoutubeLiveClient
   # @raise [LiveChatRateLimitError]
   # @return [Array<String>, NilClass]
   def raw_chat_messages(page_token: nil)
-    return nil unless chat_id_of_live_stream
+    raise "need chat_id" if chat_id.nil?
+    raise "need video_id" if video_id.nil?
 
-    uri = URI.parse("#{BASE}/v3/liveChat/messages")
-    uri.query = "id=#{video_id}&liveChatId=#{chat_id_of_live_stream}&part=id,snippet,authorDetails&pageToken=#{page_token}"
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    req = Net::HTTP::Get.new(uri.request_uri)
-    req["Authorization"] = "Bearer #{access_token}"
-    Rails.logger.debug { "[youtube api] #{uri.to_s}" }
-    res = http.request(req)
-
-    handle_error(res) do
-      return json = JSON.parse(res.body)
+    response = ChatMessagesRequest.request(video_id: video_id, chat_id: chat_id, page_token: page_token, access_token: access_token)
+    handle_error(response) do
+      return json = JSON.parse(response.body)
     end
   rescue OldAccessTokenError
     retry
   end
 
   # @return [String, NilClass]
-  def chat_id_of_live_stream
-    return nil unless video_id
+  def chat_id
     return @chat_id if defined?(@chat_id) && @chat_id
     raise "active_streaming_videoで取得したchat_idを使ってください"
   end
