@@ -1,4 +1,4 @@
-class StreamingService::ShowVideoService
+class StreamingService::ShowLiveStreamService
   def initialize(streaming_service_account, video_id: )
     @streaming_service_account = streaming_service_account
     @video_id = video_id

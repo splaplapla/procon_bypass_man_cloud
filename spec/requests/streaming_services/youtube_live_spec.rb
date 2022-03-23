@@ -70,7 +70,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
       allow(live_video).to receive(:thumbnails_high_url) { "/" }
       allow(live_video).to receive(:published_at) { Time.zone.now }
       allow(service_double).to receive(:execute) { live_video }
-      allow(StreamingService::ShowVideoService).to receive(:new) { service_double }
+      allow(StreamingService::ShowLiveStreamService).to receive(:new) { service_double }
     end
 
     it do

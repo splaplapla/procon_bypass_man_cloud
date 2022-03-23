@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe StreamingService::ShowVideoService do
+describe StreamingService::ShowLiveStreamService do
   describe '#execute' do
     let(:user) { FactoryBot.create(:user) }
     let(:streaming_service) { FactoryBot.create(:streaming_service, user: user) }
