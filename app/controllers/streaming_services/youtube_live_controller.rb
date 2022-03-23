@@ -29,6 +29,7 @@ class StreamingServices::YoutubeLiveController < ApplicationController
 
     messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
     # TODO ここでmessagesをコマンドに変換する
+    StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
     head :ok
   end
 
