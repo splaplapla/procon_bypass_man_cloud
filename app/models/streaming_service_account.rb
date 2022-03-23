@@ -10,4 +10,12 @@ class StreamingServiceAccount < ApplicationRecord
   def expired_access_token?
     expires_at < Time.zone.now
   end
+
+  def start_monitoring
+    update!(monitors_at: Time.zone.now)
+  end
+
+  def stop_monitoring
+    update!(monitors_at: nil)
+  end
 end
