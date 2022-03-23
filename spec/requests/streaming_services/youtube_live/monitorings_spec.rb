@@ -12,7 +12,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
 
     it do
       subject
-      expect(response).to be_ok
+      expect(response).to be_redirect
     end
 
     it do
@@ -35,7 +35,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
 
     it do
       subject
-      expect(response).to be_ok
+      expect(response).to be_redirect
     end
 
     it do
