@@ -9,12 +9,6 @@ class StreamingService::YoutubeLiveClient
   class NotOwnerVideoError < StandardError; end
   class NotLiveStreamError < StandardError; end
 
-  class Video < Struct.new(:id, :published_at, :title, :description, :thumbnails_high_url, :chat_id)
-    def published_at
-      super.to_time # cached_dataからdeserializeすると文字列になっているので
-    end
-  end
-
   class BaseRequest
     def self.request(uri: )
       http = Net::HTTP.new(uri.host, uri.port)
@@ -117,7 +111,7 @@ class StreamingService::YoutubeLiveClient
           raise NotOwnerVideoError, "This video is Not Owner. Check the video id."
         end
 
-        return Video.new(
+        return StreamingService::YoutubeLive::Video.new(
           item.dig("id"),
           item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo').to_s,
           item.dig("snippet", "title"),
@@ -139,7 +133,7 @@ class StreamingService::YoutubeLiveClient
     response = AvailableLiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
     handle_error(response) do |json|
       if(item = json["items"].first)
-        return Video.new(
+        return StreamingService::YoutubeLive::Video.new(
           item.dig("id", "videoId"),
           item.dig("snippet", "publishedAt").to_time.in_time_zone('Asia/Tokyo').to_s,
           item.dig("snippet", "title"),

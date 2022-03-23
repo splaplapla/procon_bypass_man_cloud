@@ -4,7 +4,7 @@ class StreamingService::YoutubeLiveDecorator
   end
 
   def video
-    StreamingService::YoutubeLiveClient::Video.new(
+    StreamingService::YoutubeLive::Video.new(
       *@streaming_service_account.cached_data["video"]["value"]
     )
   end

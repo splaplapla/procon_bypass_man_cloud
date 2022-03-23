@@ -14,7 +14,7 @@ describe StreamingService::ShowLiveStreamService do
       allow(StreamingService::YoutubeLiveClient).to receive(:new) { youtube_live_client }
       allow(youtube_live_client).to receive(:video_id=) { "a" }
       allow(youtube_live_client).to receive(:my_channel_id=) { "a" }
-      allow(youtube_live_client).to receive(:active_streaming_video) { StreamingService::YoutubeLiveClient::Video.new(:a, :b, :c, :d, :e) }
+      allow(youtube_live_client).to receive(:active_streaming_video) { StreamingService::YoutubeLive::Video.new(:a, :b, :c, :d, :e) }
       allow(youtube_live_client).to receive(:my_channel_id) { "a" }
       allow(youtube_live_client).to receive(:available_live_stream) { "b" }
     end
@@ -74,7 +74,7 @@ describe StreamingService::ShowLiveStreamService do
 
       it do
         expect(subject).to match(
-          an_instance_of(StreamingService::YoutubeLiveClient::Video)
+          an_instance_of(StreamingService::YoutubeLive::Video)
         )
       end
     end
@@ -86,7 +86,7 @@ describe StreamingService::ShowLiveStreamService do
 
       it do
         expect(subject).to match(
-          an_instance_of(StreamingService::YoutubeLiveClient::Video)
+          an_instance_of(StreamingService::YoutubeLive::Video)
         )
       end
     end

@@ -21,5 +21,7 @@ describe StreamingService::FetchChatMessagesService do
     it 'page_tokenをcached_dataに保存すること' do
       expect { subject }.to change { streaming_service_account.cached_data["video"]["next_page_token"] }.from(nil).to("token")
     end
+
+    it { expect(subject).to eq([]) }
   end
 end
