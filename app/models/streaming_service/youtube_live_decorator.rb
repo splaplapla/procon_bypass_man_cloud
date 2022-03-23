@@ -34,7 +34,9 @@ class StreamingService::YoutubeLiveDecorator
   end
 
   def video_next_page_token=(value)
-    @streaming_service_account.cached_data["video"]["next_page_token"] = value
+    if @streaming_service_account.cached_data["video"]["next_page_token"] != value
+      @streaming_service_account.cached_data["video"]["next_page_token"] = value
+    end
   end
 
   private

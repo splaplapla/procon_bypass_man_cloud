@@ -15,7 +15,7 @@ class StreamingService::FetchChatMessagesService
       page_token: @streaming_service_account.video_next_page_token
     )
     @streaming_service_account.video_next_page_token = next_page_token
-    @streaming_service_account.save!
+    @streaming_service_account.save! if @streaming_service_account.changed?
 
     messages
   end
