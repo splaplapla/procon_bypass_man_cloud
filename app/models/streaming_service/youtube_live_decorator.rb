@@ -9,6 +9,18 @@ class StreamingService::YoutubeLiveDecorator
     )
   end
 
+  def set_video(video_id: , values: )
+    @streaming_service_account.cached_data["video"] = { 'id' => video_id, 'value' => values }
+  end
+
+  def video_is_nil?
+    @streaming_service_account.cached_data["video"].blank?
+  end
+
+  def reset_video
+    @streaming_service_account.cached_data["video"] = {}
+  end
+
   def my_channel_id
     @streaming_service_account.cached_data["my_channel_id"]
   end

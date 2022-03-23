@@ -44,7 +44,7 @@ describe StreamingService::ShowLiveStreamService do
 
     context 'cached_dataに同じvideoがあるとき' do
       before do
-        streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["a", "b", "c", "d", "e"] } })
+        streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["a", "b", "c", "d", "e", nil] } })
       end
 
       it do

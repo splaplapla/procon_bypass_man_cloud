@@ -1,6 +1,6 @@
 class StreamingService::ShowLiveStreamService
   def initialize(streaming_service_account, video_id: )
-    @streaming_service_account = streaming_service_account
+    @streaming_service_account = StreamingService::YoutubeLiveDecorator.new(streaming_service_account)
     @video_id = video_id
   end
 
@@ -8,32 +8,26 @@ class StreamingService::ShowLiveStreamService
     client = StreamingService::YoutubeLiveClient.new(@streaming_service_account)
     client.video_id = @video_id
 
-    if @streaming_service_account.cached_data["my_channel_id"].blank?
-      @streaming_service_account.cached_data["my_channel_id"] = client.my_channel_id
+    if @streaming_service_account.my_channel_id.blank?
+      @streaming_service_account.my_channel_id = client.my_channel_id
     end
-    client.my_channel_id = @streaming_service_account.cached_data["my_channel_id"]
+    client.my_channel_id = @streaming_service_account.my_channel_id
 
-    if @streaming_service_account.cached_data["video"].blank?
-      @streaming_service_account.cached_data["video"] = {}
-    end
-    if @streaming_service_account.cached_data.fetch("video") && @streaming_service_account.cached_data.dig("video", "id") != @video_id
-      @streaming_service_account.cached_data["video"] = { 'id' => @video_id, 'value' => client.active_streaming_video.to_h.values }
-      # TODO 引数の数が変わったら再取得したい. 実装が変わったときに起きる
+    if @streaming_service_account.video_is_nil?
+      @streaming_service_account.reset_video
     end
 
+    # TODO 引数の数が変わったら再取得したい. 実装が変わったときに起きる
+    if @streaming_service_account.video.id != @video_id
+      @streaming_service_account.set_video(video_id: @video_id, values: client.active_streaming_video.to_h.values)
+    end
     @streaming_service_account.save!
 
-    unless(my_channel_id = @streaming_service_account.cached_data["my_channel_id"])
-      my_channel_id = client.my_channel_id
-    end
-    video =
-      if @streaming_service_account.cached_data.dig("video", "id")
-        StreamingService::YoutubeLiveClient::Video.new(
-          *@streaming_service_account.cached_data.dig("video", 'value')
-        )
-      else
-        client.active_streaming_video
-      end
+    video = if @streaming_service_account.video.id
+              @streaming_service_account.video
+            else
+              client.active_streaming_video
+            end
     return video
   rescue StreamingService::YoutubeLiveClient::UnexpectedError
     raise # TODO
