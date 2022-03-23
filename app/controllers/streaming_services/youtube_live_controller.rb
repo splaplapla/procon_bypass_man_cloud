@@ -17,6 +17,8 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     render plain: "リクエストのリミットに達しました。時間を空けて再度試してください。", status: :server_error
   rescue StreamingService::YoutubeLiveClient::VideoNotFoundError
     render plain: "動画が存在しませんでした", status: :not_found
+  rescue StreamingService::YoutubeLiveClient::NotLiveStreamError
+    render plain: "ライブ配信ではありません", status: :not_found
   end
 
   def chat_messages
