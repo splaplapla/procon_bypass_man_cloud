@@ -3,6 +3,7 @@
 <% if @streaming_service_account.monitors_at %>
   <p class="text-center">
     <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
   </p>
   <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
   <script>
