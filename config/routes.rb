@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     delete :unlink_streaming_service_account, on: :member
 
     resources :youtube_live, only: [:new, :show], module: :streaming_services do
-      get :chat_messages, on: :member
       post :commands, on: :member
 
       resource :monitoring, only: [:create, :destroy], module: :youtube_live

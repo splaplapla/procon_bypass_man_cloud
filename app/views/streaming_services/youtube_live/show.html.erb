@@ -44,12 +44,11 @@
     </tr>
   </table>
 
-  <%= link_to "chatを取得する", chat_messages_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), remote: true %>
   <% if @streaming_service_account.monitors_at %>
-    <%= link_to "コメントと解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete %><br>
+    <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger" %><br>
     <%= link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
   <% else %>
-    <%= link_to "コメントと連携する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post %>
+    <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success" %>
   <% end %>
 <% else %>
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
