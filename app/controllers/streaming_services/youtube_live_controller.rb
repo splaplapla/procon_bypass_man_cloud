@@ -29,7 +29,7 @@ class StreamingServices::YoutubeLiveController < ApplicationController
 
     messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
     result = StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
-    render json: { result: result }
+    render json: { commands: result, all: messages }
   end
 
   def chat_messages
