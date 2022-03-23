@@ -104,7 +104,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
         service = double(:service).as_null_object
         allow(service).to receive(:execute) { {} }
         streaming_service_account.update!(monitors_at: Time.zone.now)
-        allow(StreamingService::FetchChatMessagesService).to receive(:new) { double(:service).as_null_object }
+        allow(StreamingService::FetchChatMessagesService).to receive(:new) { service }
         allow(StreamingService::ConvertMessagesToCommandsService).to receive(:new) { service }
       end
 
