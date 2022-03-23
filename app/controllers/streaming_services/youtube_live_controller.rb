@@ -3,7 +3,7 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     @streaming_service = current_user.streaming_services.find(params[:streaming_service_id])
     @streaming_service_account = @streaming_service.streaming_service_account
 
-    @my_channel_id, @live_stream = StreamingService::ShowLiveStreamService.new(@streaming_service_account).execute
+    @my_channel_id, @live_stream = StreamingService::ShowAvailableLiveStreamService.new(@streaming_service_account).execute
   rescue StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError
     render text: "リクエストのリミットに達しました。時間を空けて再度試してください。", status: :server_error
   end
@@ -28,7 +28,6 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     end
 
     messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
-    # TODO ここでmessagesをコマンドに変換する
     StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
     head :ok
   end

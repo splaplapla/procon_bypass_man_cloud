@@ -1,4 +1,4 @@
-class StreamingService::ShowLiveStreamService
+class StreamingService::ShowAvailableLiveStreamService
   class YoutubeLiveDecorator
     def initialize(streaming_service_account)
       @streaming_service_account = streaming_service_account
