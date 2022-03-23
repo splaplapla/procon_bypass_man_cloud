@@ -57,13 +57,11 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account = streaming_service_account
   end
 
-  class Message < Struct.new(:body, :author_channel_id, :author_name, :owner, :moderator, :published_at); end
-
   def chat_messages(page_token: nil)
     raw = raw_chat_messages(page_token: page_token)
     page_token = raw["nextPageToken"]
     messages = raw["items"].map do |item|
-      Message.new(
+      StreamingService::YoutubeLive::ChatMessage.new(
         item.dig("snippet", "textMessageDetails", "messageText"),
         item.dig("snippet", "authorChannelId"),
         item.dig("authorDetails", "displayName"),
