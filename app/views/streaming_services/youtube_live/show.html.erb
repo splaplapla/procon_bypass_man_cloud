@@ -45,8 +45,11 @@
   </table>
 
   <%= link_to "chatを取得する", chat_messages_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), remote: true %>
-  <%= link_to "コメントと連携する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), remote: true, method: :post %>
-  <%= link_to "コメントと解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), remote: true, method: :delete %>
+  <% if @streaming_service_account.monitors_at %>
+    <%= link_to "コメントと解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete %>
+  <% else %>
+    <%= link_to "コメントと連携する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post %>
+  <% end %>
 <% else %>
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
 <% end %>
