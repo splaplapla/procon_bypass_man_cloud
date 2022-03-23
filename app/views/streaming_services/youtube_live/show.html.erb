@@ -1,64 +1,68 @@
-
 <h1>「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+
+<% if @streaming_service_account.monitors_at %>
+  <p class="text-center">
+    <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+  </p>
+  <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
+  <script>
+    function call_api() {
+      $.post("<%= commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id) %>");
+    }
+    setInterval("call_api()", 5000);
+    $(function() {
+      call_api()
+    });
+  </script>
+<% else %>
+  <p class="text-center">
+    <%= link_to "コメントとの連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
+  </p>
+<% end %>
+
 <% if @live_stream %>
   <table class="table mb-4">
     <tr>
+      <th>コメントとの連携状態</th>
+      <td>
+        <% if @streaming_service_account.monitors_at %>
+          連携中
+        <% else %>
+          停止中
+        <% end %>
+      </td>
+    </tr>
+    <tr>
       <th>サムネイル</th>
       <td>
-        <div>
-          <%= image_tag @live_stream.thumbnails_high_url %>
-        </div>
+        <%= image_tag @live_stream.thumbnails_high_url %>
       </td>
     </tr>
     <tr>
       <th>タイトル</th>
       <td>
-        <div>
-          <%= link_to @live_stream.title, "https://www.youtube.com/watch?v=#{@live_stream.id}", target: :_blank %>
-        </div>
+        <%= link_to @live_stream.title, "https://www.youtube.com/watch?v=#{@live_stream.id}", target: :_blank %>
       </td>
     </tr>
     <tr>
       <th>開始時間</th>
       <td>
-        <div>
-          <%= @live_stream.published_at.to_s(:jp) %>
-        </div>
+        <%= @live_stream.published_at.to_s(:jp) %>
       </td>
     </tr>
     <tr>
       <th>description</th>
       <td>
-        <div>
-          <%= simple_format @live_stream.description %>
-        </div>
+        <%= simple_format @live_stream.description %>
       </td>
     </tr>
     <tr>
       <th>chat id</th>
       <td>
-        <div>
-          <%= @live_stream.chat_id %>
-        </div>
+        <%= @live_stream.chat_id %>
       </td>
     </tr>
   </table>
-
-  <% if @streaming_service_account.monitors_at %>
-    <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger" %><br>
-    <%= link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
-    <script>
-      function call_api() {
-        $.post("<%= commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id) %>");
-      }
-      setInterval("call_api()", 5000);
-      $(function() {
-        call_api()
-      });
-    </script>
-  <% else %>
-    <%= link_to "コメントとの連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success" %>
-  <% end %>
 <% else %>
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
 <% end %>
