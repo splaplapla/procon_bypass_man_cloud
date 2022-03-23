@@ -7,15 +7,16 @@ class StreamingService::ConvertMessagesToCommandsService
 
   # TODO ここでmessagesをコマンドに変換する
   def execute
-    @messages.each_slice(100) do |messages|
-      messages = messages.select do |message|
+    result = []
+    @messages.each_slice(100) do |chunk_messages|
+      messages = chunk_messages.select do |message|
         reject_outdated(message) && is_command?(message) && is_normal_author?(message)
       end
 
-      trigger(
-        is_triggerable?(messages)
-      )
+      result << trigger(is_triggerable?(messages))
     end
+
+    result.flatten
   end
 
   private

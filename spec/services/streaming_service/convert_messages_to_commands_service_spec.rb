@@ -24,6 +24,10 @@ describe StreamingService::ConvertMessagesToCommandsService do
       it do
         expect { subject }.to change { device.pbm_remote_macro_jobs.count }
       end
+
+      it do
+        expect(subject.size).to eq(1)
+      end
     end
 
     context 'トリガーワードがないとき' do
@@ -32,6 +36,11 @@ describe StreamingService::ConvertMessagesToCommandsService do
       ] }
 
       it do
+        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+      end
+
+      it do
+        expect(subject.size).to eq(0)
       end
     end
 
@@ -43,6 +52,10 @@ describe StreamingService::ConvertMessagesToCommandsService do
       it do
         expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
       end
+
+      it do
+        expect(subject.size).to eq(0)
+      end
     end
 
     context 'モデレーターの発言のとき' do
@@ -52,6 +65,10 @@ describe StreamingService::ConvertMessagesToCommandsService do
 
       it do
         expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+      end
+
+      it do
+        expect(subject.size).to eq(0)
       end
     end
   end

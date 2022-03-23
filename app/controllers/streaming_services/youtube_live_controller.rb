@@ -28,8 +28,8 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     return head :bad_request unless @streaming_service_account.monitors_at
 
     messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
-    StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
-    head :ok
+    result = StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
+    render json: { result: result }
   end
 
   def chat_messages
