@@ -22,6 +22,14 @@ class StreamingServices::YoutubeLiveController < ApplicationController
   end
 
   def commands
+    unless @streaming_service_account.monitors_at
+      head :ok
+      return
+    end
+
+    messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
+    # TODO ここでmessagesをコマンドに変換する
+    head :ok
   end
 
   def chat_messages
