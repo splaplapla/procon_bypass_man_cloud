@@ -15,42 +15,44 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  class LiveStreamDetailRequest
+  class BaseRequest
+    def self.request(uri: )
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      req = Net::HTTP::Get.new(uri.request_uri)
+      yield(req)
+      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+      http.request(req)
+    end
+  end
+
+  class LiveStreamDetailRequest < BaseRequest
     def self.request(video_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/videos")
       uri.query = "id=#{video_id}&part=snippet,liveStreamingDetails&maxResults=2"
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      req = Net::HTTP::Get.new(uri.request_uri)
-      req["Authorization"] = "Bearer #{access_token}"
-      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
-      http.request(req)
+      super(uri: uri) do |req|
+        req["Authorization"] = "Bearer #{access_token}"
+      end
     end
   end
 
-  class AvailableLiveStreamRequest
+  class AvailableLiveStreamRequest < BaseRequest
     def self.request(my_channel_id: , access_token: )
       uri = URI.parse("#{BASE}/v3/search")
       uri.query = "channelId=#{my_channel_id}&part=id,snippet&type=video&eventType=live&maxResults=2"
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      req = Net::HTTP::Get.new(uri.request_uri)
-      req["Authorization"] = "Bearer #{access_token}"
-      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
-      http.request(req)
+      super(uri: uri) do |req|
+        req["Authorization"] = "Bearer #{access_token}"
+      end
     end
   end
 
-  class ChatMessagesRequest
+  class ChatMessagesRequest < BaseRequest
     def self.request(video_id: , chat_id: , page_token: , access_token: )
       uri = URI.parse("#{BASE}/v3/liveChat/messages")
       uri.query = "id=#{video_id}&liveChatId=#{chat_id}&part=id,snippet,authorDetails&pageToken=#{page_token}"
-      http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true
-      req = Net::HTTP::Get.new(uri.request_uri)
-      req["Authorization"] = "Bearer #{access_token}"
-      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
-      res = http.request(req)
+      super(uri: uri) do |req|
+        req["Authorization"] = "Bearer #{access_token}"
+      end
     end
   end
 
@@ -61,7 +63,7 @@ class StreamingService::YoutubeLiveClient
     @streaming_service_account = streaming_service_account
   end
 
-  class Message < Struct.new(:body, :author_channel_id,:author_name, :owner, :moderator, :published_at); end
+  class Message < Struct.new(:body, :author_channel_id, :author_name, :owner, :moderator, :published_at); end
 
   def chat_messages(page_token: nil)
     raise "need chat_id" if chat_id.nil?
