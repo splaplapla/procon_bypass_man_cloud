@@ -21,6 +21,9 @@ class StreamingServices::YoutubeLiveController < ApplicationController
     render plain: "ライブ配信ではありません", status: :not_found
   end
 
+  def commands
+  end
+
   def chat_messages
     @streaming_service = current_user.streaming_services.find(params[:streaming_service_id])
     @streaming_service_account = @streaming_service.streaming_service_account
