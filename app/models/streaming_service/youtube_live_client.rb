@@ -66,9 +66,6 @@ class StreamingService::YoutubeLiveClient
   class Message < Struct.new(:body, :author_channel_id, :author_name, :owner, :moderator, :published_at); end
 
   def chat_messages(page_token: nil)
-    raise "need chat_id" if chat_id.nil?
-    raise "need video_id" if video_id.nil?
-
     raw = raw_chat_messages(page_token: page_token)
     page_token = raw["nextPageToken"]
     messages = raw["items"].map do |item|
@@ -92,7 +89,7 @@ class StreamingService::YoutubeLiveClient
 
     response = ChatMessagesRequest.request(video_id: video_id, chat_id: chat_id, page_token: page_token, access_token: access_token)
     handle_error(response) do |json|
-      return json = JSON.parse(response.body)
+      return json
     end
   rescue OldAccessTokenError
     retry
@@ -113,8 +110,7 @@ class StreamingService::YoutubeLiveClient
     raise "need video_id" if video_id.nil?
 
     response = LiveStreamDetailRequest.request(video_id: video_id, access_token: access_token)
-    handle_error(response) do
-      json = JSON.parse(response.body)
+    handle_error(response) do |json|
       if(item = json["items"].first)
         chat_id = item.dig("liveStreamingDetails", "activeLiveChatId") or raise(NotLiveStreamError, "Could not find a chat_id")
         if(channel_id = item.dig("snippet", "channelId")) && my_channel_id != channel_id && !Rails.env.development?
@@ -141,8 +137,7 @@ class StreamingService::YoutubeLiveClient
   # 公開しているライブ配信のみを返す. 限定公開だと返ってこない. chat_idはない
   def available_live_stream
     response = AvailableLiveStreamRequest.request(my_channel_id: my_channel_id, access_token: access_token)
-    handle_error(response) do
-      json = JSON.parse(response.body)
+    handle_error(response) do |json|
       if(item = json["items"].first)
         return Video.new(
           item.dig("id", "videoId"),
@@ -171,8 +166,7 @@ class StreamingService::YoutubeLiveClient
     Rails.logger.debug { "[youtube api] #{uri.to_s}" }
     response = http.post(uri.path, params.to_json, headers)
 
-    handle_error(response) do
-      json = JSON.parse(response.body)
+    handle_error(response) do |json|
       @streaming_service_account.update!(
         access_token: json['access_token'],
         expires_at: Time.zone.now + json['expires_in'],
@@ -196,8 +190,8 @@ class StreamingService::YoutubeLiveClient
     Rails.logger.debug { "[youtube api] #{uri.to_s}" }
     res = http.request(req)
 
-    handle_error(res) do
-      @my_channel_id = JSON.parse(res.body)["items"].first["id"]
+    handle_error(res) do |json|
+      @my_channel_id = json["items"].first["id"]
       return @my_channel_id
     end
   rescue OldAccessTokenError
@@ -209,7 +203,9 @@ class StreamingService::YoutubeLiveClient
   # @raise [OldAccessTokenError] access_tokenを作成し直したら投げる
   def handle_error(response, &block)
     if response.code == "200"
-      block.call
+      block.call(
+        JSON.parse(response.body)
+      )
     elsif response.code == "401"
       refresh!
       raise OldAccessTokenError
