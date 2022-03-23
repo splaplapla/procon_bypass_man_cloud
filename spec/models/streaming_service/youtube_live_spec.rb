@@ -1,8 +1,71 @@
 require 'rails_helper'
 
 describe StreamingService::YoutubeLiveClient do
+  let(:client) { described_class.new(streaming_service_account) }
+
+  describe '#chat_messages' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:device) { FactoryBot.create(:device, user: user) }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
+
+    subject { client.chat_messages }
+
+    before do
+      allow(StreamingService::YoutubeLiveClient::ChatMessagesRequest).to receive(:request) do
+        OpenStruct.new(
+          code: '200',
+          body: {
+            "kind"=>"youtube#liveChatMessageListResponse",
+            "etag"=>"nwZZWVIIhKjZ4Dmyypt_zJh2s7U",
+            "pollingIntervalMillis"=>4889,
+            "pageInfo"=>{"totalResults"=>21, "resultsPerPage"=>18},
+            "nextPageToken"=>"GL2e8Oes2_YCIIjIwv6s2_YC",
+            "items"=> [
+              { "kind"=>"youtube#liveChatMessage",
+                "etag"=>"BNXbTPpH53AlfXn29tL-79mckTQ",
+                "id"=>"LCC.CjgKDQoLMGZwYm9GQWJNRDAqJwoYVUN1VEFYVGV4cmhldGJPZTN6Z3NrSkJREgswZnBib0ZBYk1EMBJFChpDT2Z1cU5TWDJfWUNGYlFLZlFvZDBMVU96URInQ01ibDNyLVgyX1lDRll3eFdBb2RkLVVJeHcxNjQ4MDAyNDgxMTc2",
+                "snippet"=> { "type"=>"textMessageEvent",
+                              "liveChatId"=>"Cg0KCzBmcGJvRkFiTUQwKicKGFVDdVRBWFRleHJoZXRiT2Uzemdza0pCURILMGZwYm9GQWJNRDA",
+                              "authorChannelId"=>"UC18DensR1cKwdzHy4Q8c5qw",
+                              "publishedAt"=>"2022-03-23T02:28:02.190226+00:00",
+                              "hasDisplayContent"=>true,
+                              "displayMessage"=>"ドクターイエロー汐留のライブカメラ通過",
+                              "textMessageDetails"=>{"messageText"=>"ドクターイエロー汐留のライブカメラ通過"} },
+            "authorDetails"=> {
+              "channelId"=>"UC18DensR1cKwdzHy4Q8c5qw",
+              "channelUrl"=>"http://www.youtube.com/channel/UC18DensR1cKwdzHy4Q8c5qw",
+              "displayName"=>"天空の白鷺",
+              "profileImageUrl"=>"https://yt3.ggpht.com/b77SUkgWkz4qK1PnTXM5ELRT8jBZXcxt1Dc2CUrooOYHJDQpfm0RCGvdZlZHYnO2L6hCxvhS0Q=s88-c-k-c0x00ffffff-no-rj",
+              "isVerified"=>false,
+              "isChatOwner"=>false,
+              "isChatSponsor"=>false,
+              "isChatModerator"=>false }
+              }
+            ]
+          }.to_json
+        )
+      end
+      client.chat_id = "foo"
+      client.video_id = "foo"
+    end
+
+    it { expect(subject.first).to eq("GL2e8Oes2_YCIIjIwv6s2_YC") }
+
+    describe 'message' do
+      let(:message)  { subject.last.last }
+
+      it { expect(message.body).to eq("ドクターイエロー汐留のライブカメラ通過") }
+      it { expect(message.author_channel_id).to eq("UC18DensR1cKwdzHy4Q8c5qw") }
+      it { expect(message.author_name).to eq("天空の白鷺") }
+      it { expect(message.owner).to eq(false) }
+      it { expect(message.moderator).to eq(false) }
+      it { expect(message.published_at).to eq("2022-03-23T02:28:02.190226+00:00".to_time) }
+    end
+  end
+
   describe '#active_streaming_video' do
-    let(:client) { described_class.new(streaming_service_account) }
     let(:user) { FactoryBot.create(:user) }
     let(:device) { FactoryBot.create(:device, user: user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
@@ -127,7 +190,6 @@ describe StreamingService::YoutubeLiveClient do
   end
 
   describe '#available_live_stream' do
-    let(:client) { described_class.new(streaming_service_account) }
     let(:user) { FactoryBot.create(:user) }
     let(:device) { FactoryBot.create(:device, user: user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }

@@ -89,7 +89,7 @@ class StreamingService::YoutubeLiveClient
     raise "need video_id" if video_id.nil?
 
     response = ChatMessagesRequest.request(video_id: video_id, chat_id: chat_id, page_token: page_token, access_token: access_token)
-    handle_error(response) do
+    handle_error(response) do |json|
       return json = JSON.parse(response.body)
     end
   rescue OldAccessTokenError
