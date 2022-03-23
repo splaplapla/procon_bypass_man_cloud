@@ -113,5 +113,39 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
         expect(response).to be_ok
       end
     end
+
+    context 'StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaErrorが起きるとき' do
+      before do
+        allow(StreamingService::FetchChatMessagesService).to receive(:new) { raise StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError }
+        streaming_service_account.update!(monitors_at: Time.zone.now)
+      end
+
+      it do
+        subject
+        expect(response).to be_server_error
+      end
+
+      it do
+        subject
+        expect(JSON.parse(response.body)).to eq("errors"=>["リクエストのリミットに達しました。時間を空けて再度試してください。"])
+      end
+    end
+
+    context 'StreamingService::YoutubeLiveClient::LiveChatRateLimitErrorが起きるとき' do
+      before do
+        allow(StreamingService::FetchChatMessagesService).to receive(:new) { raise StreamingService::YoutubeLiveClient::LiveChatRateLimitError }
+        streaming_service_account.update!(monitors_at: Time.zone.now)
+      end
+
+      it do
+        subject
+        expect(response).to be_bad_request
+      end
+
+      it do
+        subject
+        expect(JSON.parse(response.body)).to eq("errors"=>["メッセージの取得頻度が早すぎます。"])
+      end
+    end
   end
 end
