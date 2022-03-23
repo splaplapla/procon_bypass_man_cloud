@@ -14,7 +14,7 @@ class StreamingService::YoutubeLiveDecorator
   end
 
   def video_is_nil?
-    @streaming_service_account.cached_data["video"].blank?
+    @streaming_service_account.cached_data["video"].nil?
   end
 
   def reset_video

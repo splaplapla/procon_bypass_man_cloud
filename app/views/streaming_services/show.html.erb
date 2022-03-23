@@ -15,52 +15,52 @@
   <tr>
     <th>連携先</th>
     <td>
-      <div>
-        <%= @streaming_service.service_type %>
-      </div>
+      <%= @streaming_service.service_type %>
     </td>
   </tr>
   <tr>
     <th>接続するデバイス</th>
     <td>
-      <div>
-        <% if @streaming_service.device %>
-          <%= link_to @streaming_service.device.name, device_path(@streaming_service.device.unique_key) %>
-          <%= wrap_device_status_with_style(status: @streaming_service.device.current_device_status_name) %>
-        <% end %>
-      </div>
+      <% if @streaming_service.device %>
+        <%= link_to @streaming_service.device.name, device_path(@streaming_service.device.unique_key) %>
+        <%= wrap_device_status_with_style(status: @streaming_service.device.current_device_status_name) %>
+      <% end %>
     </td>
   </tr>
   <tr>
     <th>連携するリモートマクロのグループ</th>
     <td>
-      <div>
-        <% if @streaming_service.remote_macro_group %>
-          <%= link_to @streaming_service.remote_macro_group.name, @streaming_service.remote_macro_group %>
-        <% end %>
-      </div>
+      <% if @streaming_service.remote_macro_group %>
+        <%= link_to @streaming_service.remote_macro_group.name, @streaming_service.remote_macro_group %>
+      <% end %>
     </td>
   </tr>
   <tr>
     <th>連携しているyoutubeチャンネル
     </th>
     <td>
-      <div>
-        <% if @streaming_service.streaming_service_account %>
-          <p>
+      <% if @streaming_service.streaming_service_account %>
+        <p>
           <%= image_tag @streaming_service.streaming_service_account.image_url %>
           「<%= @streaming_service.streaming_service_account.name %>」と連携中です。
-          </p>
+        </p>
+
+        <p>
           <%= link_to "配信中のライブ配信の動画を選択する", new_streaming_service_youtube_live_path(@streaming_service) %>
-          <br>
+        </p>
 
-          <hr>
-
-          <%= link_to "連携解除", unlink_streaming_service_account_streaming_service_path(@streaming_service), method: :delete, class: "btn btn-danger" %>
-        <% else %>
-          <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+        <% if @streaming_service_account.video.id %>
+          <p>
+            <%= link_to "前回連携していたライブ配信を表示する", streaming_service_youtube_live_path(@streaming_service, @streaming_service_account.video.id) %>
+          </p>
         <% end %>
-      </div>
+
+        <hr>
+
+        <%= link_to "連携解除", unlink_streaming_service_account_streaming_service_path(@streaming_service), method: :delete, class: "btn btn-danger" %>
+      <% else %>
+        <%= link_to "Googleでログイン", "/auth/google_oauth2", method: :post %>
+      <% end %>
     </td>
   </tr>
 </table>

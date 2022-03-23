@@ -23,6 +23,7 @@ class StreamingServicesController < ApplicationController
 
   def show
     @streaming_service = current_user.streaming_services.find(params[:id])
+    @streaming_service_account = StreamingService::YoutubeLiveDecorator.new(@streaming_service.streaming_service_account)
     session[:current_streaming_service_id] = @streaming_service.id
   end
 
