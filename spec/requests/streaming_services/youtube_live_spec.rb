@@ -78,4 +78,38 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
       expect(response).to be_ok
     end
   end
+
+  describe 'POST #commands' do
+    include_context "login_with_user"
+
+    let(:user) { FactoryBot.create(:user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, user: user) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
+
+    subject { post commands_streaming_service_youtube_live_path(streaming_service, "foo") }
+
+    before do
+      streaming_service_account
+    end
+
+    context 'monitors_atがnil' do
+      it do
+        subject
+        expect(response).to be_bad_request
+      end
+    end
+
+    context 'monitors_atがnot nil' do
+      before do
+        streaming_service_account.update!(monitors_at: Time.zone.now)
+        allow(StreamingService::FetchChatMessagesService).to receive(:new) { double(:service).as_null_object }
+        allow(StreamingService::ConvertMessagesToCommandsService).to receive(:new) { double(:service).as_null_object }
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+    end
+  end
 end

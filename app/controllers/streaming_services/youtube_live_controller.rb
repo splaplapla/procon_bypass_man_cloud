@@ -22,10 +22,10 @@ class StreamingServices::YoutubeLiveController < ApplicationController
   end
 
   def commands
-    unless @streaming_service_account.monitors_at
-      head :ok
-      return
-    end
+    @streaming_service = current_user.streaming_services.find(params[:streaming_service_id])
+    @streaming_service_account = @streaming_service.streaming_service_account
+
+    return head :bad_request unless @streaming_service_account.monitors_at
 
     messages = StreamingService::FetchChatMessagesService.new(@streaming_service_account, video_id: params[:id]).execute
     StreamingService::ConvertMessagesToCommandsService.new(@streaming_service_account, messages: messages).execute
