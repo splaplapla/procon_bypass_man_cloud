@@ -8,6 +8,7 @@ class CreateStreamingServiceAccounts < ActiveRecord::Migration[6.1]
       t.string :refresh_token, null: false
       t.datetime :expires_at, null: false
       t.string :uid, null: false
+      t.datetime :monitors_at, null: true
       t.text :cached_data
 
       t.index [:streaming_service_id, :uid], unique: true
