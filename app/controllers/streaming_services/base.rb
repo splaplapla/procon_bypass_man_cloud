@@ -14,10 +14,12 @@ class StreamingServices::Base < ApplicationController
   end
 
   def render_exceeded_youtube_quota_error
-    render json: { errors: ["リクエストのリミットに達しました。時間を空けて再度試してください。"] }, status: :internal_server_error
+    Rails.logger.error "youtube APIのレートリミットに達しました。時間を空けて再度試してください。"
+    render json: { errors: ["youtube APIのレートリミットに達しました。時間を空けて再度試してください。"] }, status: :internal_server_error
   end
 
   def render_live_chat_rate_limit_error
+    Rails.logger.error "メッセージの取得頻度が早すぎます。"
     render json: { errors: ["メッセージの取得頻度が早すぎます。"] }, status: :bad_request
   end
 end

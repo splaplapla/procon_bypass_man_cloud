@@ -127,7 +127,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
 
       it do
         subject
-        expect(JSON.parse(response.body)).to eq("errors"=>["リクエストのリミットに達しました。時間を空けて再度試してください。"])
+        expect(JSON.parse(response.body)).to eq("errors"=>["youtube APIのレートリミットに達しました。時間を空けて再度試してください。"])
       end
     end
 

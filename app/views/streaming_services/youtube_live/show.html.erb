@@ -14,7 +14,7 @@
       <th>タイトル</th>
       <td>
         <div>
-          <%= @live_stream.title %>
+          <%= link_to @live_stream.title, "https://www.youtube.com/watch?v=#{@live_stream.id}", target: :_blank %>
         </div>
       </td>
     </tr>
@@ -47,6 +47,15 @@
   <% if @streaming_service_account.monitors_at %>
     <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger" %><br>
     <%= link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
+    <script>
+      function call_api() {
+        $.post("<%= commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id) %>");
+      }
+      setInterval("call_api()", 5000);
+      $(function() {
+        call_api()
+      });
+    </script>
   <% else %>
     <%= link_to "コメントとの連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success" %>
   <% end %>
