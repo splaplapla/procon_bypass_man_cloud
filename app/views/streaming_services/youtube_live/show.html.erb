@@ -1,8 +1,8 @@
 <h1>「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
 
-<% if @streaming_service_account.monitors_at %>
+<% if @streaming_service_account.monitoring_now? %>
   <p class="text-center">
-    <%= link_to "コメントとの連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <%= link_to "配信との連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
     <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
   </p>
   <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
@@ -17,16 +17,16 @@
   </script>
 <% else %>
   <p class="text-center">
-    <%= link_to "コメントとの連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
+    <%= link_to "配信との連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
   </p>
 <% end %>
 
 <% if @live_stream %>
   <table class="table mb-4">
     <tr>
-      <th>コメントとの連携状態</th>
+      <th>配信との連携状態</th>
       <td>
-        <% if @streaming_service_account.monitors_at %>
+        <% if @streaming_service_account.monitoring_now? %>
           連携中
         <% else %>
           停止中

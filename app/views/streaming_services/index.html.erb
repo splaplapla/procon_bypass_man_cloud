@@ -14,6 +14,11 @@
     <tr>
       <td>
         <%= link_to streaming_service.name.presence || '未入力', streaming_service %>
+
+        <% if streaming_service.streaming_service_account&.monitoring_now? %>
+          <br>
+          <span class="badge bg-success">配信と連携中</span>
+        <% end %>
       </td>
       <td>
         <%= streaming_service.service_type %>

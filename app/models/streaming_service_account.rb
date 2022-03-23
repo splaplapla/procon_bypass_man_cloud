@@ -18,4 +18,8 @@ class StreamingServiceAccount < ApplicationRecord
   def stop_monitoring
     update!(monitors_at: nil)
   end
+
+  def monitoring_now?
+    monitors_at?
+  end
 end
