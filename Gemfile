@@ -12,6 +12,9 @@ gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
 gem 'newrelic_rpm'
+gem 'acts-as-taggable-on'
+gem 'omniauth-google-oauth2'
+gem 'omniauth-rails_csrf_protection'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'

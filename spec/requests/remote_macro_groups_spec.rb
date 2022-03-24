@@ -3,21 +3,6 @@ require 'rails_helper'
 RSpec.describe RemoteMacroGroupsController, type: :request do
   include_context "login_with_user"
 
-  describe "GET #index" do
-    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
-
-    subject { get remote_macro_groups_path }
-
-    before do
-      remote_macro_group
-    end
-
-    it do
-      subject
-      expect(response).to be_ok
-    end
-  end
-
   describe "GET #new" do
     subject { get new_remote_macro_group_path }
 

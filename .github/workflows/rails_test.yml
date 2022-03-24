@@ -38,3 +38,5 @@ jobs:
           DATABASE_DB: github_actions_test
           DATABASE_PASSWORD: password
           DATABASE_USERNAME: root
+          GOOGLE_OAUTH2_CLIENT_ID: x
+          GOOGLE_OAUTH2_SECRET: x

@@ -1,0 +1,74 @@
+<h1>「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+
+<% if @streaming_service_account.monitoring_now? %>
+  <p class="text-center">
+    <%= link_to "配信との連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
+  </p>
+  <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
+  <script>
+    function call_api() {
+      $.post("<%= commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id) %>");
+    }
+    setInterval("call_api()", 5000);
+    $(function() {
+      call_api()
+    });
+  </script>
+<% else %>
+  <p class="text-center">
+    <%= link_to "配信との連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
+  </p>
+<% end %>
+
+<% if @live_stream %>
+  <table class="table mb-4">
+    <tr>
+      <th>配信との連携状態</th>
+      <td>
+        <% if @streaming_service_account.monitoring_now? %>
+          連携中
+        <% else %>
+          停止中
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <%= image_tag @live_stream.thumbnails_high_url %>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <%= link_to @live_stream.title, "https://www.youtube.com/watch?v=#{@live_stream.id}", target: :_blank %>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <%= @live_stream.published_at.to_s(:jp) %>
+      </td>
+    </tr>
+    <tr>
+      <th>description</th>
+      <td>
+        <%= simple_format @live_stream.description %>
+      </td>
+    </tr>
+    <tr>
+      <th>chat id</th>
+      <td>
+        <%= @live_stream.chat_id %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>
+
+<script>
+// TODO poolingする
+// post streaming_service_youtube_live_commands_path
+</script>

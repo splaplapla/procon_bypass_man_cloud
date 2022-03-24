@@ -17,9 +17,21 @@ Rails.application.routes.draw do
     resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
-  resources :remote_macro_groups, only: [:index, :show, :edit, :new, :create, :destroy], shallow: true do
+  resources :remote_macro_groups, only: [:show, :edit, :new, :create, :destroy], shallow: true do
     resources :remote_macros, only: [:new, :create, :destroy] do
       post 'devices/:device_unique_key/test_emit' => 'remote_macros#test_emit', as: :test_emit
+      get :edit_trigger_words, on: :member
+      patch :update_trigger_words, on: :member
+    end
+  end
+
+  resources :streaming_services, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    delete :unlink_streaming_service_account, on: :member
+
+    resources :youtube_live, only: [:new, :show], module: :streaming_services do
+      post :commands, on: :member
+
+      resource :monitoring, only: [:create, :destroy], module: :youtube_live
     end
   end
 
@@ -48,6 +60,10 @@ Rails.application.routes.draw do
       resources :pbm_jobs, only: [:index, :update]
       resources :device_statuses, only: [:create]
       resources :completed_pbm_remote_macro_jobs, only: [:create]
+
+      resources :streaming_services, module: :streaming_services, only: [:show] do
+        post "pbm_remote_macro_jobs/:word/enqueue" => "pbm_remote_macro_jobs#enqueue", as: :enqueue_pbm_remote_macro_jobs
+      end
     end
   end
 
@@ -83,4 +99,6 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  get '/auth/google_oauth2/callback', to: 'omniauth_callbacks#google_oauth2'
 end

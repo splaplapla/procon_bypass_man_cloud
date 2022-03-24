@@ -1,0 +1,91 @@
+<h1>連携しているストリーミングサービスの一覧</h1>
+
+<% if @streaming_services.present? %>
+<table class="table">
+  <tr>
+    <th class="col-md-2">名前</th>
+    <th class="col-md-1">連携先サービス</th>
+    <th class="col-md-1">連携中アカウント</th>
+    <th class="col-md-1">接続先デバイス</th>
+    <th class="col-md-2">連携するマクロのグループ</th>
+    <th class="col-md-1"></th>
+  </tr>
+  <% @streaming_services.each do |streaming_service| %>
+    <tr>
+      <td>
+        <%= link_to streaming_service.name.presence || '未入力', streaming_service %>
+
+        <% if streaming_service.streaming_service_account&.monitoring_now? %>
+          <br>
+          <span class="badge bg-success">配信と連携中</span>
+        <% end %>
+      </td>
+      <td>
+        <%= streaming_service.service_type %>
+      </td>
+      <td>
+        <% if streaming_service&.streaming_service_account %>
+          <span class="badge bg-success">
+            <%= streaming_service.streaming_service_account.name %>
+          </span>
+        <% else %>
+          <span class="badge bg-warning">未連携</span>
+        <% end %>
+      </td>
+      <td>
+        <% if streaming_service.device %>
+          <%= link_to streaming_service.device.name, device_path(streaming_service.device.unique_key) %>
+        <% end %>
+      </td>
+      <td>
+        <% if streaming_service.remote_macro_group %>
+          <%= link_to streaming_service.remote_macro_group.name, streaming_service.remote_macro_group %>
+        <% end %>
+      </td>
+      <td>
+        <%= link_to '削除する', streaming_service, method: :delete, class: "btn btn-danger", data: { confirm: "削除しますがいいですか？" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% else %>
+  <p>連携しているストリーミングサービスが未登録です</p>
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "ストリーミングサービスを連携する", new_streaming_service_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
+
+<h1>リモートマクロのグループ一覧</h1>
+<% if @remote_macro_groups.present? %>
+  <table class="table">
+    <tr>
+      <th>名前</th>
+      <th>メモ</th>
+      <th>登録数マクロ</th>
+      <th class="col-md-2"></th>
+    </tr>
+    <% @remote_macro_groups.each do |remote_macro_group| %>
+      <tr>
+        <td><%= link_to remote_macro_group.name.presence || '名前未設定', remote_macro_group_path(remote_macro_group) %></td>
+        <td><%= remote_macro_group.memo %></td>
+        <td><%= remote_macro_group.remote_macros.count %>個</td>
+        <td><%= link_to "削除する", remote_macro_group_path(remote_macro_group), method: :delete, data: { confirm: "削除しますがいいですか？" }, class: "btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  リモートマクロのグループが未登録です
+<% end %>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "リモートマクロのグループを新規登録する", new_remote_macro_group_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>

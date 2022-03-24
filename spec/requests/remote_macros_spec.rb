@@ -69,4 +69,34 @@ RSpec.describe RemoteMacrosController, type: :request do
       expect { subject }.to have_broadcasted_to(device.push_token)
     end
   end
+
+  describe 'GET #edit_trigger_words' do
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    subject { get edit_trigger_words_remote_macro_path(remote_macro, device.unique_key) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+  end
+
+  describe 'PATCH #update_trigger_words' do
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:device) { FactoryBot.create(:device, user: user) }
+
+    subject { patch update_trigger_words_remote_macro_path(remote_macro, device.unique_key), params: { remote_macro: { trigger_word_list: "foo" } } }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { remote_macro.reload.trigger_word_list }.from([]).to(["foo"])
+    end
+  end
 end

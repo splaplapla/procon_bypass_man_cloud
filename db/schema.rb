@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_09_102124) do
+ActiveRecord::Schema.define(version: 2022_03_20_052520) do
 
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
@@ -135,6 +135,66 @@ ActiveRecord::Schema.define(version: 2022_03_09_102124) do
     t.bigint "user_id"
   end
 
+  create_table "streaming_service_accounts", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "image_url"
+    t.bigint "streaming_service_id", null: false
+    t.string "access_token", null: false
+    t.string "refresh_token", null: false
+    t.datetime "expires_at", null: false
+    t.string "uid", null: false
+    t.datetime "monitors_at"
+    t.text "cached_data"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["access_token"], name: "index_streaming_service_accounts_on_access_token", unique: true
+    t.index ["refresh_token"], name: "index_streaming_service_accounts_on_refresh_token", unique: true
+    t.index ["streaming_service_id", "uid"], name: "index_streaming_service_accounts_on_streaming_service_id_and_uid", unique: true
+    t.index ["streaming_service_id"], name: "index_streaming_service_accounts_on_streaming_service_id", unique: true
+  end
+
+  create_table "streaming_services", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.bigint "user_id", null: false
+    t.integer "service_type", null: false
+    t.bigint "remote_macro_group_id"
+    t.bigint "device_id"
+    t.boolean "enabled", default: false
+    t.string "unique_key"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["unique_key"], name: "index_streaming_services_on_unique_key", unique: true
+  end
+
+  create_table "taggings", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.string "taggable_type"
+    t.bigint "taggable_id"
+    t.string "tagger_type"
+    t.bigint "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.string "tenant", limit: 128
+    t.index ["context"], name: "index_taggings_on_context"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+    t.index ["taggable_id", "taggable_type", "context"], name: "taggings_taggable_context_idx"
+    t.index ["taggable_id", "taggable_type", "tagger_id", "context"], name: "taggings_idy"
+    t.index ["taggable_id"], name: "index_taggings_on_taggable_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_taggings_on_taggable_type_and_taggable_id"
+    t.index ["taggable_type"], name: "index_taggings_on_taggable_type"
+    t.index ["tagger_id", "tagger_type"], name: "index_taggings_on_tagger_id_and_tagger_type"
+    t.index ["tagger_id"], name: "index_taggings_on_tagger_id"
+    t.index ["tagger_type", "tagger_id"], name: "index_taggings_on_tagger_type_and_tagger_id"
+    t.index ["tenant"], name: "index_taggings_on_tenant"
+  end
+
+  create_table "tags", charset: "utf8mb4", force: :cascade do |t|
+    t.string "name", collation: "utf8_bin"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "taggings_count", default: 0
+  end
+
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
@@ -166,4 +226,5 @@ ActiveRecord::Schema.define(version: 2022_03_09_102124) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token"
   end
 
+  add_foreign_key "taggings", "tags"
 end
