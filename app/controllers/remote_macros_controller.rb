@@ -22,7 +22,7 @@ class RemoteMacrosController < ApplicationController
   def update
     @remote_macro = current_user.remote_macros.find(params[:id])
     if @remote_macro.update!(remote_macro_params)
-      redirect_to remote_macro_group_path(@remote_macro.remote_macro_group)
+      redirect_to remote_macro_group_path(@remote_macro.remote_macro_group), notice: "更新できました"
     else
       @remote_macro_group = @remote_macro.remote_macro_group
       render :edit
