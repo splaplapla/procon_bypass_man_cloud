@@ -29,6 +29,34 @@ RSpec.describe RemoteMacrosController, type: :request do
     end
   end
 
+  describe "GET #edit" do
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+
+    subject { get edit_remote_macro_path(remote_macro) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+  end
+
+  describe "PUT #update" do
+    let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+
+    subject { put remote_macro_path(remote_macro), params: { remote_macro: { name: "bar", steps: "x" } } }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
+
+    it do
+      expect { subject }.to change { remote_macro.reload.name }.to("bar")
+    end
+  end
+
   describe "DELETE #destroy" do
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
     let(:remote_macro) { FactoryBot.create(:remote_macro, remote_macro_group: remote_macro_group, steps: "") }
