@@ -10,6 +10,7 @@
       <th class="col-md-2"></th>
       <th class="col-md-2"></th>
       <th class="col-md-1"></th>
+      <th class="col-md-1"></th>
     </tr>
     <% @remote_macros.each do |remote_macro| %>
       <tr>
@@ -29,6 +30,7 @@
             <% end %>
           </ul>
         </td>
+        <td><%= link_to "編集する", edit_remote_macro_path(remote_macro), class: "btn btn-success" %></td>
         <td><%= link_to "削除する", remote_macro_path(remote_macro), method: :delete, data: { confirm: "削除しますがいいですか？" }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>

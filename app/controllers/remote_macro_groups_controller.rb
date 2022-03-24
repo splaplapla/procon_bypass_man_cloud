@@ -14,7 +14,7 @@ class RemoteMacroGroupsController < ApplicationController
 
   def show
     @remote_macro_group = current_user.remote_macro_groups.find(params[:id])
-    @remote_macros = @remote_macro_group.remote_macros.order(id: :acs)
+    @remote_macros = @remote_macro_group.remote_macros.order(id: :asc)
   end
 
   def destroy

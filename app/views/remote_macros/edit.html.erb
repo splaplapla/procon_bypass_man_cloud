@@ -1,6 +1,6 @@
 <%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", streaming_services_path %> -＞</span>
 
-<h1 class="mb-5">リモートマクロの新規登録</h1>
-<%= form_for([@remote_macro_group, @remote_macro]) do |f| %>
+<h1 class="mb-5">リモートマクロの編集</h1>
+<%= form_for(@remote_macro) do |f| %>
   <%= render 'form', f: f %>
 <% end %>
