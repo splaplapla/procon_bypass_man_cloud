@@ -149,7 +149,7 @@ ActiveRecord::Schema.define(version: 2022_03_20_052520) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["access_token"], name: "index_streaming_service_accounts_on_access_token", unique: true
     t.index ["refresh_token"], name: "index_streaming_service_accounts_on_refresh_token", unique: true
-    t.index ["streaming_service_id", "uid"], name: "index_streaming_service_accounts_on_streaming_service_id_and_uid", unique: true
+    t.index ["streaming_service_id", "uid"], name: "index_streaming_service_id_uid", unique: true
     t.index ["streaming_service_id"], name: "index_streaming_service_accounts_on_streaming_service_id", unique: true
   end
 
