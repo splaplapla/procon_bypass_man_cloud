@@ -12,9 +12,22 @@ class RemoteMacroGroupsController < ApplicationController
     end
   end
 
+  def edit
+    @remote_macro_group = current_user.remote_macro_groups.find(params[:id])
+  end
+
+  def update
+    @remote_macro_group = current_user.remote_macro_groups.find(params[:id])
+    if @remote_macro_group.update(remote_macro_group_params)
+      redirect_to remote_macro_group_path(@remote_macro_group), notice: "更新に成功しました"
+    else
+      render :edit
+    end
+  end
+
   def show
     @remote_macro_group = current_user.remote_macro_groups.find(params[:id])
-    @remote_macros = @remote_macro_group.remote_macros
+    @remote_macros = @remote_macro_group.remote_macros.order(id: :asc)
   end
 
   def destroy

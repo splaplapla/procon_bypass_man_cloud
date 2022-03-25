@@ -1,5 +1,13 @@
 <%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", streaming_services_path %> -＞</span>
-<h1 class="mb-5">リモートマクロの一覧</h1>
+
+<div class="row">
+  <div class="col-11">
+    <h1>リモートマクロの一覧「<%= @remote_macro_group.name %>」</h1>
+  </div>
+  <div class="col-1">
+    <%= link_to "編集", edit_remote_macro_group_path(@remote_macro_group), class: "btn btn-success" %>
+  </div>
+</div>
 
 <% if @remote_macros.present? %>
   <table class="table">
@@ -9,6 +17,7 @@
       <th>トリガーワード</th>
       <th class="col-md-2"></th>
       <th class="col-md-2"></th>
+      <th class="col-md-1"></th>
       <th class="col-md-1"></th>
     </tr>
     <% @remote_macros.each do |remote_macro| %>
@@ -29,6 +38,7 @@
             <% end %>
           </ul>
         </td>
+        <td><%= link_to "編集する", edit_remote_macro_path(remote_macro), class: "btn btn-success" %></td>
         <td><%= link_to "削除する", remote_macro_path(remote_macro), method: :delete, data: { confirm: "削除しますがいいですか？" }, class: "btn btn-danger" %></td>
       </tr>
     <% end %>
