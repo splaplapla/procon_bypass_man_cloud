@@ -43,5 +43,29 @@ describe RemoteMacro::CreatePbmRemoteMacroJobService do
         expect(subject.steps).to eq(["foo", "toggle", "foo"])
       end
     end
+
+    context 'stepsが:つきカンマ区切り' do
+      subject { described_class.new(device: device).execute(name: "foo", steps: ":foo, :toggle, :foo") }
+
+      it do
+        expect { subject }.to change { device.pbm_remote_macro_jobs.count }.by(1)
+      end
+
+      it do
+        expect(subject.steps).to eq(["foo", "toggle", "foo"])
+      end
+    end
+
+    context 'stepsが:つきカンマ区切り' do
+      subject { described_class.new(device: device).execute(name: "foo", steps: "[:foo, :toggle, :foo]") }
+
+      it do
+        expect { subject }.to change { device.pbm_remote_macro_jobs.count }.by(1)
+      end
+
+      it do
+        expect(subject.steps).to eq(["foo", "toggle", "foo"])
+      end
+    end
   end
 end

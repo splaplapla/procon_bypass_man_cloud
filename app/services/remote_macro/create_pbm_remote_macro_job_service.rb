@@ -19,6 +19,10 @@ class RemoteMacro::CreatePbmRemoteMacroJobService
   private
 
   def split_steps(steps)
-    steps.split(/[,\s]+/)
+    if /^\[(.+)\]$/ =~ steps
+      steps = $1
+    end
+
+    steps.split(/[,\s]+/).map { |x| x.remove(/^:/) }
   end
 end
