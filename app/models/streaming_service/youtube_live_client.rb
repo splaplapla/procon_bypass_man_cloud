@@ -15,7 +15,7 @@ class StreamingService::YoutubeLiveClient
       http.use_ssl = true
       req = Net::HTTP::Get.new(uri.request_uri)
       yield(req)
-      Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+      Rails.logger.info { "[youtube api] #{uri.to_s}" }
       http.request(req)
     end
   end
@@ -155,7 +155,7 @@ class StreamingService::YoutubeLiveClient
       grant_type: 'refresh_token',
     }
     headers = { 'Content-Type' => 'application/json' }
-    Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+    Rails.logger.info { "[youtube api] #{uri.to_s}" }
     response = http.post(uri.path, params.to_json, headers)
 
     handle_error(response) do |json|
@@ -179,7 +179,7 @@ class StreamingService::YoutubeLiveClient
     http.use_ssl = true
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
-    Rails.logger.debug { "[youtube api] #{uri.to_s}" }
+    Rails.logger.info { "[youtube api] #{uri.to_s}" }
     res = http.request(req)
 
     handle_error(res) do |json|
