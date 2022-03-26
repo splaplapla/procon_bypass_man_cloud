@@ -12,6 +12,7 @@ class StreamingServices::YoutubeLiveController < StreamingServices::Base
     @streaming_service_account = streaming_service_account
     @live_stream = StreamingService::ShowLiveStreamService.new(@streaming_service_account, video_id: params[:id]).execute
   rescue StreamingService::ShowLiveStreamService::AvailableVideoNotError => e
+    @streaming_service_account.stop_monitoring
     render plain: e.message, status: :not_found
   end
 

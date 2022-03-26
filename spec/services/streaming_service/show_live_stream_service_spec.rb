@@ -19,6 +19,49 @@ describe StreamingService::ShowLiveStreamService do
       allow(youtube_live_client).to receive(:available_live_stream) { "b" }
     end
 
+    context 'ライブ配信ではない、とき' do
+      context 'ライブ配信ではない状態が記録済みのとき' do
+        before do
+          streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["var", "2", "3", "4", "5"] } })
+          StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_not_live
+          streaming_service_account.save!
+        end
+
+        it do
+          expect { subject }.to raise_error(StreamingService::ShowLiveStreamService::AvailableVideoNotError)
+        end
+
+        it do
+          expect {
+            begin
+              subject
+            rescue
+            end
+          }.not_to change { StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_live? }
+        end
+      end
+
+      context 'キャッシュにないvideo_idがライブ配信ではないとき' do
+        before do
+          streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["var", "2", "3", "4", "5"] } })
+          expect(youtube_live_client).to receive(:active_streaming_video) { raise StreamingService::YoutubeLiveClient::NotLiveStreamError }
+        end
+
+        it do
+          expect { subject }.to raise_error(StreamingService::ShowLiveStreamService::AvailableVideoNotError)
+        end
+
+        it do
+          expect {
+            begin
+              subject
+            rescue
+            end
+          }.to change { StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_live? }.from(false).to(true)
+        end
+      end
+    end
+
     context 'cached_dataに違うvideoがあるとき' do
       before do
         streaming_service_account.update!(cached_data: { video: {"id"=>"var", "value"=>["1", "2", "3", "4", "5"] } })
