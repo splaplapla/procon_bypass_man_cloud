@@ -11,10 +11,8 @@ class StreamingServices::YoutubeLiveController < StreamingServices::Base
     @streaming_service = streaming_service
     @streaming_service_account = streaming_service_account
     @live_stream = StreamingService::ShowLiveStreamService.new(@streaming_service_account, video_id: params[:id]).execute
-  rescue StreamingService::YoutubeLiveClient::VideoNotFoundError
-    render plain: "動画が存在しませんでした", status: :not_found
-  rescue StreamingService::YoutubeLiveClient::NotLiveStreamError
-    render plain: "ライブ配信ではありません", status: :not_found
+  rescue StreamingService::ShowLiveStreamService::AvailableVideoNotError => e
+    render plain: e.message, status: :not_found
   end
 
   def commands
