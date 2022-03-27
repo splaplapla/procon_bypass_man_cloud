@@ -168,9 +168,6 @@ class StreamingService::YoutubeLiveClient
 
   # @return [String]
   def my_channel_id
-    if @streaming_service_account.respond_to?(:my_channel_id) && @streaming_service_account.my_channel_id.present?
-      return @streaming_service_account.my_channel_id
-    end
     return @my_channel_id if defined?(@my_channel_id)
 
     uri = URI.parse("#{BASE}/v3/channels")
