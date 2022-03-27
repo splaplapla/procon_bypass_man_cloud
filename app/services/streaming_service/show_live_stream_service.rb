@@ -21,9 +21,9 @@ class StreamingService::ShowLiveStreamService
       @streaming_service_account.reset_video
     end
 
-    ensure_can_execute!
-
-    if @streaming_service_account.video.id != @video_id
+    if @streaming_service_account.video.id == @video_id
+      ensure_can_execute!
+    else
       begin
         @streaming_service_account.set_video(video_id: @video_id, values: client.active_streaming_video.to_h.values)
       rescue StreamingService::YoutubeLiveClient::NotLiveStreamError

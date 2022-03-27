@@ -22,7 +22,7 @@ describe StreamingService::ShowLiveStreamService do
     context 'ライブ配信ではない、とき' do
       context 'ライブ配信ではない状態が記録済みのとき' do
         before do
-          streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["var", "2", "3", "4", "5"] } })
+          streaming_service_account.update!(cached_data: { video: {"id"=>"foo", "value"=>["foo", "2", "3", "4", "5"] } })
           StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_not_live
           streaming_service_account.save!
         end
