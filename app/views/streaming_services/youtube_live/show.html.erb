@@ -80,7 +80,7 @@
     </div>
   </div>
 
-  <% @streaming_service.remote_macro_group.remote_macros.each do |remote_macro| %>
+  <% @streaming_service.remote_macro_group.remote_macros.default_order.each do |remote_macro| %>
     【<%= remote_macro.name %>コマンド】
     <br>
 
