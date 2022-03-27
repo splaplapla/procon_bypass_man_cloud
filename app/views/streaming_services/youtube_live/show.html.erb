@@ -68,7 +68,24 @@
   配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
 <% end %>
 
-<script>
-// TODO poolingする
-// post streaming_service_youtube_live_commands_path
-</script>
+<hr>
+
+<% if @streaming_service.remote_macro_group %>
+  <div class="row">
+    <div class="col-11">
+      <h2>設定中のリモートマクロ一覧</h2>
+    </div>
+    <div class="col-1">
+      <%= link_to '編集', @streaming_service.remote_macro_group, class: "btn btn-success", target: :_blank %>
+    </div>
+  </div>
+
+  <% @streaming_service.remote_macro_group.remote_macros.each do |remote_macro| %>
+    【<%= remote_macro.name %>コマンド】
+    <br>
+
+    トリガーワード: <%= remote_macro.trigger_word_list.map { |word| word }.join(", ") %>
+    <br>
+    <br>
+  <% end %>
+<% end %>
