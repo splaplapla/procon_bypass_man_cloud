@@ -37,6 +37,10 @@ class Device < ApplicationRecord
       return 'offline'
     end
 
+    if current_device_status.nil?
+      return 'offline'
+    end
+
     if current_device_status.recent?
       current_device_status.status
     else
