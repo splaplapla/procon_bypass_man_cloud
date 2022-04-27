@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - './:/app:delegated'
+      - bundle_path:/bundle
+    environment:
+      - BUNDLE_PATH=/bundle
+volumes:
+  bundle_path:
