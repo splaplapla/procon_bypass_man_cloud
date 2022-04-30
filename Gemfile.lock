@@ -181,7 +181,7 @@ GEM
       omniauth (~> 2.0)
     pbmenv (0.1.9)
     pg (1.2.3)
-    procon_bypass_man (0.1.21)
+    procon_bypass_man (0.1.22)
       action_cable_client
       pbmenv (>= 0.1.9)
       sorted_set
