@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 # docker run --rm -i -t --name sid debian:sid bin/bash
-FROM ruby:3.0.2
+FROM ruby:3.1.2
 RUN apt-get update -qq && apt-get install -y default-mysql-client default-libmysqlclient-dev default-mysql-client-core
 WORKDIR /app
 COPY Gemfile /app/Gemfile
