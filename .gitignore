@@ -40,3 +40,6 @@ yarn-debug.log*
 .yarn-integrity
 deployment
 .envrc
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
