@@ -29,4 +29,13 @@ bundle install
 
 ### TODO
 * デバイス詳細ページをReactで作る
-* 設定エディターをReactで作る
+  - 現在は状態管理をjQueryでDOMをいじっているのでかなり厳しい状態
+* 設定エディター機能
+  - 作り途中(import-mapへの移行でtypescriptが使えなくなってしまい元に戻る)
+* ライブストリーミングのコメント連携
+  - [ ] youtube live
+    * gcp appが非公開なので公開にする必要がある
+  - [ ] twitch
+      * 未実装
+* 設定ファイル同士のdiff機能
+* rails7.0化
