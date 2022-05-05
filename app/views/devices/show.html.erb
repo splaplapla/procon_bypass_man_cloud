@@ -129,10 +129,12 @@
     return false;
   }
 
-  // ページを表示したときにdeviceへ疎通する
-  $(function(){
-    $('.toast').toast({});
+  document.addEventListener('DOMContentLoaded', function() {
+    Array.from(document.querySelectorAll(".toast")).forEach(
+      (toastNode) => new bootstrap.Toast(toastNode)
+    );
     $.post("<%= ping_device_path(@device.unique_key) %>");
+
 
     <% if @device.pbm_version %>
       $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");

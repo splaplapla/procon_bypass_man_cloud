@@ -11,6 +11,8 @@
     <%= javascript_importmap_tags %>
     <%= stylesheet_link_tag "application" %>
   </head>
+    <%# https://github.com/rails/importmap-rails/issues/65 %>
+    <script>window.process = { env: {} }</script>
 
     <%= render "shared/logo_svg" %>
 
