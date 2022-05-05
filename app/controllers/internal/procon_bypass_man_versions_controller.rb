@@ -1,4 +1,5 @@
 class Internal::ProconBypassManVersionsController < ApplicationController
+  skip_forgery_protection only: [:show]
   skip_before_action :require_login, only: [:show]
 
   def show

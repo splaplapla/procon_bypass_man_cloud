@@ -16,10 +16,5 @@ import "channels"
 Rails.start()
 
 $(function() { // eslint-disable-line
-  // tooltip()とかくとエラーになるので、、、
-  // $('[data-bs-toggle="tooltip"]').tooltip(); // eslint-disable-line
-  const elem = document.querySelector('[data-bs-toggle="tooltip"]')
-  if(elem) { createPopper(elem, {}); }
-
   $("#global-flash").delay(3000).fadeOut('slow');
 })
