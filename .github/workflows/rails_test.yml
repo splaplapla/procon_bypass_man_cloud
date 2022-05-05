@@ -27,6 +27,8 @@ jobs:
       - name: Run tests
         run: |
           bundle exec rails yarn:install
+          # bundle exec rake assets:precompile
+          yarn build:css
           bundle exec rails db:create
           bundle exec rails db:schema:load
           bundle exec rake
