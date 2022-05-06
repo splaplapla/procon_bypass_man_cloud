@@ -7,7 +7,6 @@ gem 'rails', "7.0.2.4"
 gem 'net-smtp' # 後で消す
 gem 'mysql2'
 gem 'puma'
-gem 'sass-rails'
 gem 'cssbundling-rails'
 gem 'importmap-rails'
 gem 'propshaft'
