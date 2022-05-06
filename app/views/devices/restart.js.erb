@@ -1,13 +1,4 @@
 var elem = document.getElementById("restartModal");
 (new bootstrap.Modal(elem)).hide();
 
-var progressModal = document.getElementById("progress-modal");
-var progressBar = progressModal.getElementsByClassName('.progress-bar');
-
-(new bootstrap.Modal(progressModal)).show();
-$(progressBar).addClass('animate');
-
-setTimeout(function() {
-  $(progressBar).removeClass('animate');
-  (new bootstrap.Modal(progressModal)).hide();
-}, 10000);
+<=% render "script_progress_modal" %>
