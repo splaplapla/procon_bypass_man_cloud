@@ -42,7 +42,7 @@
     $.get($("[data-refresh-action-url]").data("refresh-action-url"));
   }
 
-  $(function(){
+  document.addEventListener('DOMContentLoaded', function() {
     var deviceId = $("[data-device-id]").data("device-id")
     document.getElementById('restartModal').addEventListener('hidden.bs.modal', function(event) {
       beInProgressStatus(deviceId);

@@ -1,4 +1,5 @@
-import consumer from "./consumer"
+import consumer from "channels/consumer"
+import $ from 'jquery'
 
 $(function(){
   const deviceId = $("[data-device-id]").data("device-id")

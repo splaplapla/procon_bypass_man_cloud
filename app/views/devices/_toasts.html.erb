@@ -45,7 +45,9 @@
 </div>
 
 <script>
-  $(function() {
-    $('.toast').toast({ delay: 9999999999 });
+  document.addEventListener('DOMContentLoaded', function() {
+    Array.from(document.querySelectorAll(".toast")).forEach(
+      (toastNode) => new bootstrap.Toast(toastNode, { delay: 9999999999 })
+    );
   })
 </script>

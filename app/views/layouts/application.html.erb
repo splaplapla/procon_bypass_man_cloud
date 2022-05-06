@@ -8,8 +8,11 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "application" %>
   </head>
+    <%# https://github.com/rails/importmap-rails/issues/65 %>
+    <script>window.process = { env: {} }</script>
 
     <%= render "shared/logo_svg" %>
 
@@ -65,12 +68,6 @@
             </p>
           <% end %>
         <% end %>
-
-        <script>
-          $(function() {
-            $("#global-flash").delay(3000).fadeOut('slow');
-          });
-        </script>
       </div>
 
       <%= yield %>
