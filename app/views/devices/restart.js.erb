@@ -1,8 +1,8 @@
-const elem = document.getElementById("restartModal");
+var elem = document.getElementById("restartModal");
 (new bootstrap.Modal(elem)).hide();
 
-const progressModal = document.getElementById("progress-modal");
-const progressBar = progressModal.getElementsByClassName('.progress-bar');
+var progressModal = document.getElementById("progress-modal");
+var progressBar = progressModal.getElementsByClassName('.progress-bar');
 
 (new bootstrap.Modal(progressModal)).show();
 $(progressBar).addClass('animate');
