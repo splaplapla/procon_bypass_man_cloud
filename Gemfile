@@ -4,8 +4,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.2'
 
 gem 'rails', "7.0.2.4"
-gem 'net-pop' # 後で消す
-gem 'net-smtp' # 後で消す
 gem 'mysql2'
 gem 'puma'
 gem 'cssbundling-rails'

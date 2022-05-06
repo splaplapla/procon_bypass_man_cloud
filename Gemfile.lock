@@ -298,8 +298,6 @@ DEPENDENCIES
   kaminari
   listen
   mysql2
-  net-pop
-  net-smtp
   newrelic_rpm
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
