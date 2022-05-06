@@ -1,0 +1,11 @@
+var progressModalElem = document.getElementById("progress-modal");
+var progressBar = progressModalElem.getElementsByClassName('progress-bar');
+
+var progressModal = new bootstrap.Modal(progressModalElem);
+progressModal.show();
+$(progressBar).addClass('animate');
+
+setTimeout(function() {
+  $(progressBar).removeClass('animate');
+  progressModal.hide();
+}, 10000);

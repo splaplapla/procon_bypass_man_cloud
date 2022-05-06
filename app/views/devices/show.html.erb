@@ -111,30 +111,32 @@
 
 <script>
   function openUpgradeModal() {
-    $("#pbmUpgradeModal").modal("show");
+    const elem = document.getElementById("pbmUpgradeModal");
+    pbmUpgradeModal = new bootstrap.Modal(elem);
+    pbmUpgradeModal.show();
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;
   }
   function openRestartModal() {
-    $("#restartModal").modal("show");
+    const elem = document.getElementById("restartModal");
+    restartModal = new bootstrap.Modal(elem);
+    restartModal.show()
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;
   }
   function openRestoreSettingModal() {
-    $("#restoreSettingModal").modal("show");
+    const elem = document.getElementById("restoreSettingModal");
+    restoreSettingModal = new bootstrap.Modal(elem);
+    restoreSettingModal.show()
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    Array.from(document.querySelectorAll(".toast")).forEach(
-      (toastNode) => new bootstrap.Toast(toastNode)
-    );
     $.post("<%= ping_device_path(@device.unique_key) %>");
-
 
     <% if @device.pbm_version %>
       $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");

@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  skip_forgery_protection only: [:ping]
+  skip_forgery_protection only: [:ping, :offline]
 
   def index
     @devices = current_user.devices.order(id: :asc)
