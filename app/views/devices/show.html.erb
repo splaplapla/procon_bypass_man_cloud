@@ -112,21 +112,24 @@
 <script>
   function openUpgradeModal() {
     const elem = document.getElementById("pbmUpgradeModal");
-    (new bootstrap.Modal(elem)).show();
+    pbmUpgradeModal = new bootstrap.Modal(elem);
+    pbmUpgradeModal.show();
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;
   }
   function openRestartModal() {
     const elem = document.getElementById("restartModal");
-    (new bootstrap.Modal(elem)).show();
+    restartModal = new bootstrap.Modal(elem);
+    restartModal.show()
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;
   }
   function openRestoreSettingModal() {
     const elem = document.getElementById("restoreSettingModal");
-    (new bootstrap.Modal(elem)).show();
+    restoreSettingModal = new bootstrap.Modal(elem);
+    restoreSettingModal.show()
     $.post("<%= ping_device_path(@device.unique_key) %>");
     startWatchdogOfPing();
     return false;

@@ -10,8 +10,7 @@ $(function(){
     consumer.subscriptions.create({ channel: "WebChannel", device_id: deviceId }, {
       received(data) {
         console.log(data)
-        const elem = document.getElementById("progress-modal");
-        (new bootstrap.Modal(elem)).hide();
+        window.progressModal && progressModal.hide()
 
         const refreshUrl = $("[data-refresh-action-url]").data("refresh-action-url");
         if(data.type === "device_is_active" ) {
