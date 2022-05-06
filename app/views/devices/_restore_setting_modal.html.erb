@@ -11,10 +11,10 @@
             <div class="form-check">
               <label class="form-check-label">
                 <% same_setting = @latest_loading_config_event && (saved_buttons_setting.content_hash == Digest::SHA1.hexdigest(@latest_loading_config_event.body["setting"] || '')) %>
-                <%= radio_button_tag :saved_buttons_setting_id, saved_buttons_setting.id, false, required: 'required', class: "form-check-input", disabled: same_setting %>
+                <%= radio_button_tag :saved_buttons_setting_id, saved_buttons_setting.id, false, required: 'required', class: "form-check-input" %>
                 <%= saved_buttons_setting.name %>
                 <% if same_setting %>
-                  <span class="badge bg-success">同じ内容は復元できません</span>
+                  <span class="badge bg-success">現在の設定と同じ内容です</span>
                 <% end %>
               </label>
             </div>
