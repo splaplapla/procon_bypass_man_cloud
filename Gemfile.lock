@@ -236,6 +236,7 @@ GEM
       ffi (~> 1.0)
     rbtree (0.4.5)
     redis (4.6.0)
+    rouge (3.28.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -308,6 +309,7 @@ DEPENDENCIES
   puma
   rails (= 7.0.2.4)
   redis
+  rouge
   rspec-rails
   sorcery
 

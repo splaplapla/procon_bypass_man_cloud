@@ -1,4 +1,8 @@
 <h2><%= @saved_buttons_setting.name %>の設定ファイル</h2>
+<style>
+  <%= Rouge::Themes::Github.render(:scope => '.highlight') %>
+</style>
+
 <% if @saved_buttons_setting.explained_lines.present? %>
   <ul>
     <% @saved_buttons_setting.explained_lines.each do |line| %>
@@ -7,6 +11,6 @@
   </ul>
 <% end %>
 
-<pre style="background-color: #F0F0F0;padding: 30px">
-<%= @saved_buttons_setting.content["setting"] %>
+<pre class="highlight" style="background-color: #F0F0F0;padding: 30px">
+<%= Rouge.highlight(@saved_buttons_setting.content["setting"], 'ruby', 'html').html_safe %>
 </pre>

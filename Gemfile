@@ -16,6 +16,7 @@ gem 'newrelic_rpm'
 gem 'acts-as-taggable-on'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
+gem 'rouge'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
