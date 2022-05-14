@@ -107,7 +107,7 @@
   </style>
 
   <pre class="highlight" style="background-color: #F0F0F0;">
-<%= Rouge.highlight(@latest_loading_config_event&.body&.to_yaml, 'ruby', 'html').html_safe %>
+<%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe %>
   </pre>
 <% else %>
   <p>表示できる設定ファイルがありません</p>
