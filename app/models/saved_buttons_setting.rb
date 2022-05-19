@@ -15,6 +15,17 @@ class SavedButtonsSetting < ApplicationRecord
     @explained_lines ||= SettingExplainService.new(text: content["setting"]).execute
   end
 
+  def normalized_content
+    cloned_content = content.clone
+    cloned_content.transform_values do |value|
+      if value.is_a?(String)
+        value.gsub!("\r\n", "\n")
+      end
+    end
+
+    cloned_content
+  end
+
   private
 
   def update_content_hash
