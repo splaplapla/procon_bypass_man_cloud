@@ -12,5 +12,9 @@
 <% end %>
 
 <pre class="highlight" style="background-color: #F0F0F0;padding: 30px">
-<%= Rouge.highlight(@saved_buttons_setting.normalized_content["setting"], 'ruby', 'html').html_safe %>
+<%= Rouge.highlight(
+  remove_comment_out_lines(
+    @saved_buttons_setting.normalized_content["setting"]
+  ), 'ruby', 'html').html_safe
+  %>
 </pre>
