@@ -38,4 +38,3 @@ bundle install
   - [ ] twitch
       * 未実装
 * 設定ファイル同士のdiff機能
-* rails7.0化
