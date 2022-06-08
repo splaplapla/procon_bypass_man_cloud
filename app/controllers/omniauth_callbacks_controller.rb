@@ -1,4 +1,7 @@
 class OmniauthCallbacksController < ApplicationController
+  def twitch
+  end
+
   def google_oauth2
     if streaming_service = current_user.streaming_services.find_by(id: current_streaming_service_id)
       if streaming_service.streaming_service_account
