@@ -1,7 +1,10 @@
 version: '3'
 services:
   web:
+    image: pbm_cloud
+    container_name: pbm_cloud
     build: .
+    platform: linux/amd64
     ports:
       - "3000:3000"
     volumes:
