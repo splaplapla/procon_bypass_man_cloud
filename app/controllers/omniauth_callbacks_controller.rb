@@ -1,5 +1,23 @@
 class OmniauthCallbacksController < ApplicationController
   def twitch
+    unless(streaming_service = current_user.streaming_services.find_by(id: current_streaming_service_id))
+      raise "もう一度ログインしてください"
+    end
+
+    if streaming_service.streaming_service_account
+      return redirect_to(back_to, notice: "このサービスではすでに連携済みです。")
+    end
+
+    streaming_service.create_streaming_service_account!(
+      name: auth_hash.info.name,
+      image_url: auth_hash.info.image,
+      access_token: auth_hash.credentials.token,
+      refresh_token: auth_hash.credentials.refresh_token,
+      expires_at: Time.at(auth_hash.credentials.expires_at),
+      uid: auth_hash.uid,
+    )
+
+    redirect_to(back_to, notice: "アカウントの連携ができました")
   end
 
   def google_oauth2
