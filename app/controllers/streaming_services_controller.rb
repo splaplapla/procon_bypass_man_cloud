@@ -23,7 +23,15 @@ class StreamingServicesController < ApplicationController
 
   def show
     @streaming_service = current_user.streaming_services.find(params[:id])
-    @streaming_service_account = StreamingService::YoutubeLiveDecorator.new(@streaming_service.streaming_service_account)
+    @streaming_service_account =
+      case
+      when @streaming_service.youtube_live?
+        StreamingService::YoutubeLiveDecorator.new(@streaming_service.streaming_service_account)
+      when @streaming_service.twitch?
+        @streaming_service.streaming_service_account
+      else
+        raise 'unknown service'
+      end
     session[:current_streaming_service_id] = @streaming_service.id
   end
 
