@@ -33,6 +33,11 @@ Rails.application.routes.draw do
 
       resource :monitoring, only: [:create, :destroy], module: :youtube_live
     end
+
+    resources :twitch, only: [:new, :show], module: :streaming_services do
+      # post :commands, on: :member
+      # resource :monitoring, only: [:create, :destroy], module: :youtube_live
+    end
   end
 
   namespace :internal do

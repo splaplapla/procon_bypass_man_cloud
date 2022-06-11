@@ -39,14 +39,8 @@
         </p>
 
         <p>
-          <%= link_to "配信中のライブ配信の動画を選択する", new_streaming_service_youtube_live_path(@streaming_service) %>
+          <%= link_to "配信中のライブ配信の動画を選択する", new_streaming_service_twitch_path(@streaming_service) %>
         </p>
-
-        <% if @streaming_service_account.video.id %>
-          <p>
-            <%= link_to "前回連携していたライブ配信を表示する", streaming_service_youtube_live_path(@streaming_service, @streaming_service_account.video.id) %>
-          </p>
-        <% end %>
 
         <hr>
 

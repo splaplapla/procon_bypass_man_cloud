@@ -1,0 +1,26 @@
+<%= @streaming_service_account.access_token %>
+
+<script>
+  const socket = new WebSocket('ws://irc-ws.chat.twitch.tv/');
+  socket.addEventListener('open', function (event) {
+      console.log('INFO: Socket Opened');
+      socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
+      socket.send('PASS oauth:<%= @streaming_service_account.access_token %>');
+      socket.send('NICK jiikko28');
+      socket.send('JOIN #yutanpo_oden');
+      socket.send('USER #jiikko28');
+  });
+
+  socket.addEventListener('error', function (event) {
+      console.log('Error from server ', event.data);
+  });
+
+  socket.addEventListener('close', function (event) {
+      console.log('close from server ', event.data);
+  });
+
+
+  socket.addEventListener('message', function (event) {
+      console.log('Message from server ', event.data);
+  });
+</script>
