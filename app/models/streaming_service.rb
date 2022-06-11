@@ -9,6 +9,8 @@ class StreamingService < ApplicationRecord
 
   enum service_type: {
     youtube_live: 10,
-    discord: 20,
+    twitch: 20,
   }
+
+  validates :service_type, presence: true
 end
