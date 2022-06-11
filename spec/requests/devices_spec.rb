@@ -2,18 +2,21 @@ require 'rails_helper'
 
 RSpec.describe "Devices", type: :request do
   describe "GET /index" do
+
+    subject { get devices_path }
+
     context 'ログインしている' do
       include_context "login_with_admin_user"
 
       it do
-        get devices_path
+        subject
         expect(response).to be_ok
       end
     end
 
     context 'ログインしていない' do
       it  do
-        get devices_path
+        subject
         expect(response).to redirect_to(root_path)
       end
     end
@@ -22,11 +25,13 @@ RSpec.describe "Devices", type: :request do
   describe "GET /show" do
     include_context "login_with_user"
 
+    subject { get device_path(device.unique_key) }
+
     describe do
       let(:device) { FactoryBot.create(:device, user: user) }
 
       it do
-        get device_path(device.unique_key)
+        subject
         expect(response).to be_ok
       end
     end
@@ -41,7 +46,8 @@ RSpec.describe "Devices", type: :request do
         let(:device) { FactoryBot.create(:device, user: user, pbm_version: "0.1.2") }
 
         it do
-          get device_path(device.unique_key)
+          subject
+          expect(response).to be_ok
         end
       end
 
@@ -49,8 +55,24 @@ RSpec.describe "Devices", type: :request do
         let(:device) { FactoryBot.create(:device, user: user, pbm_version: "0.1.3") }
 
         it do
-          get device_path(device.unique_key)
+          subject
+          expect(response).to be_ok
         end
+      end
+    end
+
+    context '有効なcurrent_pbm_sessionを持っているとき' do
+      let(:device) { FactoryBot.create(:device, user: user) }
+      let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a") }
+      let(:device_status) { device.device_statuses.create!(status: :running, pbm_session: pbm_session) }
+
+      before do
+        device.update!(current_device_status: device_status)
+      end
+
+      it do
+        subject
+        expect(response).to be_ok
       end
     end
   end
@@ -60,8 +82,10 @@ RSpec.describe "Devices", type: :request do
 
     let(:device) { FactoryBot.create(:device, user: user) }
 
+    subject { get new_device_path }
+
     it  do
-      get new_device_path
+      subject
       expect(response).to be_ok
     end
   end
