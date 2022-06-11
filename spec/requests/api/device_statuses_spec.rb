@@ -59,6 +59,14 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
         it do
           expect { subject }.to change { device.reload.current_device_status_id }
         end
+
+        context 'pbm_sessionのupdate_at' do
+          let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a", updated_at: 1.minutes.ago) }
+
+          it do
+            expect { subject }.to change { pbm_session.reload.updated_at }
+          end
+        end
       end
     end
   end

@@ -1,6 +1,6 @@
 class DeviceStatus < ApplicationRecord
   belongs_to :device
-  belongs_to :pbm_session
+  belongs_to :pbm_session, touch: true
 
   enum status: {
     initialized: 0,

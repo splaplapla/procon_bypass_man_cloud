@@ -1,4 +1,5 @@
 class Api::DeviceStatusesController < Api::Base
+  # TODO ここでload agvを受け入れる
   def create
     form = Api::CreateDeviceStatsForm.new(permitted_params)
     form.validate!
