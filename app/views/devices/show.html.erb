@@ -66,7 +66,11 @@
     </td>
   <tr>
   </tr>
-    <th>デバイスからの最後のアクセスから経過した時間</th>
+    <th>hostname</th>
+    <td><%= @device.hostname %></td>
+  <tr>
+  </tr>
+    <th>デバイスが最後にアクセスしてからの経過時間</th>
     <td>
       <div id="device_current_last_access_at">
         <% if @device.last_access_at.present? %>
@@ -76,8 +80,14 @@
     </td>
   <tr>
   </tr>
-    <th>hostname</th>
-    <td><%= @device.hostname %></td>
+    <th>デバイスとの接続時間</th>
+    <td>
+        <% if @current_pbm_session %>
+          <%= time_ago_in_words(@current_pbm_session.created_at) %>
+        <% else %>
+          -
+        <% end %>
+    </td>
   <tr>
 </table>
 

@@ -9,6 +9,7 @@ class DevicesController < ApplicationController
     @device = current_user.devices.find_by!(unique_key: params[:id])
     @latest_loading_config_event = @device.latest_loading_config_event
     @saved_buttons_settings = current_user.saved_buttons_settings.order(id: :asc)
+    @current_pbm_session = @device.current_device_status&.pbm_session
     if @latest_loading_config_event
       @saved_buttons_setting_form = SavedButtonsSettingForm.new(event_id: @latest_loading_config_event.id)
 
