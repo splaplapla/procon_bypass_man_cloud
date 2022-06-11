@@ -34,7 +34,7 @@
     <td>
       <% if @streaming_service.streaming_service_account %>
         <p>
-          <%= image_tag @streaming_service.streaming_service_account.image_url %>
+          <%= image_tag @streaming_service.streaming_service_account.image_url, size: '100x100' %>
           「<%= @streaming_service.streaming_service_account.name %>」と連携中です。
         </p>
 
