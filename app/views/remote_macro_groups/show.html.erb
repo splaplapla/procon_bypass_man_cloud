@@ -1,8 +1,12 @@
-<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", streaming_services_path %> -＞</span>
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %> ->
+  <%= "リモートマクロのグループ「#{@remote_macro_group.name}」のマクロ一覧" %>
+</p>
+
+<h1><%= "リモートマクロのグループ「#{@remote_macro_group.name}」のマクロ一覧" %></h1>
 
 <div class="row">
   <div class="col-11">
-    <h1>リモートマクロの一覧「<%= @remote_macro_group.name %>」</h1>
   </div>
   <div class="col-1">
     <%= link_to "編集", edit_remote_macro_group_path(@remote_macro_group), class: "btn btn-success" %>

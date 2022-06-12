@@ -1,3 +1,11 @@
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %></span> ->
+  <%= link_to "連携中ストリーミングサービス「#{@streaming_service.name}」", streaming_service_path(@streaming_service) %></span> ->
+  <%= link_to "配信の選択", new_streaming_service_twitch_path(@streaming_service) %> ->
+  配信との連携
+</p>
+
+
 <h1> Twitch「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
 
 <% if @streaming_service.remote_macro_group_id.nil? || @streaming_service.device_id.nil? %>

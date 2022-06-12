@@ -1,3 +1,9 @@
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %></span> ->
+  <%= link_to "連携中ストリーミングサービス「#{@streaming_service.name}」", streaming_service_path(@streaming_service) %></span> ->
+  配信の選択
+</p>
+
 <h1> Twitch 「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
 <% if @live_stream %>
   配信中のライブが見つかりました。<br>

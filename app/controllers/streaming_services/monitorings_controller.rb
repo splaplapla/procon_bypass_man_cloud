@@ -16,6 +16,10 @@ class StreamingServices::MonitoringsController < StreamingServices::Base
   private
 
   def redirect_path
-    URI.parse(request.referrer).path
+    if request.referrer.present?
+      URI.parse(request.referrer).path
+    else
+      streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account)
+    end
   end
 end
