@@ -4,9 +4,41 @@ describe StreamingService::TwitchClient do
   let(:client) { described_class.new(streaming_service_account) }
 
   describe '#myself_live' do
+    let(:user) { FactoryBot.create(:user) }
+    let(:device) { FactoryBot.create(:device, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, device: device, user: user) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
+
     subject { client.myself_live }
 
     it do
+      allow(StreamingService::TwitchClient::BaseRequest).to receive(:do_request) do
+        OpenStruct.new(
+          code: '200',
+          body: {
+            "data"=> [
+              {"id"=>"39398041959",
+               "user_id"=>"49207184",
+               "user_login"=>"fps_shaka",
+               "user_name"=>"fps_shaka",
+               "game_id"=>"516575",
+               "game_name"=>"VALORANT",
+               "type"=>"live",
+               "title"=>"VCTみますDay2 RiotGames許諾の元",
+               "viewer_count"=>36269,
+               "started_at"=>"2022-06-11T02:37:10Z",
+               "language"=>"ja",
+               "thumbnail_url"=>"https://static-cdn.jtvnw.net/previews-ttv/live_user_fps_shaka-{width}x{height}.jpg",
+               "tag_ids"=>["6ba1d230-e52f-4d81-b1e0-41f25a8a9f5d"],
+               "is_mature"=>false}
+            ],
+            "pagination"=>{},
+          }.to_json,
+        )
+      end
+      expect(subject.id).to eq("39398041959")
+      expect(subject.user_name).to eq("fps_shaka")
+      expect(subject.type).to eq("live")
     end
   end
 

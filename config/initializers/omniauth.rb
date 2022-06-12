@@ -6,7 +6,7 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     image_size: 50
   }
 
-  provider :twitch, ENV["TWITCH_CLIENT_ID"], ENV['TWITCH_SECRET'], {
+  provider :twitch, ENV["TWITCH_OAUTH2_CLIENT_ID"],  ENV['TWITCH_OAUTH2_SECRET'], {
     scope: 'user:read:email chat:read chat:edit',
-    }
+  }
 end
