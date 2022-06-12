@@ -1,5 +1,3 @@
-# TODO https://dev.twitch.tv/docs/authentication/refresh-tokens
-
 class StreamingService::TwitchClient
   class UnexpectedError < StandardError; end
   class OldAccessTokenError < StandardError; end
