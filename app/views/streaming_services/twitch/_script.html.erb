@@ -1,0 +1,32 @@
+<script>
+// https://stackoverflow.com/questions/71876873/rails-7-7-0-2-3-importmap-jquery-is-not-defined-in-view
+  var codeExecuted = false;
+
+  document.addEventListener('DOMContentLoaded', function(e) {
+      if(codeExecuted) { return }
+
+      const socket = new WebSocket('ws://irc-ws.chat.twitch.tv/');
+      socket.addEventListener('open', function (event) {
+          console.log('INFO: Socket Opened');
+          socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
+          socket.send('PASS oauth:<%= @streaming_service_account.access_token %>');
+          socket.send('NICK <%= twitch_my_name %>');
+          socket.send('JOIN #<%= twitch_live_stream_user_name %>');
+          socket.send('USER #<%= twitch_live_stream_user_name %>');
+        });
+
+      socket.addEventListener('error', function (event) {
+          console.log('Error from server ', event.data);
+        });
+
+      socket.addEventListener('close', function (event) {
+          console.log('close from server ', event.data);
+        });
+
+      socket.addEventListener('message', function (event) {
+          console.log('Message from server ', event.data);
+        });
+
+      codeExecuted = true;
+    })
+</script>

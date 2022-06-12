@@ -10,8 +10,7 @@
     <%= link_to "配信との連携を解除する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :delete, class: "btn btn-danger btn-lg" %><br>
     <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
     </p>
-    <script>
-    </script>
+    <%= render 'script', twitch_live_stream_user_name: @live_stream.user_login, twitch_my_name: @twitch_my_user.login %>
   <% else %>
     <p class="text-center">
     <%= link_to "配信との連携を開始する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :post, class: "btn btn-success btn-lg" %>
