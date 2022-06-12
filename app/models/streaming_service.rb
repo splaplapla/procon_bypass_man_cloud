@@ -13,4 +13,13 @@ class StreamingService < ApplicationRecord
   }
 
   validates :service_type, presence: true
+  validate :prevent_to_update_service_type, on: :update
+
+  private
+
+  def prevent_to_update_service_type
+    if changes[:service_type].present?
+      self.errors.add(:service_type, :invalid)
+    end
+  end
 end
