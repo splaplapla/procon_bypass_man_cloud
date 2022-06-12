@@ -55,25 +55,4 @@
 
 <hr>
 
-<% if @streaming_service.remote_macro_group %>
-  <div class="row">
-    <div class="col-11">
-      <h2>設定中のリモートマクロ一覧</h2>
-    </div>
-    <div class="col-1">
-      <%= link_to '編集', @streaming_service.remote_macro_group, class: "btn btn-success", target: :_blank %>
-    </div>
-  </div>
-
-  <% if @streaming_service.remote_macro_group.remote_macros.present? %>
-    <% @streaming_service.remote_macro_group.remote_macros.default_order.each do |remote_macro| %>
-      【<%= remote_macro.name %>コマンド】
-      <br>
-      トリガーワード: <%= remote_macro.trigger_word_list.map { |word| word }.join(", ") %>
-      <br>
-      <br>
-    <% end %>
-  <% else %>
-    リモートマクロが未登録です
-  <% end %>
-<% end %>
+<%= render 'streaming_services/remote_macro_group' %>

@@ -60,7 +60,7 @@ class StreamingService::TwitchClient
   end
 
   def myself_live
-    response = GetMyselfLiveRequest.new(access_token: access_token).execute(user_name: 'akarindao') # TODO myself.loginにする
+    response = GetMyselfLiveRequest.new(access_token: access_token).execute(user_name: 'rinadecoro') # TODO myself.loginにする
     return handle_error(response) do |json|
       break nil if json['data'].empty?
       Live.new(*json['data'].first.slice('id', 'user_id', 'user_name', 'user_login', 'type', 'title', 'thumbnail_url', 'started_at').values)
