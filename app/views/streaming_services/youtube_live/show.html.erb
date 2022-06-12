@@ -2,7 +2,7 @@
 
 <% if @streaming_service_account.monitoring_now? %>
   <p class="text-center">
-    <%= link_to "配信との連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <%= link_to "配信との連携を解除する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :delete, class: "btn btn-danger btn-lg" %><br>
     <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
   </p>
   <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
@@ -17,7 +17,7 @@
   </script>
 <% else %>
   <p class="text-center">
-    <%= link_to "配信との連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
+    <%= link_to "配信との連携を開始する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :post, class: "btn btn-success btn-lg" %>
   </p>
 <% end %>
 

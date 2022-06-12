@@ -1,6 +1,8 @@
 class StreamingServices::YoutubeLiveController < StreamingServices::Base
   before_action :reject_when_not_monitoring, only: [:commands]
 
+  skip_forgery_protection only: [:commands]
+
   def new
     @streaming_service = streaming_service
     @streaming_service_account = streaming_service_account
