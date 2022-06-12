@@ -4,7 +4,15 @@ class StreamingService::TwitchClient
   class UnexpectedError < StandardError; end
   class OldAccessTokenError < StandardError; end
 
-  class Live < Struct.new(:id, :user_id, :user_name, :type, :title, :thumbnail_url); end
+  class Live < Struct.new(:id, :user_id, :user_name, :user_login, :type, :title, :thumbnail_url, :started_at)
+    def started_at
+      super.to_time
+    end
+
+    def thumbnail_url
+      super.gsub('{width}x{height}', 'x')
+    end
+  end
   class TwitchUser < Struct.new(:id, :login, :display_name, :type, :broadcaster_type, :email); end
 
   BASE = "https://api.twitch.tv/helix"
@@ -52,9 +60,9 @@ class StreamingService::TwitchClient
   end
 
   def myself_live
-    response = GetMyselfLiveRequest.new(access_token: access_token).execute(user_name: myself.login)
+    response = GetMyselfLiveRequest.new(access_token: access_token).execute(user_name: 'akarindao') # TODO myself.loginにする
     handle_error(response) do |json|
-      Live.new(*json['data'].first.slice('id', 'user_id', 'user_name', 'type', 'title', 'thumbnail_url').values)
+      Live.new(*json['data'].first.slice('id', 'user_id', 'user_name', 'user_login', 'type', 'title', 'thumbnail_url', 'started_at').values)
     end
   rescue OldAccessTokenError
     retry

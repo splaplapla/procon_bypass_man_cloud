@@ -1,0 +1,80 @@
+<h1> Twitch「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+
+<% if @streaming_service.remote_macro_group_id.nil? || @streaming_service.device_id.nil? %>
+  <p class="alert alert-danger">デバイスもしくはリモートマクロが未設定です。
+  <%= link_to 'ここから', edit_streaming_service_path(@streaming_service) %>
+  設定してください。</p>
+<% else %>
+  <% if @streaming_service_account.monitoring_now? %>
+    <p class="text-center">
+    <%= link_to "配信との連携を解除する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
+    </p>
+    <script>
+    </script>
+  <% else %>
+    <p class="text-center">
+    <%= link_to "配信との連携を開始する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :post, class: "btn btn-success btn-lg" %>
+    </p>
+  <% end %>
+<% end %>
+
+<% if @live_stream %>
+  <table class="table mb-4">
+    <tr>
+      <th>配信との連携状態</th>
+      <td>
+        <% if @streaming_service_account.monitoring_now? %>
+          連携中
+        <% else %>
+          停止中
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <%= image_tag @live_stream.thumbnail_url, width: '500' %>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <%= link_to @live_stream.title, "https://www.twitch.tv/#{@live_stream.user_login}", target: :_blank %>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <%= @live_stream.started_at.to_fs(:jp) %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>
+
+<hr>
+
+<% if @streaming_service.remote_macro_group %>
+  <div class="row">
+    <div class="col-11">
+      <h2>設定中のリモートマクロ一覧</h2>
+    </div>
+    <div class="col-1">
+      <%= link_to '編集', @streaming_service.remote_macro_group, class: "btn btn-success", target: :_blank %>
+    </div>
+  </div>
+
+  <% if @streaming_service.remote_macro_group.remote_macros.present? %>
+    <% @streaming_service.remote_macro_group.remote_macros.default_order.each do |remote_macro| %>
+      【<%= remote_macro.name %>コマンド】
+      <br>
+      トリガーワード: <%= remote_macro.trigger_word_list.map { |word| word }.join(", ") %>
+      <br>
+      <br>
+    <% end %>
+  <% else %>
+    リモートマクロが未登録です
+  <% end %>
+<% end %>

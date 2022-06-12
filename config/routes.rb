@@ -27,16 +27,17 @@ Rails.application.routes.draw do
 
   resources :streaming_services, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     delete :unlink_streaming_service_account, on: :member
+    resources :streaming_service_accounts, only: [] do
+      resource :monitoring, only: [:create, :destroy], module: :streaming_services
+    end
 
     resources :youtube_live, only: [:new, :show], module: :streaming_services do
       post :commands, on: :member
-
       resource :monitoring, only: [:create, :destroy], module: :youtube_live
     end
 
     resources :twitch, only: [:new, :show], module: :streaming_services do
       # post :commands, on: :member
-      # resource :monitoring, only: [:create, :destroy], module: :youtube_live
     end
   end
 

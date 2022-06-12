@@ -1,26 +1,37 @@
-<%= @streaming_service_account.access_token %>
+<h1> Twitch 「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+<% if @live_stream %>
+  配信中のライブが見つかりました。<br>
 
-<script>
-  const socket = new WebSocket('ws://irc-ws.chat.twitch.tv/');
-  socket.addEventListener('open', function (event) {
-      console.log('INFO: Socket Opened');
-      socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
-      socket.send('PASS oauth:<%= @streaming_service_account.access_token %>');
-      socket.send('NICK jiikko28');
-      socket.send('JOIN #yutanpo_oden');
-      socket.send('USER #jiikko28');
-  });
+  <table class="table mb-4">
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <div>
+          <%= image_tag @live_stream.thumbnail_url, width: '500' %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <div>
+          <%= @live_stream.title %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <div>
+          <%= @live_stream.started_at.to_fs(:jp) %>
+        </div>
+      </td>
+    </tr>
+  </table>
 
-  socket.addEventListener('error', function (event) {
-      console.log('Error from server ', event.data);
-  });
-
-  socket.addEventListener('close', function (event) {
-      console.log('close from server ', event.data);
-  });
-
-
-  socket.addEventListener('message', function (event) {
-      console.log('Message from server ', event.data);
-  });
-</script>
+  <p class="text-center">
+  <%= link_to "この配信に投稿されるコメントと連携する", streaming_service_twitch_path(@streaming_service, @live_stream.user_login), class: "btn btn-success btn-lg" %>
+  </p>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>
