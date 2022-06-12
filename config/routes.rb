@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     end
 
     resources :twitch, only: [:new, :show], module: :streaming_services do
-      # post :commands, on: :member
+      post :enqueue, on: :collection # require word param
     end
   end
 

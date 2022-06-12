@@ -29,8 +29,9 @@
         console.log(matched[1]);
         table = <%= raw json_escape(@macro_trigger_table.to_json) %>;
         if(table[matched[1]]) {
+          var word = table[matched[1]]
+          $.post('<%= enqueue_streaming_service_twitch_index_path(@streaming_service) %>', { word: word });
           console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1');
-          // ここで非同期リクエストを送信する
         }
       }
     });
