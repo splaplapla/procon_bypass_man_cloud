@@ -1,6 +1,8 @@
 class StreamingServices::TwitchController < StreamingServices::Base
   skip_forgery_protection only: :enqueue
 
+  before_action :reject_when_not_monitoring, only: :enqueue
+
   def new
     @streaming_service = streaming_service
     @streaming_service_account = streaming_service_account
@@ -42,5 +44,11 @@ class StreamingServices::TwitchController < StreamingServices::Base
       remote_macro_group.
       remote_macros.
       flat_map { |x| x.trigger_word_list }.reduce({}) { |a, k| a[k] = true; a }
+  end
+
+  def reject_when_not_monitoring
+    if streaming_service_account.monitors_at.nil?
+      return head :bad_request
+    end
   end
 end

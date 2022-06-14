@@ -59,9 +59,9 @@ RSpec.describe StreamingServices::TwitchController, type: :request do
     include_context "login_with_user"
 
     let(:user) { FactoryBot.create(:user) }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
     let(:streaming_service) { FactoryBot.create(:streaming_service, user: user, remote_macro_group: remote_macro_group) }
     let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
-    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
     let(:live_video) { double(:live).as_null_object }
     let(:client) { double(:client) }
 
@@ -80,6 +80,57 @@ RSpec.describe StreamingServices::TwitchController, type: :request do
     it do
       subject
       expect(response).to be_ok
+    end
+  end
+
+  describe 'POST #commands' do
+    include_context "login_with_user"
+
+    let(:user) { FactoryBot.create(:user) }
+    let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, user: user, remote_macro_group: remote_macro_group) }
+    let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
+
+    subject { post enqueue_streaming_service_twitch_index_path(streaming_service, "foo", word: param_word) }
+
+    before do
+      streaming_service_account
+    end
+
+    context 'monitors_atがnot nil' do
+      let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service, monitors_at: Time.zone.now) }
+
+      before do
+      end
+
+      context 'wordがない' do
+        let(:param_word) { '' }
+
+        it do
+          subject
+          expect(response).to be_bad_request
+        end
+      end
+
+      context 'wordがある' do
+        context 'wordがマッチする' do
+          let(:param_word) { 'no word' }
+
+          it do
+            subject
+            pending
+          end
+        end
+
+        context 'wordがマッチしない' do
+          let(:param_word) { 'no word' }
+
+          it do
+            subject
+            expect(response).to be_bad_request
+          end
+        end
+      end
     end
   end
 end
