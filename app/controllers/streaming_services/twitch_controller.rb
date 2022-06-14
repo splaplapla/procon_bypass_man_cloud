@@ -2,6 +2,8 @@ class StreamingServices::TwitchController < StreamingServices::Base
   skip_forgery_protection only: :enqueue
 
   before_action :reject_when_not_monitoring, only: :enqueue
+  before_action :require_streaming_service_device, only: :enqueue
+  before_action :require_streaming_service_remote_macro_group, only: :enqueue
 
   def new
     @streaming_service = streaming_service
@@ -21,20 +23,20 @@ class StreamingServices::TwitchController < StreamingServices::Base
 
   def enqueue
     if params[:word].blank?
-      return render json: { errors: 'require word param' }, status: :bad_request
+      return render json: { errors: 'Require word param' }, status: :bad_request
     end
 
     @streaming_service = streaming_service
     @streaming_service_account = streaming_service_account
     device = @streaming_service.device
 
-    if(remote_macro = @streaming_service.remote_macro_group.remote_macros.tagged_with(params[:word], on: :trigger_words).first)
-      remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: remote_macro.steps, name: remote_macro.name)
-      ActionCable.server.broadcast(device.push_token, PbmRemoteMacroJobSerializer.new(remote_macro_job).attributes)
-      return render json: {}, status: :ok
+    unless(remote_macro = @streaming_service.remote_macro_group.remote_macros.tagged_with(params[:word], on: :trigger_words).first)
+      return render json: { errors: 'The remote_macro did not find' }, status: :bad_request
     end
 
-    return render json: { errors: 'the remote_macro did not find' }, status: :bad_request
+    remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: remote_macro.steps, name: remote_macro.name)
+    ActionCable.server.broadcast(device.push_token, PbmRemoteMacroJobSerializer.new(remote_macro_job).attributes)
+    return render json: {}, status: :ok
   end
 
   private
@@ -49,6 +51,18 @@ class StreamingServices::TwitchController < StreamingServices::Base
   def reject_when_not_monitoring
     if streaming_service_account.monitors_at.nil?
       return head :bad_request
+    end
+  end
+
+  def require_streaming_service_device
+    if streaming_service.device.nil?
+      return render json: { errors: 'Require device of streaming_service' }, status: :bad_request
+    end
+  end
+
+  def require_streaming_service_remote_macro_group
+    if streaming_service.remote_macro_group.nil?
+      return render json: { errors: 'Require remote_macro_group of streaming_service' }, status: :bad_request
     end
   end
 end
