@@ -26,7 +26,36 @@ RSpec.describe StreamingServicesController, type: :request do
     end
   end
 
-  describe "GET /show" do
+  describe "POST #create" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:streaming_service_attribute) { FactoryBot.attributes_for(:streaming_service, ) }
+
+    subject { post streaming_services_path, params: { streaming_service: { name: 'foo', service_type: service_type } } }
+
+    context 'service_type is youtube_live' do
+      let(:service_type) { :youtube_live }
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
+
+      it { expect { subject }.to change { user.streaming_services.count }.by(1) }
+    end
+
+    context 'service_type is twitch' do
+      let(:service_type) { :twitch }
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
+
+      it { expect { subject }.to change { user.streaming_services.count }.by(1) }
+    end
+  end
+
+  describe "GET #show" do
     let(:user) { FactoryBot.create(:user) }
     let(:device) { FactoryBot.create(:device, user: user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
