@@ -30,11 +30,38 @@ RSpec.describe StreamingServicesController, type: :request do
     let(:user) { FactoryBot.create(:user) }
     let(:device) { FactoryBot.create(:device, user: user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
-    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, service_type: service_type, device: device, user: user) }
 
-    it do
-      get streaming_service_path(streaming_service)
-      expect(response).to be_ok
+    subject { get streaming_service_path(streaming_service) }
+
+    describe 'service type is' do
+      context 'youtube live' do
+        let(:service_type) { StreamingService.service_types[:youtube_live] }
+
+        it do
+          subject
+          expect(response).to be_ok
+        end
+
+        it do
+          subject
+          expect(response.body).to include('連携しているyoutubeチャンネル')
+        end
+      end
+
+      context 'twitch' do
+        let(:service_type) { StreamingService.service_types[:twitch] }
+
+        it do
+          subject
+          expect(response).to be_ok
+        end
+
+        it do
+          subject
+          expect(response.body).to include('連携しているtwitchチャンネル')
+        end
+      end
     end
   end
 
