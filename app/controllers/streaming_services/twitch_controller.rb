@@ -1,6 +1,7 @@
 class StreamingServices::TwitchController < StreamingServices::Base
   skip_forgery_protection only: :enqueue
 
+  before_action :require_word_param, only: :enqueue
   before_action :reject_when_not_monitoring, only: :enqueue
   before_action :require_streaming_service_device, only: :enqueue
   before_action :require_streaming_service_remote_macro_group, only: :enqueue
@@ -22,10 +23,6 @@ class StreamingServices::TwitchController < StreamingServices::Base
   end
 
   def enqueue
-    if params[:word].blank?
-      return render json: { errors: 'Require word param' }, status: :bad_request
-    end
-
     @streaming_service = streaming_service
     @streaming_service_account = streaming_service_account
     device = @streaming_service.device
@@ -46,6 +43,12 @@ class StreamingServices::TwitchController < StreamingServices::Base
       remote_macro_group.
       remote_macros.
       flat_map { |x| x.trigger_word_list }.reduce({}) { |a, k| a[k] = true; a }
+  end
+
+  def require_word_param
+    if params[:word].blank?
+      return render json: { errors: 'Require word param' }, status: :bad_request
+    end
   end
 
   def reject_when_not_monitoring
