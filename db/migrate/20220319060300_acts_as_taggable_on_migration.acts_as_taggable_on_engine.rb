@@ -9,7 +9,7 @@ class ActsAsTaggableOnMigration < ActiveRecord::Migration[6.0]
     end
 
     create_table ActsAsTaggableOn.taggings_table do |t|
-      t.references :tag, foreign_key: { to_table: ActsAsTaggableOn.tags_table }
+      t.references :tag, foreign_key: { to_table: ActsAsTaggableOn.tags_table }, type: :bigint
 
       # You should make sure that the column created is
       # long enough to store the required class names.
