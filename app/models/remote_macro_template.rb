@@ -1,0 +1,2 @@
+class RemoteMacroTemplate < ApplicationRecord
+end
