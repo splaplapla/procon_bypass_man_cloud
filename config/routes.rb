@@ -17,6 +17,14 @@ Rails.application.routes.draw do
     resources :public_saved_buttons_settings, only: [:create, :destroy]
   end
 
+  resources :remote_macro_groups, only: [:show] do
+    resources :game_softs, only: :index, module: :remote_macro_groups do
+      resources :remote_macro_templates, only: :index do
+        resources :remote_macros, only: :create
+      end
+    end
+  end
+
   resources :remote_macro_groups, only: [:show, :edit, :update, :new, :create, :destroy], shallow: true do
     resources :remote_macros, only: [:new, :create, :edit, :update, :destroy] do
       post 'devices/:device_unique_key/test_emit' => 'remote_macros#test_emit', as: :test_emit

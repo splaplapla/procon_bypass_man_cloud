@@ -1,0 +1,20 @@
+<p>
+<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", remote_macro_group_path(@remote_macro_group) %> ->
+テンプレートから取り込む「ゲームタイトルの選択」
+</p>
+
+
+<table class='table'>
+  <tr>
+    <th>タイトル</th>
+    <th></th>
+  </tr>
+  <% @game_softs.each do |game_soft| %>
+    <tr>
+      <td><%= game_soft.title %></td>
+      <td>
+        <%= link_to '選択する', remote_macro_group_game_soft_remote_macro_templates_path(@remote_macro_group, game_soft) %>
+      </td>
+    </tr>
+  <% end %>
+</table>

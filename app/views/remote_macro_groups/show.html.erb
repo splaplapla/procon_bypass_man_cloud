@@ -6,9 +6,10 @@
 <h1><%= "リモートマクロのグループ「#{@remote_macro_group.name}」のマクロ一覧" %></h1>
 
 <div class="row">
-  <div class="col-11">
+  <div class="col-9">
   </div>
-  <div class="col-1">
+  <div class="col-3 text-right">
+    <%= link_to "テンプレートから取り込む", remote_macro_group_game_softs_path(@remote_macro_group), class: "btn btn-primary" %>
     <%= link_to "編集", edit_remote_macro_group_path(@remote_macro_group), class: "btn btn-success" %>
   </div>
 </div>
