@@ -13,6 +13,10 @@ describe StreamingService::TwitchClient do
 
     context 'データが返ってこないとき' do
       it do
+        twitch_user = double(:twitch_user).tap do |u|
+          allow(u).to receive(:login) { 'foo' }
+        end
+        allow(client).to receive(:myself) { twitch_user }
         allow(StreamingService::TwitchClient::BaseRequest).to receive(:do_request) do
           OpenStruct.new(
             code: '200',

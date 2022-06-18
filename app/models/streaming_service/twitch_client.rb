@@ -72,6 +72,10 @@ class StreamingService::TwitchClient
 
     response = GetMyselfRequest.new(access_token: access_token).execute
     handle_error(response) do |json|
+      if json['data'].empty?
+        return nil
+      end
+
       @myself = TwitchUser.new(*json['data'].first.slice('id', 'login', 'display_name', 'type', 'broadcaster_type', 'email').values)
     end
   rescue OldAccessTokenError
