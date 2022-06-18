@@ -2,7 +2,7 @@
 
 <% if @streaming_service_account.monitoring_now? %>
   <p class="text-center">
-    <%= link_to "配信との連携を解除する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <%= link_to "配信との連携を解除する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :delete, class: "btn btn-danger btn-lg" %><br>
     <p class="alert alert-danger">連携中はこの画面を閉じないでください。</p>
   </p>
   <% link_to "コメントを取得してからコマンドを送信する", commands_streaming_service_youtube_live_path(@streaming_service, @live_stream.id), method: :post, remote: true %>
@@ -17,7 +17,7 @@
   </script>
 <% else %>
   <p class="text-center">
-    <%= link_to "配信との連携を開始する", streaming_service_youtube_live_monitoring_path(@streaming_service, @live_stream.id), method: :post, class: "btn btn-success btn-lg" %>
+    <%= link_to "配信との連携を開始する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :post, class: "btn btn-success btn-lg" %>
   </p>
 <% end %>
 
@@ -70,22 +70,4 @@
 
 <hr>
 
-<% if @streaming_service.remote_macro_group %>
-  <div class="row">
-    <div class="col-11">
-      <h2>設定中のリモートマクロ一覧</h2>
-    </div>
-    <div class="col-1">
-      <%= link_to '編集', @streaming_service.remote_macro_group, class: "btn btn-success", target: :_blank %>
-    </div>
-  </div>
-
-  <% @streaming_service.remote_macro_group.remote_macros.default_order.each do |remote_macro| %>
-    【<%= remote_macro.name %>コマンド】
-    <br>
-
-    トリガーワード: <%= remote_macro.trigger_word_list.map { |word| word }.join(", ") %>
-    <br>
-    <br>
-  <% end %>
-<% end %>
+<%= render 'streaming_services/remote_macro_group' %>

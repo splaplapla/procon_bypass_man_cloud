@@ -182,6 +182,8 @@ GEM
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
+    omniauth-twitch (1.1.0)
+      omniauth-oauth2 (~> 1.6)
     pbmenv (0.1.10)
     pg (1.3.5)
     procon_bypass_man (0.2.1)
@@ -302,6 +304,7 @@ DEPENDENCIES
   newrelic_rpm
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
+  omniauth-twitch
   pg
   procon_bypass_man
   propshaft

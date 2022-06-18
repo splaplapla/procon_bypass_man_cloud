@@ -1,0 +1,43 @@
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %> ->
+  <%= link_to "連携中ストリーミングサービス「#{@streaming_service.name}」", streaming_service_path(@streaming_service) %> ->
+  配信の選択
+</p>
+
+<h1> Twitch 「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+<% if @live_stream %>
+  配信中のライブが見つかりました。<br>
+
+  <table class="table mb-4">
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <div>
+          <%= image_tag @live_stream.thumbnail_url, width: '500' %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <div>
+          <%= @live_stream.title %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <div>
+          <%= @live_stream.started_at.to_fs(:jp) %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <p class="text-center">
+  <%= link_to "この配信に投稿されるコメントと連携する", streaming_service_twitch_path(@streaming_service, @live_stream.user_login), class: "btn btn-success btn-lg" %>
+  </p>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>

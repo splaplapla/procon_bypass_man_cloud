@@ -26,15 +26,71 @@ RSpec.describe StreamingServicesController, type: :request do
     end
   end
 
-  describe "GET /show" do
+  describe "POST #create" do
+    let(:user) { FactoryBot.create(:user) }
+    let(:streaming_service_attribute) { FactoryBot.attributes_for(:streaming_service, ) }
+
+    subject { post streaming_services_path, params: { streaming_service: { name: 'foo', service_type: service_type } } }
+
+    context 'service_type is youtube_live' do
+      let(:service_type) { :youtube_live }
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
+
+      it { expect { subject }.to change { user.streaming_services.count }.by(1) }
+    end
+
+    context 'service_type is twitch' do
+      let(:service_type) { :twitch }
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
+
+      it { expect { subject }.to change { user.streaming_services.count }.by(1) }
+    end
+  end
+
+  describe "GET #show" do
     let(:user) { FactoryBot.create(:user) }
     let(:device) { FactoryBot.create(:device, user: user) }
     let(:remote_macro_group) { FactoryBot.create(:remote_macro_group, user: user) }
-    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, device: device, user: user) }
+    let(:streaming_service) { FactoryBot.create(:streaming_service, remote_macro_group: remote_macro_group, service_type: service_type, device: device, user: user) }
 
-    it do
-      get streaming_service_path(streaming_service)
-      expect(response).to be_ok
+    subject { get streaming_service_path(streaming_service) }
+
+    describe 'service type is' do
+      context 'youtube live' do
+        let(:service_type) { StreamingService.service_types[:youtube_live] }
+
+        it do
+          subject
+          expect(response).to be_ok
+        end
+
+        it do
+          subject
+          expect(response.body).to include('連携しているyoutubeチャンネル')
+        end
+      end
+
+      context 'twitch' do
+        let(:service_type) { StreamingService.service_types[:twitch] }
+
+        it do
+          subject
+          expect(response).to be_ok
+        end
+
+        it do
+          subject
+          expect(response.body).to include('連携しているtwitchチャンネル')
+        end
+      end
     end
   end
 

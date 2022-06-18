@@ -1,11 +1,16 @@
-<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", streaming_services_path %> -＞</span>
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %> ->
+  <%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」のマクロ一覧", remote_macro_group_path(@remote_macro_group) %> ->
+  マクロのトリガーキーワード登録
+</p>
 
-<h1 class="mb-5">リモートマクロの新規登録</h1>
+<h1>マクロ「<%= @remote_macro.name %>」のトリガーキーワード登録</h1>
+
 <%= form_for(@remote_macro, url: update_trigger_words_remote_macro_path(@remote_macro)) do |f| %>
   <%= render "shared/validation_errors", f: f %>
   <div class="mb-3 row">
-    <%= f.label :trigger_word_list, "トリガーワード", class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
+    <%= f.label :trigger_word_list, "トリガーワード(カンマ区切り)", class: "col-sm-3 col-form-label" %>
+    <div class="col-sm-9">
       <%= f.text_field :trigger_word_list, value: f.object.trigger_word_list.join(", "), class: 'form-control' %>
     </div>
   </div>
@@ -13,7 +18,7 @@
   <div class="mb-3 row">
     <div class="col-sm-0"></div>
     <div class="col-sm-12">
-      <%= f.submit "登録する", class: "form-control btn btn-primary" %>
+      <%= f.submit class: "form-control btn btn-primary" %>
     </div>
   </div>
 <% end %>

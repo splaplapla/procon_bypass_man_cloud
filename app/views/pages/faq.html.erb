@@ -5,25 +5,34 @@ app.rb にある `config.api_servers = ['https://pbm-cloud.herokuapp.com']` の�
 その後、device_idというファイル名の中身を https://pbm-cloud.herokuapp.com/devices/new に入力してください。<br>
 
 <hr>
-<pre>
-#!/usr/bin/env ruby
 
-require 'bundler/inline'
+<style>
+  <%= Rouge::Themes::Github.render(:scope => '.highlight') %>
+</style>
+<pre class="highlight" style="background-color: #F0F0F0;padding: 10px">
 
-gemfile do
-  source 'https://rubygems.org'
-  git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
-  gem 'procon_bypass_man', '0.1.18'
-end
+<% code = <<~EOH
+  #!/usr/bin/env ruby
 
-ProconBypassMan.configure do |config|
-  config.root = File.expand_path(__dir__)
-  config.logger = Logger.new("#{ProconBypassMan.root}/app.log", 5, 1024 * 1024 * 10)
-  config.logger.level = :debug
-  config.api_servers = ['https://pbm-cloud.herokuapp.com'] # ここを追加する
-  config.enable_critical_error_logging = true
-end
+  require 'bundler/inline'
 
-ProconBypassMan.run(setting_path: "/usr/share/pbm/current/setting.yml")
+  gemfile do
+    source 'https://rubygems.org'
+    git_source(:github) {|repo_name| "https://github.com/\#{repo_name}" }
+    gem 'procon_bypass_man', '0.1.18'
+  end
+
+  ProconBypassMan.configure do |config|
+    config.root = File.expand_path(__dir__)
+    config.logger = Logger.new("\#{ProconBypassMan.root}/app.log", 5, 1024 * 1024 * 10)
+    config.logger.level = :debug
+    config.api_servers = ['https://pbm-cloud.herokuapp.com'] # ここを追加する
+    config.enable_critical_error_logging = true
+  end
+
+  ProconBypassMan.run(setting_path: "/usr/share/pbm/current/setting.yml")
+EOH
+%>
+<%= Rouge.highlight(code, 'ruby', 'html').html_safe %>
 </pre>
 <hr>

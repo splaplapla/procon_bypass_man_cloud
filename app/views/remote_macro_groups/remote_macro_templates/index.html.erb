@@ -1,0 +1,25 @@
+<p>
+<%= link_to "リモートマクロのグループ「#{@remote_macro_group.name}」", remote_macro_group_path(@remote_macro_group) %> ->
+テンプレートから取り込む「ゲームタイトルの選択」 ->
+ゲーム「<%= @game_soft.title %> >」 ->
+テンプレートから取り込む
+</p>
+
+
+<table class='table'>
+  <tr>
+    <th>動作概要</th>
+    <th>steps</th>
+    <th>説明</th>
+    <th></th>
+  </tr>
+  <% @remote_macro_templates.each do |remote_macro_template| %>
+    <tr>
+      <td><%= remote_macro_template.title %></td>
+      <td><%= remote_macro_template.steps %></td>
+      <td><%= simple_format remote_macro_template.description %></td>
+      <td><%= link_to '取り込む', remote_macro_group_game_soft_remote_macro_template_remote_macros_path(@remote_macro_group, @game_soft, remote_macro_template), method: :post, class: 'btn btn-primary' %></td>
+    </tr>
+  <% end %>
+</table>
+

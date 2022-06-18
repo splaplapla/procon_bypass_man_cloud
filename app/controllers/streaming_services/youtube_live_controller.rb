@@ -1,5 +1,10 @@
 class StreamingServices::YoutubeLiveController < StreamingServices::Base
+  rescue_from StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError, with: :render_exceeded_youtube_quota_error
+  rescue_from StreamingService::YoutubeLiveClient::LiveChatRateLimitError, with: :render_live_chat_rate_limit_error
+
   before_action :reject_when_not_monitoring, only: [:commands]
+
+  skip_forgery_protection only: [:commands]
 
   def new
     @streaming_service = streaming_service
@@ -30,5 +35,15 @@ class StreamingServices::YoutubeLiveController < StreamingServices::Base
     if streaming_service_account.monitors_at.nil?
       return head :bad_request
     end
+  end
+
+  def render_exceeded_youtube_quota_error
+    Rails.logger.error "youtube APIのレートリミットに達しました。時間を空けて再度試してください。"
+    render json: { errors: ["youtube APIのレートリミットに達しました。時間を空けて再度試してください。"] }, status: :internal_server_error
+  end
+
+  def render_live_chat_rate_limit_error
+    Rails.logger.error "メッセージの取得頻度が早すぎます。"
+    render json: { errors: ["メッセージの取得頻度が早すぎます。"] }, status: :bad_request
   end
 end

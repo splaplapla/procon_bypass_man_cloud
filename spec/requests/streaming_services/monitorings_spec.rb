@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
+RSpec.describe StreamingServices::MonitoringsController, type: :request do
   describe 'POST #post' do
     include_context "login_with_user"
 
@@ -8,7 +8,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
     let(:streaming_service) { FactoryBot.create(:streaming_service, user: user) }
     let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
 
-    subject { post streaming_service_youtube_live_monitoring_path(streaming_service, streaming_service_account) }
+    subject { post streaming_service_streaming_service_account_monitoring_path(streaming_service, streaming_service_account) }
 
     it do
       subject
@@ -27,7 +27,7 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
     let(:streaming_service) { FactoryBot.create(:streaming_service, user: user) }
     let(:streaming_service_account) { FactoryBot.create(:streaming_service_account, streaming_service: streaming_service) }
 
-    subject { delete streaming_service_youtube_live_monitoring_path(streaming_service, streaming_service_account) }
+    subject { delete streaming_service_streaming_service_account_monitoring_path(streaming_service, streaming_service_account) }
 
     before do
       streaming_service_account.update!(monitors_at: Time.zone.now)

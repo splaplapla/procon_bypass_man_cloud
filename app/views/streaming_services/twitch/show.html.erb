@@ -1,0 +1,64 @@
+<p>
+  <%= link_to "ストリーミングサービス一覧", streaming_services_path %> ->
+  <%= link_to "連携中ストリーミングサービス「#{@streaming_service.name}」", streaming_service_path(@streaming_service) %> ->
+  <%= link_to "配信の選択", new_streaming_service_twitch_path(@streaming_service) %> ->
+  配信との連携
+</p>
+
+
+<h1> Twitch「<%= @streaming_service_account.name %>」で配信中のライブ</h1>
+
+<% if @streaming_service.remote_macro_group_id.nil? || @streaming_service.device_id.nil? %>
+  <p class="alert alert-danger">デバイスもしくはリモートマクロが未設定です。
+  <%= link_to 'ここから', edit_streaming_service_path(@streaming_service) %>
+  設定してください。</p>
+<% else %>
+  <% if @streaming_service_account.monitoring_now? %>
+    <p class="text-center">
+    <%= link_to "配信との連携を解除する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :delete, class: "btn btn-danger btn-lg" %><br>
+    <p class="alert alert-danger">連携中なので、この画面を閉じないでください。</p>
+    </p>
+    <%= render 'script', twitch_live_stream_user_name: @live_stream.user_login, twitch_my_name: @twitch_my_user.login %>
+  <% else %>
+    <p class="text-center">
+    <%= link_to "配信との連携を開始する", streaming_service_streaming_service_account_monitoring_path(@streaming_service, @streaming_service_account), method: :post, class: "btn btn-success btn-lg" %>
+    </p>
+  <% end %>
+<% end %>
+
+<% if @live_stream %>
+  <table class="table mb-4">
+    <tr>
+      <th>配信との連携状態</th>
+      <td>
+        <% if @streaming_service_account.monitoring_now? %>
+          連携中
+        <% else %>
+          停止中
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <th>サムネイル</th>
+      <td>
+        <%= image_tag @live_stream.thumbnail_url, width: '500' %>
+      </td>
+    </tr>
+    <tr>
+      <th>タイトル</th>
+      <td>
+        <%= link_to @live_stream.title, "https://www.twitch.tv/#{@live_stream.user_login}", target: :_blank %>
+      </td>
+    </tr>
+    <tr>
+      <th>開始時間</th>
+      <td>
+        <%= @live_stream.started_at.to_fs(:jp) %>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  配信中のライブが見つかりません。画面のリロードをするか、配信を開始してください。
+<% end %>
+
+<%= render 'streaming_services/remote_macro_group' %>
