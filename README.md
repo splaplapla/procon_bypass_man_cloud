@@ -36,6 +36,10 @@ bundle config set --local without production
 bundle install
 ```
 
+### デバッグ
+* デバイス詳細webページのaction cable js channelに通知を送る
+  * `ActionCable.server.broadcast(device.unique_key, { type: :loaded_config })`
+
 ### TODO
 * デバイス詳細ページをReactで作る
   - 現在は状態管理をjQueryでDOMをいじっているのでかなり厳しい状態
