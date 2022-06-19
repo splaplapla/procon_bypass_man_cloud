@@ -17,6 +17,10 @@ $(function(){
           $.get(refreshUrl);
           beActiveStatus(deviceId);
           stopWatchdogOfPing();
+        } else if (data.type === "booted" ) {
+          // none
+        } else if (data.type === "loaded_config" ) {
+          window.location.reload();
         } else if (data.type === "completed_upgrade_pbm" ) {
           (new bootstrap.Toast(document.getElementById("ok-upgrade-toast"))).show();
           $.post($("[data-offline-action-url]").data("offline-action-url"));
