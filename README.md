@@ -11,7 +11,7 @@
 * PBMのバージョンアップ
 * 設定ファイルのバックアップ、公開
 * ライブストリーミングのコメント連携
-  - youtube live(WI))
+  - youtube live(WIP)
     * gcp appが非公開なので公開にする必要がある
   - twitch
 
