@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+bundle exec bundler-audit --update && \
+         bundle exec brakeman -q -w2 && \
+         yarn format-check && \
+         yarn lint && \
+         bundle exec rake && \
+         echo OK!!!!!!!!!!!!!!!
