@@ -5,7 +5,7 @@
   document.addEventListener('DOMContentLoaded', function(e) {
     if(codeExecuted) { return }
 
-    const socket = new WebSocket('ws://irc-ws.chat.twitch.tv/');
+    const socket = new WebSocket('wss://irc-ws.chat.twitch.tv/');
     socket.addEventListener('open', function (event) {
       console.log('INFO: Socket Opened');
       socket.send('CAP REQ :twitch.tv/tags twitch.tv/commands');
