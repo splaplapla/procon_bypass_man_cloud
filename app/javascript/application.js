@@ -18,3 +18,4 @@ Rails.start()
 $(function() { // eslint-disable-line
   $("#global-flash").delay(3000).fadeOut('slow');
 })
+import "controllers"
