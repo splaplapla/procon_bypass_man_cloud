@@ -12,6 +12,9 @@ import * as bootstrap from 'bootstrap'
 window.bootstrap = bootstrap
 
 import "channels"
+import * as Turbo from '@hotwired/turbo';
+
+Turbo.start()
 
 Rails.start()
 
