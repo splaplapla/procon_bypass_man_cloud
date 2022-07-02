@@ -12,6 +12,7 @@
     "@babel/preset-typescript": "^7.16.5",
     "@emotion/react": "^11.7.1",
     "@hotwired/stimulus": "^3.0.1",
+    "@hotwired/turbo": "^7.1.0",
     "@popperjs/core": "^2.11.2",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
