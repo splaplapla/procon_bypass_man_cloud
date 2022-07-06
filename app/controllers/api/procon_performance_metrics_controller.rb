@@ -6,6 +6,8 @@ class Api::ProconPerformanceMetricsController < Api::Base
     form.validate!
 
     render json: {}, status: :ok
+  rescue ActiveModel::ValidationError => e
+    render json: { errors: e.model.errors.full_messages }, status: :bad_request
   end
 
   private
