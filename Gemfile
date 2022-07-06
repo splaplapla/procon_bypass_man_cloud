@@ -38,6 +38,7 @@ end
 
 group :test do
   gem 'bundle-audit'
+  gem 'mock_redis'
 end
 
 group :development do
