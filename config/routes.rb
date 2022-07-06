@@ -71,6 +71,7 @@ Rails.application.routes.draw do
     resources :events, only: [:create]
 
     resources :devices, only: :show do
+      resources :procon_performance_metrics, only: [:create]
       resources :pbm_jobs, only: [:index, :update]
       resources :device_statuses, only: [:create]
       resources :completed_pbm_remote_macro_jobs, only: [:create]
