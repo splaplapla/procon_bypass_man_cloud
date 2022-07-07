@@ -5,12 +5,12 @@ class Api::ProconPerformanceMetricsController < Api::Base
     form = Api::CreateProconPerformanceMetricForm.new(metric_params)
     form.validate!
 
-    ProconPerformanceMetric::WriteService.new(
+    ProconPerformanceMetric::WriteService.new.execute(
       timestamp: form.timestamp,
       time_taken_max: form.time_taken_max,
       time_taken_p50: form.time_taken_p50,
-      time_taken_p99: form.time_taken_p99,
       time_taken_p95: form.time_taken_p95,
+      time_taken_p99: form.time_taken_p99,
       read_error_count: form.read_error_count,
       write_error_count: form.write_error_count,
       load_agv: form.load_agv,

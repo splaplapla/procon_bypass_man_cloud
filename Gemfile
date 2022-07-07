@@ -39,6 +39,7 @@ end
 group :test do
   gem 'bundle-audit'
   gem 'mock_redis'
+  gem 'timecop'
 end
 
 group :development do
