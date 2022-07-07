@@ -24,6 +24,13 @@ RSpec.describe Api::ProconPerformanceMetricsController, type: :request do
         subject
         expect(response).to be_ok
       end
+
+      it do
+        subject
+        expect(
+          ProconPerformanceMetric::ReadService.new.execute(device_uuid: device.uuid).size
+        ).to eq(1)
+      end
     end
 
     context 'param is invalid' do
