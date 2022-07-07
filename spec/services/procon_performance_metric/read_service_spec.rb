@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 describe ProconPerformanceMetric::ReadService do
-  let(:redis) { MockRedis.new }
+  include_context "redis_mock"
+
   let(:device_uuid) { "abc" }
 
   before do
-    allow(ProconPerformanceMetric::Base).to receive(:redis) { redis }
-
     ProconPerformanceMetric::WriteService.new.execute(
       timestamp: "2011-11-11 10:00:00+09:00",
       time_taken_max: 22,

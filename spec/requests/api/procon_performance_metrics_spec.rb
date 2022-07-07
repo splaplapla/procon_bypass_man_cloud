@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Api::ProconPerformanceMetricsController, type: :request do
+  include_context "redis_mock"
+
   let(:device) { FactoryBot.create(:device) }
 
   subject { post api_device_procon_performance_metrics_path(device.uuid), params: { body: body_params } }

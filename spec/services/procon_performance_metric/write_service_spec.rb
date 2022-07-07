@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 describe ProconPerformanceMetric::WriteService do
-  let(:redis) { MockRedis.new }
+  include_context "redis_mock"
+
   let(:form) do
     OpenStruct.new(
       timestamp: "a",
@@ -14,10 +15,6 @@ describe ProconPerformanceMetric::WriteService do
       load_agv: "2-2-2",
       device_uuid: "abc",
     )
-  end
-
-  before do
-    allow(ProconPerformanceMetric::Base).to receive(:redis) { redis }
   end
 
   def run
