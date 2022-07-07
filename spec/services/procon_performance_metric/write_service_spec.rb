@@ -22,7 +22,7 @@ describe ProconPerformanceMetric::WriteService do
 
   def run
     described_class.new.execute(
-      timestamp: form.timestamp,
+      timestamp: "2011-11-11 10:00:00+09:00",
       time_taken_max: form.time_taken_max,
       time_taken_p50: form.time_taken_p50,
       time_taken_p95: form.time_taken_p95,
