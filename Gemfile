@@ -12,6 +12,7 @@ gem 'propshaft'
 gem 'kaminari'
 gem 'sorcery'
 gem 'redis'
+gem 'redis-namespace'
 gem 'newrelic_rpm'
 gem 'acts-as-taggable-on'
 gem 'omniauth-twitch'
@@ -37,6 +38,8 @@ end
 
 group :test do
   gem 'bundle-audit'
+  gem 'mock_redis'
+  gem 'timecop'
 end
 
 group :development do
