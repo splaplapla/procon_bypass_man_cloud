@@ -35,9 +35,13 @@ class Api::ProconPerformanceMetricsController < Api::Base
       :time_taken_p50,
       :time_taken_p95,
       :time_taken_p99,
+      :interval_from_previous_succeed_max,
+      :interval_from_previous_succeed_p50,
       :read_error_count,
       :write_error_count,
       :load_agv,
+      :succeed_rate,
+      :collected_spans_size,
     )
   end
 end
