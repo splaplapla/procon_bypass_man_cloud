@@ -11,10 +11,14 @@ class Api::ProconPerformanceMetricsController < Api::Base
       time_taken_p50: form.time_taken_p50,
       time_taken_p95: form.time_taken_p95,
       time_taken_p99: form.time_taken_p99,
+      interval_from_previous_succeed_max: form.interval_from_previous_succeed_max,
+      interval_from_previous_succeed_p50: form.interval_from_previous_succeed_p50,
       read_error_count: form.read_error_count,
       write_error_count: form.write_error_count,
       load_agv: form.load_agv,
       device_uuid: device.uuid,
+      succeed_rate: form.succeed_rate,
+      collected_spans_size: form.collected_spans_size,
     )
 
     render json: {}, status: :ok

@@ -6,11 +6,28 @@ module ProconPerformanceMetric
                 time_taken_p50: ,
                 time_taken_p95: ,
                 time_taken_p99: ,
+                interval_from_previous_succeed_max: ,
+                interval_from_previous_succeed_p50: ,
                 read_error_count: ,
                 write_error_count: ,
                 load_agv: ,
-                device_uuid: )
-      value = serialize(timestamp, time_taken_max, time_taken_p50, time_taken_p95, time_taken_p99, read_error_count, write_error_count, load_agv)
+                device_uuid: ,
+                succeed_rate: ,
+                collected_spans_size: )
+
+      value = serialize(timestamp,
+                        time_taken_max,
+                        time_taken_p50,
+                        time_taken_p95,
+                        time_taken_p99,
+                        interval_from_previous_succeed_max,
+                        interval_from_previous_succeed_p50,
+                        read_error_count,
+                        write_error_count,
+                        load_agv,
+                        succeed_rate,
+                        collected_spans_size)
+
       self.class.redis.rpush(device_uuid, value)
       self.class.redis.ltrim(device_uuid, 0, max_stored_items_size-1)
       self.class.redis.expire(device_uuid, retention_period.to_i)

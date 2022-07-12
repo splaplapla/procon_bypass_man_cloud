@@ -4,23 +4,35 @@ module ProconPerformanceMetric
                                                    :time_taken_p50,
                                                    :time_taken_p95,
                                                    :time_taken_p99,
+                                                   :interval_from_previous_succeed_max,
+                                                   :interval_from_previous_succeed_p50,
                                                    :read_error_count,
                                                    :write_error_count,
-                                                   :load_agv)
+                                                   :load_agv,
+                                                   :succeed_rate,
+                                                   :collected_spans_size)
     def time_taken_max
-      super.to_i
+      super.to_f
     end
 
     def time_taken_p50
-      super.to_i
+      super.to_f
     end
 
     def time_taken_p95
-      super.to_i
+      super.to_f
     end
 
     def time_taken_p99
-      super.to_i
+      super.to_f
+    end
+
+    def interval_from_previous_succeed_max
+      super.to_f
+    end
+
+    def interval_from_previous_succeed_p50
+      super.to_f
     end
 
     def read_error_count
@@ -28,6 +40,14 @@ module ProconPerformanceMetric
     end
 
     def write_error_count
+      super.to_i
+    end
+
+    def succeed_rate
+      super.to_f
+    end
+
+    def collected_spans_size
       super.to_i
     end
 
