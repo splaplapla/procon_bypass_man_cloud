@@ -10,6 +10,8 @@ describe ProconPerformanceMetric::WriteService do
       time_taken_p50: 50,
       time_taken_p95: 95,
       time_taken_p99: 99,
+      interval_from_previous_succeed_max: 1,
+      interval_from_previous_succeed_p50: 2,
       read_error_count: 3,
       write_error_count: 5,
       load_agv: "2-2-2",
@@ -24,10 +26,14 @@ describe ProconPerformanceMetric::WriteService do
       time_taken_p50: form.time_taken_p50,
       time_taken_p95: form.time_taken_p95,
       time_taken_p99: form.time_taken_p99,
+      interval_from_previous_succeed_max: form.interval_from_previous_succeed_max,
+      interval_from_previous_succeed_p50: form.interval_from_previous_succeed_p50,
       read_error_count: form.read_error_count,
       write_error_count: form.write_error_count,
       load_agv: form.load_agv,
       device_uuid: form.device_uuid,
+      succeed_rate: 0.9,
+      collected_spans_size: 400,
     )
   end
 
