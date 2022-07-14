@@ -4,6 +4,10 @@ module ProconPerformanceMetric
                                                    :time_taken_p50,
                                                    :time_taken_p95,
                                                    :time_taken_p99,
+                                                   :write_time_max,
+                                                   :write_time_p50,
+                                                   :read_time_max,
+                                                   :read_time_p50,
                                                    :interval_from_previous_succeed_max,
                                                    :interval_from_previous_succeed_p50,
                                                    :read_error_count,
@@ -24,6 +28,22 @@ module ProconPerformanceMetric
     end
 
     def time_taken_p99
+      super.to_f
+    end
+
+    def write_time_max
+      super.to_f
+    end
+
+    def write_time_p50
+      super.to_f
+    end
+
+    def read_time_max
+      super.to_f
+    end
+
+    def read_time_p50
       super.to_f
     end
 

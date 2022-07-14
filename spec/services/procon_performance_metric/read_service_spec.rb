@@ -12,6 +12,10 @@ describe ProconPerformanceMetric::ReadService do
       time_taken_p50: 24,
       time_taken_p95: 3,
       time_taken_p99: 4,
+      write_time_max: 0.1,
+      write_time_p50: 0.1,
+      read_time_max: 0.2,
+      read_time_p50: 0.2,
       interval_from_previous_succeed_max: 1,
       interval_from_previous_succeed_p50: 2,
       read_error_count: 5,
@@ -27,6 +31,10 @@ describe ProconPerformanceMetric::ReadService do
       time_taken_p50: 22,
       time_taken_p95: 33,
       time_taken_p99: 44,
+      write_time_max: 0.1,
+      write_time_p50: 0.1,
+      read_time_max: 0.2,
+      read_time_p50: 0.2,
       interval_from_previous_succeed_max: 1,
       interval_from_previous_succeed_p50: 2,
       read_error_count: 55,
@@ -52,6 +60,10 @@ describe ProconPerformanceMetric::ReadService do
     expect(metric1.write_error_count).to eq(6)
     expect(metric1.succeed_rate).to eq(0.9)
     expect(metric1.collected_spans_size).to eq(300)
+    expect(metric1.write_time_max).to eq(0.1)
+    expect(metric1.write_time_p50).to eq(0.1)
+    expect(metric1.read_time_max).to eq(0.2)
+    expect(metric1.read_time_p50).to eq(0.2)
 
     expect(metric2.time_taken_max).to eq(11)
     expect(metric2.time_taken_p50).to eq(22)
