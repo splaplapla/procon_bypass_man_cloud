@@ -1,7 +1,6 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs mb-4">
   <li class="nav-item">
     <a href="<%= device_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_path(device.unique_key)) %>">全般</a>
-
   </li>
   <li class="nav-item">
     <a href="<%= device_procon_performance_metric_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_procon_performance_metric_path(device.unique_key)) %>">プロコンのパフォーマンスモニタリング</a>
