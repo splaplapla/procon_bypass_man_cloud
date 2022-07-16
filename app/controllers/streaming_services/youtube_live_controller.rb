@@ -1,6 +1,7 @@
 class StreamingServices::YoutubeLiveController < StreamingServices::Base
   rescue_from StreamingService::YoutubeLiveClient::ExceededYoutubeQuotaError, with: :render_exceeded_youtube_quota_error
   rescue_from StreamingService::YoutubeLiveClient::LiveChatRateLimitError, with: :render_live_chat_rate_limit_error
+  rescue_from StreamingService::YoutubeLiveClient::ExpiredRefreshTokenError, with: :render_expired_refresh_token_error
 
   before_action :reject_when_not_monitoring, only: [:commands]
 
@@ -45,5 +46,10 @@ class StreamingServices::YoutubeLiveController < StreamingServices::Base
   def render_live_chat_rate_limit_error
     Rails.logger.error "メッセージの取得頻度が早すぎます。"
     render json: { errors: ["メッセージの取得頻度が早すぎます。"] }, status: :bad_request
+  end
+
+  def render_expired_refresh_token_error
+    Rails.logger.error "アクセストークンが無効になりました。再連携をしてください。"
+    render plain: "アクセストークンが無効になりました。youtubeのアカウントを再連携をしてください。", status: :bad_request
   end
 end
