@@ -1,5 +1,8 @@
-<%= link_to "デバイス一覧に戻る",  devices_path %>
-<div data-device-id="<%= @device.uuid %>" class="mb-4"></div>
+<div class='mb-4'>
+  <%= link_to "デバイス一覧に戻る",  devices_path %>
+</div>
+
+<div data-device-id="<%= @device.uuid %>"></div>
 <div data-refresh-action-url="<%= current_status_device_path(@device.unique_key, format: :js) %>"></div>
 <div data-offline-action-url="<%= offline_device_path(@device.unique_key, format: :js) %>"></div>
 
@@ -15,8 +18,10 @@
   </div>
 <% end %>
 
+<%= render 'devices/shared/tab', device: @device %>
+
 <div>
-  <div class="row">
+  <div class="row pt-4">
     <div class="col-md-9 col-lg-9">
       <h1>
         <%= @device.name_or_hostname %>
