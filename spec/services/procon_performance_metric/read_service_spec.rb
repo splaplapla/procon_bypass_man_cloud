@@ -6,6 +6,7 @@ describe ProconPerformanceMetric::ReadService do
   let(:device_uuid) { "abc" }
 
   before do
+    ProconPerformanceMetric::Base.redis.flushdb
     ProconPerformanceMetric::WriteService.new.execute(
       timestamp: "2011-11-11 10:00:00+09:00",
       time_taken_max: 22,

@@ -77,10 +77,7 @@ module ProconPerformanceMetric
   end
 
   class Base
-    def self.redis
-      redis = Redis.new(url: ENV['REDIS_URL'])
-      Redis::Namespace.new(:procon_performance_metric, redis: redis)
-    end
+    class_attribute :redis
 
     private
 
