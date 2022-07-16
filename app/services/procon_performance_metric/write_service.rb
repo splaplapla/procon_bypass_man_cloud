@@ -39,19 +39,18 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
     if self.class.redis.llen(device_uuid) > max_stored_items_size
       self.class.redis.lpop(device_uuid)
     end
-    self.class.redis.expire(device_uuid, retention_period.to_i)
+    self.class.redis.expire(device_uuid, retention_period.hours.to_i)
     value
   end
 
   private
 
-  # 2時間
   def retention_period
-    2.hours
+    10
   end
 
   # 毎分1個送られてくる想定で、2時間キープするのでせいぜい120だけ保存していればいいでしょう
   def max_stored_items_size
-    120
+    retention_period * 60
   end
 end
