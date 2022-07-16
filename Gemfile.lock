@@ -81,6 +81,7 @@ GEM
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
     byebug (11.1.3)
+    chartkick (4.2.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
@@ -299,6 +300,7 @@ DEPENDENCIES
   brakeman
   bundle-audit
   byebug
+  chartkick
   cssbundling-rails
   factory_bot_rails
   foreman
