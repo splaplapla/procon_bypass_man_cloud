@@ -4,6 +4,8 @@ import Rails from "@rails/ujs"
 import $ from 'jquery'
 // import "bootstrap"
 import { createPopper } from '@popperjs/core';
+import "chartkick"
+import "Chart.bundle"
 
 window.$ = $
 window.jQuery = $

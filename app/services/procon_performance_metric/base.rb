@@ -76,7 +76,6 @@ module ProconPerformanceMetric
     end
   end
 
-
   class Base
     def self.redis
       redis = Redis.new(url: ENV['REDIS_URL'])

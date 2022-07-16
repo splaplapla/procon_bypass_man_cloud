@@ -56,6 +56,8 @@ Rails.application.routes.draw do
   get 'p/:id' => 'public_saved_buttons_settings#show', as: :public_saved_buttons_setting
 
   resources :devices, only: [:new, :index, :show, :edit, :create] do
+    resource :procon_performance_metric, module: :devices, only: :show
+
     member do
       put :update_name
       post :ping
