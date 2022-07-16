@@ -36,7 +36,9 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
                       collected_spans_size)
 
     self.class.redis.rpush(device_uuid, value)
-    self.class.redis.ltrim(device_uuid, 0, max_stored_items_size-1)
+    if self.class.redis.llen(device_uuid) > max_stored_items_size
+      self.class.redis.lpop(device_uuid)
+    end
     self.class.redis.expire(device_uuid, retention_period.to_i)
     value
   end

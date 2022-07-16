@@ -52,8 +52,7 @@ describe ProconPerformanceMetric::WriteService do
     expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(120)
   end
 
-  # TODO 2時間で消えるようにしたい
-  xit '2時間まで保存されること' do
+  it '2時間まで保存されること' do
     ProconPerformanceMetric::Base.redis.flushdb
     Timecop.freeze(3.hours.ago) do
       run
