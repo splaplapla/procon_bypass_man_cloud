@@ -147,5 +147,22 @@ RSpec.describe StreamingServices::YoutubeLiveController, type: :request do
         expect(JSON.parse(response.body)).to eq("errors"=>["メッセージの取得頻度が早すぎます。"])
       end
     end
+
+    context 'StreamingService::YoutubeLiveClient::ExpiredRefreshTokenErrorが起きるとき' do
+      before do
+        allow(StreamingService::FetchChatMessagesService).to receive(:new) { raise StreamingService::YoutubeLiveClient::ExpiredRefreshTokenError }
+        streaming_service_account.update!(monitors_at: Time.zone.now)
+      end
+
+      it do
+        subject
+        expect(response).to be_bad_request
+      end
+
+      it do
+        subject
+        expect(response.body).to eq("アクセストークンが無効になりました。youtubeのアカウントを再連携をしてください。")
+      end
+    end
   end
 end

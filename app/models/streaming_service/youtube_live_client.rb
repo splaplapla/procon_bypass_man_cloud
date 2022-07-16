@@ -8,6 +8,7 @@ class StreamingService::YoutubeLiveClient
   class VideoNotFoundError < StandardError; end
   class NotOwnerVideoError < StandardError; end
   class NotLiveStreamError < StandardError; end
+  class ExpiredRefreshTokenError < StandardError; end
 
   class BaseRequest
     def self.request(uri: )
@@ -194,10 +195,18 @@ class StreamingService::YoutubeLiveClient
     if response.code == "200"
       return block.call(JSON.parse(response.body))
     elsif response.code == "401"
-      refresh!
-      raise OldAccessTokenError
+      domain, reason = parse_error2(response.body)
+      case
+      when ["global", "authError"]
+        raise ExpiredRefreshTokenError
+      else
+        # whenで書きたい
+        Rails.logger.error(domain, reason)
+        refresh!
+        raise OldAccessTokenError
+      end
     elsif response.code == "403"
-      errors = parse_error(response.body)
+      error = parse_error(response.body)
 
       case
       when errors.include?("youtube.quota")
@@ -218,8 +227,12 @@ class StreamingService::YoutubeLiveClient
   end
 
   # "domain": "youtube.liveChat", "reason": "rateLimitExceeded"
-  # TODO reasonもとる
+  # TODO reasonもとる. deplicated
   def parse_error(body)
     return JSON.parse(body).dig("error", "errors").map {|x| x["domain"] }
+  end
+
+  def parse_error2(body)
+    return JSON.parse(body).dig("error", "errors").map {|x| [x["domain"], x["reason"]] }.first
   end
 end
