@@ -1,8 +1,19 @@
-<ul class="nav nav-tabs mb-4">
-  <li class="nav-item">
-    <a href="<%= device_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_path(device.unique_key)) %>">全般</a>
-  </li>
-  <li class="nav-item">
-    <a href="<%= device_procon_performance_metric_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_procon_performance_metric_path(device.unique_key)) %>">プロコンのパフォーマンスモニタリング</a>
-  </li>
-</ul>
+<% if @is_demo %>
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a href="<%= demo_path %>" class="nav-link  <%= :active if current_page?(demo_path) %>">全般</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= procon_performance_metric_demo_path %>" class="nav-link  <%= :active if current_page?(procon_performance_metric_demo_path) %>">プロコンのパフォーマンスモニタリング</a>
+    </li>
+  </ul>
+<% else %>
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item">
+      <a href="<%= device_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_path(device.unique_key)) %>">全般</a>
+    </li>
+    <li class="nav-item">
+      <a href="<%= device_procon_performance_metric_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_procon_performance_metric_path(device.unique_key)) %>">プロコンのパフォーマンスモニタリング</a>
+    </li>
+  </ul>
+<% end %>

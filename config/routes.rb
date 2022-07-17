@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   get 'terms' => 'pages#terms', as: :terms
   get 'faq' => 'pages#faq', as: :faq
-  resource :demo, only: [:show]
+  resource :demo, only: [:show] do
+    get :procon_performance_metric, on: :collection
+  end
   resource :user, only: [:new, :edit, :update, :create]
   resources :user_sessions, only: [:new, :create]
   get 'login' => 'user_sessions#new', as: :login

@@ -1,7 +1,6 @@
 class Devices::ProconPerformanceMetricsController < ApplicationController
   def show
     @device = current_user.devices.find_by!(unique_key: params[:device_id])
-
     metrics = ProconPerformanceMetric::ReadService.new.execute(device_uuid: @device.uuid)
     @read_time_data_list = [
       { data: metrics.map { |x| [x.timestamp, x.read_time_max] }, name: '最大' },
