@@ -45,6 +45,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     allow(ProconBypassManVersion::Client).to receive(:get_version) { raise }
+    ProconPerformanceMetric::Base.redis = MockRedis.new
   end
 
   # You can uncomment this line to turn off ActiveRecord support entirely.

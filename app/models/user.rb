@@ -1,12 +1,12 @@
 class User < ApplicationRecord
-  authenticates_with_sorcery!
+  include PlanCap
 
-  MAX_SAVED_BUTTONS_SETTINGS_COUNT = 10
+  authenticates_with_sorcery!
 
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
-  validates :saved_buttons_settings, length: { maximum: MAX_SAVED_BUTTONS_SETTINGS_COUNT }
+  validate :validate_saved_buttons_settings_max_length
 
   validates :email, uniqueness: true
 
@@ -26,6 +26,14 @@ class User < ApplicationRecord
 
   # @return [Boolean]
   def can_create_saved_buttons_settings?
-    MAX_SAVED_BUTTONS_SETTINGS_COUNT > saved_buttons_settings.count
+    max_saved_settings_size >= saved_buttons_settings.size
+  end
+
+  private
+
+  def validate_saved_buttons_settings_max_length
+    return if can_create_saved_buttons_settings?
+
+    errors.add(:saved_buttons_settings, '登録可能な個数を超えています')
   end
 end

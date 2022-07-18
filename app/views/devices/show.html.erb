@@ -111,7 +111,7 @@
 <% else %>
   <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
   <div class="alert alert-danger">
-    保存数の上限である<%= User::MAX_SAVED_BUTTONS_SETTINGS_COUNT %>件に達したため、新しく保存することができません。
+    保存数の上限である<%= current_user.max_saved_settings_size %>件に達したため、新しく保存することができません。
   </div>
 <% end %>
 </div>
