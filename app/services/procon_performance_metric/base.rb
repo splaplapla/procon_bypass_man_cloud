@@ -74,6 +74,12 @@ module ProconPerformanceMetric
     def timestamp
       super.to_time
     end
+
+    def load_agv
+      super.split('-').map(&:to_f)
+    rescue
+      [0, 0, 0]
+    end
   end
 
   class Base

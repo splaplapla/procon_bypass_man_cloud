@@ -41,7 +41,8 @@ RSpec.describe "Demo", type: :request do
   describe "GET #procon_performance_metric" do
     subject { get procon_performance_metric_demo_path }
 
-    let(:device) { FactoryBot.create(:device) }
+    let(:user) { FactoryBot.create(:user) }
+    let(:device) { FactoryBot.create(:device, user: user) }
 
     before do
       device.create_demo_device!

@@ -4,7 +4,7 @@
 
 <%= render 'devices/shared/tab', device: @device %>
 
-<div class="alert alert-info">直近<%= current_user.performance_metrics_retention_hours %>時間分のデータを表示しています</div>
+<div class="alert alert-info">直近<%= @user.performance_metrics_retention_hours %>時間分のデータを表示しています</div>
 
 <h2>プロコンからの読み取りにかかる時間</h2>
 <%= line_chart @read_time_data_list, xtitle: "時間", ytitle: "秒" %>
@@ -28,3 +28,6 @@
 
 <h2>バイパス回数</h2>
 <%= line_chart @bypass_count_data_list, xtitle: "時間", ytitle: "回数" %>
+
+<h2>ロードアベレージ</h2>
+<%= line_chart @load_agv_data_list, xtitle: "時間", ytitle: "ジョブ数" %>
