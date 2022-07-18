@@ -1,6 +1,7 @@
-<div class='mb-4'>
-  <%= link_to "デバイス一覧に戻る",  devices_path %>
-</div>
+<p>
+  <%= link_to "デバイス一覧",  devices_path %>
+  -> <%= @device.name %>
+</p>
 
 <div data-device-id="<%= @device.uuid %>"></div>
 <div data-refresh-action-url="<%= current_status_device_path(@device.unique_key, format: :js) %>"></div>
@@ -9,12 +10,6 @@
 <% if not @device.enable_pbmenv %>
   <div class="alert alert-danger">
     pbmenvを使っていないため一部機能が使えません。
-  </div>
-<% end %>
-
-<% if @is_demo %>
-  <div class="alert alert-danger">
-    デモページでは書き込みはできません
   </div>
 <% end %>
 

@@ -1,6 +1,7 @@
-<div class='mb-4'>
-  <%= link_to "デバイス一覧に戻る",  devices_path %>
-</div>
+<p>
+  <%= link_to "デバイス一覧",  devices_path %>
+  -> <%= @device.name %>
+</p>
 
 <%= render 'devices/shared/tab', device: @device %>
 

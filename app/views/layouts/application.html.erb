@@ -69,6 +69,12 @@
         <% end %>
       </div>
 
+      <% if @is_demo %>
+        <div class="alert alert-danger">
+          デモページでは書き込みはできません
+        </div>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>
