@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include PlanCap
+
   authenticates_with_sorcery!
 
   MAX_SAVED_BUTTONS_SETTINGS_COUNT = 10
