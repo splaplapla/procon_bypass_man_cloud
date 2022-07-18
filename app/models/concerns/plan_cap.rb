@@ -7,6 +7,10 @@ module PlanCap
     plan_detail[:max_saved_settings_size]
   end
 
+  def plan_name
+    plan_detail[:name]
+  end
+
   private
 
   def plan_detail

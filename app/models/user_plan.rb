@@ -11,18 +11,22 @@ module UserPlan
 
       DETAIL = {
         PLAN_FREE => {
+          name: :free,
           PERFORMANCE_METRICS_RETENTION_HOURS => 2,
-          MAX_SAVED_SETTINGS_SIZE => 5,
+          MAX_SAVED_SETTINGS_SIZE => 3,
         },
         PLAN_LIGHT => {
+          name: :light,
           PERFORMANCE_METRICS_RETENTION_HOURS => 5,
           MAX_SAVED_SETTINGS_SIZE => 10,
         },
         PLAN_STANDARD => {
+          name: :standard,
           PERFORMANCE_METRICS_RETENTION_HOURS => 10,
           MAX_SAVED_SETTINGS_SIZE => 20,
         },
         PLAN_PRO => {
+          name: :pro,
           PERFORMANCE_METRICS_RETENTION_HOURS => 10,
           MAX_SAVED_SETTINGS_SIZE => 40,
         },
