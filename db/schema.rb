@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_18_040530) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_18_051033) do
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false
@@ -216,7 +216,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_040530) do
     t.string "email", null: false
     t.string "crypted_password"
     t.string "salt"
-    t.boolean "admin", default: true, null: false
+    t.boolean "admin", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "remember_me_token"
