@@ -21,5 +21,10 @@ module ProconPerformanceMetricVisualizable
     @bypass_count_data_list = [
       { data: metrics.map { |x| [x.timestamp, x.collected_spans_size] }, name: '合計' },
     ]
+    @load_agv_data_list = [
+      { data: metrics.map { |x| [x.timestamp, x.load_agv[0]] }, name: '1分平均' },
+      { data: metrics.map { |x| [x.timestamp, x.load_agv[1]] }, name: '5分平均' },
+      { data: metrics.map { |x| [x.timestamp, x.load_agv[2]] }, name: '15分平均' },
+    ]
   end
 end

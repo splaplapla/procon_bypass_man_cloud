@@ -38,7 +38,7 @@ describe ProconPerformanceMetric::ReadService do
       interval_from_previous_succeed_p50: 2,
       read_error_count: 55,
       write_error_count: 6,
-      load_agv: "3-3-3",
+      load_agv: "3.2-3-3",
       device_uuid: device_uuid,
       succeed_rate: 0.9,
       collected_spans_size: 300,
@@ -63,6 +63,7 @@ describe ProconPerformanceMetric::ReadService do
     expect(metric1.write_time_p50).to eq(0.1)
     expect(metric1.read_time_max).to eq(0.2)
     expect(metric1.read_time_p50).to eq(0.2)
+    expect(metric1.load_agv).to eq([2.0, 3.0, 3.0])
 
     expect(metric2.time_taken_max).to eq(11)
     expect(metric2.time_taken_p50).to eq(22)
@@ -72,7 +73,8 @@ describe ProconPerformanceMetric::ReadService do
     expect(metric1.interval_from_previous_succeed_p50).to eq(2)
     expect(metric2.read_error_count).to eq(55)
     expect(metric2.write_error_count).to eq(6)
-    expect(metric1.succeed_rate).to eq(0.9)
-    expect(metric1.collected_spans_size).to eq(300)
+    expect(metric2.succeed_rate).to eq(0.9)
+    expect(metric2.collected_spans_size).to eq(300)
+    expect(metric2.load_agv).to eq([3.2, 3.0, 3.0])
   end
 end
