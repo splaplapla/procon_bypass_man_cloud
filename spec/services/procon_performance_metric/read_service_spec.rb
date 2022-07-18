@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe ProconPerformanceMetric::ReadService do
-  include_context "redis_mock"
-
   let(:device_uuid) { "abc" }
 
   before do

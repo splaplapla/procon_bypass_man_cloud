@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Devices::ProconPerformanceMetricsController, type: :request do
   include_context "login_with_user"
-  include_context "redis_mock"
 
   describe 'GET #index' do
     let(:device) { FactoryBot.create(:device, user: user) }

@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 describe ProconPerformanceMetric::WriteService do
-  include_context "redis_mock"
-
   let(:form) do
     OpenStruct.new(
       timestamp: "a",
@@ -45,20 +43,46 @@ describe ProconPerformanceMetric::WriteService do
     )
   end
 
-  xit '120個まで保存されること' do
-    123.times do
-      run
+  context 'free' do
+    it '120個まで保存されること' do
+      123.times do
+        run
+      end
+      expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(120)
     end
-    expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(120)
+
+    it '2時間まで保存されること' do
+      Timecop.freeze(3.hours.ago) do
+        run
+        expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(1)
+      end
+
+      expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(0)
+    end
   end
 
-  it '2時間まで保存されること' do
-    ProconPerformanceMetric::Base.redis.flushdb
-    Timecop.freeze(3.hours.ago) do
-      run
-      expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(1)
+  context 'not free' do
+    let(:device) { FactoryBot.create(:device, user: user, uuid: form.device_uuid) }
+    let(:user) { FactoryBot.create(:user, plan: UserPlan::PLAN::PLAN_PRO) }
+
+    before do
+      device
     end
 
-    expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(1)
+    it '120個まで保存されること' do
+      123.times do
+        run
+      end
+      expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(123)
+    end
+
+    it '2時間まで保存されること' do
+      Timecop.freeze(3.hours.ago) do
+        run
+        expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(1)
+      end
+
+      expect(ProconPerformanceMetric::Base.redis.lrange(form.device_uuid, 0, -1).size).to eq(1)
+    end
   end
 end
