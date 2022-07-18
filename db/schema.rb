@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_06_15_010708) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_18_040530) do
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false
@@ -235,6 +235,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_15_010708) do
     t.string "activation_state"
     t.string "activation_token"
     t.datetime "activation_token_expires_at", precision: nil
+    t.integer "plan", default: 0, null: false
     t.index ["activation_token"], name: "index_users_on_activation_token"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at"
