@@ -23,7 +23,12 @@ class DevicesController < ApplicationController
   end
 
   def create
+    unless current_user.can_have_another_devices?
+      raise '登録可能なデバイス数を超えています' # TODO サービスクラスにする
+    end
+
     uuid = params.required(:device)[:uuid]
+
     if device = Device.find_by(user_id: nil, uuid: uuid)
       device.update!(user: current_user)
       redirect_to device_path(device.unique_key), notice: "デバイスの登録が完了しました"

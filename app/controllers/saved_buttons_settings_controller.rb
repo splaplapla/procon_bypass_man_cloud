@@ -12,8 +12,8 @@ class SavedButtonsSettingsController < ApplicationController
       return redirect_to "/saved_buttons_settings", alert: "設定ファイルを作成できませんでした"
     end
 
-    current_user.saved_buttons_settings.build(content: event.body, name: form.name, memo: form.memo)
-    if current_user.save
+    new_saved_buttons_setting = current_user.saved_buttons_settings.build(content: event.body, name: form.name, memo: form.memo)
+    if current_user.add_saved_buttons_setting(new_saved_buttons_setting)
       redirect_to "/saved_buttons_settings", notice: "設定ファイルを作成できました"
     else
       redirect_to "/saved_buttons_settings", alert: "設定ファイルを作成できませんでした"

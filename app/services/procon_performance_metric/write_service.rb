@@ -56,6 +56,6 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
   private
 
   def minimum_performance_metrics_retention_hours
-    UserPlan::PLAN::CAPACITY::DETAIL[UserPlan::PLAN::PLAN_FREE][UserPlan::PLAN::CAPACITY::PERFORMANCE_METRICS_RETENTION_HOURS]
+    UserPlan::DETAIL[UserPlan::PLAN::PLAN_FREE][UserPlan::CAPACITY::PERFORMANCE_METRICS_RETENTION_HOURS]
   end
 end

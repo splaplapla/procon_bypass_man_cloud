@@ -104,7 +104,17 @@ RSpec.describe "Devices", type: :request do
         expect(response).to be_redirect
       end
       it { expect { subject }.to change { user.devices.count }.by(1) }
+
+      context 'すでに2台を登録している' do
+        before do
+          FactoryBot.create(:device, user: user)
+          FactoryBot.create(:device, user: user)
+        end
+
+        it { expect { subject }.to raise_error(RuntimeError) }
+      end
     end
+
     context 'デバイスが見つからなかったとき' do
       let(:device_uuid) { "foo" }
       it  do
