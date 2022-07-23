@@ -27,12 +27,12 @@ class User < ApplicationRecord
 
   # @return [Boolean]
   def can_create_saved_buttons_settings?
-    max_saved_settings_size > saved_buttons_settings.size
+    max_saved_settings_size > saved_buttons_settings.count
   end
 
   # @return [Boolean]
   def can_have_another_devices?
-    max_devices_size > devices.size
+    max_devices_size > devices.count
   end
 
   private

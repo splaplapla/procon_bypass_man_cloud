@@ -6,10 +6,15 @@ RSpec.describe User, type: :model do
     end
 
     describe '#saved_buttons_settings' do
+      let(:user) { FactoryBot.create(:user) }
+
+      before do
+        saved_buttons_settings
+      end
+
       describe 'length' do
-        context 'すでに2件保存済みのとき' do
-          let(:saved_buttons_settings) { 2.times.map { FactoryBot.build(:saved_buttons_setting) } }
-          let(:user) { FactoryBot.create(:user, saved_buttons_settings: saved_buttons_settings) }
+        context 'すでに3件保存済みのとき' do
+          let(:saved_buttons_settings) { 3.times.map { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) } }
 
           it do
             user.saved_buttons_settings.build
@@ -19,8 +24,7 @@ RSpec.describe User, type: :model do
         end
 
         context 'すでに1件保存済みのとき' do
-          let(:saved_buttons_settings) { 1.times.map { FactoryBot.build(:saved_buttons_setting) } }
-          let(:user) { FactoryBot.create(:user, saved_buttons_settings: saved_buttons_settings) }
+          let(:saved_buttons_settings) { 1.times.map { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) } }
 
           it do
             user.saved_buttons_settings.build
