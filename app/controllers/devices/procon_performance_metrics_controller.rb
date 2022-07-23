@@ -4,7 +4,7 @@ class Devices::ProconPerformanceMetricsController < ApplicationController
   def show
     @device = current_user.devices.find_by!(unique_key: params[:device_id])
     @user = current_user
-    metrics = ProconPerformanceMetric::ReadService.new.execute(device_uuid: @device.uuid)
-    visualize(metrics: metrics)
+    @metrics = ProconPerformanceMetric::ReadService.new.execute(device_uuid: @device.uuid)
+    visualize(metrics: @metrics)
   end
 end

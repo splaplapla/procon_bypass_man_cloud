@@ -26,8 +26,8 @@ class DemosController < ApplicationController
   def procon_performance_metric
     @device = target_device
     @user = @device.user
-    metrics = ProconPerformanceMetric::ReadService.new.execute(device_uuid: @device.uuid)
-    visualize(metrics: metrics)
+    @metrics = ProconPerformanceMetric::ReadService.new.execute(device_uuid: @device.uuid)
+    visualize(metrics: @metrics)
     render "devices/procon_performance_metrics/show"
   end
 
