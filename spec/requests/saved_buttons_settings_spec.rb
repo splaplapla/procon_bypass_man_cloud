@@ -61,6 +61,14 @@ RSpec.describe "SavedButtonsSettings", type: :request do
         2.times { FactoryBot.create(:saved_buttons_setting, user: user) }
       end
 
+      context 'devicesがすでに2件登録済みの時' do
+        before do
+          2.times { FactoryBot.create(:device, user: user) }
+        end
+
+        it { expect { subject }.to change { user.saved_buttons_settings.count }.by(1) }
+      end
+
       it { expect { subject }.to change { user.saved_buttons_settings.count }.by(1) }
     end
   end

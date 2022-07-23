@@ -6,8 +6,6 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 3 }, if: -> { new_record? || changes[:crypted_password] }
   validates :password, confirmation: true, if: -> { new_record? || changes[:crypted_password] }
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:crypted_password] }
-  validate :validate_saved_buttons_settings_max_length
-  validate :validate_registable_devices
 
   validates :email, uniqueness: true
 
@@ -35,17 +33,12 @@ class User < ApplicationRecord
     max_devices_size > devices.count
   end
 
-  private
+  # @return [Boolean]
+  # TODO サービスクラスにする
+  def add_saved_buttons_setting(new_add_saved_buttons_setting)
+    return false unless can_create_saved_buttons_settings?
 
-  def validate_saved_buttons_settings_max_length
-    return if can_create_saved_buttons_settings?
-
-    errors.add(:saved_buttons_settings, '登録可能な個数を超えています')
-  end
-
-  def validate_registable_devices
-    return if can_have_another_devices?
-
-    errors.add(:devices, '登録可能なデバイス数を超えています')
+    self.saved_buttons_settings << new_add_saved_buttons_setting
+    return true
   end
 end
