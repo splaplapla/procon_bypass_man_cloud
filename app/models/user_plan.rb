@@ -22,12 +22,12 @@ module UserPlan
         },
         PLAN_STANDARD => {
           name: :standard,
-          PERFORMANCE_METRICS_RETENTION_HOURS => 10,
+          PERFORMANCE_METRICS_RETENTION_HOURS => 20,
           MAX_SAVED_SETTINGS_SIZE => 20,
         },
         PLAN_PRO => {
           name: :pro,
-          PERFORMANCE_METRICS_RETENTION_HOURS => 10,
+          PERFORMANCE_METRICS_RETENTION_HOURS => 20,
           MAX_SAVED_SETTINGS_SIZE => 40,
         },
       }
