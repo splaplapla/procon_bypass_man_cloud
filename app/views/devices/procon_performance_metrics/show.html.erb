@@ -5,30 +5,34 @@
 
 <%= render 'devices/shared/tab', device: @device %>
 
-<div class="alert alert-info">直近<%= @user.performance_metrics_retention_hours %>時間分のデータを表示しています</div>
+<% if @metrics.empty? %>
+  <p class='alert alert-warning'>表示するデータがありません。</p>
+<% else %>
+  <div class="alert alert-info">直近<%= @user.performance_metrics_retention_hours %>時間分のデータを表示しています</div>
 
-<h2>プロコンからの読み取りにかかる時間</h2>
-<%= line_chart @read_time_data_list, xtitle: "時間", ytitle: "秒" %>
+  <h2>プロコンからの読み取りにかかる時間</h2>
+  <%= line_chart @read_time_data_list, xtitle: "時間", ytitle: "秒" %>
 
-<hr>
+  <hr>
 
-<h2>Switchへの書き込みにかかる時間</h2>
-<%= line_chart @write_time_data_list, xtitle: "時間", ytitle: "秒" %>
+  <h2>Switchへの書き込みにかかる時間</h2>
+  <%= line_chart @write_time_data_list, xtitle: "時間", ytitle: "秒" %>
 
-<hr>
+  <hr>
 
-<h2>プロコンから読み取って、Switchへ書き込むまでにかかる時間</h2>
-<%= line_chart @read_write_time_data_list, xtitle: "時間", ytitle: "秒" %>
+  <h2>プロコンから読み取って、Switchへ書き込むまでにかかる時間</h2>
+  <%= line_chart @read_write_time_data_list, xtitle: "時間", ytitle: "秒" %>
 
-<hr>
+  <hr>
 
-<h2>前回のバイパス完了時から、次のバイパスが開始するまでの時間</h2>
-<%= line_chart @bypass_data_list, xtitle: "時間", ytitle: "秒" %>
+  <h2>前回のバイパス完了時から、次のバイパスが開始するまでの時間</h2>
+  <%= line_chart @bypass_data_list, xtitle: "時間", ytitle: "秒" %>
 
-<hr>
+  <hr>
 
-<h2>バイパス回数</h2>
-<%= line_chart @bypass_count_data_list, xtitle: "時間", ytitle: "回数" %>
+  <h2>バイパス回数</h2>
+  <%= line_chart @bypass_count_data_list, xtitle: "時間", ytitle: "回数" %>
 
-<h2>ロードアベレージ</h2>
-<%= line_chart @load_agv_data_list, xtitle: "時間", ytitle: "ジョブ数" %>
+  <h2>ロードアベレージ</h2>
+  <%= line_chart @load_agv_data_list, xtitle: "時間", ytitle: "ジョブ数" %>
+<% end %>
