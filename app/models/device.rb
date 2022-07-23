@@ -55,7 +55,7 @@ class Device < ApplicationRecord
 
   # @return [Boolean]
   def offline?
-    current_device_status_id.nil?
+    current_device_status.nil?
   end
 
   # @return [void]
