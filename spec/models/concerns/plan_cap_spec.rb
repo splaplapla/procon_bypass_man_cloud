@@ -37,7 +37,7 @@ RSpec.describe PlanCap, type: :model do
     end
 
     it do
-      expect(has_plan.performance_metrics_retention_hours).to eq(10)
+      expect(has_plan.performance_metrics_retention_hours).to eq(20)
     end
 
     it do
