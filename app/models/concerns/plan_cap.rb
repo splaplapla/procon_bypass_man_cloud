@@ -14,6 +14,6 @@ module PlanCap
   private
 
   def plan_detail
-    UserPlan::PLAN::CAPACITY::DETAIL[plan]
+    UserPlan::DETAIL[plan]
   end
 end
