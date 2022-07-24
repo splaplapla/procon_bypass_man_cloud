@@ -276,6 +276,8 @@ GEM
     sorted_set (1.0.3)
       rbtree
       set (~> 1.0)
+    stimulus-rails (1.1.0)
+      railties (>= 6.0.0)
     strscan (3.0.3)
     thor (1.2.1)
     timecop (0.9.5)
@@ -332,6 +334,7 @@ DEPENDENCIES
   rouge
   rspec-rails
   sorcery
+  stimulus-rails
   timecop
 
 RUBY VERSION
