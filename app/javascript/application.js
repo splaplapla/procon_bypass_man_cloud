@@ -16,3 +16,4 @@ window.bootstrap = bootstrap
 import "channels"
 
 Rails.start()
+import "controllers"

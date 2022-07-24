@@ -21,6 +21,7 @@ gem 'omniauth-google-oauth2'
 gem 'omniauth-rails_csrf_protection'
 gem 'rouge'
 gem "chartkick"
+gem 'stimulus-rails'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
