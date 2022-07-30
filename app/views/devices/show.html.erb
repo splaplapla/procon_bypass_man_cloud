@@ -91,35 +91,70 @@
   <tr>
 </table>
 
-<h2>
-  現在のボタン設定
-</h2>
-<% if @same_saved_buttons_settings.present? %>
-  ※ <%= @same_saved_buttons_settings.map(&:name).join(", ") %> の保存済み設定ファイルと同じ内容です
-<% end %>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class='nav-item' role="presentation">
+    <button
+      class="nav-link active"
+      id="current-setting-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#current-setting"
+      type="button"
+      role="tab"
+      aria-controls="current-setting"
+      aria-selected="true"
+    >
+    現在の設定
+    </button>
+    </li>
+  <li class='nav-item' role="presentation">
+    <button
+      class="nav-link"
+      id="edit-setting-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#edit-setting"
+      type="button"
+      role="tab"
+      aria-controls="edit-setting"
+      aria-selected="true"
+    >
+    編集
+    </button>
+    </li>
+</ul>
 
-<div class="mb-2">
-<% if @latest_loading_config_event&.body.nil? %>
-  <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
-<% elsif (@is_demo || current_user.can_create_saved_buttons_settings?) %>
-  <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
-<% else %>
-  <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
-  <div class="alert alert-danger">
-    保存数の上限である<%= current_user.max_saved_settings_size %>件に達したため、新しく保存することができません。
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade active show" id="current-setting" role="tabpanel" aria-labelledby="current-setting-tab">
+      <div class="mb-2 mt-4">
+        <% if @latest_loading_config_event&.body.nil? %>
+          <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
+
+        <% elsif (@is_demo || current_user.can_create_saved_buttons_settings?) %>
+          <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
+        <% else %>
+          <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
+          <div class="alert alert-danger">
+            保存数の上限である<%= current_user.max_saved_settings_size %>件に達したため、新しく保存することができません。
+          </div>
+        <% end %>
+      </div>
+
+      <% if @same_saved_buttons_settings.present? %>
+        ※ <%= @same_saved_buttons_settings.map(&:name).join(", ") %> の保存済み設定ファイルと同じ内容です
+      <% end %>
+
+      <% if @latest_loading_config_event&.body %>
+        <style><%= Rouge::Themes::Github.render(:scope => '.highlight') %></style>
+
+        <pre class="highlight" style="background-color: #F0F0F0;"><%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe -%></pre>
+      <% else %>
+        <p>表示できる設定ファイルがありません</p>
+      <% end %>
+    </div>
+
+    <div class="tab-pane fade" id="edit-setting" role="tabpanel" aria-labelledby="edit-setting-tab">
+    </div>
   </div>
-<% end %>
-</div>
-
-<% if @latest_loading_config_event&.body %>
-  <style>
-    <%= Rouge::Themes::Github.render(:scope => '.highlight') %>
-  </style>
-
-  <pre class="highlight" style="background-color: #F0F0F0;"><%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe -%></pre>
-<% else %>
-  <p>表示できる設定ファイルがありません</p>
-<% end %>
 
 <script>
   function openUpgradeModal() {
