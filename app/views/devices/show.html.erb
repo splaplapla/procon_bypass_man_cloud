@@ -152,10 +152,10 @@
   </div>
 
   <div class="tab-pane fade" id="edit-setting" role="tabpanel" aria-labelledby="edit-setting-tab">
-    <%= form_for '', method: :post, remote: true do |f| %>
+    <%= form_tag restore_editable_setting_device_path(@device.unique_key), method: :post, remote: true do |f| %>
       <div class='row'>
         <div class="mb-3">
-          <%= text_area_tag :setting_of_content, @latest_loading_config_event&.body&.to_yaml, class: "form-control", rows: 30, cols: 40 %>
+          <%= text_area_tag :setting_content, @latest_loading_config_event&.body&.to_yaml, class: "form-control", rows: 30, cols: 40 %>
         </div>
       </div>
 
@@ -187,7 +187,7 @@
     return false;
   }
   function openRestoreSettingModal() {
-    const elem = document.getElementById("restoreSettingModal");
+    const elem = document.getElementById("restoreSettingModalId");
     restoreSettingModal = new bootstrap.Modal(elem);
     restoreSettingModal.show()
     $.post("<%= ping_device_path(@device.unique_key) %>");

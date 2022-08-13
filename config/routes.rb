@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       post :restart
       post :pbm_upgrade
       post :restore_setting
+      post :restore_editable_setting
       get :current_status
       post :offline
     end
