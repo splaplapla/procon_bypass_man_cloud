@@ -145,7 +145,7 @@
     <% if @latest_loading_config_event&.body %>
       <style><%= Rouge::Themes::Github.render(:scope => '.highlight') %></style>
 
-      <pre class="highlight" style="background-color: #F0F0F0;"><%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe -%></pre>
+      <pre class="highlight" style="background-color: #F0F0F0; padding: 10px"><%= Rouge.highlight(@latest_loading_config_event.body['setting'], 'ruby', 'html').html_safe -%></pre>
     <% else %>
       <p>表示できる設定ファイルがありません</p>
     <% end %>
@@ -155,7 +155,7 @@
     <%= form_tag restore_editable_setting_device_path(@device.unique_key), method: :post, remote: true do |f| %>
       <div class='row'>
         <div class="mb-3">
-          <%= text_area_tag :setting_content, @latest_loading_config_event&.body&.to_yaml, class: "form-control", rows: 30, cols: 40 %>
+          <%= text_area_tag :setting_content, @latest_loading_config_event && @latest_loading_config_event.body['setting'], class: "form-control", rows: 30, cols: 40 %>
         </div>
       </div>
 
