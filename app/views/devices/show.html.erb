@@ -124,37 +124,50 @@
 
 
 <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade active show" id="current-setting" role="tabpanel" aria-labelledby="current-setting-tab">
-      <div class="mb-2 mt-4">
-        <% if @latest_loading_config_event&.body.nil? %>
-          <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
+  <div class="tab-pane fade active show" id="current-setting" role="tabpanel" aria-labelledby="current-setting-tab">
+    <div class="mb-2 mt-4">
+      <% if @latest_loading_config_event&.body.nil? %>
+        <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success" %>
+      <% elsif (@is_demo || current_user.can_create_saved_buttons_settings?) %>
+        <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
+      <% else %>
+        <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
+        <div class="alert alert-danger">
+          保存数の上限である<%= current_user.max_saved_settings_size %>件に達したため、新しく保存することができません。
+        </div>
+      <% end %>
+    </div>
 
-        <% elsif (@is_demo || current_user.can_create_saved_buttons_settings?) %>
-          <%= link_to "現在の設定を保存する", nil, data: { bs_toggle: "modal", bs_target: "#saveSettingModal" }, class: "btn btn-success" %>
-        <% else %>
-          <%= link_to "現在の設定を保存する", nil, class: "disabled btn btn-success mb-2" %>
-          <div class="alert alert-danger">
-            保存数の上限である<%= current_user.max_saved_settings_size %>件に達したため、新しく保存することができません。
-          </div>
-        <% end %>
+    <% if @same_saved_buttons_settings.present? %>
+      ※ <%= @same_saved_buttons_settings.map(&:name).join(", ") %> の保存済み設定ファイルと同じ内容です
+    <% end %>
+
+    <% if @latest_loading_config_event&.body %>
+      <style><%= Rouge::Themes::Github.render(:scope => '.highlight') %></style>
+
+      <pre class="highlight" style="background-color: #F0F0F0;"><%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe -%></pre>
+    <% else %>
+      <p>表示できる設定ファイルがありません</p>
+    <% end %>
+  </div>
+
+  <div class="tab-pane fade" id="edit-setting" role="tabpanel" aria-labelledby="edit-setting-tab">
+    <%= form_for '', method: :post, remote: true do |f| %>
+      <div class='row'>
+        <div class="mb-3">
+          <%= text_area_tag :setting_of_content, @latest_loading_config_event&.body&.to_yaml, class: "form-control", rows: 30, cols: 40 %>
+        </div>
       </div>
 
-      <% if @same_saved_buttons_settings.present? %>
-        ※ <%= @same_saved_buttons_settings.map(&:name).join(", ") %> の保存済み設定ファイルと同じ内容です
-      <% end %>
-
-      <% if @latest_loading_config_event&.body %>
-        <style><%= Rouge::Themes::Github.render(:scope => '.highlight') %></style>
-
-        <pre class="highlight" style="background-color: #F0F0F0;"><%= Rouge.highlight(@latest_loading_config_event.body.to_yaml, 'ruby', 'html').html_safe -%></pre>
-      <% else %>
-        <p>表示できる設定ファイルがありません</p>
-      <% end %>
-    </div>
-
-    <div class="tab-pane fade" id="edit-setting" role="tabpanel" aria-labelledby="edit-setting-tab">
-    </div>
+      <div class="mb-5">
+        <div class='float-end'>
+          <%= submit_tag "デバイスにいますぐ反映する", class: "btn btn-primary", data: { confirm: 'デバイスに送信しますがよろしいですか?' } %>
+        </div>
+      </div>
+    <% end %>
   </div>
+
+</div>
 
 <script>
   function openUpgradeModal() {
