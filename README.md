@@ -39,6 +39,8 @@ bundle install
 ### デバッグ
 * デバイス詳細webページのaction cable js channelに通知を送る
   * `ActionCable.server.broadcast(device.unique_key, { type: :loaded_config })`
+  * `ActionCable.server.broadcast(device.unique_key, { type: :device_is_active })`
+      * pingのレスポンス. デバイス詳細画面にあるモーダルのサブミットボタンがクリックできるようになる
 
 ### TODO
 * デバイス詳細ページをReactで作る
