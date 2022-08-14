@@ -72,6 +72,14 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :game do
+    namespace :splatoon2 do
+      resources :sketches, only: [:index, :new, :show, :edit, :update, :destroy] do
+        post :draw
+      end
+    end
+  end
+
   namespace :api do
     resources :events, only: [:create]
 
