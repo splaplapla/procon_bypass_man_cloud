@@ -100,7 +100,7 @@ class DevicesController < ApplicationController
     setting_content = params[:setting_content]
     pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(
       device: device,
-      setting_content: setting_content,
+      setting_content: { 'setting' => setting_content }, # TODO settingがnestしているの直す. clientの修正も必要?
       setting_name: 'manual input setting'
     ).execute!
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
