@@ -14,6 +14,7 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
               read_error_count: ,
               write_error_count: ,
               load_agv: ,
+              gc_count: ,
               device_uuid: ,
               succeed_rate: ,
               collected_spans_size: )
@@ -37,6 +38,7 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
                       read_error_count,
                       write_error_count,
                       load_agv,
+                      gc_count,
                       succeed_rate,
                       collected_spans_size)
 
