@@ -243,6 +243,36 @@ RSpec.describe "Devices", type: :request do
     end
   end
 
+  describe 'POST /restore_editable_setting' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
+
+    subject { post restore_editable_setting_device_path(device.unique_key, setting_content: { a: 1 }, format: :js) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.args).to eq({ "setting" => {"a"=>'1'}, "setting_name" => "manual input setting" })
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.action).to eq("restore_pbm_setting")
+    end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
+    end
+  end
+
   describe 'POST /offline' do
     include_context "login_with_user"
 
