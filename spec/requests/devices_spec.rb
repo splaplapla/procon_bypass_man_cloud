@@ -217,7 +217,7 @@ RSpec.describe "Devices", type: :request do
     include_context "login_with_user"
 
     let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
-    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user) }
 
     subject { post restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id, format: :js) }
 
@@ -227,9 +227,10 @@ RSpec.describe "Devices", type: :request do
     end
 
     it do
-      subject
+      expect { subject }.to change { device.pbm_jobs.count }.by(1)
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq({ "setting" => {"a"=>1}, "setting_name" => "title2" })
+      expect(pbm_job.args['setting_name']).to eq("title2")
+      expect(pbm_job.args['setting']).to eq(saved_buttons_setting.content)
     end
 
     it do
@@ -259,7 +260,7 @@ RSpec.describe "Devices", type: :request do
     it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq({ "setting" => {"a"=>'1'}, "setting_name" => "manual input setting" })
+      expect(pbm_job.args).to eq({ "setting" => { 'setting' => {"a"=>'1' } }, "setting_name" => "manual input setting" })
     end
 
     it do
