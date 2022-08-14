@@ -33,6 +33,9 @@
   <h2>バイパス回数</h2>
   <%= line_chart @bypass_count_data_list, xtitle: "時間", ytitle: "回数" %>
 
+  <h2>GC回数</h2>
+  <%= line_chart @gc_count_data_list, xtitle: "時間", ytitle: "回数" %>
+
   <h2>ロードアベレージ</h2>
   <%= line_chart @load_agv_data_list, xtitle: "時間", ytitle: "ジョブ数" %>
 <% end %>
