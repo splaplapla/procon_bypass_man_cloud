@@ -32,6 +32,7 @@ end
 ## Development
 ### インストール方法
 ```
+brew install imagemagick
 bundle config set --local without production
 bundle install
 ```
