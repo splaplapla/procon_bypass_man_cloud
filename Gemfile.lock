@@ -249,6 +249,7 @@ GEM
     redis (4.7.1)
     redis-namespace (1.8.2)
       redis (>= 3.0.4)
+    rmagick (4.2.6)
     rouge (3.29.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
@@ -331,6 +332,7 @@ DEPENDENCIES
   rails (= 7.0.3.1)
   redis
   redis-namespace
+  rmagick
   rouge
   rspec-rails
   sorcery

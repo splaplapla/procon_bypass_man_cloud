@@ -22,6 +22,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'rouge'
 gem "chartkick"
 gem 'stimulus-rails'
+gem "rmagick" # グレースケース化とピクセルの色を取得しているだけなのでoverkillかも
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
