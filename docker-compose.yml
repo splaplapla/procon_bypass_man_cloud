@@ -7,9 +7,10 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - './:/app:delegated'
-      - bundle_path:/bundle
+      - '.:/app:delegated'
+      - bundle:/vendor/bundle
     environment:
-      - BUNDLE_PATH=/bundle
+      - BUNDLE_PATH:/vendor/bundle
 volumes:
-  bundle_path:
+  bundle:
+    driver: local
