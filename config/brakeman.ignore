@@ -1,13 +1,104 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "89b01ccced9081bc141b819f567b6107f6e95ed88e7b7e6f087d5e6aeb662f5d",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/devices/show.html.erb",
+      "line": 148,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Rouge.highlight(current_user.devices.find_by!(:unique_key => params[:id]).latest_loading_config_event.body[\"setting\"], \"ruby\", \"html\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "DevicesController",
+          "method": "show",
+          "line": 14,
+          "file": "app/controllers/devices_controller.rb",
+          "rendered": {
+            "name": "devices/show",
+            "file": "app/views/devices/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "devices/show"
+      },
+      "user_input": "current_user.devices.find_by!(:unique_key => params[:id])",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "e2e40b9c38b5e459e6d1b25e260f2623592d19d890728860f4ca653d570164be",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/public_saved_buttons_settings/show.html.erb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "Rouge.highlight(remove_comment_out_lines(PublicSavedButtonsSetting.find_by!(:unique_key => params[:id]).saved_buttons_setting.normalized_content[\"setting\"]), \"ruby\", \"html\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "PublicSavedButtonsSettingsController",
+          "method": "show",
+          "line": 7,
+          "file": "app/controllers/public_saved_buttons_settings_controller.rb",
+          "rendered": {
+            "name": "public_saved_buttons_settings/show",
+            "file": "app/views/public_saved_buttons_settings/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "public_saved_buttons_settings/show"
+      },
+      "user_input": "PublicSavedButtonsSetting.find_by!(:unique_key => params[:id]).saved_buttons_setting",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "f8919cf8d16da13e77094648518ac4976171965f8c910c95bf58339274bce22e",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/services/convert_binarization_image_service.rb",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`#{\"convert -threshold #{threshold} #{input_file.path} #{output_file.path}\"}`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "ConvertBinarizationImageService",
+        "method": "execute"
+      },
+      "user_input": "threshold",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Dangerous Eval",
       "warning_code": 13,
       "fingerprint": "fdee4b6324d66cea9501def927183e833ada527928020eb925af6df6928e81cc",
       "check_name": "Evaluation",
       "message": "User input in eval",
       "file": "app/controllers/admin/saved_buttons_settings/contents_controller.rb",
-      "line": 8,
+      "line": 7,
       "link": "https://brakemanscanner.org/docs/warning_types/dangerous_eval/",
       "code": "ProconBypassMan::ButtonsSettingConfiguration.new.instance_eval(SavedButtonsSetting.find(params[:id]).content[\"setting\"])",
       "render_path": null,
@@ -18,9 +109,13 @@
       },
       "user_input": "SavedButtonsSetting.find(params[:id]).content",
       "confidence": "High",
+      "cwe_id": [
+        913,
+        95
+      ],
       "note": ""
     }
   ],
-  "updated": "2021-12-31 19:30:00 +0900",
-  "brakeman_version": "5.1.2"
+  "updated": "2022-08-23 15:30:32 +0900",
+  "brakeman_version": "5.3.1"
 }
