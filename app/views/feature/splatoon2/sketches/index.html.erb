@@ -1,1 +1,31 @@
 <h1>登録しているスケッチ一覧</h1>
+
+<div class="container-fluid">
+  <div class="d-flex flex-row-reverse bd-highlight">
+    <div class="p-2 bd-highlight">
+      <%= link_to "スケッチを新規登録する", new_feature_splatoon2_sketch_path, class: "btn btn-success" %>
+    </div>
+  </div>
+</div>
+
+
+<table class='table'>
+  <tr>
+  <th>名前</th>
+  <th>画像</th>
+  <th></th>
+  <th></th>
+  <th></th>
+  </tr>
+  <% @sketches.each do |sketch| %>
+    <tr>
+      <td><%= sketch.name %></td>
+      <td>
+        <img src='data:image/png;base64,<%= sketch.encoded_image %>' height='100'>
+      </td>
+      <td><%= link_to '詳細', feature_splatoon2_sketch_path(sketch) %></td>
+      <td><%= link_to '編集', edit_feature_splatoon2_sketch_path(sketch) %></td>
+      <td><%= link_to '削除', feature_splatoon2_sketch_path(sketch), method: :delete %></td>
+    </tr>
+  <% end %>
+</table>

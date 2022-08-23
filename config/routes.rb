@@ -72,11 +72,10 @@ Rails.application.routes.draw do
     end
   end
 
-
   namespace :feature do
     root "root#index"
     namespace :splatoon2 do
-      resources :sketches, only: [:index, :new, :show, :edit, :update, :destroy] do
+      resources :sketches, only: [:index, :new, :show, :edit, :create, :update, :destroy] do
         post :draw
       end
     end
