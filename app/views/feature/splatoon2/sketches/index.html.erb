@@ -13,6 +13,7 @@
   <tr>
   <th>名前</th>
   <th>画像</th>
+  <th>白黒の閾値</th>
   <th></th>
   <th></th>
   <th></th>
@@ -21,8 +22,10 @@
     <tr>
       <td><%= sketch.name %></td>
       <td>
+        <img src='data:<%= sketch.encoded_image %>' height='100'>
         <img height='100' data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(sketch) %>">
       </td>
+      <td><%= sketch.binary_threshold %></td>
       <td><%= link_to '詳細', feature_splatoon2_sketch_path(sketch) %></td>
       <td><%= link_to '白黒具合を調整する', edit_feature_splatoon2_sketch_path(sketch) %></td>
       <td><%= link_to '削除', feature_splatoon2_sketch_path(sketch), method: :delete %></td>
