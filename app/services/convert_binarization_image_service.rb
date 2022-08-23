@@ -13,6 +13,7 @@ class ConvertBinarizationImageService
     input_file.write(@image_data)
     input_file.rewind
     convert_cmd = "convert -threshold #{@threshold} #{input_file.path} #{output_file.path}"
+    Rails.logger.debug { convert_cmd }
     `#{convert_cmd}`
     output_file.rewind
     input_file.close
