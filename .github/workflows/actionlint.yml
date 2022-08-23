@@ -1,3 +1,9 @@
+name: Actionlint
+
+on:
+  pull_request:
+    branches: ['*']
+
 jobs:
   actionlint:
     runs-on: ubuntu-latest
