@@ -1,8 +1,13 @@
 class Splatoon2Sketch < ApplicationRecord
   belongs_to :user
 
+  # @param [..::UploadedFile] file
   def image=(file)
-    prefix = "#{file.content_type};base64"
-    self.encoded_image = "#{prefix},#{Base64.encode64(file.read)}"
+    self.encoded_image = Lib::Image2Base64.new(file).execute
+  end
+
+  # @return [String, String] binary, file extension
+  def decoded_image
+    Lib::Base642Image.new(encoded_image).execute
   end
 end

@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     namespace :splatoon2 do
       resources :sketches, only: [:index, :new, :show, :edit, :create, :update, :destroy] do
         post :draw
+        get :monochrome_image, on: :member
       end
     end
   end
