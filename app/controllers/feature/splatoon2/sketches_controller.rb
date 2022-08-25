@@ -45,22 +45,22 @@ class Feature::Splatoon2::SketchesController < ApplicationController
       file_content_type: file_content_type,
       threshold: @sketch.binary_threshold || 0
     ).execute
-    converted_image_data = Lib::Image2Base64.new(converted_image_file, content_type: file_content_type).execute
-    render json: { image_data: converted_image_data }
+    converted_base64_image_data = Lib::Image2Base64.new(converted_image_file, content_type: file_content_type).execute
+    render json: { image_data: converted_base64_image_data }
     converted_image_file.close
   end
 
   def cropped_monochrome_image
     @sketch = current_user.splatoon2_sketches.find(params[:id])
     image_data, file_content_type = @sketch.decoded_image
-    converted_image_file = ConvertBinarizationImageService2.new(
+    converted_image_file = ConvertBinarizationImageWithCropService.new(
       image_data: image_data,
       file_content_type: file_content_type,
       threshold: @sketch.binary_threshold || 0,
       crop_arg: @sketch.convert_cmd_crop_arg,
     ).execute
-    converted_image_data = Lib::Image2Base64.new(converted_image_file, content_type: file_content_type).execute
-    render json: { image_data: converted_image_data }
+    converted_base64_image_data = Lib::Image2Base64.new(converted_image_file, content_type: file_content_type).execute
+    render json: { image_data: converted_base64_image_data }
     converted_image_file.close
   end
 
