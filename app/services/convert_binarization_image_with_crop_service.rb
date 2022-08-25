@@ -13,6 +13,6 @@ class ConvertBinarizationImageWithCropService < BaseConvertBinarizationImageServ
   private
 
   def convert_cmd
-    "convert #{@crop_arg} -threshold #{@threshold} -resize 320x120! #{input_file.path} #{output_file.path}"
+    "convert #{@crop_arg} -alpha off -threshold #{@threshold}% -resize 320x120! #{input_file.path} #{output_file.path}"
   end
 end

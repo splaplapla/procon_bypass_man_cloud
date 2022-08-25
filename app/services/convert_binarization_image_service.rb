@@ -9,6 +9,6 @@ class ConvertBinarizationImageService < BaseConvertBinarizationImageService
   end
 
   def convert_cmd 
-    "convert -threshold #{@threshold} #{input_file.path} #{output_file.path}"
+    "convert  -alpha off -threshold #{@threshold}% #{input_file.path} #{output_file.path}"
   end
 end
