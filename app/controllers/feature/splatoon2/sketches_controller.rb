@@ -8,19 +8,19 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   end
 
   def show
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
   end
 
   def edit
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
   end
 
   def edit_binary_threshold
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
   end
 
   def update
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
     if @sketch.update(sketch_params)
       redirect_to feature_splatoon2_sketch_path(@sketch)
     else
@@ -38,7 +38,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   end
 
   def monochrome_image
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
     image_data, file_content_type = @sketch.decoded_image
     converted_image_file = ConvertBinarizationImageService.new(
       image_data: image_data,
@@ -51,7 +51,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   end
 
   def cropped_monochrome_image
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
     image_data, file_content_type = @sketch.decoded_image
     converted_image_file = ConvertBinarizationImageWithCropService.new(
       image_data: image_data,
@@ -65,7 +65,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   end
 
   def destroy
-    @sketch = current_user.splatoon2_sketches.find(params[:id])
+    @sketch = get_sketch
     @sketch.destroy
     redirect_to feature_splatoon2_sketches_path(@sketch), notice: '削除しました'
   end
@@ -74,5 +74,9 @@ class Feature::Splatoon2::SketchesController < ApplicationController
 
   def sketch_params
     params[:splatoon2_sketch].permit(:name, :image, :binary_threshold, :crop_data)
+  end
+
+  def get_sketch
+    @sketch ||= current_user.splatoon2_sketches.find(params[:id])
   end
 end
