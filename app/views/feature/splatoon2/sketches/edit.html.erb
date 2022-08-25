@@ -1,10 +1,13 @@
-<%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put do |f| %>
+<%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put, data: { controller: "image-crop" } do |f| %>
   <%= render "shared/validation_errors", f: f %>
 
   <div class="form-group row mb-2">
     <%= f.label :binary_threshold, "白黒の閾値", class: "col-form-label" %>
     <%= f.text_field :binary_threshold, class: "form-control", required: true %>
   </div>
+
+  <canvas id="image-canvas"></canvas>
+  <img src='data:<%= @sketch.encoded_image %>' id="image" style="display:none;">
 
   <div class="form-group row">
     <%= f.submit class: "form-control btn btn-primary" %>
