@@ -32,7 +32,7 @@ end
 ## Development
 ### インストール方法
 ```
-brew install imagemagick
+brew install imagemagick mysql@5.7 redis
 bundle config set --local without production
 bundle install
 ```

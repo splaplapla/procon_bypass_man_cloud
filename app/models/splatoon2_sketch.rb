@@ -8,11 +8,6 @@ class Splatoon2Sketch < ApplicationRecord
     self.encoded_image = Lib::Image2Base64.new(file).execute
   end
 
-  # @return [String, String] binary, file extension
-  def decoded_image
-    Lib::Base642Image.new(encoded_image).execute
-  end
-
   def crop_data=(value)
     if value.is_a?(Hash)
       super
@@ -21,11 +16,9 @@ class Splatoon2Sketch < ApplicationRecord
     end
   end
 
-  def convert_cmd_crop_arg
-    x = crop_data["x"].to_i
-    y = crop_data["y"].to_i
-    width = crop_data["width"].to_i
-    height = crop_data["height"].to_i
-    "-crop #{width}x#{height}+#{x}+#{y}"
+  # decoratorとかに移動したい
+  # @return [String, String] binary, file extension
+  def decoded_image
+    Lib::Base642Image.new(encoded_image).execute
   end
 end

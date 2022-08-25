@@ -6,6 +6,8 @@
   -> 白黒の閾値の編集
 </p>
 
+<h1><%= @sketch.name %>の白黒の閾値の編集</h1>
+
 <%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put do |f| %>
   <%= render "shared/validation_errors", f: f %>
 
