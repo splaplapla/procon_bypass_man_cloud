@@ -5,8 +5,37 @@
 <%= link_to 'デバイスに送信する', edit_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-info' %>
 <%= link_to '削除', feature_splatoon2_sketch_path(@sketch), method: :delete, class: 'btn btn-danger' %>
 
-<h1>画像</h1>
-
-<img src='data:<%= @sketch.encoded_image %>' height='100'>
-<img data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
-<img data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image2_feature_splatoon2_sketch_path(@sketch) %>">
+<table class="table">
+  <tr>
+    <th>
+      元画像
+    </th>
+    <th>
+      <img src='data:<%= @sketch.encoded_image %>'>
+    </th>
+  </tr>
+  <tr>
+    <th>
+      白黒化
+    </th>
+    <th>
+      <% if @sketch.binary_threshold %>
+      <img border="1"  data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
+    <% else %>
+      <div class="alert alert-info">白黒の閾値が登録されていません</div>
+    <% end %>
+    </th>
+  </tr>
+  <tr>
+    <th>
+      切り取り後
+    </th>
+    <th>
+      <% if @sketch.crop_data %>
+        <img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
+      <% else %>
+        <div class="alert alert-info">切り取り範囲が登録されていません</div>
+      <% end %>
+    </th>
+  </tr>
+</table>

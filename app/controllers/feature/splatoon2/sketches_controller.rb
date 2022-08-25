@@ -46,7 +46,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
     converted_image_file.close
   end
 
-  def monochrome_image2
+  def cropped_monochrome_image
     @sketch = current_user.splatoon2_sketches.find(params[:id])
     image_data, file_content_type = @sketch.decoded_image
     converted_image_file = ConvertBinarizationImageService2.new(

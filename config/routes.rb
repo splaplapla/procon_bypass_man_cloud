@@ -79,7 +79,7 @@ Rails.application.routes.draw do
         post :draw
         get :edit_binary_threshold, on: :member
         get :monochrome_image, on: :member
-        get :monochrome_image2, on: :member
+        get :cropped_monochrome_image, on: :member
       end
     end
   end
