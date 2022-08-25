@@ -11,6 +11,10 @@ class Feature::Splatoon2::SketchesController < ApplicationController
     @sketch = current_user.splatoon2_sketches.find(params[:id])
   end
 
+  def edit
+    @sketch = current_user.splatoon2_sketches.find(params[:id])
+  end
+
   def edit_binary_threshold
     @sketch = current_user.splatoon2_sketches.find(params[:id])
   end
@@ -45,7 +49,12 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   def monochrome_image2
     @sketch = current_user.splatoon2_sketches.find(params[:id])
     image_data, file_content_type = @sketch.decoded_image
-    converted_image_file = ConvertBinarizationImageService.new(image_data: image_data, file_content_type: file_content_type, threshold: @sketch.binary_threshold || 0).execute
+    converted_image_file = ConvertBinarizationImageService2.new(
+      image_data: image_data,
+      file_content_type: file_content_type,
+      threshold: @sketch.binary_threshold || 0,
+      crop_arg: @sketch.convert_cmd_crop_arg,
+    ).execute
     converted_image_data = Lib::Image2Base64.new(converted_image_file, content_type: file_content_type).execute
     render json: { image_data: converted_image_data }
     converted_image_file.close

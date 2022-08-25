@@ -28,12 +28,14 @@ export default class extends Controller {
       instance.cropperValue = new Cropper(cvs, {
         zoomable: false,
         aspectRatio: 320 / 120,
-        center: true,
+        background: true,
+        responsive: false,
+        viewMode: 1,
         dragMode: "none",
         minCropBoxWidth: 320,
         minCropBoxHeight: 120,
         ready() {
-          instance.cropperValue.setCropBoxData(instance.cropDataValue)
+          instance.cropperValue.setData(instance.cropDataValue)
         },
       })
     };
@@ -42,7 +44,7 @@ export default class extends Controller {
 
   submit(event) {
     event.preventDefault();
-    this.crop_dataTarget.value = JSON.stringify(this.cropperValue.getCropBoxData());
+    this.crop_dataTarget.value = JSON.stringify(this.cropperValue.getData());
     this.formTarget.submit();
   }
 }

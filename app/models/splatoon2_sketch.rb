@@ -20,4 +20,12 @@ class Splatoon2Sketch < ApplicationRecord
       super(JSON.parse(value))
     end
   end
+
+  def convert_cmd_crop_arg
+    x = crop_data["x"].to_i
+    y = crop_data["y"].to_i
+    width = crop_data["width"].to_i
+    height = crop_data["height"].to_i
+    "-crop #{width}x#{height}+#{x}+#{y}"
+  end
 end
