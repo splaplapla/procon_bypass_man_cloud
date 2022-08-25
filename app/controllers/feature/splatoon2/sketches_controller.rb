@@ -51,6 +51,6 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   private
 
   def sketch_params
-    params[:splatoon2_sketch].permit(:name, :image, :binary_threshold)
+    params[:splatoon2_sketch].permit(:name, :image, :binary_threshold, :crop_data)
   end
 end

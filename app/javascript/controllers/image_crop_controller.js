@@ -3,23 +3,29 @@ import Cropper from 'cropperjs';
 
 // Connects to data-controller="image-crop"
 export default class extends Controller {
-  connect() {
-    this.image = document.getElementById('image');
+  static values = [
+    'cropper',
+  ]
 
-    //2Dコンテキストのオブジェクトを生成する
+  static targets = [
+    'crop_data',
+    'form',
+  ]
+
+
+  connect() {
+    const sketchImage = document.getElementById('sketch-image');
     const cvs = document.getElementById('image-canvas');
     const ctx = cvs.getContext('2d');
 
-    //画像オブジェクトを生成
-    var img = new Image();
-    img.src = this.image.src;
+    const img = new Image();
+    img.src = sketchImage.src;
     cvs.width = img.width;
     cvs.height = img.height;
 
-    //画像をcanvasに設定
-    img.onload = function(){
+    const onload = function(instance) {
       ctx.drawImage(img, 0, 0);
-      self.cropper = new Cropper(cvs, {
+      instance.cropperValue = new Cropper(cvs, {
         zoomable: false,
         aspectRatio: 320/120,
         center: true,
@@ -28,5 +34,11 @@ export default class extends Controller {
         minCropBoxHeight: 120,
       })
     }
+    img.onload = onload(this)
+  }
+
+  submit(event) {
+    this.crop_dataTarget.value = JSON.stringify(this.cropperValue.getCropBoxData());
+    this.formTarget.submit();
   }
 }

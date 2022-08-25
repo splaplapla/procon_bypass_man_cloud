@@ -157,6 +157,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_14_053921) do
     t.string "name", null: false
     t.text "encoded_image", size: :medium, null: false
     t.integer "binary_threshold"
+    t.text "crop_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_splatoon2_sketches_on_user_id"
