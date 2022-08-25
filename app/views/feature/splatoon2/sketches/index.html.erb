@@ -23,12 +23,17 @@
       <td><%= sketch.name %></td>
       <td>
         <img src='data:<%= sketch.encoded_image %>' height='100'>
-        <img height='100' data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(sketch) %>">
+        <% if sketch.binary_threshold.present? %>
+          <img height='100' data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(sketch) %>">
+        <% end %>
+        <% if sketch.crop_data.present? %>
+          <img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(sketch) %>">
+        <% end %>
       </td>
       <td><%= sketch.binary_threshold %></td>
-      <td><%= link_to '詳細', feature_splatoon2_sketch_path(sketch) %></td>
-      <td><%= link_to '白黒具合を調整する', edit_feature_splatoon2_sketch_path(sketch) %></td>
-      <td><%= link_to '削除', feature_splatoon2_sketch_path(sketch), method: :delete %></td>
+      <td><%= link_to '詳細', feature_splatoon2_sketch_path(sketch), class: 'btn btn-info' %></td>
+      <td><%= link_to '切り取り範囲を調整する', edit_feature_splatoon2_sketch_path(sketch), class: 'btn btn-primary' %></td>
+      <td><%= link_to '白黒具合を調整する', edit_binary_threshold_feature_splatoon2_sketch_path(sketch), class: 'btn btn-primary' %></td>
     </tr>
   <% end %>
 </table>
