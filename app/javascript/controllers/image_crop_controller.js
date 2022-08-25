@@ -12,7 +12,6 @@ export default class extends Controller {
     'form',
   ]
 
-
   connect() {
     const sketchImage = document.getElementById('sketch-image');
     const cvs = document.getElementById('image-canvas');

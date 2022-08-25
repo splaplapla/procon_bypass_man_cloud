@@ -77,9 +77,11 @@ Rails.application.routes.draw do
     namespace :splatoon2 do
       resources :sketches, only: [:index, :new, :show, :edit, :create, :update, :destroy] do
         post :draw
-        get :edit_binary_threshold, on: :member
-        get :monochrome_image, on: :member
-        get :cropped_monochrome_image, on: :member
+        member do
+          get :edit_binary_threshold
+          get :monochrome_image
+          get :cropped_monochrome_image
+        end
       end
     end
   end
