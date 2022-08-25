@@ -3,9 +3,9 @@ import Cropper from 'cropperjs';
 
 // Connects to data-controller="image-crop"
 export default class extends Controller {
-  static values = [
-    'cropper',
-  ]
+  static values = {
+    cropData: Object,
+  }
 
   static targets = [
     'crop_data',
@@ -27,17 +27,21 @@ export default class extends Controller {
       ctx.drawImage(img, 0, 0);
       instance.cropperValue = new Cropper(cvs, {
         zoomable: false,
-        aspectRatio: 320/120,
+        aspectRatio: 320 / 120,
         center: true,
         dragMode: "none",
         minCropBoxWidth: 320,
         minCropBoxHeight: 120,
+        ready() {
+          instance.cropperValue.setCropBoxData(instance.cropDataValue)
+        },
       })
-    }
+    };
     img.onload = onload(this)
   }
 
   submit(event) {
+    event.preventDefault();
     this.crop_dataTarget.value = JSON.stringify(this.cropperValue.getCropBoxData());
     this.formTarget.submit();
   }

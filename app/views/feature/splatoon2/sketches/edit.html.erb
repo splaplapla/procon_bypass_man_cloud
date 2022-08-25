@@ -1,4 +1,6 @@
-<%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put, data: { controller: "image-crop", target: "image-crop.form" } do |f| %>
+<% crop_data = @sketch.crop_data %>
+<%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put, data: { controller: "image-crop", target: "image-crop.form", "image-crop-crop_data-value": crop_data } do |f| %>
+
   <%= render "shared/validation_errors", f: f %>
 
   <canvas id="image-canvas"></canvas>
