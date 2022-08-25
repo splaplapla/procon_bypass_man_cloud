@@ -1,6 +1,29 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "7c61fdc677b9db87bcb1047d7e7422157f3a80d5e41f8508cb091f6248aa463a",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "app/services/base_convert_binarization_image_service.rb",
+      "line": 7,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`#{convert_cmd}`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "BaseConvertBinarizationImageService",
+        "method": "execute"
+      },
+      "user_input": "convert_cmd",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
       "fingerprint": "89b01ccced9081bc141b819f567b6107f6e95ed88e7b7e6f087d5e6aeb662f5d",
@@ -116,6 +139,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-08-23 15:30:32 +0900",
+  "updated": "2022-08-25 22:22:02 +0900",
   "brakeman_version": "5.3.1"
 }
