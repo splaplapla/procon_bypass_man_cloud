@@ -6,7 +6,7 @@ class GenerateSplatoon2SketchBinarizationListService
     @file = file
   end
 
-  # @return [Array<Array<Boolean>>]
+  # @return [Array<Array<Boolean>>] trueが黒で、falseが白
   def execute
     img = Magick::ImageList.new(@file.open)
     dots = img.rows.times.map { |y|
