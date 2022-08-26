@@ -3,14 +3,15 @@
   -> スプラトゥーン2連携「イラスト投稿でのドットの自動打ち」
   -> <%= link_to "スケッチ一覧",  feature_splatoon2_sketches_path %>
   -> <%= link_to "スケッチ「#{@sketch.name}」",  feature_splatoon2_sketches_path(@sketch) %>
-  -> <%= "デバイスの送信する" %>
+  -> <%= "デバイス「#{@device.name}」" %>
+  -> <%= "デバイスに送信する" %>
 </p>
 
-<h1>デバイスの送信する</h1>
+<h1>デバイスに送信する</h1>
 <div class="hide"
      data-controller="splatoon2-sketch-drawer"
      data-splatoon2-sketch-drawer-data-value="<%= @binarization_macros.to_json %>"
-     data-splatoon2-sketch-drawer-request_path-value="<%= feature_splatoon2_sketch_drawing_sketch_path(@sketch.id) %>">
+     data-splatoon2-sketch-drawer-request_path-value="<%= feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key) %>">
   <span class="badge bg-primary" data-splatoon2-sketch-drawer-target="status">停止する</span>
   <hr>
   <button class="btn btn-primary" data-action="click->splatoon2-sketch-drawer#start">書き込む</button>
@@ -18,10 +19,8 @@
   <button class="btn btn-danger" data-action="click->splatoon2-sketch-drawer#stop">停止する</button>
 </div>
 
-<!--
 <hr>
-送信予定の入力は以下の通りです。
-<pre style="font-size: 0.001em; width: 2000px;">
-<%# @asc_art %>
-</pre>
--->
+
+書き込み対象<br>
+
+<img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(@sketch.id) %>">

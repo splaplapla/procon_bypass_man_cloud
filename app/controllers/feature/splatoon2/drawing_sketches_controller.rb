@@ -5,14 +5,19 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   def show
     @sketch = get_sketch
-    # @asc_art = get_asc_art
+    @device = get_device
     @binarization_macros = get_binarization_macros
   end
 
   def create
-    params[:macros].each do |macro|
-      RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: macro, name: "drawing")
+    if params[:macros].blank? || !params[:macros].is_a?(Array)
+      return head :bad_request
     end
+
+    device = get_device
+    remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device, save_record: false).execute(steps: params[:macros].join(","), name: "drawing")
+    ActionCable.server.broadcast(device.push_token, PbmRemoteMacroJobSerializer.new(remote_macro_job).attributes)
+
     head :ok
   end
 
@@ -30,6 +35,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   end
 
   # @return [Array<Array<String>>]
+  # debug用
   def get_asc_art
     asc_art = nil
     get_converted_image_file.tap do |converted_image_file|
@@ -69,5 +75,9 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   def get_sketch
     @sketch ||= current_user.splatoon2_sketches.find(params[:sketch_id])
+  end
+
+  def get_device
+    @device ||= current_user.devices.find_by!(unique_key: params[:device_id])
   end
 end

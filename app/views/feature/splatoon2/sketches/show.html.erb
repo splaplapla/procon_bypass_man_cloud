@@ -7,10 +7,30 @@
 
 <h1><%= @sketch.name %>のスケッチ</h1>
 
-<%= link_to '切り取り範囲を調整する', edit_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
-<%= link_to '白黒具合を調整する', edit_binary_threshold_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
-<%= link_to 'デバイスに送信する', feature_splatoon2_sketch_drawing_sketch_path(@sketch), class: 'btn btn-info' %>
-<%= link_to '削除', feature_splatoon2_sketch_path(@sketch), method: :delete, class: 'btn btn-danger', data: { confirm: "削除しますがいいですか？" } %>
+<div class="row">
+  <div class="col"></div>
+  <div class="col">
+    <%= link_to '切り取り範囲を調整する', edit_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
+  </div>
+  <div class="col">
+    <%= link_to '白黒具合を調整する', edit_binary_threshold_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a href="#" class="text-decoration-none dropdown-toggle btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+        デバイスに送信する
+      </a>
+      <ul class="dropdown-menu text-small" aria-labelledby="setting">
+        <% current_user.devices.each do |device| %>
+          <li><a class="dropdown-item" href="<%= feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, device.unique_key) %>"><%= device.name %>へ送信する</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col">
+    <%= link_to '削除', feature_splatoon2_sketch_path(@sketch), method: :delete, class: 'btn btn-danger', data: { confirm: "削除しますがいいですか？" } %>
+  </div>
+</div>
 
 <table class="table">
   <tr>
@@ -35,7 +55,7 @@
   </tr>
   <tr>
     <th>
-      白黒化 かつ 切り取り後
+      白黒化 and 切り取り後
     </th>
     <th>
       <% if @sketch.crop_data %>

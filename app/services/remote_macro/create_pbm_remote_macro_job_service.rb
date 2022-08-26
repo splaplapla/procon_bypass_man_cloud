@@ -1,6 +1,7 @@
 class RemoteMacro::CreatePbmRemoteMacroJobService
-  def initialize(device: )
+  def initialize(device: , save_record: true)
     @device = device
+    @save_record = save_record
   end
 
   def execute(name: , steps: )
@@ -12,7 +13,7 @@ class RemoteMacro::CreatePbmRemoteMacroJobService
       steps: split_steps(steps),
       uuid: PbmRemoteMacroJob.generate_uuid,
     )
-    remote_macro_job.save!
+    remote_macro_job.save! if @save_record
     remote_macro_job
   end
 
