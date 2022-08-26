@@ -11,6 +11,7 @@ export default class extends Controller {
   static targets = [
     "status",
     "position",
+    "send_interval",
   ]
 
   connect() {
@@ -60,7 +61,8 @@ export default class extends Controller {
     this.runStats = true;
     this.statusTarget.innerText = "書き込み中";
     this.statusTarget.className = "badge bg-primary";
-    this.intervalId = setInterval(this._sendMacro.bind(this), 500);
+    const send_interval = Number(this.send_intervalTarget.value || 1000)
+    this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
   _stop() {
