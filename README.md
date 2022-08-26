@@ -11,15 +11,20 @@
 * PBMのバージョンアップ
 * 設定ファイルのバックアップ、公開
 * ライブストリーミングのコメント連携
-  - youtube live(WIP)
+  * youtube live(WIP)
     * gcp appが非公開なので公開にする必要がある
-  - twitch
+  * twitch
+    * https://zenn.dev/jiikko/articles/3c06c20322dd84
+* スプラトゥーン2, 3専用機能
+    * 自動ドット打ち
 
 ## procon_bypass_manを登録する方法
+デバイスIDを https://pbm-cloud.herokuapp.com に登録する必要があります。
+
 * `app.rb` の `config.api_servers` の行をアンコメントアウトする
-* `procon_bypass_man` を起動する
+* `procon_bypass_man` を起動する。これでデバイスIDが生成されます。
 * https://pbm-cloud.herokuapp.com でユーザ登録をする
-* `/usr/share/pbm/shared/device_id` もしくは実行しているディレクトリにある `device_id` の中身を https://pbm-cloud.herokuapp.com/devices/new に貼り付ける
+* Raspberry PI内の`/usr/share/pbm/shared/device_id` もしくは実行しているディレクトリにある `device_id` の中身を https://pbm-cloud.herokuapp.com/devices/new に貼り付ける
 
 ```ruby
 ProconBypassMan.configure do |config|
@@ -71,5 +76,4 @@ ProconPerformanceMetric::WriteService.new.execute(
 * デバイス詳細ページをReactで作る
   - 現在は状態管理をjQueryでDOMをいじっているのでかなり厳しい状態
 * 設定エディター機能
-  - 作り途中(import-mapへの移行でtypescriptが使えなくなってしまい元に戻る)
 * 設定ファイル同士のdiff機能
