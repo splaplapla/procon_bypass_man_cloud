@@ -2,7 +2,7 @@
   <%= link_to "機能一覧",  feature_root_path %>
   -> スプラトゥーン2連携「イラスト投稿でのドットの自動打ち」
   -> <%= link_to "スケッチ一覧",  feature_splatoon2_sketches_path %>
-  -> <%= link_to "スケッチ「#{@sketch.name}」",  feature_splatoon2_sketches_path(@sketch) %>
+  -> <%= link_to "スケッチ「#{@sketch.name}」",  feature_splatoon2_sketch_path(@sketch.id) %>
   -> 白黒の閾値の編集
 </p>
 
