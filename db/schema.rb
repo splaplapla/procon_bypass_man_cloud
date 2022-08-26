@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_14_053921) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false
@@ -77,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_14_053921) do
 
   create_table "pbm_remote_macro_jobs", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
-    t.string "steps", null: false
+    t.text "steps", null: false
     t.string "name", null: false
     t.string "uuid", null: false
     t.integer "status", null: false

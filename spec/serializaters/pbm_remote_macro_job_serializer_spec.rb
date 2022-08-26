@@ -10,6 +10,7 @@ describe PbmRemoteMacroJobSerializer do
     it do
       expect(subject).to eq(
         action: "remote_macro",
+        status: "queued",
         name: "foo",
         uuid: remote_macro_job.uuid,
         steps: ["a"],
