@@ -58,6 +58,7 @@ export default class extends Controller {
   _reset() {
     this.macroPointer = 0;
     this._updateProgress()
+    this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
   }
 
