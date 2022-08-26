@@ -77,6 +77,8 @@ export default class extends Controller {
     this._stop();
   }
 
+  // TODO 500が返ってきたら停止する
+  // TODO レスポンスが返ってくるまでは次のリクエストを送信しない
   _postRequest(macros) {
     const postData = { macros: macros };
     axios.post(this.requestPathValue, postData).then((response) => {
