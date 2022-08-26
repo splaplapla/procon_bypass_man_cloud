@@ -1,0 +1,25 @@
+<p>
+  <%= link_to "機能一覧",  feature_root_path %>
+  -> スプラトゥーン2連携「イラスト投稿でのドットの自動打ち」
+  -> <%= link_to "スケッチ一覧",  feature_splatoon2_sketches_path %>
+  -> <%= link_to "スケッチ「#{@sketch.name}」",  feature_splatoon2_sketches_path(@sketch) %>
+  -> 切り取り範囲の編集
+</p>
+
+<h1><%= @sketch.name %>の切り取り範囲の編集</h1>
+
+<% crop_data = @sketch.crop_data %>
+<%= form_with model: @sketch, url: feature_splatoon2_sketch_path(@sketch), method: :put, data: { controller: "image-crop", target: "image-crop.form", "image-crop-crop_data-value": crop_data } do |f| %>
+
+  <%= render "shared/validation_errors", f: f %>
+
+  <canvas id="image-canvas"></canvas>
+  <div>
+    <img src='data:<%= @sketch.encoded_image %>' id="sketch-image" style="display:none;">
+  </div>
+  <%= f.hidden_field :crop_data, data: { target: "image-crop.crop_data" } %>
+
+  <div class="form-group row mt-5">
+    <a href="#" class="form-control btn btn-primary" data-action="click->image-crop#submit">更新する</a>
+  </div>
+<% end %>

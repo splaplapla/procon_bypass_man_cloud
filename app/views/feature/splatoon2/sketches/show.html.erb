@@ -1,0 +1,68 @@
+<p>
+  <%= link_to "機能一覧",  feature_root_path %>
+  -> スプラトゥーン2連携「イラスト投稿でのドットの自動打ち」
+  -> <%= link_to "スケッチ一覧",  feature_splatoon2_sketches_path %>
+  -> <%= "スケッチ「#{@sketch.name}」" %>
+</p>
+
+<h1><%= @sketch.name %>のスケッチ</h1>
+
+<div class="row">
+  <div class="col"></div>
+  <div class="col">
+    <%= link_to '切り取り範囲を調整する', edit_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
+  </div>
+  <div class="col">
+    <%= link_to '白黒具合を調整する', edit_binary_threshold_feature_splatoon2_sketch_path(@sketch), class: 'btn btn-primary' %>
+  </div>
+  <div class="col">
+    <div class="dropdown">
+      <a href="#" class="text-decoration-none dropdown-toggle btn btn-success" data-bs-toggle="dropdown" aria-expanded="false">
+        デバイスに送信する
+      </a>
+      <ul class="dropdown-menu text-small" aria-labelledby="setting">
+        <% current_user.devices.each do |device| %>
+          <li><a class="dropdown-item" href="<%= feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, device.unique_key) %>"><%= device.name %>へ送信する</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+  <div class="col">
+    <%= link_to '削除', feature_splatoon2_sketch_path(@sketch), method: :delete, class: 'btn btn-danger', data: { confirm: "削除しますがいいですか？" } %>
+  </div>
+</div>
+
+<table class="table">
+  <tr>
+    <th>
+      元画像
+    </th>
+    <th>
+      <img src='data:<%= @sketch.encoded_image %>'>
+    </th>
+  </tr>
+  <tr>
+    <th>
+      白黒化
+    </th>
+    <th>
+      <% if @sketch.binary_threshold %>
+      <img border="1"  data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
+    <% else %>
+      <div class="alert alert-info">白黒の閾値が登録されていません</div>
+    <% end %>
+    </th>
+  </tr>
+  <tr>
+    <th>
+      白黒化 and 切り取り後
+    </th>
+    <th>
+      <% if @sketch.crop_data %>
+        <img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
+      <% else %>
+        <div class="alert alert-info">切り取り範囲が登録されていません</div>
+      <% end %>
+    </th>
+  </tr>
+</table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_18_051033) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_14_053921) do
   create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false
@@ -150,6 +150,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_18_051033) do
     t.datetime "updated_at", null: false
     t.string "content_hash"
     t.bigint "user_id"
+  end
+
+  create_table "splatoon2_sketches", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.text "encoded_image", size: :medium, null: false
+    t.integer "binary_threshold"
+    t.text "crop_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_splatoon2_sketches_on_user_id"
   end
 
   create_table "streaming_service_accounts", charset: "utf8mb4", force: :cascade do |t|
