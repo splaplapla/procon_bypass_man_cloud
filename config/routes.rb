@@ -90,6 +90,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     resources :events, only: [:create]
+    resources :pbm_jobs, only: [:show]
 
     resources :devices, only: :show do
       resources :procon_performance_metrics, only: [:create]

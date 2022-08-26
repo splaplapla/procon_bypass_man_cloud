@@ -7,6 +7,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     @sketch = get_sketch
     @device = get_device
     @binarization_macros = get_binarization_macros
+    @flatten_binarization_macros = @binarization_macros.flatten
   end
 
   def create
@@ -15,15 +16,15 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     end
 
     device = get_device
-    remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device, save_record: false).execute(steps: params[:macros].join(","), name: "drawing")
-    ActionCable.server.broadcast(device.push_token, PbmRemoteMacroJobSerializer.new(remote_macro_job).attributes)
-
-    head :ok
+    remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: params[:macros].join(","), name: "drawing")
+    remote_macro_job = PbmRemoteMacroJobSerializer.new(remote_macro_job)
+    ActionCable.server.broadcast(device.push_token, remote_macro_job.attributes)
+    render json: remote_macro_job.to_json
   end
 
   private
 
-  # @return [Array<Array<Array<String>>>]
+  # @return [Array<Array<String>>]
   def get_binarization_macros
     macros = nil
     get_converted_image_file.tap do |converted_image_file|

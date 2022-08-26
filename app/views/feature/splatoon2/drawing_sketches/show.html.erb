@@ -8,6 +8,28 @@
 </p>
 
 <h1>デバイスに送信する</h1>
+
+<div class="hide"
+     data-controller="splatoon2-sketch-drawer2"
+     data-splatoon2-sketch-drawer2-data-value="<%= @flatten_binarization_macros.to_json %>"
+     data-splatoon2-sketch-drawer2-request_path-value="<%= feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key) %>">
+  ステータス: <span data-splatoon2-sketch-drawer2-target="status"></span><br>
+  進捗率: <span data-splatoon2-sketch-drawer2-target="progress"></span><br>
+  書き込み中のポジション: <span data-splatoon2-sketch-drawer2-target="position"></span>
+  <hr>
+  送信インターバル(msec): <input type="text" value="1000" data-splatoon2-sketch-drawer2-target="send_interval"><br><br>
+  <button class="btn btn-primary" data-action="click->splatoon2-sketch-drawer2#start">書き込む</button>
+  <button class="btn btn-success" data-action="click->splatoon2-sketch-drawer2#reset">最初に戻る</button>
+  <button class="btn btn-danger" data-action="click->splatoon2-sketch-drawer2#stop">停止する</button>
+</div>
+
+
+
+
+<h2>旧実装</h2>
+
+<hr>
+
 <div class="hide"
      data-controller="splatoon2-sketch-drawer"
      data-splatoon2-sketch-drawer-data-value="<%= @binarization_macros.to_json %>"
