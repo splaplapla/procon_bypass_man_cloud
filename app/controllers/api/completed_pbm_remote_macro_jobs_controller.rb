@@ -6,7 +6,7 @@ class Api::CompletedPbmRemoteMacroJobsController < Api::Base
 
     render json: PbmRemoteMacroJobSerializer.new(pbm_remote_macro_job)
   rescue ActiveRecord::RecordNotFound => e
-    render json: { errors: 'the remote_macro_job did not find' }, status: :bad_request
+    render json: { errors: "the remote_macro_job(#{params[:job_id]}) did not find" }, status: :bad_request
   rescue ActiveModel::ValidationError => e
     render json: { errors: e.model.errors.full_messages }, status: :bad_request
   end
