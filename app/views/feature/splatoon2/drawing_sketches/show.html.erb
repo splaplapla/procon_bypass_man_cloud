@@ -12,9 +12,7 @@
      data-controller="splatoon2-sketch-drawer"
      data-splatoon2-sketch-drawer-data-value="<%= @binarization_macros.to_json %>"
      data-splatoon2-sketch-drawer-request_path-value="<%= feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key) %>">
-  <span class="badge bg-primary" data-splatoon2-sketch-drawer-target="status">停止する</span>
-  <br>
-
+  ステータス: <span data-splatoon2-sketch-drawer-target="status"></span><br>
   進捗率: <span data-splatoon2-sketch-drawer-target="progress"></span><br>
   書き込み中のポジション: <span data-splatoon2-sketch-drawer-target="position"></span>
   <hr>
