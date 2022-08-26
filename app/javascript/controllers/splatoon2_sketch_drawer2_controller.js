@@ -82,6 +82,8 @@ export default class extends Controller {
   }
 
   _postRequest() {
+    const maxMacrosSize = 200;
+
     // 前回にリクエストを送っていたら、完了するまで
     if(this.lastRequest.id) {
       axios.get(`/api/pbm_jobs/${this.lastRequest.id}`).then((response) => {
@@ -92,19 +94,24 @@ export default class extends Controller {
           return;
         }
 
-        const macros = [...Array(200)].map(() => this.dotsData.shift());
+        // リクエストが成功したらthis.dotsDataから取り除く
+        const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
         const postData = { macros: macros };
         axios.post(this.requestPathValue, postData).then((response) => {
           this.lastRequest.id = response.data.uuid
           this.lastRequest.status = "wait"
+        }).then(() => {
+          [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
         })
       })
     } else {
-      const macros = [...Array(200)].map(() => this.dotsData.shift());
+      const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
       const postData = { macros: macros };
       axios.post(this.requestPathValue, postData).then((response) => {
         this.lastRequest.id = response.data.uuid
         this.lastRequest.status = "wait"
+      }).then(() => {
+        [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
       })
     }
   }
