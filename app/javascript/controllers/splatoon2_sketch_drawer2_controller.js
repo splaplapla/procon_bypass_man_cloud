@@ -82,7 +82,7 @@ export default class extends Controller {
   }
 
   _postRequest() {
-    const maxMacrosSize = 200;
+    const maxMacrosSize = 1000;
 
     // 前回にリクエストを送っていたら、完了するまで
     if(this.lastRequest.id) {

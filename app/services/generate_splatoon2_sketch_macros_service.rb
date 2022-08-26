@@ -1,14 +1,14 @@
 # 一番左上から開始して、右に行ったら下に移動して折り返す
 class GenerateSplatoon2SketchMacrosService
   # 偶数. 右へ移動する
-  MACRO_POINT = [:pressing_a_for_0_03sec, :pressing_right_for_0_03sec]
-  MACRO_NOT_POINT = [:wait_for_0_03sec, :pressing_right_for_0_03sec]
+  MACRO_POINT = [:pressing_a_for_0_02sec, :pressing_right_for_0_02sec]
+  MACRO_NOT_POINT = [:wait_for_0_02sec, :pressing_right_for_0_02sec]
 
   # 奇数. 左へ移動する
-  MACRO_REVERSE_POINT = [:pressing_a_for_0_03sec, :pressing_left_for_0_03sec]
-  MACRO_REVERSE_NOT_POINT = [:wait_for_0_03sec, :pressing_left_for_0_03sec]
+  MACRO_REVERSE_POINT = [:pressing_a_for_0_02sec, :pressing_left_for_0_02sec]
+  MACRO_REVERSE_NOT_POINT = [:wait_for_0_02sec, :pressing_left_for_0_02sec]
 
-  MACRO_NEXT_LINE = [:pressing_down_for_0_03sec]
+  MACRO_NEXT_LINE = [:pressing_down_for_0_02sec]
 
   # @param [Array<Array<Boolean>>] list_in_list trueが黒で、falseが白
   # [ [true, false, true, ...],
