@@ -6,7 +6,7 @@ class BaseConvertBinarizationImageService
     Rails.logger.debug { convert_cmd }
     `#{convert_cmd}`
     output_file.rewind
-    input_file.close
+    input_file.close!
 
     return output_file
   end

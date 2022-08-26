@@ -7,10 +7,21 @@
 </p>
 
 <h1>デバイスの送信する</h1>
-<%= @binarization_macros[0] %>
+<div class="hide"
+     data-controller="splatoon2-sketch-drawer"
+     data-splatoon2-sketch-drawer-data-value="<%= @binarization_macros.to_json %>"
+     data-splatoon2-sketch-drawer-request_path-value="<%= feature_splatoon2_sketch_drawing_sketch_path(@sketch.id) %>">
+  <span class="badge bg-primary" data-splatoon2-sketch-drawer-target="status">停止する</span>
+  <hr>
+  <button class="btn btn-primary" data-action="click->splatoon2-sketch-drawer#start">書き込む</button>
+  <button class="btn btn-success">最初に戻る</button>
+  <button class="btn btn-danger" data-action="click->splatoon2-sketch-drawer#stop">停止する</button>
+</div>
 
+<!--
 <hr>
 送信予定の入力は以下の通りです。
 <pre style="font-size: 0.001em; width: 2000px;">
-<%= @asc_art %>
+<%# @asc_art %>
 </pre>
+-->

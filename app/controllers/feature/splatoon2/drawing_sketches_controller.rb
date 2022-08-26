@@ -1,13 +1,19 @@
 class Feature::Splatoon2::DrawingSketchesController < ApplicationController
-  after_action :close_converted_image_file
+  skip_forgery_protection only: [:create]
+
+  after_action :close_converted_image_file, only: :show
 
   def show
     @sketch = get_sketch
-    @asc_art = get_asc_art
+    # @asc_art = get_asc_art
     @binarization_macros = get_binarization_macros
   end
 
   def create
+    params[:macros].each do |macro|
+      RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: macro, name: "drawing")
+    end
+    head :ok
   end
 
   private
