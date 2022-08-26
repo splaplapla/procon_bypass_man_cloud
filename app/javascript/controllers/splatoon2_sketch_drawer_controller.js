@@ -11,15 +11,16 @@ export default class extends Controller {
   static targets = [
     "status",
     "position",
+    "progress",
     "send_interval",
   ]
 
   connect() {
-    this.dataValue;
     this._stop();
     this.macroPointerX = 0;
     this.macroPointerY = 0;
     this._writePosition();
+    this._calcProgress();
   }
 
   // @public
@@ -38,6 +39,7 @@ export default class extends Controller {
   }
 
   _sendMacro() {
+    this._calcProgress();
     if(!this.runStats) { return }
     this._writePosition();
 
@@ -59,6 +61,7 @@ export default class extends Controller {
 
   _start() {
     this.runStats = true;
+    this._calcProgress()
     this.statusTarget.innerText = "書き込み中";
     this.statusTarget.className = "badge bg-primary";
     const send_interval = Number(this.send_intervalTarget.value || 1000)
@@ -66,6 +69,7 @@ export default class extends Controller {
   }
 
   _stop() {
+    this._calcProgress();
     this.runStats = false;
     this.statusTarget.innerText = "停止中";
     this.statusTarget.className = "badge bg-secondary";
@@ -73,6 +77,7 @@ export default class extends Controller {
   }
 
   _reset() {
+    this._calcProgress();
     this.macroPointerX = 0;
     this.macroPointerY = 0;
     this._writePosition();
@@ -90,5 +95,9 @@ export default class extends Controller {
 
   _writePosition() {
     this.positionTarget.innerText = `${this.macroPointerY}x${this.macroPointerX}`;
+  }
+
+  _calcProgress() {
+    this.progressTarget.innerText = `${Math.trunc((this.macroPointerY / this.dataValue.length) * 100)}%`;
   }
 }
