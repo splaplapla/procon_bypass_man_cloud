@@ -92,21 +92,19 @@ export default class extends Controller {
           return;
         }
 
-        const macros = [...Array(100)].map(() => this.dotsData.shift());
+        const macros = [...Array(200)].map(() => this.dotsData.shift());
         const postData = { macros: macros };
         axios.post(this.requestPathValue, postData).then((response) => {
           this.lastRequest.id = response.data.uuid
           this.lastRequest.status = "wait"
-          console.log(response);
         })
       })
     } else {
-      const macros = [...Array(100)].map(() => this.dotsData.shift());
+      const macros = [...Array(200)].map(() => this.dotsData.shift());
       const postData = { macros: macros };
       axios.post(this.requestPathValue, postData).then((response) => {
         this.lastRequest.id = response.data.uuid
         this.lastRequest.status = "wait"
-        console.log(response);
       })
     }
   }
