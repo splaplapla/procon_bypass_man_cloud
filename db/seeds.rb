@@ -52,6 +52,7 @@ device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
 device = Device.find_or_create_by!(uuid: "d1") do |d|
   d.hostname = "hoge"
   d.user_id = nil
+  d.name = "最初に買ったやつ"
 end
 
 user = User.find_or_create_by!(email: "admin@example.com") do |user|
