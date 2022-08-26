@@ -2,7 +2,7 @@
 [![Run rspec](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_test.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_test.yml)
 [![Run linters](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml)
 
-* https://github.com/splaplapla/procon_bypass_man を便利に使えるようになるWEBアプリケーションです
+* https://github.com/splaplapla/procon_bypass_man の運用を楽にするWEBアプリケーションです
 * https://pbm-cloud.herokuapp.com で公開しています
 
 ## 機能
