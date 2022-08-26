@@ -6,8 +6,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   def show
     @sketch = get_sketch
     @device = get_device
-    @binarization_macros = get_binarization_macros
-    @flatten_binarization_macros = @binarization_macros.flatten
+    @flatten_binarization_macros = get_binarization_macros.flatten
   end
 
   def create
