@@ -13,9 +13,11 @@ export default class extends Controller {
     "position",
     "progress",
     "send_interval",
+    "timer",
   ]
 
   connect() {
+    this._setTimer();
     this.maxDataValueLength = this.dataValue.length
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
@@ -39,6 +41,7 @@ export default class extends Controller {
   }
 
   _start() {
+    this.startAt = Date.now();
     this._updateProgress();
     this.runStats = true;
     this.statusTarget.innerText = "書き込み中";
@@ -56,13 +59,17 @@ export default class extends Controller {
   }
 
   _reset() {
+    this.startAt = Date.now();
     this.macroPointer = 0;
     this._updateProgress()
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
+    this._setTimer();
   }
 
   _sendMacro() {
+    this._setTimer();
+
     if(!this.runStats) { return }
     this._updateProgress();
 
@@ -115,5 +122,9 @@ export default class extends Controller {
 
   _maxDotsLength() {
     return this.maxDataValueLength;
+  }
+
+  _setTimer() {
+    this.timerTarget.innerText = `${Math.trunc((Date.now() - this.startAt || 0) / 1000)}秒`;
   }
 }
