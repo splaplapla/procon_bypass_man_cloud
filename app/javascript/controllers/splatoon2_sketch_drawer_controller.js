@@ -10,33 +10,48 @@ export default class extends Controller {
 
   static targets = [
     "status",
+    "position",
   ]
 
   connect() {
     this.dataValue;
-    this._stop(this);
+    this._stop();
     this.macroPointerX = 0;
     this.macroPointerY = 0;
+    this._writePosition();
   }
 
   // @public
   start() {
-    this._start(this);
+    this._start();
   }
 
   // @public
   stop() {
-    this._stop(this);
+    this._stop();
   }
 
   // @public
   reset() {
-    this._reset(this);
+    this._reset();
   }
 
   _sendMacro() {
+    if(!this.runStats) { return }
+    this._writePosition();
+
+    if(!this.dataValue[this.macroPointerY]) { // 全部描き切った時
+      this._stop();
+      return;
+    }
+
     const macros = this.dataValue[this.macroPointerY][this.macroPointerX];
-    if(!macros) { this.macroPointerY++; return; };
+    if(!macros) {
+      this.macroPointerY++;
+      this.macroPointerX = 0;
+      return;
+    };
+
     this._postRequest(macros)
     this.macroPointerX++;
   }
@@ -58,6 +73,7 @@ export default class extends Controller {
   _reset() {
     this.macroPointerX = 0;
     this.macroPointerY = 0;
+    this._writePosition();
     this._stop();
   }
 
@@ -66,5 +82,9 @@ export default class extends Controller {
     axios.post(this.requestPathValue, postData).then((response) => {
       console.log(response);
     })
+  }
+
+  _writePosition() {
+    this.positionTarget.innerText = `${this.macroPointerY}x${this.macroPointerX}`;
   }
 }
