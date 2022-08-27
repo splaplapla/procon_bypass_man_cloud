@@ -3,7 +3,7 @@ module CanChangeUserPlan
     update!(plan: UserPlan::PLAN::PLAN_FREE)
   end
 
-  def be_free!
+  def be_light!
     update!(plan: UserPlan::PLAN::PLAN_LIGHT)
   end
 
