@@ -35,6 +35,11 @@ class User < ApplicationRecord
   end
 
   # @return [Boolean]
+  def can_have_another_splatoon2_sketches?
+    max_devices_size > splatoon2_sketches.count
+  end
+
+  # @return [Boolean]
   # TODO サービスクラスにする
   def add_saved_buttons_setting(new_add_saved_buttons_setting)
     return false unless can_create_saved_buttons_settings?
