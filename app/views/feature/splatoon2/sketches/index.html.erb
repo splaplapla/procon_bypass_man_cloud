@@ -6,13 +6,17 @@
 
 <h1>登録しているスケッチ一覧</h1>
 
-<div class="container-fluid">
-  <div class="d-flex flex-row-reverse bd-highlight">
-    <div class="p-2 bd-highlight">
-      <%= link_to "スケッチを新規登録する", new_feature_splatoon2_sketch_path, class: "btn btn-success" %>
+<% if current_user.can_have_another_splatoon2_sketches? %>
+  <div class="container-fluid">
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <div class="p-2 bd-highlight">
+        <%= link_to "スケッチを新規登録する", new_feature_splatoon2_sketch_path, class: "btn btn-success" %>
+      </div>
     </div>
   </div>
-</div>
+<% else %>
+  <div class='alert alert-warning'>スケッチの登録数の上限に達したため、新しくスケッチを登録できません。</div>
+<% end %>
 
 
 <table class='table'>

@@ -27,7 +27,7 @@
       <% if current_user.can_have_another_devices? %>
         <%= link_to "デバイスを新規登録する", new_device_path, class: "btn btn-success" %>
       <% else %>
-        <div class='alert alert-warning'>デバイスの登録数の上限に達したため新しくデバイスを登録できません。</div>
+        <div class='alert alert-warning'>デバイスの登録数の上限に達したため、新しくデバイスを登録できません。</div>
       <% end %>
     </div>
   </div>

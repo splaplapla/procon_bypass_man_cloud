@@ -1,4 +1,6 @@
 class Feature::Splatoon2::SketchesController < ApplicationController
+  before_action :can_create_another_splatoon2_sketches, only: [:new, :create]
+
   def index
     @sketches = current_user.splatoon2_sketches
   end
@@ -29,6 +31,10 @@ class Feature::Splatoon2::SketchesController < ApplicationController
   end
 
   def create
+    unless current_user.can_have_another_splatoon2_sketches?
+      raise '登録可能なスケッチを超えています' # TODO サービスクラスにする
+    end
+
     @sketch = current_user.splatoon2_sketches.build(sketch_params)
     if @sketch.save
       redirect_to feature_splatoon2_sketch_path(@sketch)
@@ -79,5 +85,11 @@ class Feature::Splatoon2::SketchesController < ApplicationController
 
   def get_sketch
     @sketch ||= current_user.splatoon2_sketches.find(params[:id])
+  end
+
+  def can_create_another_splatoon2_sketches
+    unless current_user.can_have_another_splatoon2_sketches?
+      redirect_to feature_splatoon2_sketches_path
+    end
   end
 end
