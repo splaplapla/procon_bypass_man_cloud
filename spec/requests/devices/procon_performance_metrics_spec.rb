@@ -25,6 +25,7 @@ RSpec.describe Devices::ProconPerformanceMetricsController, type: :request do
         write_error_count: "491",
         load_agv: "0.49-0.5-0.55",
         gc_count: 3,
+        gc_time: 3,
         device_uuid: 'd1',
         succeed_rate: 1,
         collected_spans_size: 4422,

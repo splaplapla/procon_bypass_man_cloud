@@ -24,6 +24,7 @@ RSpec.describe Api::ProconPerformanceMetricsController, type: :request do
           write_error_count: 3,
           load_agv: 2,
           gc_count: 3,
+          gc_time: 3,
           succeed_rate: 22,
           collected_spans_size: 33,
         }

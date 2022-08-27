@@ -14,6 +14,7 @@ module ProconPerformanceMetric
                                                    :write_error_count,
                                                    :load_agv,
                                                    :gc_count,
+                                                   :gc_time,
                                                    :succeed_rate,
                                                    :collected_spans_size)
     def time_taken_max
@@ -74,6 +75,10 @@ module ProconPerformanceMetric
 
     def gc_count
       super.to_i
+    end
+
+    def gc_time
+      super.to_f
     end
 
     def timestamp

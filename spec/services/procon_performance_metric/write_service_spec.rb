@@ -18,6 +18,7 @@ describe ProconPerformanceMetric::WriteService do
       write_error_count: 5,
       load_agv: "2-2-2",
       gc_count: 3,
+      gc_time: 3,
       device_uuid: "abc",
     )
   end
@@ -39,6 +40,7 @@ describe ProconPerformanceMetric::WriteService do
       write_error_count: form.write_error_count,
       load_agv: form.load_agv,
       gc_count: form.gc_count,
+      gc_time: form.gc_time,
       device_uuid: form.device_uuid,
       succeed_rate: 0.9,
       collected_spans_size: 400,
