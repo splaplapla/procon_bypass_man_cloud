@@ -135,13 +135,15 @@ export default class extends Controller {
 
   _postRequest() {
     const maxMacrosSize = 2000;
+    const statusProcessed = "processed";
+    const statusWait = "processed";
 
-    // 前回にリクエストを送っていたら、完了するまで
+    // 前回にリクエストを送っていたら、それが完了するまで待機する
     if(this.lastRequest.id) {
       axios.get(`/api/pbm_jobs/${this.lastRequest.id}`).then((response) => {
-        if(response.data.status === "processed") { this.lastRequest.status = "processed" }
+        if(response.data.status === statusProcessed) { this.lastRequest.status = statusProcessed }
 
-        if(this.lastRequest.status === "wait") { 
+        if(this.lastRequest.status === statusWait) { 
           console.log("前回のリクエストが未完了なので何もしません");
           return;
         }
@@ -151,7 +153,7 @@ export default class extends Controller {
         const postData = { macros: macros };
         axios.post(this.requestPathValue, postData).then((response) => {
           this.lastRequest.id = response.data.uuid
-          this.lastRequest.status = "wait"
+          this.lastRequest.status = statusWait
         }).then(() => {
           [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
         })
@@ -161,7 +163,7 @@ export default class extends Controller {
       const postData = { macros: macros };
       axios.post(this.requestPathValue, postData).then((response) => {
         this.lastRequest.id = response.data.uuid
-        this.lastRequest.status = "wait"
+        this.lastRequest.status = statusWait
       }).then(() => {
         [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
       })
