@@ -32,13 +32,13 @@
   </div>
 </div>
 
-<table class="table">
+<table class="table" border='1'>
   <tr>
     <th>
       元画像
     </th>
     <th>
-      <img src='data:<%= @sketch.encoded_image %>'>
+      <img src='data:<%= @sketch.encoded_image %>' class='col-10'>
     </th>
   </tr>
   <tr>
@@ -47,10 +47,10 @@
     </th>
     <th>
       <% if @sketch.binary_threshold %>
-      <img border="1"  data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(@sketch) %>">
-    <% else %>
-      <div class="alert alert-info">白黒の閾値が登録されていません</div>
-    <% end %>
+        <img border="1"  data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= monochrome_image_feature_splatoon2_sketch_path(@sketch) %>" class='col-10'>
+      <% else %>
+        <div class="alert alert-info">白黒の閾値が登録されていません</div>
+      <% end %>
     </th>
   </tr>
   <tr>

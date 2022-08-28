@@ -65,7 +65,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     @sketch = get_sketch
     @sketch = Splatoon2SketchConvertWithCropDecorator.new(@sketch)
     image_data, file_content_type = @sketch.decoded_image
-    @converted_image_file = ConvertBinarizationImageWithCropService.new(
+    @converted_image_file = Splatoon2SketchService::ConvertBinarizationImageWithCropService.new(
       image_data: image_data,
       file_content_type: file_content_type,
       threshold: @sketch.binary_threshold || 0,

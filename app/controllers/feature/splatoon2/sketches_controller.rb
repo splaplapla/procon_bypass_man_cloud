@@ -47,7 +47,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
     @sketch = get_sketch
     image_data, file_content_type = @sketch.decoded_image
     binary_threshold = params[:binary_threshold].presence&.to_i || @sketch.binary_threshold || 0
-    converted_image_file = ConvertBinarizationImageService.new(
+    converted_image_file = Splatoon2SketchService::ConvertBinarizationImageService.new(
       image_data: image_data,
       file_content_type: file_content_type,
       threshold: binary_threshold
@@ -61,7 +61,7 @@ class Feature::Splatoon2::SketchesController < ApplicationController
     @sketch = get_sketch
     @sketch = Splatoon2SketchConvertWithCropDecorator.new(@sketch)
     image_data, file_content_type = @sketch.decoded_image
-    converted_image_file = ConvertBinarizationImageWithCropService.new(
+    converted_image_file = Splatoon2SketchService::ConvertBinarizationImageWithCropService.new(
       image_data: image_data,
       file_content_type: file_content_type,
       threshold: @sketch.binary_threshold || 0,
