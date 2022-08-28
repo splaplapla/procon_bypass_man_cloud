@@ -68,6 +68,43 @@ class ProgressLabel {
   }
 }
 
+class LastRequest {
+  static statusProcessed = "processed";
+  static statusWait = "wait";
+
+  constructor() {
+    this.reset();
+  }
+
+  // @return [void]
+  reset() {
+    this.request = { id: null, status: null };
+  }
+
+  // @return [Booolean]
+  isStatusWait() {
+    return this.request.status === LastRequest.statusWait;
+  }
+
+  // @return [String]
+  id(){ return this.request.id }
+
+  // @return [void]
+  beStatusProcessed() {
+    this.request.status = LastRequest.statusProcessed;
+  }
+
+  // @return [void]
+  beStatusWait() {
+    this.request.status = LastRequest.statusWait;
+  }
+
+  // @return [void]
+  setId(id) {
+    this.request.id = id
+  }
+}
+
 // Connects to data-controller="splatoon2-sketch-drawer2"
 export default class extends Controller {
   static values = {
@@ -87,12 +124,12 @@ export default class extends Controller {
     this.status = new Status(this.statusTarget);
     this.timer = new Timer(this.timerTarget);
     this.progressLabel = new ProgressLabel(this.progressTarget, this.positionTarget, this.dataValue.length);
+    this.lastRequest = new LastRequest()
 
     this.maxDataValueLength = this.dataValue.length;
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
     this.progressLabel.update(this.dotsData.length);
-    this.lastRequest = { id: null, status: null };
     this.timer.reset();
   }
 
@@ -109,7 +146,7 @@ export default class extends Controller {
   // @public
   reset() {
     this._reset();
-    this.lastRequest = { id: null, status: null };
+    this.lastRequestStatus.reset();
   }
 
   _start() {
@@ -151,15 +188,15 @@ export default class extends Controller {
 
   _postRequest() {
     const maxMacrosSize = 2000;
-    const statusProcessed = "processed";
-    const statusWait = "processed";
 
     // 前回にリクエストを送っていたら、それが完了するまで待機する
-    if(this.lastRequest.id) {
-      axios.get(`/api/pbm_jobs/${this.lastRequest.id}`).then((response) => {
-        if(response.data.status === statusProcessed) { this.lastRequest.status = statusProcessed }
+    if(this.lastRequest.id()) {
+      axios.get(`/api/pbm_jobs/${this.lastRequest.id()}`).then((response) => {
+        if(response.data.status === LastRequest.statusProcessed) {
+          this.lastRequest.beStatusProcessed();
+        }
 
-        if(this.lastRequest.status === statusWait) { 
+        if(this.lastRequest.isStatusWait()) {
           console.log("前回のリクエストが未完了なので何もしません");
           return;
         }
@@ -168,8 +205,8 @@ export default class extends Controller {
         const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
         const postData = { macros: macros };
         axios.post(this.requestPathValue, postData).then((response) => {
-          this.lastRequest.id = response.data.uuid
-          this.lastRequest.status = statusWait
+          this.lastRequest.setId(response.data.uuid);
+          this.lastRequest.beStatusWait();
         }).then(() => {
           [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
         })
@@ -178,8 +215,8 @@ export default class extends Controller {
       const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
       const postData = { macros: macros };
       axios.post(this.requestPathValue, postData).then((response) => {
-        this.lastRequest.id = response.data.uuid
-        this.lastRequest.status = statusWait
+        this.lastRequest.setId(response.data.uuid);
+        this.lastRequest.beStatusWait();
       }).then(() => {
         [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
       })
