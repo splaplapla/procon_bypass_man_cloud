@@ -2,9 +2,9 @@
   "name": "procon-bypass-man-cloud",
   "private": true,
   "scripts": {
-    "format": "prettier --write './app/javascript/packs/**/*.{ts,tsx}'",
-    "format-check": "prettier --check './app/javascript/packs/**/*.{ts,tsx}'",
-    "lint": "eslint ./app/javascript/packs",
+    "format": "prettier --write './app/javascript/controllers/**/*.{js,jsx,ts,tsx}'",
+    "format-check": "prettier --check './app/javascript/controllers/**/*.{js,jsx,ts,tsx}'",
+    "lint": "eslint ./app/javascript/controllers",
     "build:css": "sass ./app/assets/stylesheets/application.sass.scss ./app/assets/builds/application.css --no-source-map --load-path=node_modules"
   },
   "dependencies": {
