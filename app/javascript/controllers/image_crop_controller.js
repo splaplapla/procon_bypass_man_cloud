@@ -1,16 +1,13 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 import Cropper from 'cropperjs';
 
 // Connects to data-controller="image-crop"
 export default class extends Controller {
   static values = {
     cropData: Object,
-  }
+  };
 
-  static targets = [
-    'crop_data',
-    'form',
-  ]
+  static targets = ['crop_data', 'form'];
 
   connect() {
     const sketchImage = document.getElementById('sketch-image');
@@ -22,7 +19,7 @@ export default class extends Controller {
     cvs.width = img.width;
     cvs.height = img.height;
 
-    const onload = function(instance) {
+    const onload = function (instance) {
       ctx.drawImage(img, 0, 0);
       instance.cropperValue = new Cropper(cvs, {
         zoomable: false,
@@ -30,15 +27,15 @@ export default class extends Controller {
         background: true,
         responsive: false,
         viewMode: 1,
-        dragMode: "none",
+        dragMode: 'none',
         minCropBoxWidth: 320,
         minCropBoxHeight: 120,
         ready() {
-          instance.cropperValue.setData(instance.cropDataValue)
+          instance.cropperValue.setData(instance.cropDataValue);
         },
-      })
+      });
     };
-    img.onload = onload(this)
+    img.onload = onload(this);
   }
 
   submit(event) {

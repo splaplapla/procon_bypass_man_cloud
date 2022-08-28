@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
 
 class PreviewImage {
@@ -7,8 +7,9 @@ class PreviewImage {
   }
 
   startSpinner() {
-    this.imgElement.src = "data:image/jpeg;base64,R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAAIf8LSW1hZ2VNYWdpY2sOZ2Ft\nbWE9MC40NTQ1NDUALAAAAAABAAEAAAICRAEAOw==" // 無の画像を入れる
-    this.imgElement.className = "spinner";
+    this.imgElement.src =
+      'data:image/jpeg;base64,R0lGODlhAQABAPAAAAAAAAAAACH5BAEAAAAAIf8LSW1hZ2VNYWdpY2sOZ2Ft\nbWE9MC40NTQ1NDUALAAAAAABAAEAAAICRAEAOw=='; // 無の画像を入れる
+    this.imgElement.className = 'spinner';
   }
 
   writeImage(imgSrc) {
@@ -16,21 +17,17 @@ class PreviewImage {
   }
 
   stopSpinner() {
-    this.imgElement.className = "";
+    this.imgElement.className = '';
   }
 }
-
 
 // Connects to data-controller="splatoon2-sketch-binary-threshold-previewer"
 export default class extends Controller {
   static values = {
     imagePath: String,
-  }
+  };
 
-  static targets = [
-    "slider",
-    "image",
-  ]
+  static targets = ['slider', 'image'];
 
   connect() {
     this.previewImage = new PreviewImage(this.imageTarget);
@@ -40,11 +37,12 @@ export default class extends Controller {
   preview() {
     this.previewImage.startSpinner();
 
-    axios.get(this._requestPath()).
-      then(this._processResponse.bind(this)).
-      catch((err) => {
+    axios
+      .get(this._requestPath())
+      .then(this._processResponse.bind(this))
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
   _processResponse(response) {

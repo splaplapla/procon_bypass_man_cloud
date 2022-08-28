@@ -1,21 +1,21 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 import axios from 'axios';
 
 class Status {
   constructor(element) {
-    this.element = element
+    this.element = element;
     this.running = false;
   }
 
   start() {
-    this.element.innerText = "書き込み中";
-    this.element.className = "badge bg-primary";
+    this.element.innerText = '書き込み中';
+    this.element.className = 'badge bg-primary';
     this.running = true;
   }
 
   stop() {
-    this.element.innerText = "停止中";
-    this.element.className = "badge bg-secondary";
+    this.element.innerText = '停止中';
+    this.element.className = 'badge bg-secondary';
     this.running = false;
   }
 
@@ -26,13 +26,13 @@ class Status {
 
 class Timer {
   constructor(element) {
-    this.label = element
+    this.label = element;
     this.value = 0;
     this.reset();
   }
 
   start() {
-    this.intervalTimerId = setInterval(this.incrementValue.bind(this), 1000)
+    this.intervalTimerId = setInterval(this.incrementValue.bind(this), 1000);
   }
 
   stop() {
@@ -41,7 +41,7 @@ class Timer {
 
   reset() {
     this.value = 0;
-    this.applyLabel()
+    this.applyLabel();
   }
 
   incrementValue() {
@@ -63,14 +63,16 @@ class ProgressLabel {
 
   update(leftDataLength) {
     const leftDotsLength = this.maxDataLength - leftDataLength;
-    this.progressElement.innerText = `${Math.trunc((leftDotsLength / this.maxDataLength) * 100)}%`;
+    this.progressElement.innerText = `${Math.trunc(
+      (leftDotsLength / this.maxDataLength) * 100
+    )}%`;
     this.positionElement.innerText = `${leftDotsLength} / ${this.maxDataLength}`;
   }
 }
 
 class LastRequest {
-  static statusProcessed = "processed";
-  static statusWait = "wait";
+  static statusProcessed = 'processed';
+  static statusWait = 'wait';
 
   constructor() {
     this.reset();
@@ -87,7 +89,9 @@ class LastRequest {
   }
 
   // @return [String]
-  id(){ return this.request.id }
+  id() {
+    return this.request.id;
+  }
 
   // @return [void]
   beStatusProcessed() {
@@ -101,7 +105,7 @@ class LastRequest {
 
   // @return [void]
   setId(id) {
-    this.request.id = id
+    this.request.id = id;
   }
 }
 
@@ -110,21 +114,19 @@ export default class extends Controller {
   static values = {
     data: Array,
     request_path: String,
-  }
+  };
 
-  static targets = [
-    "status",
-    "position",
-    "progress",
-    "send_interval",
-    "timer",
-  ]
+  static targets = ['status', 'position', 'progress', 'send_interval', 'timer'];
 
   connect() {
     this.status = new Status(this.statusTarget);
     this.timer = new Timer(this.timerTarget);
-    this.progressLabel = new ProgressLabel(this.progressTarget, this.positionTarget, this.dataValue.length);
-    this.lastRequest = new LastRequest()
+    this.progressLabel = new ProgressLabel(
+      this.progressTarget,
+      this.positionTarget,
+      this.dataValue.length
+    );
+    this.lastRequest = new LastRequest();
 
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this.stop();
@@ -134,13 +136,15 @@ export default class extends Controller {
 
   // @public
   start() {
-    if(this.status.isRunning()) { return }
+    if (this.status.isRunning()) {
+      return;
+    }
 
     this.status.start();
     this.timer.start();
     this.progressLabel.update(this.dotsData.length);
 
-    const send_interval = Number(this.send_intervalTarget.value || 1000)
+    const send_interval = Number(this.send_intervalTarget.value || 1000);
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
@@ -162,10 +166,12 @@ export default class extends Controller {
   }
 
   _sendMacro() {
-    if(!this.status.isRunning()) { return }
+    if (!this.status.isRunning()) {
+      return;
+    }
 
     this.progressLabel.update(this.dotsData.length);
-    if(this.dotsData.length == 0) {
+    if (this.dotsData.length == 0) {
       this.stop();
       return;
     }
@@ -177,36 +183,46 @@ export default class extends Controller {
     const maxMacrosSize = 2000;
 
     // 前回にリクエストを送っていたら、それが完了するまで待機する
-    if(this.lastRequest.id()) {
+    if (this.lastRequest.id()) {
       axios.get(`/api/pbm_jobs/${this.lastRequest.id()}`).then((response) => {
-        if(response.data.status === LastRequest.statusProcessed) {
+        if (response.data.status === LastRequest.statusProcessed) {
           this.lastRequest.beStatusProcessed();
         }
 
-        if(this.lastRequest.isStatusWait()) {
-          console.log("前回のリクエストが未完了なので何もしません");
+        if (this.lastRequest.isStatusWait()) {
+          console.log('前回のリクエストが未完了なので何もしません');
           return;
         }
 
         // リクエストが成功したらthis.dotsDataから取り除く
-        const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
+        const macros = [...Array(maxMacrosSize)].map(
+          (x, index) => this.dotsData[index]
+        );
         const postData = { macros: macros };
-        axios.post(this.requestPathValue, postData).then((response) => {
+        axios
+          .post(this.requestPathValue, postData)
+          .then((response) => {
+            this.lastRequest.setId(response.data.uuid);
+            this.lastRequest.beStatusWait();
+          })
+          .then(() => {
+            [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
+          });
+      });
+    } else {
+      const macros = [...Array(maxMacrosSize)].map(
+        (x, index) => this.dotsData[index]
+      );
+      const postData = { macros: macros };
+      axios
+        .post(this.requestPathValue, postData)
+        .then((response) => {
           this.lastRequest.setId(response.data.uuid);
           this.lastRequest.beStatusWait();
-        }).then(() => {
-          [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
         })
-      })
-    } else {
-      const macros = [...Array(maxMacrosSize)].map((x, index) => this.dotsData[index]);
-      const postData = { macros: macros };
-      axios.post(this.requestPathValue, postData).then((response) => {
-        this.lastRequest.setId(response.data.uuid);
-        this.lastRequest.beStatusWait();
-      }).then(() => {
-        [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
-      })
+        .then(() => {
+          [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
+        });
     }
   }
 }
