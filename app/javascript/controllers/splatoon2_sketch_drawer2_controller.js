@@ -1,6 +1,30 @@
 import { Controller } from "@hotwired/stimulus"
 import axios from 'axios';
 
+class Status {
+  constructor(element) {
+    this.element = element
+    this.running = false;
+  }
+
+  start() {
+    this.element.innerText = "書き込み中";
+    this.element.className = "badge bg-primary";
+    this.running = true;
+  }
+
+  stop() {
+    this.element.innerText = "停止中";
+    this.element.className = "badge bg-secondary";
+    this.running = false;
+  }
+
+  isRunning() {
+    return this.running;
+  }
+}
+
+
 // Connects to data-controller="splatoon2-sketch-drawer2"
 export default class extends Controller {
   static values = {
@@ -17,6 +41,7 @@ export default class extends Controller {
   ]
 
   connect() {
+    this.status = new Status(this.statusTarget);
     this._setTimer();
     this.maxDataValueLength = this.dataValue.length
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
@@ -41,26 +66,23 @@ export default class extends Controller {
   }
 
   _start() {
+    if(this.isRunning) { return }
+
+    this.status.start();
     this.startAt = Date.now();
     this._updateProgress();
-    this.runStats = true;
-    this.statusTarget.innerText = "書き込み中";
-    this.statusTarget.className = "badge bg-primary";
     const send_interval = Number(this.send_intervalTarget.value || 1000)
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
   _stop() {
     this._updateProgress();
-    this.runStats = false;
-    this.statusTarget.innerText = "停止中";
-    this.statusTarget.className = "badge bg-secondary";
+    this.status.stop()
     clearTimeout(this.intervalId);
   }
 
   _reset() {
     this.startAt = Date.now();
-    this.macroPointer = 0;
     this._updateProgress()
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
@@ -70,10 +92,10 @@ export default class extends Controller {
   _sendMacro() {
     this._setTimer();
 
-    if(!this.runStats) { return }
+    if(!this.isRunning) { return }
     this._updateProgress();
 
-    if(this.dotsData.length == 0) { // 全部描き切った時
+    if(this.dotsData.length == 0) {
       this._stop();
       return;
     }
