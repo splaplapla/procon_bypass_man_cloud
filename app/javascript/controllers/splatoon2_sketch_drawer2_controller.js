@@ -126,30 +126,14 @@ export default class extends Controller {
     this.progressLabel = new ProgressLabel(this.progressTarget, this.positionTarget, this.dataValue.length);
     this.lastRequest = new LastRequest()
 
-    this.maxDataValueLength = this.dataValue.length;
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
-    this._stop();
+    this.stop();
     this.progressLabel.update(this.dotsData.length);
     this.timer.reset();
   }
 
   // @public
   start() {
-    this._start();
-  }
-
-  // @public
-  stop() {
-    this._stop();
-  }
-
-  // @public
-  reset() {
-    this._reset();
-    this.lastRequestStatus.reset();
-  }
-
-  _start() {
     if(this.status.isRunning()) { return }
 
     this.status.start();
@@ -160,26 +144,29 @@ export default class extends Controller {
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
-  _stop() {
+  // @public
+  stop() {
     this.progressLabel.update(this.dotsData.length);
     this.status.stop();
     this.timer.stop();
     clearTimeout(this.intervalId);
   }
 
-  _reset() {
+  // @public
+  reset() {
     this.progressLabel.update(this.dotsData.length);
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
-    this._stop();
+    this.stop();
     this.timer.reset();
+    this.lastRequestStatus.reset();
   }
 
   _sendMacro() {
     if(!this.status.isRunning()) { return }
-    this.progressLabel.update(this.dotsData.length);
 
+    this.progressLabel.update(this.dotsData.length);
     if(this.dotsData.length == 0) {
-      this._stop();
+      this.stop();
       return;
     }
 
