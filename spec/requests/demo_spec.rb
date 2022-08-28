@@ -62,6 +62,8 @@ RSpec.describe "Demo", type: :request do
         read_error_count: 55,
         write_error_count: 6,
         load_agv: "3-3-3",
+        gc_count: 3,
+        gc_time: 3,
         device_uuid: device.uuid,
         succeed_rate: 0.9,
         collected_spans_size: 300,

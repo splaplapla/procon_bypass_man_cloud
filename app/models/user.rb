@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :saved_buttons_settings, dependent: :destroy
   has_many :remote_macro_groups, dependent: :destroy
   has_many :remote_macros, through: :remote_macro_groups
+  has_many :splatoon2_sketches, dependent: :destroy
 
   has_many :streaming_services
 
@@ -31,6 +32,11 @@ class User < ApplicationRecord
   # @return [Boolean]
   def can_have_another_devices?
     max_devices_size > devices.count
+  end
+
+  # @return [Boolean]
+  def can_have_another_splatoon2_sketches?
+    max_devices_size > splatoon2_sketches.count
   end
 
   # @return [Boolean]

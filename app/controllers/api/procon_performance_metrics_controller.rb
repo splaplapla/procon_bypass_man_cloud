@@ -20,6 +20,8 @@ class Api::ProconPerformanceMetricsController < Api::Base
       read_error_count: form.read_error_count,
       write_error_count: form.write_error_count,
       load_agv: form.load_agv,
+      gc_count: form.gc_count,
+      gc_time: form.gc_time,
       device_uuid: device.uuid,
       succeed_rate: form.succeed_rate,
       collected_spans_size: form.collected_spans_size,
@@ -48,6 +50,8 @@ class Api::ProconPerformanceMetricsController < Api::Base
       :read_error_count,
       :write_error_count,
       :load_agv,
+      :gc_count,
+      :gc_time,
       :succeed_rate,
       :collected_spans_size,
     )

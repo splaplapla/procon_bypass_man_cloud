@@ -52,9 +52,8 @@ device = Device.find_or_create_by!(uuid: "a", hostname: "hoge", user_id: nil)
 device = Device.find_or_create_by!(uuid: "d1") do |d|
   d.hostname = "hoge"
   d.user_id = nil
+  d.name = "最初に買ったやつ"
 end
-device.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 1.0, name: "title1" })
-device.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 3.0, name: "title2" })
 
 user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.password = "hogehoge"
@@ -62,6 +61,9 @@ user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user.admin = true
 end
 user.devices << device
+
+user.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 1.0, name: "title1" })
+user.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 3.0, name: "title2" })
 
 pbm_session = device.pbm_sessions.create!(uuid: SecureRandom.uuid, hostname: "foo")
 pbm_session.events.create!(event_type: :reload_config, body: { "setting" => pbm_setting_content })

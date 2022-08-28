@@ -80,7 +80,11 @@ class DevicesController < ApplicationController
   def restore_setting
     device = current_user.devices.find_by!(unique_key: params[:id])
     saved_buttons_setting = current_user.saved_buttons_settings.find_by!(id: params[:saved_buttons_setting_id])
-    pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(device: device, saved_buttons_setting: saved_buttons_setting).execute!
+    pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(
+      device: device,
+      setting_content: saved_buttons_setting.content,
+      setting_name: saved_buttons_setting.name,
+    ).execute!
     ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
 
     respond_to do |format|
@@ -88,6 +92,24 @@ class DevicesController < ApplicationController
         redirect_to saved_buttons_settings_path, notice: '復元処理を開始しました'
       end
       format.js
+    end
+  end
+
+  def restore_editable_setting
+    device = current_user.devices.find_by!(unique_key: params[:id])
+    setting_content = params[:setting_content]
+    pbm_job = Admin::PbmJob::CreateRestorePbmSettingJobService.new(
+      device: device,
+      setting_content: { 'setting' => setting_content }, # TODO settingがnestしているの直す. clientの修正も必要?
+      setting_name: 'manual input setting'
+    ).execute!
+    ActionCable.server.broadcast(device.push_token, PbmJobSerializer.new(pbm_job).attributes)
+
+    respond_to do |format|
+      format.html do
+        redirect_to saved_buttons_settings_path, notice: '復元処理を開始しました'
+      end
+      format.js { render :restore_setting }
     end
   end
 

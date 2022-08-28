@@ -217,7 +217,7 @@ RSpec.describe "Devices", type: :request do
     include_context "login_with_user"
 
     let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
-    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user) }
 
     subject { post restore_setting_device_path(device.unique_key, saved_buttons_setting_id: saved_buttons_setting.id, format: :js) }
 
@@ -227,9 +227,40 @@ RSpec.describe "Devices", type: :request do
     end
 
     it do
+      expect { subject }.to change { device.pbm_jobs.count }.by(1)
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.args['setting_name']).to eq("title2")
+      expect(pbm_job.args['setting']).to eq(saved_buttons_setting.content)
+    end
+
+    it do
       subject
       pbm_job = device.pbm_jobs.last
-      expect(pbm_job.args).to eq({ "setting" => {"a"=>1}, "setting_name" => "title2" })
+      expect(pbm_job.action).to eq("restore_pbm_setting")
+    end
+
+    it do
+      expect { subject }.to have_broadcasted_to(device.push_token)
+    end
+  end
+
+  describe 'POST /restore_editable_setting' do
+    include_context "login_with_user"
+
+    let(:device) { FactoryBot.create(:device, user: user, name: "bar") }
+    let(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user, content: { a: 1 }) }
+
+    subject { post restore_editable_setting_device_path(device.unique_key, setting_content: { a: 1 }, format: :js) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
+
+    it do
+      subject
+      pbm_job = device.pbm_jobs.last
+      expect(pbm_job.args).to eq({ "setting" => { 'setting' => {"a"=>'1' } }, "setting_name" => "manual input setting" })
     end
 
     it do

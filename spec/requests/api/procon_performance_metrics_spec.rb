@@ -23,6 +23,8 @@ RSpec.describe Api::ProconPerformanceMetricsController, type: :request do
           read_error_count: 3,
           write_error_count: 3,
           load_agv: 2,
+          gc_count: 3,
+          gc_time: 3,
           succeed_rate: 22,
           collected_spans_size: 33,
         }
@@ -44,6 +46,12 @@ RSpec.describe Api::ProconPerformanceMetricsController, type: :request do
         subject
         item = ProconPerformanceMetric::ReadService.new.execute(device_uuid: device.uuid).first
         expect(item.interval_from_previous_succeed_p50).to eq(44)
+      end
+
+      it do
+        subject
+        item = ProconPerformanceMetric::ReadService.new.execute(device_uuid: device.uuid).first
+        expect(item.gc_count).to eq(3)
       end
     end
 

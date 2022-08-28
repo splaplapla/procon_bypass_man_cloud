@@ -75,7 +75,7 @@ GEM
     bcrypt (3.1.18)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
-    brakeman (5.2.3)
+    brakeman (5.3.1)
     builder (3.2.4)
     bundle-audit (0.1.0)
       bundler-audit
@@ -83,7 +83,7 @@ GEM
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
     byebug (11.1.3)
-    chartkick (4.2.0)
+    chartkick (4.2.1)
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     connection_pool (2.2.5)
@@ -92,17 +92,17 @@ GEM
       railties (>= 6.0.0)
     diff-lcs (1.5.0)
     digest (3.1.0)
-    erubi (1.10.0)
+    erubi (1.11.0)
     eventmachine (1.2.7)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
-    faraday (2.4.0)
-      faraday-net_http (~> 2.0)
+    faraday (2.5.2)
+      faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
-    faraday-net_http (2.1.0)
+    faraday-net_http (3.0.0)
     ffi (1.15.5)
     foreman (0.87.2)
     globalid (1.0.0)
@@ -161,7 +161,7 @@ GEM
       digest
       net-protocol
       timeout
-    newrelic_rpm (8.9.0)
+    newrelic_rpm (8.10.0)
     nio4r (2.5.8)
     nokogiri (1.13.8)
       mini_portile2 (~> 2.8.0)
@@ -193,7 +193,7 @@ GEM
     omniauth-twitch (1.1.0)
       omniauth-oauth2 (~> 1.6)
     pbmenv (0.1.10)
-    pg (1.4.2)
+    pg (1.4.3)
     procon_bypass_man (0.2.2)
       action_cable_client
       pbmenv (>= 0.1.9)
@@ -247,9 +247,10 @@ GEM
       ffi (~> 1.0)
     rbtree (0.4.5)
     redis (4.7.1)
-    redis-namespace (1.8.2)
-      redis (>= 3.0.4)
-    rouge (3.29.0)
+    redis-namespace (1.9.0)
+      redis (>= 4)
+    rmagick (4.2.6)
+    rouge (3.30.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
     rspec-expectations (3.11.0)
@@ -331,6 +332,7 @@ DEPENDENCIES
   rails (= 7.0.3.1)
   redis
   redis-namespace
+  rmagick
   rouge
   rspec-rails
   sorcery

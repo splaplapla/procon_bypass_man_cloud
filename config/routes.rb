@@ -66,13 +66,31 @@ Rails.application.routes.draw do
       post :restart
       post :pbm_upgrade
       post :restore_setting
+      post :restore_editable_setting
       get :current_status
       post :offline
     end
   end
 
+  namespace :feature do
+    root "root#index"
+    namespace :splatoon2 do
+      resources :sketches, only: [:index, :new, :show, :edit, :create, :update, :destroy] do
+        resources :devices, only: [:show] do
+          resource :drawing_sketch, only: [:show, :create]
+        end
+        member do
+          get :edit_binary_threshold
+          get :monochrome_image
+          get :cropped_monochrome_image
+        end
+      end
+    end
+  end
+
   namespace :api do
     resources :events, only: [:create]
+    resources :pbm_jobs, only: [:show]
 
     resources :devices, only: :show do
       resources :procon_performance_metrics, only: [:create]
