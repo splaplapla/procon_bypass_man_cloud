@@ -4,13 +4,12 @@ import axios from 'axios';
 // Connects to data-controller="splatoon2-sketches"
 export default class extends Controller {
   connect() {
-    // TODO window経由を止める
-    const path = this.data.get('imagePathValue')
-    if(!window.imageElements) { window.imageElements = {} }
-    window.imageElements[path] = this.element;
+    const imagePath = this.data.get('imagePathValue')
+    this.imageElement = this.element;
+    axios.get(imagePath).then(this._processResponse.bind(this))
+  }
 
-    axios.get(path).then((response) => {
-      window.imageElements[path].src = `data:${response.data.image_data}`
-    })
+  _processResponse(response) {
+    this.imageElement.src = `data:${response.data.image_data}`
   }
 }
