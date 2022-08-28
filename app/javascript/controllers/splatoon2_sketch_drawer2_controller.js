@@ -54,6 +54,19 @@ class Timer {
   }
 }
 
+class ProgressLabel {
+  constructor(progressElement, positionElement, maxDataLength) {
+    this.progressElement = progressElement;
+    this.positionElement = positionElement;
+    this.maxDataLength = maxDataLength;
+  }
+
+  update(leftDataLength) {
+    const leftDotsLength = this.maxDataLength - leftDataLength;
+    this.progressElement.innerText = `${Math.trunc((leftDotsLength / this.maxDataLength) * 100)}%`;
+    this.positionElement.innerText = `${leftDotsLength} / ${this.maxDataLength}`;
+  }
+}
 
 // Connects to data-controller="splatoon2-sketch-drawer2"
 export default class extends Controller {
@@ -73,11 +86,12 @@ export default class extends Controller {
   connect() {
     this.status = new Status(this.statusTarget);
     this.timer = new Timer(this.timerTarget);
+    this.progressLabel = new ProgressLabel(this.progressTarget, this.positionTarget, this.dataValue.length);
 
-    this.maxDataValueLength = this.dataValue.length
+    this.maxDataValueLength = this.dataValue.length;
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
-    this._updateProgress();
+    this.progressLabel.update(this.dotsData.length);
     this.lastRequest = { id: null, status: null };
     this.timer.reset();
   }
@@ -95,42 +109,44 @@ export default class extends Controller {
   // @public
   reset() {
     this._reset();
+    this.lastRequest = { id: null, status: null };
   }
 
   _start() {
-    if(this.isRunning) { return }
+    if(this.status.isRunning()) { return }
 
     this.status.start();
     this.timer.start();
-    this._updateProgress();
+    this.progressLabel.update(this.dotsData.length);
+
     const send_interval = Number(this.send_intervalTarget.value || 1000)
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
   _stop() {
-    this._updateProgress();
+    this.progressLabel.update(this.dotsData.length);
     this.status.stop();
     this.timer.stop();
     clearTimeout(this.intervalId);
   }
 
   _reset() {
-    this._updateProgress()
+    this.progressLabel.update(this.dotsData.length);
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
     this.timer.reset();
   }
 
   _sendMacro() {
-    if(!this.isRunning) { return }
-    this._updateProgress();
+    if(!this.status.isRunning()) { return }
+    this.progressLabel.update(this.dotsData.length);
 
     if(this.dotsData.length == 0) {
       this._stop();
       return;
     }
 
-    this._postRequest()
+    this._postRequest();
   }
 
   _postRequest() {
@@ -168,18 +184,5 @@ export default class extends Controller {
         [...Array(maxMacrosSize)].map(() => this.dotsData.shift());
       })
     }
-  }
-
-  _updateProgress() {
-    this.positionTarget.innerText = `${this._leftDotsLength()} / ${this._maxDotsLength()}`;
-    this.progressTarget.innerText = `${Math.trunc((this._leftDotsLength() / this._maxDotsLength()) * 100)}%`;
-  }
-
-  _leftDotsLength() {
-    return this._maxDotsLength() - this.dotsData.length;
-  }
-
-  _maxDotsLength() {
-    return this.maxDataValueLength;
   }
 }
