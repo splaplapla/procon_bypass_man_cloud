@@ -32,7 +32,6 @@ class Timer {
   }
 
   start() {
-    this.label.innerText = `${Math.trunc((Date.now() - this.startAt || 0) / 1000)}秒`;
     this.intervalTimerId = setInterval(this.incrementValue.bind(this), 1000)
   }
 
@@ -102,7 +101,6 @@ export default class extends Controller {
     if(this.isRunning) { return }
 
     this.status.start();
-    this.startAt = Date.now();
     this.timer.start();
     this._updateProgress();
     const send_interval = Number(this.send_intervalTarget.value || 1000)
