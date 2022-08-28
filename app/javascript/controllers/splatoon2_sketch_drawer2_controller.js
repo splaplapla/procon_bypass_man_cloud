@@ -24,6 +24,37 @@ class Status {
   }
 }
 
+class Timer {
+  constructor(element) {
+    this.label = element
+    this.value = 0;
+    this.reset();
+  }
+
+  start() {
+    this.label.innerText = `${Math.trunc((Date.now() - this.startAt || 0) / 1000)}秒`;
+    this.intervalTimerId = setInterval(this.incrementValue.bind(this), 1000)
+  }
+
+  stop() {
+    clearTimeout(this.intervalTimerId);
+  }
+
+  reset() {
+    this.value = 0;
+    this.applyLabel()
+  }
+
+  incrementValue() {
+    this.value = this.value + 1;
+    this.applyLabel();
+  }
+
+  applyLabel() {
+    this.label.innerText = `${this.value}秒`;
+  }
+}
+
 
 // Connects to data-controller="splatoon2-sketch-drawer2"
 export default class extends Controller {
@@ -42,12 +73,14 @@ export default class extends Controller {
 
   connect() {
     this.status = new Status(this.statusTarget);
-    this._setTimer();
+    this.timer = new Timer(this.timerTarget);
+
     this.maxDataValueLength = this.dataValue.length
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
     this._updateProgress();
     this.lastRequest = { id: null, status: null };
+    this.timer.reset();
   }
 
   // @public
@@ -70,6 +103,7 @@ export default class extends Controller {
 
     this.status.start();
     this.startAt = Date.now();
+    this.timer.start();
     this._updateProgress();
     const send_interval = Number(this.send_intervalTarget.value || 1000)
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
@@ -77,21 +111,19 @@ export default class extends Controller {
 
   _stop() {
     this._updateProgress();
-    this.status.stop()
+    this.status.stop();
+    this.timer.stop();
     clearTimeout(this.intervalId);
   }
 
   _reset() {
-    this.startAt = Date.now();
     this._updateProgress()
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this._stop();
-    this._setTimer();
+    this.timer.reset();
   }
 
   _sendMacro() {
-    this._setTimer();
-
     if(!this.isRunning) { return }
     this._updateProgress();
 
@@ -149,9 +181,5 @@ export default class extends Controller {
 
   _maxDotsLength() {
     return this.maxDataValueLength;
-  }
-
-  _setTimer() {
-    this.timerTarget.innerText = `${Math.trunc((Date.now() - this.startAt || 0) / 1000)}秒`;
   }
 }
