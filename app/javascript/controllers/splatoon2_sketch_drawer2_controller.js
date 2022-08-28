@@ -162,7 +162,7 @@ export default class extends Controller {
     this.dotsData = JSON.parse(JSON.stringify(this.dataValue));
     this.stop();
     this.timer.reset();
-    this.lastRequestStatus.reset();
+    this.lastRequest.reset();
   }
 
   _sendMacro() {
