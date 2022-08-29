@@ -3,17 +3,17 @@
     {
       "warning_type": "Command Injection",
       "warning_code": 14,
-      "fingerprint": "7c61fdc677b9db87bcb1047d7e7422157f3a80d5e41f8508cb091f6248aa463a",
+      "fingerprint": "343c4b0de7f06c8de0d76c3342dbbed6ef7b787106a73d6a774a58bc58c9b280",
       "check_name": "Execute",
       "message": "Possible command injection",
-      "file": "app/services/base_convert_binarization_image_service.rb",
-      "line": 7,
+      "file": "app/services/splatoon2_sketch_service/base_convert_binarization_image_service.rb",
+      "line": 8,
       "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
       "code": "`#{convert_cmd}`",
       "render_path": null,
       "location": {
         "type": "method",
-        "class": "BaseConvertBinarizationImageService",
+        "class": "Splatoon2SketchService::BaseConvertBinarizationImageService",
         "method": "execute"
       },
       "user_input": "convert_cmd",
@@ -92,29 +92,6 @@
       "note": ""
     },
     {
-      "warning_type": "Command Injection",
-      "warning_code": 14,
-      "fingerprint": "f8919cf8d16da13e77094648518ac4976171965f8c910c95bf58339274bce22e",
-      "check_name": "Execute",
-      "message": "Possible command injection",
-      "file": "app/services/convert_binarization_image_service.rb",
-      "line": 17,
-      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
-      "code": "`#{\"convert -threshold #{threshold} #{input_file.path} #{output_file.path}\"}`",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "ConvertBinarizationImageService",
-        "method": "execute"
-      },
-      "user_input": "threshold",
-      "confidence": "Medium",
-      "cwe_id": [
-        77
-      ],
-      "note": ""
-    },
-    {
       "warning_type": "Dangerous Eval",
       "warning_code": 13,
       "fingerprint": "fdee4b6324d66cea9501def927183e833ada527928020eb925af6df6928e81cc",
@@ -139,6 +116,6 @@
       "note": ""
     }
   ],
-  "updated": "2022-08-25 22:22:02 +0900",
+  "updated": "2022-08-29 12:18:17 +0900",
   "brakeman_version": "5.3.1"
 }
