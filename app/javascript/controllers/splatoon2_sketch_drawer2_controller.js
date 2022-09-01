@@ -210,6 +210,7 @@ export default class extends Controller {
           });
       });
     } else {
+      this.lastRequest.setId(1); // レスポンスが返ってくる前に多重で送信しないようにダミーの値を埋めておく
       const macros = [...Array(maxMacrosSize)].map(
         (x, index) => this.dotsData[index]
       );
