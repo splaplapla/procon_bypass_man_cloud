@@ -144,7 +144,7 @@ export default class extends Controller {
     this.timer.start();
     this.progressLabel.update(this.dotsData.length);
 
-    const send_interval = Number(this.send_intervalTarget.value || 1000);
+    const send_interval = Number(this.send_intervalTarget.value || 3000);
     this.intervalId = setInterval(this._sendMacro.bind(this), send_interval); // TODO 500以下の時は1000にする
   }
 
