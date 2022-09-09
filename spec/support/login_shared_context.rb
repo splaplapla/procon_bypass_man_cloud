@@ -13,3 +13,8 @@ RSpec.shared_context 'login_with_user' do
     login_user(user)
   end
 end
+
+# alias
+RSpec.shared_context 'logged_in' do
+  include_context 'login_with_user'
+end

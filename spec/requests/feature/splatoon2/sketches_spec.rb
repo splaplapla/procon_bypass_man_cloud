@@ -45,12 +45,41 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
     end
   end
 
-  # TODO
   describe 'POST #create' do
+    include_context "login_with_user"
+
+    let(:splatoon2_sketch_params) do
+      { splatoon2_sketch: { name: "a",
+                            image: fixture_file_upload(File.join(Rails.root, "spec", "files", "dummy.gif")),
+        },
+      }
+    end
+
+    subject { post feature_splatoon2_sketches_path, params: splatoon2_sketch_params }
+
+    it { expect { subject }.to change { user.splatoon2_sketches.count }.by(1) }
+    it do
+      subject
+      expect(response).to be_redirect
+    end
   end
 
-  # TODO
   describe 'PUT #update' do
+    include_context "login_with_user"
+
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+    let(:splatoon2_sketch_params) do
+      { splatoon2_sketch: {
+        crop_data: { a: 1 } }
+      }
+    end
+
+    subject { put feature_splatoon2_sketch_path(splatoon2_sketch.id), params: splatoon2_sketch_params }
+
+    it do
+      subject
+      expect(response).to be_redirect
+    end
   end
 
   describe 'GET #edit' do
@@ -97,11 +126,29 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
     end
   end
 
-  # TODO
   describe 'GET monochrome_image' do
+    include_context "login_with_user"
+
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
+
+    subject { get cropped_monochrome_image_feature_splatoon2_sketch_path(splatoon2_sketch.id) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
   end
 
-  # TODO
   describe 'GET cropped_monochrome_image' do
+    include_context "login_with_user"
+
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
+
+    subject { get cropped_monochrome_image_feature_splatoon2_sketch_path(splatoon2_sketch.id) }
+
+    it do
+      subject
+      expect(response).to be_ok
+    end
   end
 end
