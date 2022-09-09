@@ -10,7 +10,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   end
 
   def create
-    if params[:macros].blank? || !params[:macros].is_a?(Array)
+    if !params[:macros].is_a?(Array) || params[:macros]&.reject(&:blank?).blank?
       return head :bad_request
     end
 
