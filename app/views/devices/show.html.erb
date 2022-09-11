@@ -152,6 +152,9 @@
   </div>
 
   <div class="tab-pane fade" id="edit-setting" role="tabpanel" aria-labelledby="edit-setting-tab">
+    <p class="mt-4">
+      <a href="https://splaplapla.github.io/procon_bypass_man_setting_editor/" target="_blank">ここから設定ファイルを生成できます</a>
+    </p>
     <%= form_tag restore_editable_setting_device_path(@device.unique_key), method: :post, remote: true do |f| %>
       <div class='row'>
         <div class="mb-3">
