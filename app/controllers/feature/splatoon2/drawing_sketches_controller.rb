@@ -45,7 +45,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
       list_in_list = GenerateSplatoon2SketchBinarizationListService.new(file: converted_image_file).execute
       asc_art = list_in_list.map { |in_list|
         in_list.map { |item|
-          item ? '@' : '.'
+          item ? 'x' : ' '
         }.join
       }.join("<br>").html_safe
     end
