@@ -14,7 +14,7 @@ module Splatoon2SketchService
     private
 
     def convert_cmd
-      "convert #{@crop_arg} -alpha off -threshold #{@threshold}% -resize 320x120! #{input_file.path} #{output_file.path}"
+      "convert #{@crop_arg} -alpha off -threshold #{@threshold}% -resize 320x120! -depth 1 #{input_file.path} #{output_file.path}"
     end
   end
 end
