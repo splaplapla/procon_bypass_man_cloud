@@ -36,3 +36,10 @@
 書き込み対象<br>
 
 <img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(@sketch.id) %>">
+
+<% if @asc_art %>
+<hr>
+<pre>
+<%= @asc_art %>
+</pre>
+<% end %>
