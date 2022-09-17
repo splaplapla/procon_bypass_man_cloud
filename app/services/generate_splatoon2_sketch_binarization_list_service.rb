@@ -1,5 +1,5 @@
 class GenerateSplatoon2SketchBinarizationListService
-  COLOR_BLACK = "black"
+  COLOR_WHITE = "white".freeze
 
   # @param [File] 2値化した画像のファイル
   def initialize(file: )
@@ -11,7 +11,7 @@ class GenerateSplatoon2SketchBinarizationListService
     img = Magick::ImageList.new(@file.open)
     dots = img.rows.times.map { |y|
       img.columns.times.map { |x|
-        img.pixel_color(x, y).to_color == COLOR_BLACK
+        img.pixel_color(x, y).to_color != COLOR_WHITE
       }
     }
   end
