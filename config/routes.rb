@@ -111,6 +111,7 @@ Rails.application.routes.draw do
     resources :saved_buttons_settings, only: [:index, :update, :destroy]
 
     resources :devices, only: [:index, :show] do
+      get :procon_performance_metric, on: :member
       resources :available_pbm_jobs, only: :index
 
       resources :pbm_jobs, only: [], shallow: true do

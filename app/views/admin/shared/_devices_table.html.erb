@@ -22,6 +22,7 @@
     <th>updated_at</th>
     <th>current_status</th>
     <th>last access at</th>
+    <th></th>
   </tr>
   <% devices.each do |device| %>
     <tr>
@@ -40,56 +41,8 @@
         <% end %>
       </td>
       <td><%= time_ago_in_words(device.last_access_at) if device.last_access_at.present? %></td>
+      <td><%= link_to "metric", procon_performance_metric_admin_device_path(device) %></td>
     </tr>
   <% end %>
 </table>
 
-<% if params[:device_id] || @device %>
-  <h2>Actions</h2>
-  <table border=1>
-    <tr>
-      <th>action</th>
-      <th>args</th>
-      <th>status</th>
-      <th>uuid</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th>更新から経った時間</th>
-      <th></th>
-    </tr>
-    <% device.pbm_jobs.order(id: :desc).limit(10).each do |pbm_job| %>
-      <tr>
-        <td><%= pbm_job.action %></td>
-        <td><%= pbm_job.args.inspect.truncate(200) %></td>
-        <td><%= pbm_job.status %></td>
-        <td><%= pbm_job.uuid %></td>
-        <td><%= pbm_job.created_at %></td>
-        <td><%= pbm_job.updated_at %></td>
-        <td><%= time_ago_in_words(pbm_job.updated_at) %></td>
-        <td><%= link_to_if pbm_job.can_cancel?, "cancelにする", admin_pbm_job_cancellation_pbm_jobs_path(pbm_job), method: :post %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
-
-<% if params[:device_id] || @device %>
-  <h2>DeviceStatus</h2>
-  <table border=1>
-    <tr>
-      <th>status</th>
-      <th>pbm_session</th>
-      <th>created_at</th>
-      <th>updated_at</th>
-      <th>更新から経った時間</th>
-    </tr>
-    <% device_statuses.each do |device_status| %>
-      <tr>
-        <td><%= device_status.status %></td>
-        <td><%= link_to device_status.pbm_session.uuid, admin_device_pbm_session_path(device, device_status.pbm_session_id) %></td>
-        <td><%= device_status.created_at %></td>
-        <td><%= device_status.updated_at %></td>
-        <td><%= time_ago_in_words(device_status.updated_at) %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
