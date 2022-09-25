@@ -98,6 +98,6 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   def get_dotting_speed
     # ユーザからの入力なのでto_fで悪意のある入力を潰す
-    params[:dotting_speed]&.to_f.&to_s || DEFAULT_DOTTING_SPEED
+    params[:dotting_speed]&.to_f&.to_s || DEFAULT_DOTTING_SPEED
   end
 end
