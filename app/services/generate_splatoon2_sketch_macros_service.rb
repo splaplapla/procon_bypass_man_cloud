@@ -18,7 +18,7 @@ class GenerateSplatoon2SketchMacrosService
   #   ...
   def initialize(list_in_list: , dotting_speed: )
     @list_in_list = list_in_list
-    dotting_speed_setter = proc { |x| (x % { dotting_speed: dotting_speed }) }
+    dotting_speed_setter = proc { |x| (x % { dotting_speed: dotting_speed.to_s.gsub(".", "_") }) }
 
     @macro_point = MACRO_POINT.map(&dotting_speed_setter)
     @macro_not_point = MACRO_NOT_POINT.map(&dotting_speed_setter)
