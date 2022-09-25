@@ -9,13 +9,12 @@ describe GenerateSplatoon2SketchMacrosService do
   }
 
   it do
-    setter_block = proc { |x| x % { dotting_speed: 0.03 } }
-    expect(described_class.new(list_in_list: list_in_list, dotting_speed: 0.03).execute).to eq([
+    expect(described_class.new(list_in_list: list_in_list).execute).to eq([
       [
-        GenerateSplatoon2SketchMacrosService::MACRO_POINT.map(&setter_block), GenerateSplatoon2SketchMacrosService::MACRO_NOT_POINT.map(&setter_block), GenerateSplatoon2SketchMacrosService::MACRO_NEXT_LINE.map(&setter_block)
+        GenerateSplatoon2SketchMacrosService::MACRO_POINT, GenerateSplatoon2SketchMacrosService::MACRO_NOT_POINT, GenerateSplatoon2SketchMacrosService::MACRO_NEXT_LINE
       ],
       [
-        GenerateSplatoon2SketchMacrosService::MACRO_REVERSE_NOT_POINT.map(&setter_block), GenerateSplatoon2SketchMacrosService::MACRO_REVERSE_POINT.map(&setter_block), GenerateSplatoon2SketchMacrosService::MACRO_NEXT_LINE.map(&setter_block)
+        GenerateSplatoon2SketchMacrosService::MACRO_REVERSE_NOT_POINT, GenerateSplatoon2SketchMacrosService::MACRO_REVERSE_POINT, GenerateSplatoon2SketchMacrosService::MACRO_NEXT_LINE
       ]
     ])
   end
