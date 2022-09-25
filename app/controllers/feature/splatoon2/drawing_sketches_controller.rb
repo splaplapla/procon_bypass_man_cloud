@@ -5,9 +5,12 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   after_action :close_converted_image_file, only: :show
 
+  DEFAULT_DOTTING_SPEED = "0.06"
+
   def show
     @sketch = get_sketch
     @device = get_device
+    @dotting_speed = params[:dotting_speed] || DEFAULT_DOTTING_SPEED
     @flatten_binarization_macros = get_binarization_macros.flatten
     if params[:debug]
       @asc_art = get_asc_art
