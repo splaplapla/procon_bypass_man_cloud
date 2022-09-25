@@ -4,14 +4,26 @@ describe Feature::Splatoon2::DrawingSketchesController, type: :request do
   include_context "login_with_user"
 
   describe 'GET #show' do
-    let(:device) {FactoryBot.create(:device, user: user) }
-    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
-
     subject { get feature_splatoon2_sketch_device_drawing_sketch_path(splatoon2_sketch.id, device.unique_key) }
 
-    it do
-      subject
-      expect(response).to be_ok
+    context 'when it has a splatoon2_sketch trim_area' do
+      let(:device) {FactoryBot.create(:device, user: user) }
+      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
+
+      it do
+        subject
+        expect(response).to be_ok
+      end
+    end
+
+    context 'when it has no splatoon2_sketch trim_area' do
+      let(:device) {FactoryBot.create(:device, user: user) }
+      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, crop_data: {}, user: user) }
+
+      it do
+        subject
+        expect(response).to be_redirect
+      end
     end
   end
 
