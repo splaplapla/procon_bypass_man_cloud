@@ -1,6 +1,8 @@
 class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   skip_forgery_protection only: [:create]
 
+  before_action :require_trim_area, only: [:show, :create]
+
   after_action :close_converted_image_file, only: :show
 
   def show
@@ -74,6 +76,13 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
       threshold: @sketch.binary_threshold || 0,
       crop_arg: @sketch.crop_arg_of_convert_cmd,
     ).execute
+  end
+
+  def require_trim_area
+    @sketch = get_sketch
+    if @sketch.crop_data.blank?
+      redirect_to feature_splatoon2_sketch_path(@sketch), alert: '切り取り範囲が登録されていないので、デバイスに送信できません。'
+    end
   end
 
   def get_sketch

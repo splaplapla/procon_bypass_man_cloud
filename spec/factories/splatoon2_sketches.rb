@@ -4,7 +4,7 @@ FactoryBot.define do
     name { "foo" }
     encoded_image { "" }
     binary_threshold { 0 }
-    crop_data { {} }
+    crop_data { { a: 1 }.to_json }
 
     trait :has_image do
       encoded_image do
