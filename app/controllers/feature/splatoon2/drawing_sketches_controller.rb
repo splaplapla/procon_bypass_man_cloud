@@ -10,7 +10,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   def show
     @sketch = get_sketch
     @device = get_device
-    @dotting_speed = params[:dotting_speed] || DEFAULT_DOTTING_SPEED
+    @dotting_speed = get_dotting_speed
     @flatten_binarization_macros = get_binarization_macros.flatten
     if params[:debug]
       @asc_art = get_asc_art
@@ -36,7 +36,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     macros = nil
     get_converted_image_file.tap do |converted_image_file|
       binarization_list = GenerateSplatoon2SketchBinarizationListService.new(file: converted_image_file).execute
-      macros = GenerateSplatoon2SketchMacrosService.new(list_in_list: binarization_list).execute
+      macros = GenerateSplatoon2SketchMacrosService.new(list_in_list: binarization_list, dotting_speed: get_dotting_speed).execute
     end
 
     macros
@@ -94,5 +94,10 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   def get_device
     @device ||= current_user.devices.find_by!(unique_key: params[:device_id])
+  end
+
+  def get_dotting_speed
+    # ユーザからの入力なのでto_fで悪意のある入力を潰す
+    params[:dotting_speed]&.to_f.&to_s || DEFAULT_DOTTING_SPEED
   end
 end
