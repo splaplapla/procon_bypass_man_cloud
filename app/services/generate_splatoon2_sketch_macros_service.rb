@@ -7,7 +7,7 @@ class GenerateSplatoon2SketchMacrosService
   MACRO_NOT_POINT = ['wait_for_%{dotting_speed}sec', 'pressing_right_for_%{dotting_speed}sec']
 
   # 奇数. 左へ移動する
-  MACRO_REVERSE_POINT = ['pressing_a_for_%{dotting_speed}sec', 'pressing_left_for_%{dotting_speed}se']
+  MACRO_REVERSE_POINT = ['pressing_a_for_%{dotting_speed}sec', 'pressing_left_for_%{dotting_speed}sec']
   MACRO_REVERSE_NOT_POINT = ['wait_for_%{dotting_speed}sec', 'pressing_left_for_%{dotting_speed}sec']
 
   MACRO_NEXT_LINE = ['pressing_down_for_%{dotting_speed}sec']
