@@ -13,19 +13,8 @@
   デバイスに書き込み中はこのウィンドウを閉じないでください。 <br>
   書き込みを開始するときは、カーソルを一番左上に移動してください。<br>
   筆の太さは一番細いのを選択してください。<br>
-  高速(0.03秒)の場合、およそ40分かかります。
+  およそ40分かかります。
 </div>
-
-打ち込み速度:
-<%= link_to_if @dotting_speed != "0.02", "超高速(0.02秒)", feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key, dotting_speed: "0.02"), data: { confirm: "書き込み速度を変えるために画面を再読み込みします。書き込み中の場合は書き込みが停止しますがよろしいですか？" } %>
-<%= link_to_if @dotting_speed != "0.03", "高速(0.03秒)", feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key, dotting_speed: "0.03"), data: { confirm: "書き込み速度を変えるために画面を再読み込みします。書き込み中の場合は書き込みが停止しますがよろしいですか？" }  %>
-<%= link_to_if @dotting_speed != "0.06", "普通(0.06秒)", feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key, dotting_speed: "0.06"), data: { confirm: "書き込み速度を変えるために画面を再読み込みします。書き込み中の場合は書き込みが停止しますがよろしいですか？" }  %>
-<%= link_to_if @dotting_speed != "0.1", "ゆっくり(0.1秒)", feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key, dotting_speed: "0.1"), data: { confirm: "書き込み速度を変えるために画面を再読み込みします。書き込み中の場合は書き込みが停止しますがよろしいですか？" }  %>
-<%= link_to_if @dotting_speed != "0.2", "超ゆっくり(0.2秒)", feature_splatoon2_sketch_device_drawing_sketch_path(@sketch.id, @device.unique_key, dotting_speed: "0.2"), data: { confirm: "書き込み速度を変えるために画面を再読み込みします。書き込み中の場合は書き込みが停止しますがよろしいですか？" }  %>
-<br>
-※イラストのドットが乱れたり、ラズパイの負荷が高い時は、打ち込み速度を遅くしてください。
-<br>
-<br>
 
 
 <div class="hide"
