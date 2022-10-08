@@ -12,6 +12,7 @@ class Admin::DevicesController < Admin::Base
     else
       @saved_buttons_settings = []
     end
+    @latest_loading_config_event = @device.latest_loading_config_event
     @current_pbm_session = @device.current_device_status&.pbm_session
     render "devices/show", layout: "application"
   end
