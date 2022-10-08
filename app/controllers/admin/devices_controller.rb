@@ -7,7 +7,12 @@ class Admin::DevicesController < Admin::Base
 
   def show
     @device = Device.find(params[:id])
-    @saved_buttons_settings = []
+    if @device.user
+      @saved_buttons_settings = @device.user.saved_buttons_settings.order(id: :asc)
+    else
+      @saved_buttons_settings = []
+    end
+    @current_pbm_session = @device.current_device_status&.pbm_session
     render "devices/show", layout: "application"
   end
 
