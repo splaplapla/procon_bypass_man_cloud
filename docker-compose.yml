@@ -16,7 +16,7 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - '.:/app:delegated'
+      - '.:/app'
       - bundle:/vendor/bundle
     environment:
       - BUNDLE_PATH:/vendor/bundle
