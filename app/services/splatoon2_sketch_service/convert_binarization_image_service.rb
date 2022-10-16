@@ -10,7 +10,7 @@ module Splatoon2SketchService
     end
 
     def convert_cmd
-      "convert -alpha off -depth 1 -threshold #{@threshold}% #{input_file.path} #{output_file.path}"
+      "convert -alpha off -threshold #{@threshold}% -depth 1 #{input_file.path} #{output_file.path}"
     end
   end
 end
