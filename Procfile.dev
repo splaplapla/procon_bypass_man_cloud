@@ -1,2 +1,2 @@
-web: bin/start_server
+web: bin/start_server -p 5000 -b 0.0.0.0
 css: yarn build:css --watch

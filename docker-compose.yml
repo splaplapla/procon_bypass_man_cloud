@@ -20,7 +20,7 @@ services:
       - bundle:/vendor/bundle
     environment:
       - BUNDLE_PATH:/vendor/bundle
-    command: /bin/sh -c "rm -f tmp/pids/server.pid; bin/rails s -p 5000 -b 0.0.0.0"
+    command: /bin/sh -c "rm -f tmp/pids/server.pid; bin/dev"
 volumes:
   bundle:
     driver: local
