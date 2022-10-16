@@ -5,7 +5,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
 
   after_action :close_converted_image_file, only: :show
 
-  DEFAULT_DOTTING_SPEED = "0.06"
+  DEFAULT_DOTTING_SPEED = "0.03"
 
   def show
     @sketch = get_sketch
@@ -96,6 +96,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     @device ||= current_user.devices.find_by!(unique_key: params[:device_id])
   end
 
+  # 遅くしても精度は変わらないっぽい
   def get_dotting_speed
     # ユーザからの入力なのでto_fで悪意のある入力を潰す
     params[:dotting_speed]&.to_f&.to_s || DEFAULT_DOTTING_SPEED
