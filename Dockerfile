@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM jiikko/procon_bypass_man_cloud-base
+FROM jiikko/procon_bypass_man_cloud-base:latest
 
 ARG RAILS_ENV=development
 
