@@ -7,7 +7,8 @@ class GenerateSplatoon2SketchBinarizationListService
   # @return [Array<Array<Boolean>>] trueが黒で、falseが白
   def execute
     img = Magick::ImageList.new(@file.open)
-    img_depth = img.depth
+    # img_depth = img.depth
+    img_depth = 8 # TODO: gifを読み込むとdepth: 1になって、to_colorでinvalid depthエラーになるのでハードコートする
     dots = img.rows.times.map { |y|
       img.columns.times.map { |x|
         color = img.pixel_color(x, y).to_color(Magick::AllCompliance, false, img_depth, true)

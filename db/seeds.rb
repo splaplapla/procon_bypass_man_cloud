@@ -60,6 +60,7 @@ user = User.find_or_create_by!(email: "admin@example.com") do |user|
   user. password_confirmation = "hogehoge"
   user.admin = true
 end
+user.be_pro!
 user.devices << device
 
 user.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content, "version" => 1.0, name: "title1" })

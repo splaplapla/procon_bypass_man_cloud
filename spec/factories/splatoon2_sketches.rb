@@ -9,8 +9,8 @@ FactoryBot.define do
     trait :has_image do
       encoded_image do
         Lib::Image2Base64.new(
-          File.open(File.join(Rails.root, "spec", "files", "dummy.gif")),
-          content_type: "image/gif"
+          File.open(File.join(Rails.root, "spec", "files", "t.jpeg")),
+          content_type: "image/jpeg"
         ).execute
       end
     end
