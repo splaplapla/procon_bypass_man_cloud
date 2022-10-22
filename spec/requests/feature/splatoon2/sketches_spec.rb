@@ -12,7 +12,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
     end
 
     context 'スケッチを持っている' do
-      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
 
       before { splatoon2_sketch }
 
@@ -35,7 +35,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
 
     context 'プランの上限を超えているとき' do
       before do
-        2.times { FactoryBot.create(:splatoon2_sketch, user: user) } # free user
+        2.times { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) } # free user
       end
 
       it do
@@ -67,7 +67,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
   describe 'PUT #update' do
     include_context "login_with_user"
 
-    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
     let(:splatoon2_sketch_params) do
       { splatoon2_sketch: {
         crop_data: { a: 1 } }
@@ -85,7 +85,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
   describe 'GET #edit' do
     include_context "login_with_user"
 
-    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
 
     subject { get edit_feature_splatoon2_sketch_path(splatoon2_sketch) }
 
@@ -99,7 +99,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
   describe 'GET #edit_binary_threshold' do
     include_context "login_with_user"
 
-    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
 
     subject { get edit_binary_threshold_feature_splatoon2_sketch_path(splatoon2_sketch) }
 
@@ -112,7 +112,7 @@ RSpec.describe Feature::Splatoon2::SketchesController, type: :request do
   describe 'DELETE #destroy' do
     include_context "login_with_user"
 
-    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, user: user) }
+    let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
 
     subject { delete feature_splatoon2_sketch_path(splatoon2_sketch) }
 

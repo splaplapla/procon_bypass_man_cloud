@@ -1,11 +1,19 @@
 ja:
   activerecord:
+    attributes:
+      splatoon2_sketch:
+        encoded_image: 画像
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
           has_many: "%{record}が存在しているので削除できません"
+      models:
+        splatoon2_sketch:
+          attributes:
+            encoded_image:
+              not_support_gif: はgifに対応していません。
   date:
     abbr_day_names:
     - 日
