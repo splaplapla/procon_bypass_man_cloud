@@ -3,6 +3,9 @@ class Splatoon2Sketch < ApplicationRecord
 
   serialize :crop_data, JSON
 
+  validates :encoded_image, presence: true
+  validate :validate_image_extension, if: :encoded_image?
+
   # @param [..::UploadedFile] file
   def image=(file)
     self.encoded_image = Lib::Image2Base64.new(file).execute
@@ -20,5 +23,14 @@ class Splatoon2Sketch < ApplicationRecord
   # @return [String, String] binary, file extension
   def decoded_image
     Lib::Base642Image.new(encoded_image).execute
+  end
+
+  private
+
+  # @return [void]
+  def validate_image_extension
+    if self.encoded_image.start_with?("image/gif")
+      errors.add(:encoded_image, :not_support_gif)
+    end
   end
 end

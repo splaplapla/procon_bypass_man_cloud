@@ -36,10 +36,19 @@ end
 
 ## Development
 ### インストール方法
+#### Mac
 ```
 brew install imagemagick mysql@5.7 redis
 bundle config set --local without production
 bundle install
+```
+
+#### docker
+```
+docker compose build
+docker compose run --rm web bin/rake db:create db:migrate
+docker compose run --rm web bin/rake db:seed
+docker compose up
 ```
 
 ### デバッグ
