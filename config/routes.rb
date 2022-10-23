@@ -87,6 +87,12 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    namespace :gamepad do
+      resources :devices, only: [:index, :show] do
+        post :emit
+      end
+    end
   end
 
   namespace :api do
