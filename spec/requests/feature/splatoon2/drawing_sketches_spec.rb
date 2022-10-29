@@ -6,23 +6,37 @@ describe Feature::Splatoon2::DrawingSketchesController, type: :request do
   describe 'GET #show' do
     subject { get feature_splatoon2_sketch_device_drawing_sketch_path(splatoon2_sketch.id, device.unique_key) }
 
-    context 'when it has a splatoon2_sketch trim_area' do
-      let(:device) {FactoryBot.create(:device, user: user) }
-      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
+    context 'when use jpg' do
+      context 'when it has a splatoon2_sketch trim_area' do
+        let(:device) {FactoryBot.create(:device, user: user) }
+        let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, user: user) }
 
-      it do
-        subject
-        expect(response).to be_ok
+        it do
+          subject
+          expect(response).to be_ok
+        end
+      end
+
+      context 'when it has no splatoon2_sketch trim_area' do
+        let(:device) {FactoryBot.create(:device, user: user) }
+        let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, crop_data: {}, user: user) }
+
+        it do
+          subject
+          expect(response).to be_redirect
+        end
       end
     end
 
-    context 'when it has no splatoon2_sketch trim_area' do
-      let(:device) {FactoryBot.create(:device, user: user) }
-      let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_image, crop_data: {}, user: user) }
+    context 'when use png' do
+      context 'when it has a splatoon2_sketch trim_area' do
+        let(:device) {FactoryBot.create(:device, user: user) }
+        let(:splatoon2_sketch) { FactoryBot.create(:splatoon2_sketch, :has_png_image, user: user) }
 
-      it do
-        subject
-        expect(response).to be_redirect
+        it do
+          subject
+          expect(response).to be_ok
+        end
       end
     end
   end
