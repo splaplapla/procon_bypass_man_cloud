@@ -127,4 +127,10 @@ class DevicesController < ApplicationController
     @device.offline!
     head :ok
   end
+
+  def detach
+    @device = current_user.devices.find_by!(unique_key: params[:id])
+    @device.detach!
+    redirect_to devices_path, notice: 'デバイスとの紐付けを解除に成功しました。'
+  end
 end

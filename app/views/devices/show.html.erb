@@ -34,11 +34,15 @@
             <li><a class="dropdown-item" href="#" onClick="openUpgradeModal()">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#" data-confirm="デバイスとの紐付けを解除しますが本当にいいですか？"> デバイスとの紐付けを解除する</a></li>
           <% else %>
             <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deviceNameModal" href="#">このデバイス名を変更する</a></li>
             <li><a class="dropdown-item disabled" href="javascript:void(0)">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item disabled" href="javascript:void(0)">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item disabled" href="javascript:void(0)">設定ファイルを復元する</a></li>
+            <div class="dropdown-divider"></div>
+            <li><a class="dropdown-item" href="#" data-confirm="デバイスとの紐付けを解除しますが本当にいいですか？"> デバイスとの紐付けを解除する</a></li>
           <% end %>
         </ul>
       </div>

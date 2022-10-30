@@ -67,4 +67,9 @@ class Device < ApplicationRecord
     return false unless pbm_version
     not ProconBypassManVersion.latest(name: pbm_version)[:is_latest]
   end
+
+  # @return [void]
+  def detach!
+    self.update!(user_id: nil)
+  end
 end
