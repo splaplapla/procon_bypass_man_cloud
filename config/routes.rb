@@ -69,6 +69,7 @@ Rails.application.routes.draw do
       post :restore_editable_setting
       get :current_status
       post :offline
+      delete :detach
     end
   end
 
