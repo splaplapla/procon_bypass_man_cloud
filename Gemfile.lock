@@ -73,6 +73,7 @@ GEM
     addressable (2.8.0)
       public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.18)
+    blue_green_process (0.1.3)
     bootsnap (1.13.0)
       msgpack (~> 1.2)
     brakeman (5.3.1)
@@ -187,8 +188,9 @@ GEM
       omniauth-oauth2 (~> 1.6)
     pbmenv (0.1.10)
     pg (1.4.3)
-    procon_bypass_man (0.2.2)
+    procon_bypass_man (0.3.2)
       action_cable_client
+      blue_green_process
       pbmenv (>= 0.1.9)
       sorted_set
     propshaft (0.6.4)
@@ -262,7 +264,7 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby2_keywords (0.0.5)
-    set (1.0.2)
+    set (1.0.3)
     sorcery (0.16.3)
       bcrypt (~> 3.1)
       oauth (~> 0.5, >= 0.5.5)
