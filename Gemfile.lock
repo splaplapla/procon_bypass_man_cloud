@@ -206,6 +206,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-cors (1.1.1)
+      rack (>= 2.0.0)
     rack-protection (2.2.2)
       rack
     rack-test (2.0.2)
@@ -323,6 +325,7 @@ DEPENDENCIES
   propshaft
   pry
   puma
+  rack-cors
   rails (= 7.0.4)
   redis
   redis-namespace

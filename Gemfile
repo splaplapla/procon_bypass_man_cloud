@@ -23,6 +23,7 @@ gem 'rouge'
 gem "chartkick"
 gem 'stimulus-rails'
 gem "rmagick" # グレースケース化とピクセルの色を取得しているだけなのでoverkillかも
+gem 'rack-cors'
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
