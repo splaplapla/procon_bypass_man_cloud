@@ -90,6 +90,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :v1 do
+      resources :saved_buttons_settings, only: [:show, :update]
+    end
+
     resources :events, only: [:create]
     resources :pbm_jobs, only: [:show]
 
