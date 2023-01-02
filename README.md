@@ -48,6 +48,7 @@ bundle install
 docker compose build
 docker compose run --rm web bin/rake db:create db:migrate
 docker compose run --rm web bin/rake db:seed
+docker compose run --rm web yarn
 docker compose up
 ```
 
