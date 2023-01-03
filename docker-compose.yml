@@ -26,6 +26,7 @@ services:
       - bundle:/vendor/bundle
     environment:
       - BUNDLE_PATH:/vendor/bundle
+      - RAILS_ENV:development
     command: /bin/sh -c "rm -f tmp/pids/server.pid; bin/dev"
 volumes:
   bundle:

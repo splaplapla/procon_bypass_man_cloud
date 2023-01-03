@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM jiikkko/procon_bypass_man_cloud-base:latest
 
-ARG RAILS_ENV=development
+ARG RAILS_ENV=production
 
 WORKDIR /app
 COPY . .
