@@ -1,15 +1,19 @@
 <h1 class="mb-5">FAQ</h1>
 
-<h2>手元のRaspberry Piを登録するにはどうすればいいですか？</h2>
-app.rb にある `config.api_servers = ['https://pbm-cloud.herokuapp.com']` の行を追加して起動してください。<br>
-その後、device_idというファイル名の中身を https://pbm-cloud.herokuapp.com/devices/new に入力してください。<br>
+<h2>手元のRaspberry PiをPBM-Cloudに登録するにはどうすればいいですか？</h2>
+app.rb にある <code>config.api_servers = ['https://pbm-cloud.herokuapp.com'] </code> の行を追加して起動してください。<br>
+その後、<code>device_id</code>というファイル名の中身を <%= link_to 'https://pbm-cloud.herokuapp.com/devices/new', 'https://pbm-cloud.herokuapp.com/devices/new' %> に入力してください。<br>
+<br>
+※ <code>device_id</code> のファイルパスは、pbmenvを使っているなら <code>/usr/share/pbm/current/device_id</code> にあります。もしくは、pbmの実行ディレクトにあります。
 
 <hr>
 
 <style>
   <%= Rouge::Themes::Github.render(:scope => '.highlight') %>
 </style>
-<pre class="highlight" style="background-color: #F0F0F0;padding: 10px">
+
+<pre class="highlight" style="background-color: #F0F0F0;padding-left: 10px;">
+
 
 <% code = <<~EOH
   #!/usr/bin/env ruby
@@ -19,7 +23,7 @@ app.rb にある `config.api_servers = ['https://pbm-cloud.herokuapp.com']` の�
   gemfile do
     source 'https://rubygems.org'
     git_source(:github) {|repo_name| "https://github.com/\#{repo_name}" }
-    gem 'procon_bypass_man', '0.1.18'
+    gem 'procon_bypass_man', '0.XX.XX'
   end
 
   ProconBypassMan.configure do |config|
@@ -34,5 +38,7 @@ app.rb にある `config.api_servers = ['https://pbm-cloud.herokuapp.com']` の�
 EOH
 %>
 <%= Rouge.highlight(code, 'ruby', 'html').html_safe %>
+
 </pre>
-<hr>
+
+※上記のapp.rbは、実際のapp.rbと異なる場合があります。
