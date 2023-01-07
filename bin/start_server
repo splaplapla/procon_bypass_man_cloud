@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-bundle check || bundle install --jobs 100
-bin/rails server -p 5000 -b 0.0.0.0
