@@ -17,6 +17,6 @@ test:
   <<: *default
   database: <%= ENV.fetch('DATABASE_DB', 'pbm_cloud_test') %>
 
-# production:
-#   <<: *default
-#   database: pbm_cloud_production
+production:
+  <<: *default
+  database: pbm_cloud_production
