@@ -1,12 +1,13 @@
 class Event < ApplicationRecord
   serialize :body, JSON
 
-  enum event_type: { boot: 0, reload_config: 10, load_config: 20, heartbeat: 30, error: 40, start_reboot: 50, }
+  enum event_type: { boot: 0, reload_config: 10, load_config: 20, heartbeat: 30, error: 40, warn: 45, start_reboot: 50, }
 
   belongs_to :pbm_session
 
   def self.event_types
     [ OpenStruct.new(name: :error),
+      OpenStruct.new(name: :warn),
       OpenStruct.new(name: :boot),
       OpenStruct.new(name: :load_config),
       OpenStruct.new(name: :reload_config),
