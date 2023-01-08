@@ -1,6 +1,8 @@
 build:
   docker:
     web: Dockerfile
+    args:
+      - --target=production
   config:
     RAILS_ENV: production
 run:
