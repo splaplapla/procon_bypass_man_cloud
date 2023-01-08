@@ -1,0 +1,64 @@
+name: Review App
+
+on: pull_request
+
+env:
+  PROJECT_ID: jiikko
+  REGISTRY_HOST: asia-northeast1-docker.pkg.dev
+  SERVICE_NAME: pbm-cloud
+  REPOSITORY_NAME: pbm-cloud
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
+      - name: "Use gcloud CLI"
+        run: |
+          gcloud auth list
+          gcloud info
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker "${REGISTRY_HOST}"
+      - name: Build Docker image
+        run: |
+          echo "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:pr-${{ github.event.number }}"
+          docker build --target production -t "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:pr-${{ github.event.number }}" .
+          docker push "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:pr-${{ github.event.number }}"
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      - name: Deploy to Cloud Run
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+        run: |-
+          gcloud run deploy "$SERVICE_NAME" \
+            --project="$PROJECT_ID" \
+            --platform=managed \
+            --image="${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:pr-${{ github.event.number }}" \
+            --region="asia-northeast1" \
+            --tag=pr-${{ github.event.number }} \
+            --set-env-vars="DATABASE_URL=${DATABASE_URL},SECRET_KEY_BASE=${SECRET_KEY_BASE}" \
+            --no-traffic \
+            --allow-unauthenticated
+      - name: Notify the review app url
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          URL: ${{ github.event.pull_request.html_url }}
+        run: |-
+          cat << EOF > comments
+          https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました
+          EOF
+          gh pr comment -F ./comments "${URL}"

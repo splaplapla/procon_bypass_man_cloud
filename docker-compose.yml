@@ -18,16 +18,18 @@ services:
   web:
     image: pbm_cloud
     container_name: pbm_cloud
-    build: .
+    build:
+      target: dev
+      context: .
     ports:
       - "5000:5000"
     volumes:
       - '.:/app'
       - bundle:/vendor/bundle
     environment:
-      - BUNDLE_PATH:/vendor/bundle
-      - RAILS_ENV:development
-    command: /bin/sh -c "rm -f tmp/pids/server.pid; bin/dev"
+      BUNDLE_PATH: /vendor/bundle
+      RAILS_ENV: development
+    command: bin/dev
 volumes:
   bundle:
     driver: local
