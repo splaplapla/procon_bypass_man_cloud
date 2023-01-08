@@ -17,5 +17,7 @@ test:
   <<: *default
   database: <%= ENV.fetch('DATABASE_DB', 'pbm_cloud_test') %>
 
+# 本番ではDATABASE_URL経由で取得するのでprecompileを通すために適当に埋める
 production:
+  adapter: mysql2
   database: pbm_cloud_production
