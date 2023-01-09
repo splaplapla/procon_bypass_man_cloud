@@ -21,7 +21,7 @@ LABEL image.type=production
 ENV RAILS_ENV production
 
 COPY . .
-RUN bundle install --jobs 100 --without development,test
+RUN bundle install --jobs 10 --without development,test
 RUN yarn
 COPY . /app
 RUN SECRET_KEY_BASE=dummy SKIP_TO_LOAD_CREDENTIALS=1 bundle exec rails assets:precompile
