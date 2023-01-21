@@ -40,13 +40,14 @@
 
 <hr>
 
-書き込み対象<br>
+書き込み対象の画像<br>
 
 <img border="1" data-controller="splatoon2-sketches" data-splatoon2-sketches-image-path-value="<%= cropped_monochrome_image_feature_splatoon2_sketch_path(@sketch.id) %>">
 
-<% if @asc_art %>
 <hr>
-<pre>
+
+書き込みプレビュー<br>
+
+<div style='display: block; font-size: 10px; transform: scale(0.6); transform-origin: left top; transform: scale(0.6); width: 2000px; height: 100%; line-height:1'>
 <%= @asc_art %>
-</pre>
-<% end %>
+</div>

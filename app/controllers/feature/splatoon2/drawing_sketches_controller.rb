@@ -12,9 +12,7 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
     @device = get_device
     @dotting_speed = get_dotting_speed
     @flatten_binarization_macros = get_binarization_macros.flatten
-    if params[:debug]
-      @asc_art = get_asc_art
-    end
+    @asc_art = get_asc_art
   end
 
   def create
@@ -43,14 +41,15 @@ class Feature::Splatoon2::DrawingSketchesController < ApplicationController
   end
 
   # @return [Array<Array<String>>]
-  # debug用
   def get_asc_art
     asc_art = nil
+    black_mark = '■'
+    white_mark = '□'
     get_converted_image_file.tap do |converted_image_file|
       list_in_list = GenerateSplatoon2SketchBinarizationListService.new(file: converted_image_file).execute
       asc_art = list_in_list.map { |in_list|
         in_list.map { |item|
-          item ? 'x' : ' '
+          item ? black_mark : white_mark
         }.join
       }.join("<br>").html_safe
     end
