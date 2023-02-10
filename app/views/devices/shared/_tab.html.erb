@@ -1,3 +1,9 @@
+<% if not device.enable_pbmenv %>
+  <div class="alert alert-danger">
+    pbmenvを使っていないため一部機能が使えません。
+  </div>
+<% end %>
+
 <% if @is_demo %>
   <ul class="nav nav-tabs mb-4">
     <li class="nav-item">
