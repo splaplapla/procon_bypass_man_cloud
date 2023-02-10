@@ -21,5 +21,8 @@
     <li class="nav-item">
       <a href="<%= device_procon_performance_metric_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_procon_performance_metric_path(device.unique_key)) %>">プロコンのパフォーマンスモニタリング</a>
     </li>
+    <li class="nav-item">
+      <a href="<%= device_logs_path(device.unique_key) %>" class="nav-link  <%= :active if current_page?(device_logs_path(device.unique_key)) %>">デバイスのログ</a>
+    </li>
   </ul>
 <% end %>

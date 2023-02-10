@@ -1,0 +1,25 @@
+<p>
+  <%= link_to "デバイス一覧",  devices_path %>
+  -> <%= @device.name %>
+</p>
+
+<%= render 'devices/shared/tab', device: @device %>
+
+<p>
+  最後のセッションに紐づくログを表示します。
+</p>
+
+<% if @pbm_session_events.blank? %>
+  <p class='alert alert-warning'>表示するログがありません。</p>
+<% else %>
+  <% @pbm_session_events.each do |pbm_session_event| %>
+    <% formatted_event_type, event_body, css_class = pbm_session_event.formatted_event_type_and_body_and_css_class %>
+
+    <div class="alert alert-info">
+      <%= pbm_session_event.created_at.to_fs(:jp) %>: <%= formatted_event_type %>
+      <% if event_body %>
+        <%= simple_format event_body.chomp %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

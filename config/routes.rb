@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
   resources :devices, only: [:new, :index, :show, :edit, :create] do
     resource :procon_performance_metric, module: :devices, only: :show
+    resource :logs, module: :devices, only: :show
 
     member do
       put :update_name
