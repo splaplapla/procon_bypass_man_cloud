@@ -69,6 +69,7 @@ user.saved_buttons_settings.create!(content: { "setting" => pbm_setting_content,
 pbm_session = device.pbm_sessions.create!(uuid: SecureRandom.uuid, hostname: "foo")
 pbm_session.events.create!(event_type: :reload_config, body: { "setting" => pbm_setting_content })
 pbm_session.events.create!(event_type: :load_config, body: { "setting" => pbm_setting_content })
+pbm_session.events.create!(event_type: :info, body: 'hoge')
 
 device_status = DeviceStatus.create!(status: :connected_but_sleeping, pbm_session: pbm_session, device: device)
 device.update!(current_device_status: device_status)

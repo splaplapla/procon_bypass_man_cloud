@@ -7,12 +7,6 @@
 <div data-refresh-action-url="<%= current_status_device_path(@device.unique_key, format: :js) %>"></div>
 <div data-offline-action-url="<%= offline_device_path(@device.unique_key, format: :js) %>"></div>
 
-<% if not @device.enable_pbmenv %>
-  <div class="alert alert-danger">
-    pbmenvを使っていないため一部機能が使えません。
-  </div>
-<% end %>
-
 <%= render 'devices/shared/tab', device: @device %>
 
 <div>

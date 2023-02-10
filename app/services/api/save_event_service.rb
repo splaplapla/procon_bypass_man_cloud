@@ -52,6 +52,8 @@ class Api::SaveEventService
         next pbm_session.events.create!(event_type: :error, body: body)
       when "warn"
         next pbm_session.events.create!(event_type: :warn, body: body)
+      when "info"
+        next pbm_session.events.create!(event_type: :info, body: body)
       end
     end
   end
