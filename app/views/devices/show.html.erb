@@ -29,6 +29,7 @@
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
             <% if current_user.admin? %>
+              <% #TODO 0.3.6以上が必要である旨を表示する %>
               <li><a class="dropdown-item" href="#" onClick="openReportProconStatusModal()">コントローラーの入力状態を取得する</a></li>
             <% end %>
             <div class="dropdown-divider"></div>
