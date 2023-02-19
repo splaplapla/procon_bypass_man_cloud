@@ -24,16 +24,15 @@ class UsersExporter
 
       user.devices.each do |device|
         device_hash = { device: device.dup.attributes.with_indifferent_access }
-        device_hash[:saved_buttons_settings] = []
         device_hash[:events] = []
         device_hash[:pbm_sessions] = []
 
-        device.events.each do |device|
-          device_hash[:events] << device.events.dup.attributes.with_indifferent_access
+        device.events.each do |event|
+          device_hash[:events] << event.dup.attributes.with_indifferent_access
         end
 
         device.pbm_sessions.each do |pbm_session|
-          device_hash[:pbm_sessions] << device.pbm_sessions.dup.attributes.with_indifferent_access
+          device_hash[:pbm_sessions] << pbm_session.dup.attributes.with_indifferent_access
         end
 
         user_hash[:devices] << device_hash

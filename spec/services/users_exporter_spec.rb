@@ -41,7 +41,6 @@ describe UsersExporter do
           result = subject
           expect(result[:users][user.id][:user][:email]).to eq(user.email)
           expect(result[:users][user.id][:saved_buttons_settings]).to eq([])
-
         end
 
         it do
@@ -53,10 +52,58 @@ describe UsersExporter do
         end
       end
 
-      xcontext 'eventsを持っている' do
+      context 'saved_buttons_settingsを持っている' do
+        let!(:user) { FactoryBot.create(:user, devices: [device]) }
+        let(:device) { FactoryBot.create(:device) }
+        let!(:saved_buttons_setting) { FactoryBot.create(:saved_buttons_setting, user: user) }
+
+        it do
+          result = subject
+          devices = result[:users][user.id][:devices]
+          expect(devices.size).to eq(1)
+        end
+
+        it do
+          result = subject
+          saved_buttons_settings = result[:users][user.id][:saved_buttons_settings]
+          expect(saved_buttons_settings.size).to eq(1)
+          local_saved_buttons_setting = saved_buttons_settings.first
+          expect(local_saved_buttons_setting).to include('content_hash' => saved_buttons_setting.content_hash)
+        end
       end
 
-      xcontext 'pbm_sessionsを持っている' do
+      context 'pbm_sessions, eventsを持っている' do
+        let!(:pbm_session) { PbmSession.create!(uuid: :b, device: device, hostname: "a") }
+        let!(:event) { pbm_session.events.create!(event_type: :boot) }
+
+        it do
+          result = subject
+          devices = result[:users][user.id][:devices]
+          expect(devices.size).to eq(1)
+        end
+
+        it do
+          result = subject
+          devices = result[:users][user.id][:devices]
+          device_hash = devices.first
+          expect(device_hash.keys).to eq([:device, :events, :pbm_sessions])
+        end
+
+        it do
+          result = subject
+          devices = result[:users][user.id][:devices]
+          device_hash = devices.first
+          expect(device_hash[:events].size).to eq(1)
+          expect(device_hash[:events].first).to include('event_type' => 'boot')
+        end
+
+        it do
+          result = subject
+          devices = result[:users][user.id][:devices]
+          device_hash = devices.first
+          expect(device_hash[:pbm_sessions].size).to eq(1)
+          expect(device_hash[:pbm_sessions].first).to include('uuid' => 'b')
+        end
       end
     end
   end

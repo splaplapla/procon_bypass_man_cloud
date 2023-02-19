@@ -23,7 +23,8 @@ RSpec.describe '/devices/:id/logs', type: :request do
       end
 
       context 'イベント・ログを持っているとき' do
-        let(:pbm_session_event) { pbm_session.events.creat!(event_type: :boot) }
+        let!(:pbm_session_event) { pbm_session.events.create!(event_type: :boot) }
+
         before do
           Event.event_types.keys.each do |event_type|
             pbm_session.events.create!(event_type: event_type)
