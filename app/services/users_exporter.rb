@@ -1,3 +1,4 @@
+# postgresqlからmysqlに移行するために使う
 class UsersExporter
   # @return [Hash]
   def self.execute
