@@ -9,6 +9,7 @@ class PbmJob < ApplicationRecord
     stop_pbm: 10,
     reload_pbm_setting: 15,
     restore_pbm_setting: 20,
+    report_porcon_status: 25,
   }
   enum status: { queued: 0, in_progress: 5, processed: 10, failed: 15, canceled: 20 }
 
