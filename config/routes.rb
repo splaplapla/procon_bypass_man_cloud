@@ -61,6 +61,11 @@ Rails.application.routes.draw do
     resource :procon_performance_metric, module: :devices, only: :show
     resource :logs, module: :devices, only: :show
 
+    namespace :actions, module: 'devices/actions' do
+      resource :procon_status, only: :create
+    end
+
+    # TODO: actions配下に移動する
     member do
       put :update_name
       post :ping
