@@ -28,7 +28,7 @@
             <li><a class="dropdown-item" href="#" onClick="openUpgradeModal()">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
-            <% if current_user.admin? %>
+            <% if current_user&.admin? %>
               <% #TODO 0.3.6以上が必要である旨を表示する %>
               <li>
                 <%= link_to 'コントローラーの入力状態を取得する', device_actions_procon_status_path(@device.unique_key, format: :js), data: { method: :post, remote: true }, class: 'dropdown-item' %>
@@ -41,7 +41,7 @@
             <li><a class="dropdown-item disabled" href="javascript:void(0)">PBMのバージョンアップ</a></li>
             <li><a class="dropdown-item disabled" href="javascript:void(0)">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item disabled" href="javascript:void(0)">設定ファイルを復元する</a></li>
-            <% if current_user.admin? %>
+            <% if current_user&.admin? %>
               <li>
                 <%= link_to 'コントローラーの入力状態を取得する', device_actions_procon_status_path(@device.unique_key, format: :js), data: { method: :post, remote: true }, class: 'dropdown-item' %>
               </li>
