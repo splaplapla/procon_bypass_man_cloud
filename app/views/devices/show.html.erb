@@ -206,14 +206,6 @@
     startWatchdogOfPing();
     return false;
   }
-  function openReportProconStatusModal() {
-    const elem = document.getElementById("proconStatusModalId");
-    restoreSettingModal = new bootstrap.Modal(elem);
-    restoreSettingModal.show()
-    $.post("<%= ping_device_path(@device.unique_key) %>");
-    startWatchdogOfPing();
-    return false;
-  }
 
   document.addEventListener('DOMContentLoaded', function() {
     $.post("<%= ping_device_path(@device.unique_key) %>");
