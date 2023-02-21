@@ -26,4 +26,9 @@ class PbmJob < ApplicationRecord
   def can_cancel?
     queued? || in_progress?
   end
+
+  # @return [Hash]
+  def serialize
+    PbmJobSerializer.new(self).attributes
+  end
 end
