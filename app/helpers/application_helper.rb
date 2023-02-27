@@ -13,4 +13,16 @@ module ApplicationHelper
       content_tag(:span, status, class: "badge bg-warning")
     end
   end
+
+  # @param [Device] device
+  def device_actions_procon_status_link(device)
+    if device.pbm_version.blank?
+      return
+    end
+    if Gem::Version.new(device.pbm_version) >= Gem::Version.new('0.3.6')
+      link_to 'コントローラーの入力状態を取得する', device_actions_procon_status_path(device.unique_key, format: :js), data: { method: :post, remote: true }, class: 'dropdown-item'
+    else
+      link_to 'コントローラーの入力状態を取得する(実行するにはPBMバージョン0.3.6以上が必要です)', nil, data: { method: :post, remote: true }, class: 'dropdown-item disabled'
+    end
+  end
 end
