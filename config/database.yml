@@ -3,6 +3,7 @@ default: &default
   encoding: utf8mb4
   charset: utf8mb4
   collation: utf8mb4_general_ci
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch('DATABASE_HOST', 'db') %>
   username: <%= ENV.fetch('DATABASE_USERNAME', 'root') %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
@@ -11,7 +12,6 @@ default: &default
 development:
   <<: *default
   database: pbm_cloud_development
-  pool: 100
 
 test:
   <<: *default
