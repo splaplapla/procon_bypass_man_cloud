@@ -55,11 +55,11 @@ jobs:
             --no-traffic \
             --allow-unauthenticated
       - name: Define comment
-        run: echo "::set-output name=comment::https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+        run: echo "COMMENT=https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました" >> "$GITHUB_ENV"
+
       - name: Notify the review app url
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           URL: ${{ github.event.pull_request.html_url }}
-          COMMENT: ${{ steps.define-comment.outputs.comment }}
         run: |-
           gh pr comment -b "${{ env.COMMENT }}" "${URL}"
