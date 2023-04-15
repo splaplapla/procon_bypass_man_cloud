@@ -10,6 +10,7 @@ module ProconPerformanceMetric
                                                    :read_time_p50,
                                                    :interval_from_previous_succeed_max,
                                                    :interval_from_previous_succeed_p50,
+                                                   :external_input_time_max,
                                                    :read_error_count,
                                                    :write_error_count,
                                                    :load_agv,
@@ -54,6 +55,10 @@ module ProconPerformanceMetric
     end
 
     def interval_from_previous_succeed_p50
+      super.to_f
+    end
+
+    def external_input_time_max
       super.to_f
     end
 

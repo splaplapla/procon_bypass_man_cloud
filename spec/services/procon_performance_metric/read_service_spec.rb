@@ -17,6 +17,7 @@ describe ProconPerformanceMetric::ReadService do
       read_time_p50: 0.2,
       interval_from_previous_succeed_max: 1,
       interval_from_previous_succeed_p50: 2,
+      external_input_time_max: 9,
       read_error_count: 5,
       write_error_count: 6,
       load_agv: "2-3-3",
@@ -38,6 +39,7 @@ describe ProconPerformanceMetric::ReadService do
       read_time_p50: 0.2,
       interval_from_previous_succeed_max: 1,
       interval_from_previous_succeed_p50: 2,
+      external_input_time_max: 9,
       read_error_count: 55,
       write_error_count: 6,
       load_agv: "3.2-3-3",
@@ -59,6 +61,7 @@ describe ProconPerformanceMetric::ReadService do
     expect(metric1.time_taken_p99).to eq(4)
     expect(metric1.interval_from_previous_succeed_max).to eq(1)
     expect(metric1.interval_from_previous_succeed_p50).to eq(2)
+    expect(metric1.external_input_time_max).to eq(9)
     expect(metric1.read_error_count).to eq(5)
     expect(metric1.write_error_count).to eq(6)
     expect(metric1.succeed_rate).to eq(0.9)

@@ -21,6 +21,7 @@ RSpec.describe Devices::ProconPerformanceMetricsController, type: :request do
         read_time_p50: "0.012",
         interval_from_previous_succeed_max: "0.168",
         interval_from_previous_succeed_p50: "0.015",
+        external_input_time_max: '1',
         read_error_count: "0",
         write_error_count: "491",
         load_agv: "0.49-0.5-0.55",
