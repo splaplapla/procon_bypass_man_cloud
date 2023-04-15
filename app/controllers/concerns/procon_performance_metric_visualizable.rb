@@ -18,6 +18,9 @@ module ProconPerformanceMetricVisualizable
       { data: metrics.map { |x| [x.timestamp, x.interval_from_previous_succeed_max] }, name: '最大' },
       { data: metrics.map { |x| [x.timestamp, x.interval_from_previous_succeed_p50] }, name: '中央値' },
     ]
+    @external_input_time_list = [
+      { data: metrics.map { |x| [x.timestamp, x.external_input_time_max] }, name: '最大' },
+    ]
     @bypass_count_data_list = [
       { data: metrics.map { |x| [x.timestamp, x.collected_spans_size] }, name: '合計' },
     ]

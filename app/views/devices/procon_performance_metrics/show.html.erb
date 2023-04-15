@@ -10,18 +10,23 @@
 <% else %>
   <div class="alert alert-info">直近<%= @user.performance_metrics_retention_hours %>時間分のデータを表示しています</div>
 
-  <h2>プロコンからの読み取りにかかる時間</h2>
+  <h2>プロコンからの読み取りにかかった時間</h2>
   <%= line_chart @read_time_data_list, xtitle: "時間", ytitle: "秒", max: 0.5 %>
 
   <hr>
 
-  <h2>Switchへの書き込みにかかる時間</h2>
+  <h2>Switchへの書き込みにかかった時間</h2>
   <%= line_chart @write_time_data_list, xtitle: "時間", ytitle: "秒", max: 0.5 %>
 
   <hr>
 
-  <h2>プロコンから読み取って、Switchへ書き込むまでにかかる時間</h2>
+  <h2>プロコンから読み取って、Switchへ書き込むまでにかかった時間</h2>
   <%= line_chart @read_write_time_data_list, xtitle: "時間", ytitle: "秒", max: 1 %>
+
+  <hr>
+
+  <h2>外部入力の読み取りにかかった時間</h2>
+  <%= line_chart @external_input_time_list, xtitle: "時間", ytitle: "秒", max: 1 %>
 
   <hr>
 
