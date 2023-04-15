@@ -1,4 +1,8 @@
 # postgresqlからmysqlに移行するために使う
+#
+# Usage:
+#   Flie.write 'dump.json', UsersExporter.execute.to_json
+
 class UsersExporter
   # @return [Hash]
   def self.execute
