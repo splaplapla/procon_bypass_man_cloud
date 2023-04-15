@@ -28,7 +28,6 @@ services:
       - bundle:/vendor/bundle
     environment:
       BUNDLE_PATH: /vendor/bundle
-      RAILS_ENV: development
     command: bin/dev
 volumes:
   bundle:

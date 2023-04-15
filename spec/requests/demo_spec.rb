@@ -59,6 +59,7 @@ RSpec.describe "Demo", type: :request do
         read_time_p50: 0.2,
         interval_from_previous_succeed_max: 1,
         interval_from_previous_succeed_p50: 2,
+        external_input_time_max: 3,
         read_error_count: 55,
         write_error_count: 6,
         load_agv: "3-3-3",
