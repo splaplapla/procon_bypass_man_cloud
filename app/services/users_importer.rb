@@ -48,21 +48,30 @@ class UsersImporter
       end
 
       hash['splatoon2_sketches'].each do |splatoon2_sketch_hash|
-        user.splatoon2_sketches.find_or_create_by!(name: splatoon2_sketch_hash['name']) do |splatoon2_sketch|
+        splatoon2_sketch = user.splatoon2_sketches.find_or_create_by!(name: splatoon2_sketch_hash['name']) do |splatoon2_sketch|
           splatoon2_sketch.encoded_image = splatoon2_sketch_hash['encoded_image']
-          splatoon2_sketch.binary_threshold = splatoon2_sketch_hash['binary_threshold']
-          splatoon2_sketch.crop_data = splatoon2_sketch_hash['crop_data']
         end
+        splatoon2_sketch.binary_threshold = splatoon2_sketch_hash['binary_threshold']
+        splatoon2_sketch.crop_data = splatoon2_sketch_hash['crop_data'] if splatoon2_sketch_hash['crop_data']
+        splatoon2_sketch.save!
       end
 
       hash['saved_buttons_settings'].each do |saved_buttons_setting_hash|
-        user.saved_buttons_settings.find_or_create_by!(content_hash: saved_buttons_setting_hash['content_hash']) do |saved_buttons_setting|
+        saved_buttons_setting = user.saved_buttons_settings.find_or_create_by!(content_hash: saved_buttons_setting_hash['content_hash']) do |saved_buttons_setting|
           saved_buttons_setting.content = saved_buttons_setting_hash['content']
-          saved_buttons_setting.memo = saved_buttons_setting_hash['memo']
           saved_buttons_setting.updated_at = saved_buttons_setting_hash['updated_at']
           saved_buttons_setting.created_at = saved_buttons_setting_hash['created_at']
         end
+        if saved_buttons_setting_hash['public_saved_buttons_setting'] && !saved_buttons_setting.public_saved_buttons_setting
+          saved_buttons_setting.create_public_saved_buttons_setting!
+        end
+        saved_buttons_setting.content = saved_buttons_setting_hash['content']
+        saved_buttons_setting.name = saved_buttons_setting_hash['name']
+        saved_buttons_setting.memo = saved_buttons_setting_hash['memo']
+        saved_buttons_setting.save!
       end
     end
+
+    true
   end
 end

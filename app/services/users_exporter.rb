@@ -1,7 +1,7 @@
 # postgresqlからmysqlに移行するために使う
 #
 # Usage:
-#   Flie.write 'dump.json', UsersExporter.execute.to_json
+#   File.write 'dump.json', UsersExporter.execute.to_json
 
 class UsersExporter
   # @return [Hash]
@@ -44,7 +44,9 @@ class UsersExporter
       end
 
       user.saved_buttons_settings.each do |saved_buttons_setting|
-        user_hash[:saved_buttons_settings] << saved_buttons_setting.dup.attributes.with_indifferent_access
+        dumped_saved_buttons_setting = saved_buttons_setting.dup.attributes.with_indifferent_access
+        dumped_saved_buttons_setting[:public_saved_buttons_setting] = !!saved_buttons_setting.public_saved_buttons_setting
+        user_hash[:saved_buttons_settings] << dumped_saved_buttons_setting
       end
 
       user.splatoon2_sketches.each do |splatoon2_sketch|
