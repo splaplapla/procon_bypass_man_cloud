@@ -8,7 +8,7 @@ RSpec.describe StreamingService, type: :model do
 
       subject { streaming_service.update(service_type: :twitch) }
 
-      it 'uservice_typeを更新できないこと' do
+      it 'service_typeを更新できないこと' do
         subject
         expect(streaming_service.valid?).to eq(false)
         expect(streaming_service.errors[:service_type].size).to eq(1)

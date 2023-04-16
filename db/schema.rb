@@ -11,14 +11,14 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
-  create_table "demo_devices", charset: "utf8mb4", force: :cascade do |t|
+  create_table "demo_devices", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["device_id"], name: "index_demo_devices_on_device_id", unique: true
   end
 
-  create_table "device_statuses", charset: "utf8mb4", force: :cascade do |t|
+  create_table "device_statuses", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.bigint "pbm_session_id", null: false
     t.integer "status", null: false
@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["pbm_session_id"], name: "index_device_statuses_on_pbm_session_id"
   end
 
-  create_table "devices", charset: "utf8mb4", force: :cascade do |t|
+  create_table "devices", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "uuid", null: false
     t.string "name"
     t.string "ip_address"
@@ -45,7 +45,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["uuid"], name: "index_devices_on_uuid", unique: true
   end
 
-  create_table "events", charset: "utf8mb4", force: :cascade do |t|
+  create_table "events", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.text "body"
     t.integer "event_type", null: false
     t.bigint "pbm_session_id"
@@ -55,14 +55,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["updated_at"], name: "index_events_on_updated_at"
   end
 
-  create_table "game_softs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "game_softs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "title", null: false
     t.integer "remote_macro_templates_count", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "pbm_jobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "pbm_jobs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.integer "action", null: false
     t.text "args", null: false
@@ -75,7 +75,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["uuid"], name: "index_pbm_jobs_on_uuid", unique: true
   end
 
-  create_table "pbm_remote_macro_jobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "pbm_remote_macro_jobs", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.text "steps", null: false
     t.string "name", null: false
@@ -88,7 +88,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["uuid"], name: "index_pbm_remote_macro_jobs_on_uuid", unique: true
   end
 
-  create_table "pbm_sessions", charset: "utf8mb4", force: :cascade do |t|
+  create_table "pbm_sessions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.string "uuid", null: false
     t.string "ip_address"
@@ -98,13 +98,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["uuid"], name: "index_pbm_sessions_on_uuid", unique: true
   end
 
-  create_table "procon_bypass_man_versions", charset: "utf8mb4", force: :cascade do |t|
+  create_table "procon_bypass_man_versions", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "public_saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
+  create_table "public_saved_buttons_settings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "saved_buttons_setting_id", null: false
     t.string "unique_key", null: false
     t.text "memo"
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["unique_key"], name: "index_public_saved_buttons_settings_on_unique_key", unique: true
   end
 
-  create_table "remote_macro_groups", charset: "utf8mb4", force: :cascade do |t|
+  create_table "remote_macro_groups", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name"
     t.text "memo"
@@ -122,7 +122,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "remote_macro_templates", charset: "utf8mb4", force: :cascade do |t|
+  create_table "remote_macro_templates", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "game_soft_id", null: false
     t.string "title", null: false
     t.string "steps", null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["game_soft_id"], name: "index_remote_macro_templates_on_game_soft_id"
   end
 
-  create_table "remote_macros", charset: "utf8mb4", force: :cascade do |t|
+  create_table "remote_macros", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "remote_macro_group_id", null: false
     t.string "name"
     t.text "memo"
@@ -142,7 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "saved_buttons_settings", charset: "utf8mb4", force: :cascade do |t|
+  create_table "saved_buttons_settings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.text "content", null: false
     t.string "name"
     t.text "memo"
@@ -152,7 +152,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.bigint "user_id"
   end
 
-  create_table "splatoon2_sketches", charset: "utf8mb4", force: :cascade do |t|
+  create_table "splatoon2_sketches", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "name", null: false
     t.text "encoded_image", size: :medium, null: false
@@ -163,7 +163,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["user_id"], name: "index_splatoon2_sketches_on_user_id"
   end
 
-  create_table "streaming_service_accounts", charset: "utf8mb4", force: :cascade do |t|
+  create_table "streaming_service_accounts", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.string "image_url"
     t.bigint "streaming_service_id", null: false
@@ -181,7 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["streaming_service_id"], name: "index_streaming_service_accounts_on_streaming_service_id", unique: true
   end
 
-  create_table "streaming_services", charset: "utf8mb4", force: :cascade do |t|
+  create_table "streaming_services", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "user_id", null: false
     t.integer "service_type", null: false
@@ -194,7 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["unique_key"], name: "index_streaming_services_on_unique_key", unique: true
   end
 
-  create_table "taggings", charset: "utf8mb4", force: :cascade do |t|
+  create_table "taggings", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "tag_id"
     t.string "taggable_type"
     t.bigint "taggable_id"
@@ -216,14 +216,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
     t.index ["tenant"], name: "index_taggings_on_tenant"
   end
 
-  create_table "tags", charset: "utf8mb4", force: :cascade do |t|
-    t.string "name", collation: "utf8_bin"
+  create_table "tags", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "taggings_count", default: 0
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"
     t.string "salt"
