@@ -21,4 +21,4 @@ test:
 production:
   adapter: mysql2
   database: pbm_cloud_production
-  url: <%= ENV.fetch('DATABASE_URL2') %>
+  url: <%= ENV['DATABASE_URL2'] %>
