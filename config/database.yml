@@ -19,6 +19,6 @@ test:
 
 # 本番ではDATABASE_URL経由で取得するのでprecompileを通すために適当に埋める
 production:
-  adapter: mysql2
+  <<: *default
   database: pbm_cloud_production
   url: <%= ENV['DATABASE_URL2'] %>
