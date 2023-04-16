@@ -26,27 +26,29 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
     performance_metrics_retention_hours = user&.performance_metrics_retention_hours || minimum_performance_metrics_retention_hours
     max_stored_items_size = 60 * performance_metrics_retention_hours
 
-    value = serialize(timestamp,
-                      time_taken_max,
-                      time_taken_p50,
-                      time_taken_p95,
-                      time_taken_p99,
-                      write_time_max,
-                      write_time_p50,
-                      read_time_max,
-                      read_time_p50,
-                      interval_from_previous_succeed_max,
-                      interval_from_previous_succeed_p50,
-                      external_input_time_max,
-                      read_error_count,
-                      write_error_count,
-                      load_agv,
-                      gc_count,
-                      gc_time,
-                      succeed_rate,
-                      collected_spans_size)
+    json = ProconPerformanceMetric::ProconPerformanceMetricStruct.new(
+      timestamp,
+      time_taken_max,
+      time_taken_p50,
+      time_taken_p95,
+      time_taken_p99,
+      write_time_max,
+      write_time_p50,
+      read_time_max,
+      read_time_p50,
+      interval_from_previous_succeed_max,
+      interval_from_previous_succeed_p50,
+      external_input_time_max,
+      read_error_count,
+      write_error_count,
+      load_agv,
+      gc_count,
+      gc_time,
+      succeed_rate,
+      collected_spans_size,
+    ).to_json
 
-    self.class.redis.rpush(device_uuid, value)
+    self.class.redis.rpush(device_uuid, json)
     # NOTE 保存上限が小さくなった時に上限まで消す
     loop do
       if self.class.redis.llen(device_uuid) > max_stored_items_size
@@ -56,7 +58,8 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
       end
     end
     self.class.redis.expire(device_uuid, performance_metrics_retention_hours.hours.to_i)
-    value
+
+    true
   end
 
   private

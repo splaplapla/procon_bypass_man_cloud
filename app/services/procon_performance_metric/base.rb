@@ -99,15 +99,5 @@ module ProconPerformanceMetric
 
   class Base
     class_attribute :redis
-
-    private
-
-    def serialize(*values)
-      values.join(',')
-    end
-
-    def deserialize(value)
-      ProconPerformanceMetricStruct.new(*value.split(','))
-    end
   end
 end
