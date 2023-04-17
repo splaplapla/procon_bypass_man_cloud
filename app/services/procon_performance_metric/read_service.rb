@@ -1,5 +1,5 @@
 class ProconPerformanceMetric::ReadService < ProconPerformanceMetric::Base
-  # @return [Array<ProconPerformanceMetricStruct>]
+  # @return [Array<ProconPerformanceMetric::MetricStruct>]
   def execute(device_uuid: )
     self.class.redis.lrange(device_uuid, 0, -1).map { |value|
       deserialize(value)
@@ -10,7 +10,7 @@ class ProconPerformanceMetric::ReadService < ProconPerformanceMetric::Base
 
   def deserialize(value)
     hash = JSON.parse(value).with_indifferent_access
-    ::ProconPerformanceMetric::ProconPerformanceMetricStruct.new(
+    ::ProconPerformanceMetric::MetricStruct.new(
       hash[:timestamp],
       hash[:time_taken_max],
       hash[:time_taken_p50],

@@ -26,7 +26,7 @@ class ProconPerformanceMetric::WriteService < ProconPerformanceMetric::Base
     performance_metrics_retention_hours = user&.performance_metrics_retention_hours || minimum_performance_metrics_retention_hours
     max_stored_items_size = 60 * performance_metrics_retention_hours
 
-    json = ProconPerformanceMetric::ProconPerformanceMetricStruct.new(
+    json = ProconPerformanceMetric::MetricStruct.new(
       timestamp,
       time_taken_max,
       time_taken_p50,
