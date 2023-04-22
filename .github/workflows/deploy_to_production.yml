@@ -1,0 +1,76 @@
+name: Deploy To Production
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+env:
+  PROJECT_ID: jiikko
+  REGISTRY_HOST: asia-northeast1-docker.pkg.dev
+  SERVICE_NAME: pbm-cloud
+  REPOSITORY_NAME: pbm-cloud
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-8)" >> "$GITHUB_ENV"
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v0"
+      - name: "Use gcloud CLI"
+        run: |
+          gcloud auth list
+          gcloud info
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker "${REGISTRY_HOST}"
+      - name: Build Docker image
+        run: |
+          echo "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${SHORT_SHA}"
+          docker build --target production -t "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${SHORT_SHA}" .
+          docker push "${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${SHORT_SHA}"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Add SHORT_SHA env property with commit short sha
+        run: echo "SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-8)" >> "$GITHUB_ENV"
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      - name: Deploy to Cloud Run
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          REDISCLOUD_URL: ${{ secrets.REDISCLOUD_URL }}
+          GOOGLE_OAUTH2_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH2_CLIENT_ID }}
+          GOOGLE_OAUTH2_SECRET: ${{ secrets.GOOGLE_OAUTH2_SECRET }}
+          TWITCH_OAUTH2_CLIENT_ID: ${{ secrets.TWITCH_OAUTH2_CLIENT_ID }}
+          TWITCH_OAUTH2_SECRET: ${{ secrets.TWITCH_OAUTH2_SECRET }}
+        run: |
+          gcloud run deploy "$SERVICE_NAME" \
+            --project="$PROJECT_ID" \
+            --platform=managed \
+            --image="${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${SHORT_SHA}" \
+            --region="asia-northeast1" \
+            --tag="master-${SHORT_SHA}" \
+            --set-env-vars="DATABASE_URL2=${DATABASE_URL}" \
+            --set-env-vars="SECRET_KEY_BASE=${SECRET_KEY_BASE}" \
+            --set-env-vars="REDISCLOUD_URL=${REDISCLOUD_URL}" \
+            --set-env-vars="RAILS_ENV=production" \
+            --set-env-vars="NEW_RELIC_LOG=stdout" \
+            --set-env-vars="GOOGLE_OAUTH2_CLIENT_ID=${GOOGLE_OAUTH2_CLIENT_ID}" \
+            --set-env-vars="GOOGLE_OAUTH2_SECRET=${GOOGLE_OAUTH2_SECRET}" \
+            --set-env-vars="TWITCH_OAUTH2_CLIENT_ID=${TWITCH_OAUTH2_CLIENT_ID}" \
+            --set-env-vars="TWITCH_OAUTH2_SECRET=${TWITCH_OAUTH2_SECRET}" \
+            --allow-unauthenticated
