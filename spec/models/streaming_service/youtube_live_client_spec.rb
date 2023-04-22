@@ -159,7 +159,7 @@ describe StreamingService::YoutubeLiveClient do
                     "publishedAt"=>"2022-03-21T07:21:17Z",
                     "channelId" => my_channel_id,
                     "title"=>"テスト",
-                    "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.herokuapp.com/p/bc059b14-662a-431a-b310-7949435dbdc3",
+                    "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.jiikko.com/p/bc059b14-662a-431a-b310-7949435dbdc3",
                     "thumbnails"=> {
                       "default"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/default_live.jpg", "width"=>120, "height"=>90},
                       "medium"=>{"url"=>"https://i.ytimg.com/vi/eU3QvsjEH18/mqdefault_live.jpg", "width"=>320, "height"=>180},
@@ -171,7 +171,7 @@ describe StreamingService::YoutubeLiveClient do
                     "categoryId"=>"20",
                     "liveBroadcastContent"=>"live",
                     "localized"=> {
-                      "title"=>"テスト", "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.herokuapp.com/p/bc059b14-662a-431a-b310-7949435dbdc3"},
+                      "title"=>"テスト", "description"=>"https://github.com/splaplapla/procon_bypass_man を使っています\n\n使用中の設定は👇です\nhttps://pbm-cloud.jiikko.com/p/bc059b14-662a-431a-b310-7949435dbdc3"},
                       "defaultAudioLanguage"=>"ja"},
                       "liveStreamingDetails"=>{"actualStartTime"=>"2022-03-21T07:22:06Z", "activeLiveChatId"=>"C" }
                 },

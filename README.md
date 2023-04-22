@@ -3,7 +3,7 @@
 [![Run linters](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml/badge.svg)](https://github.com/splaplapla/procon_bypass_man_cloud/actions/workflows/rails_security_checks.yml)
 
 * https://github.com/splaplapla/procon_bypass_man の運用を楽にするWEBアプリケーションです
-* https://pbm-cloud.herokuapp.com で公開しています
+* https://pbm-cloud.jiikko.com で公開しています
 
 ## 機能
 * PBMとの接続状況の可視化
@@ -19,17 +19,17 @@
     * 自動ドット打ち
 
 ## procon_bypass_manを登録する方法
-デバイスIDを https://pbm-cloud.herokuapp.com に登録する必要があります。
+デバイスIDを https://pbm-cloud.jiikko.com に登録する必要があります。
 
 * `app.rb` の `config.api_servers` の行をアンコメントアウトする
 * `procon_bypass_man` を起動する。これでデバイスIDが生成されます。
-* https://pbm-cloud.herokuapp.com でユーザ登録をする
-* Raspberry PI内の`/usr/share/pbm/shared/device_id` もしくは実行しているディレクトリにある `device_id` の中身を https://pbm-cloud.herokuapp.com/devices/new に貼り付ける
+* https://pbm-cloud.jiikko.com でユーザ登録をする
+* Raspberry PI内の`/usr/share/pbm/shared/device_id` もしくは実行しているディレクトリにある `device_id` の中身を https://pbm-cloud.jiikko.com/devices/new に貼り付ける
 
 ```ruby
 ProconBypassMan.configure do |config|
   # ...
-  config.api_servers = 'https://pbm-cloud.herokuapp.com' # これを追加する
+  config.api_servers = 'https://pbm-cloud.jiikko.com' # これを追加する
   # ...
 end
 ```

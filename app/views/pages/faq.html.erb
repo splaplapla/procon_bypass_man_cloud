@@ -1,8 +1,8 @@
 <h1 class="mb-5">FAQ</h1>
 
 <h2>手元のRaspberry PiをPBM-Cloudに登録するにはどうすればいいですか？</h2>
-app.rb にある <code>config.api_servers = ['https://pbm-cloud.herokuapp.com'] </code> の行を追加して起動してください。<br>
-その後、<code>device_id</code>というファイル名の中身を <%= link_to 'https://pbm-cloud.herokuapp.com/devices/new', 'https://pbm-cloud.herokuapp.com/devices/new' %> に入力してください。<br>
+app.rb にある <code>config.api_servers = ['https://pbm-cloud.jiikko.com'] </code> の行を追加して起動してください。<br>
+その後、<code>device_id</code>というファイル名の中身を <%= link_to 'https://pbm-cloud.jiikko.com/devices/new', 'https://pbm-cloud.jiikko.com/devices/new' %> に入力してください。<br>
 <br>
 ※ <code>device_id</code> のファイルパスは、pbmenvを使っているなら <code>/usr/share/pbm/current/device_id</code> にあります。もしくは、pbmの実行ディレクトにあります。
 
@@ -30,7 +30,7 @@ app.rb にある <code>config.api_servers = ['https://pbm-cloud.herokuapp.com'] 
     config.root = File.expand_path(__dir__)
     config.logger = Logger.new("\#{ProconBypassMan.root}/app.log", 5, 1024 * 1024 * 10)
     config.logger.level = :debug
-    config.api_servers = ['https://pbm-cloud.herokuapp.com'] # ここを追加する
+    config.api_servers = ['https://pbm-cloud.jiikko.com'] # ここを追加する
     config.enable_critical_error_logging = true
   end
 
