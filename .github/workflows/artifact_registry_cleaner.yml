@@ -1,0 +1,47 @@
+name: Artifact Registry Cleaner
+
+on:
+  schedule:
+    - cron: '0 0 */1 * *' # runs daily
+  workflow_dispatch:
+  pull_request:
+
+env:
+  PROJECT_ID: jiikko
+  REGISTRY_HOST: asia-northeast1-docker.pkg.dev
+  REPOSITORY_NAME: pbm-cloud
+
+jobs:
+  gcr-cleaner:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - id: "auth"
+        uses: "google-github-actions/auth@v0"
+        with:
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      - name: Authorize Docker push
+        run: gcloud auth configure-docker "${REGISTRY_HOST}"
+
+      - name: Prepare args
+        id: prepare_args
+        run: |
+          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -grace=24h" >> "$GITHUB_OUTPUT"
+      - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
+        with:
+          args: "${{ steps.prepare_args.outputs.args }}"
+
+      - name: Prepare args
+        id: prepare_args2
+        run: |
+          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -tag-filter-any='^(master-)' -keep=5" >> "$GITHUB_OUTPUT"
+      - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
+        with:
+          args: "${{ steps.prepare_args2.outputs.args }}"
+
+      - name: Prepare args
+        id: prepare_args3
+        run: |
+          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -tag-filter-any='^(pr-)' -keep=5" >> "$GITHUB_OUTPUT"
+      - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
+        with:
+          args: "${{ steps.prepare_args3.outputs.args }}"
