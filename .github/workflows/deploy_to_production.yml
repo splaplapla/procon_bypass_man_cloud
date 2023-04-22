@@ -86,31 +86,14 @@ jobs:
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
       - name: Update traffic
-        continue-on-error: true
-        run: |
-          retry_count=0
-          max_retries=5
-
-          while [ $retry_count -lt $max_retries ]; do
+        # NOTE: デプロイした直後だと、トラフィックの移行先が見えないことがあるのでretryする
+        uses: nick-fields/retry@v2
+        with:
+          max_attempts: 5
+          timeout_minutes: 5
+          command: |
             gcloud beta run services update-traffic "$SERVICE_NAME" \
               --project="$PROJECT_ID" \
               --platform=managed \
               --to-tags="master-${SHORT_SHA}=100" \
               --region="asia-northeast1"
-
-            exit_status=$?
-
-            if [ $exit_status -eq 0 ]; then
-              echo "Command succeeded!"
-              break
-            else
-              echo "Command failed. Retrying in 10 seconds... ($((retry_count+1))/$max_retries)"
-              retry_count=$((retry_count+1))
-              sleep 10
-            fi
-          done
-
-          if [ $retry_count -eq $max_retries ]; then
-            echo "Command failed after $max_retries attempts. Exiting."
-            exit 1
-          fi
