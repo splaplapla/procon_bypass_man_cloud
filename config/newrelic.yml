@@ -45,4 +45,4 @@ staging:
 production:
   <<: *default_settings
   app_name: pbm-cloud
-  monitor_mode: true
+  monitor_mode: false

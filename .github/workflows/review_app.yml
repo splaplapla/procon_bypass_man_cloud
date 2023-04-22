@@ -51,7 +51,7 @@ jobs:
             --image="${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:pr-${{ github.event.number }}" \
             --region="asia-northeast1" \
             --tag=pr-${{ github.event.number }} \
-            --set-env-vars="DATABASE_URL=${DATABASE_URL}" \
+            --set-env-vars="DATABASE_URL2=${DATABASE_URL}" \
             --set-env-vars="SECRET_KEY_BASE=${SECRET_KEY_BASE}" \
             --set-env-vars="REDISCLOUD_URL=${REDISCLOUD_URL}" \
             --set-env-vars="RAILS_ENV=production" \
