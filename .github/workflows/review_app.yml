@@ -73,9 +73,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Create comment
-        uses: peter-evans/create-or-update-comment@v3
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            - "https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+          comment-author: 'github-actions[bot]'
+          body-includes: "7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: "https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+          edit-mode: replace
