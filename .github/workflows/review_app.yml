@@ -43,6 +43,7 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+          REDISCLOUD_URL: ${{ secrets.REDISCLOUD_URL }}
         run: |-
           gcloud run deploy "$SERVICE_NAME" \
             --project="$PROJECT_ID" \
@@ -52,6 +53,9 @@ jobs:
             --tag=pr-${{ github.event.number }} \
             --set-env-vars="DATABASE_URL=${DATABASE_URL}" \
             --set-env-vars="SECRET_KEY_BASE=${SECRET_KEY_BASE}" \
+            --set-env-vars="REDISCLOUD_URL=${REDISCLOUD_URL}" \
+            --set-env-vars="RAILS_ENV=production" \
+            --set-env-vars="NEW_RELIC_LOG=stdout" \
             --no-traffic \
             --allow-unauthenticated
       - name: Define comment
