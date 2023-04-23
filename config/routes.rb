@@ -96,6 +96,10 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
+    namespace :v1 do
+      resource :configuration, only: [:show]
+    end
+
     resources :events, only: [:create]
     resources :pbm_jobs, only: [:show]
 
