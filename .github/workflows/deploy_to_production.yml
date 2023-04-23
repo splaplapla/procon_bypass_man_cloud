@@ -23,6 +23,8 @@ jobs:
           token: '${{ github.token }}'
           environment-url: https://pbm-cloud-dev.jiikko.com/
           environment: production
+    outputs:
+      deployment_id: ${{ steps.deployment.outputs.deployment_id }}
 
   build:
     runs-on: ubuntu-latest
@@ -110,7 +112,7 @@ jobs:
               --region="asia-northeast1"
 
   update_deployment_status:
-   needs: [build, deploy, publish]
+    needs: [create_deployment, build, deploy, publish]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -119,12 +121,14 @@ jobs:
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
+          environment-url: https://pbm-cloud-dev.jiikko.com/
           state: 'failure'
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ needs.create_deployment.outputs.deployment_id }}
       - name: Update deployment status (success)
         if: success()
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
+          environment-url: https://pbm-cloud-dev.jiikko.com/
           state: 'success'
-          deployment-id: ${{ steps.deployment.outputs.deployment_id }}
+          deployment-id: ${{ needs.create_deployment.outputs.deployment_id }}
