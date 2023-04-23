@@ -197,7 +197,6 @@ GEM
     omniauth-twitch (1.2.0)
       omniauth-oauth2 (~> 1.6)
     pbmenv (0.1.11)
-    pg (1.4.6)
     pkg-config (1.5.1)
     procon_bypass_man (0.3.7)
       action_cable_client
@@ -339,7 +338,6 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-rails_csrf_protection
   omniauth-twitch
-  pg
   procon_bypass_man
   propshaft
   pry
@@ -356,7 +354,4 @@ DEPENDENCIES
   timecop
 
 RUBY VERSION
-   ruby 3.1.2p20
-
-BUNDLED WITH
-   2.2.30
+   ruby 3.2.0p0
