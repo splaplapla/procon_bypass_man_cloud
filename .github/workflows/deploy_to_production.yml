@@ -97,3 +97,11 @@ jobs:
               --platform=managed \
               --to-tags="master-${SHORT_SHA}=100" \
               --region="asia-northeast1"
+
+      - uses: chrnorm/deployment-action@v2
+        name: Create GitHub deployment
+        id: deployment
+        with:
+          token: '${{ github.token }}'
+          environment-url: https://pbm-cloud-dev.jiikko.com/
+          environment: production
