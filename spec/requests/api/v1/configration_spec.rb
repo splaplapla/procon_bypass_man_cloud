@@ -7,7 +7,7 @@ describe Api::V1::ConfigurationsController, type: :request do
     it do
       subject
       expect(response).to be_ok
-      expect(response.body).to eq({ "ws_server_url"=>"ws://www.example.com" }.to_json)
+      expect(response.body).to eq({ "ws_server_url"=> "ws://www.example.com/websocket" }.to_json)
     end
   end
 end
