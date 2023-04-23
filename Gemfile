@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.1.2'
+ruby '3.2.0'
 
 gem 'rails', "7.0.4.3"
 gem 'mysql2'
@@ -26,10 +26,6 @@ gem "rmagick" # グレースケース化とピクセルの色を取得してい�
 
 # 設定ファイルのパースとバリデーションのために使っている
 gem 'procon_bypass_man'
-
-group :production do
-  gem 'pg'
-end
 
 gem 'bootsnap', require: false
 
