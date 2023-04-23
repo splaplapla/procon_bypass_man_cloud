@@ -131,7 +131,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update deployment status (failure)
-        if: failure()
+        if: "needs.create_deployment.result == 'failure' || needs.build.result == 'failure' || needs.deploy.result == 'failure' || needs.publish.result == 'failure'"
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
@@ -139,7 +139,7 @@ jobs:
           state: 'failure'
           deployment-id: ${{ needs.create_deployment.outputs.deployment_id }}
       - name: Update deployment status (success)
-        if: success()
+        if: "needs.create_deployment.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success' && needs.publish.result == 'success'"
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
