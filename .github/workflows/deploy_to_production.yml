@@ -30,8 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set SHORT_SHA env property with commit short sha
-        run: echo "SHORT_SHA=$(echo "${GITHUB_SHA}" | cut -c1-8)" >> "$GITHUB_ENV"
       - id: "auth"
         uses: "google-github-actions/auth@v0"
         with:
@@ -60,7 +58,7 @@ jobs:
           context: .
           push: true
           target: production
-          tags: ${{ env.REGISTRY_HOST }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/web:master-${{ env.SHORT_SHA }}
+          tags: ${{ env.REGISTRY_HOST }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/web:master-${{ github.sha }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -88,7 +86,7 @@ jobs:
           gcloud run deploy "$SERVICE_NAME" \
             --project="$PROJECT_ID" \
             --platform=managed \
-            --image="${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${SHORT_SHA}" \
+            --image="${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web:master-${GITHUB_SHA}" \
             --region="asia-northeast1" \
             --tag="master-${SHORT_SHA}" \
             --set-env-vars="DATABASE_URL2=${DATABASE_URL}" \
