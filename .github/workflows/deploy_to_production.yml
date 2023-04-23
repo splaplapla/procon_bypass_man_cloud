@@ -100,7 +100,7 @@ jobs:
             --set-env-vars="TWITCH_OAUTH2_SECRET=${TWITCH_OAUTH2_SECRET}" \
             --allow-unauthenticated
 
-  publish:
+  promote_new_revision:
     needs: [build, deploy]
     runs-on: ubuntu-latest
     steps:
@@ -124,12 +124,12 @@ jobs:
               --region="asia-northeast1"
 
   update_deployment_status:
-    needs: [create_deployment, build, deploy, publish]
+    needs: [create_deployment, build, deploy, promote_new_revision]
     if: always()
     runs-on: ubuntu-latest
     steps:
       - name: Update deployment status (failure)
-        if: "needs.create_deployment.result == 'failure' || needs.build.result == 'failure' || needs.deploy.result == 'failure' || needs.publish.result == 'failure'"
+        if: "needs.create_deployment.result == 'failure' || needs.build.result == 'failure' || needs.deploy.result == 'failure' || needs.promote_new_revision.result == 'failure'"
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
@@ -137,7 +137,7 @@ jobs:
           state: 'failure'
           deployment-id: ${{ needs.create_deployment.outputs.deployment_id }}
       - name: Update deployment status (success)
-        if: "needs.create_deployment.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success' && needs.publish.result == 'success'"
+        if: "needs.create_deployment.result == 'success' && needs.build.result == 'success' && needs.deploy.result == 'success' && needs.promote_new_revision.result == 'success'"
         uses: chrnorm/deployment-status@v2
         with:
           token: ${{ github.token }}
