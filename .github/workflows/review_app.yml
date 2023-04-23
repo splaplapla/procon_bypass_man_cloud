@@ -11,6 +11,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v3
       - id: "auth"
@@ -33,6 +34,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v3
       - id: "auth"
@@ -66,12 +68,22 @@ jobs:
             --set-env-vars="TWITCH_OAUTH2_SECRET=${TWITCH_OAUTH2_SECRET}" \
             --no-traffic \
             --allow-unauthenticated
-      - name: Define comment
-        run: echo "COMMENT=https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました" >> "$GITHUB_ENV"
-
-      - name: Notify the review app url
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          URL: ${{ github.event.pull_request.html_url }}
-        run: |-
-          gh pr comment -b "${{ env.COMMENT }}" "${URL}"
+  comment_pull_request:
+    needs: deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: "7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: "https://pr-${{ github.event.number }}---pbm-cloud-7hrjn5ej3q-an.a.run.app/ がデプロイされました"
+          edit-mode: replace

@@ -76,7 +76,7 @@ jobs:
             --allow-unauthenticated
 
   publish:
-    needs: build
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Add SHORT_SHA env property with commit short sha
@@ -86,7 +86,7 @@ jobs:
         with:
           credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
       - name: Update traffic
-        # NOTE: デプロイした直後だと、トラフィックの移行先が見えないことがあるのでretryする
+        # NOTE: デプロイした直後だと、トラフィックの移行先が見えないことがあるのでretryする、と思ったけどneedsの指定が間違っていただけの可能性がある
         uses: nick-fields/retry@v2
         with:
           max_attempts: 5
