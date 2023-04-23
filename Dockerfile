@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM jiikkko/procon_bypass_man_cloud-base:latest as base
+FROM jiikkko/procon_bypass_man_cloud-base:ruby3.2.0 as base
 
 WORKDIR /app
 
