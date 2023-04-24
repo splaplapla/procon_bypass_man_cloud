@@ -4,7 +4,6 @@ on:
   schedule:
     - cron: '0 0 */1 * *' # runs daily
   workflow_dispatch:
-  pull_request:
 
 env:
   PROJECT_ID: jiikko
@@ -25,7 +24,7 @@ jobs:
       - name: Prepare args
         id: prepare_args
         run: |
-          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -grace=1h" >> "$GITHUB_OUTPUT"
+          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -grace=5s" >> "$GITHUB_OUTPUT"
       - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
         with:
           args: "${{ steps.prepare_args.outputs.args }}"
