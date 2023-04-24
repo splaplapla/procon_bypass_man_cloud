@@ -9,6 +9,7 @@ env:
   PROJECT_ID: jiikko
   REGISTRY_HOST: asia-northeast1-docker.pkg.dev
   REPOSITORY_NAME: pbm-cloud
+  GCRCLEANER_LOG: debug
 
 jobs:
   clean:
@@ -24,7 +25,7 @@ jobs:
       - name: Prepare args
         id: prepare_args
         run: |
-          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -grace=5s" >> "$GITHUB_OUTPUT"
+          echo "args=-repo=${REGISTRY_HOST}/$PROJECT_ID/$REPOSITORY_NAME/web -grace=1h" >> "$GITHUB_OUTPUT"
       - uses: 'docker://us-docker.pkg.dev/gcr-cleaner/gcr-cleaner/gcr-cleaner-cli'
         with:
           args: "${{ steps.prepare_args.outputs.args }}"
