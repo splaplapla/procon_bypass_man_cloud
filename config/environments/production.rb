@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require Rails.root.join("app/models/action_cable_server")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -44,8 +45,8 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
-  config.action_cable.disable_request_forgery_protection = true
-  config.action_cable.url = "/websocket"
+  # config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.url = ActionCableServer.new.url
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
