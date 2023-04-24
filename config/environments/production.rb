@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require Rails.root.join("app/models/action_cable_server")
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

@@ -38,7 +38,7 @@ end
 ### インストール方法
 #### Mac
 ```
-brew install imagemagick mysql@5.7 redis
+brew install imagemagick mysql@8.0 redis
 bundle config set --local without production
 bundle install
 ```
@@ -53,6 +53,8 @@ docker compose up
 ```
 
 ### デバッグ
+* production用docker build
+  * `docker build --target production -t pbm_cloud_production .`
 * デバイス詳細webページのaction cable js channelに通知を送る
   * `ActionCable.server.broadcast(device.unique_key, { type: :loaded_config })`
   * `ActionCable.server.broadcast(device.unique_key, { type: :device_is_active })`
