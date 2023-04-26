@@ -100,6 +100,7 @@ jobs:
             --set-env-vars="TWITCH_OAUTH2_CLIENT_ID=${TWITCH_OAUTH2_CLIENT_ID}" \
             --set-env-vars="TWITCH_OAUTH2_SECRET=${TWITCH_OAUTH2_SECRET}" \
             --set-env-vars="ACTION_CABLE_URL=${ACTION_CABLE_URL}" \
+            --set-env-vars="DISABLE_ACTION_CABLE=1" \
             --allow-unauthenticated
 
   promote_new_revision:
