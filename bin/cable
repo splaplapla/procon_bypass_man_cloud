@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+
+bundle exec puma --config config/puma.rb cable/config.ru
