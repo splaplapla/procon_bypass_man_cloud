@@ -8,7 +8,7 @@ class ActionCableServer
   # @return [String]
   # NOTE: 設定ファイルから使われていて、同じホスト名ならホスト名を省略できる
   def url
-    @action_cable_url || DEFAULT_PATH
+    @action_cable_url.presence || DEFAULT_PATH
   end
 
   # @return [String]
@@ -17,7 +17,7 @@ class ActionCableServer
   def url_with_host(host: )
     return url if url.start_with?('ws:')
 
-    if @action_cable_url.nil?
+    if @action_cable_url.blank?
       "ws://#{File.join(host, DEFAULT_PATH)}"
     else
       "ws://#{url}"

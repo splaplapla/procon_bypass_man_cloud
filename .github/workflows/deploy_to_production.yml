@@ -82,7 +82,7 @@ jobs:
           GOOGLE_OAUTH2_SECRET: ${{ secrets.GOOGLE_OAUTH2_SECRET }}
           TWITCH_OAUTH2_CLIENT_ID: ${{ secrets.TWITCH_OAUTH2_CLIENT_ID }}
           TWITCH_OAUTH2_SECRET: ${{ secrets.TWITCH_OAUTH2_SECRET }}
-          ACTION_CABLE_URL: ${{ env.ACTION_CABLE_URL }}
+          ACTION_CABLE_URL: ${{ vars.ACTION_CABLE_URL }}
         run: |
           gcloud run deploy "$SERVICE_NAME" \
             --project="$PROJECT_ID" \
