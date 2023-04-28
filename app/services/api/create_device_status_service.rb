@@ -8,9 +8,18 @@ class Api::CreateDeviceStatusService
 
   def execute(status: )
     raise "unknown status" unless DeviceStatus.statuses.keys.include?(status)
-    pbm_session = PbmSession.find_or_create_by!(uuid: pbm_session_id) do |s|
-      s.device = device
-      s.hostname = "unknown"
+
+    pbm_session = nil
+    begin
+      ApplicationRecord.transaction(requires_new: true) do
+        pbm_session = PbmSession.find_or_create_by!(uuid: pbm_session_id) do |s|
+          s.device = device
+          s.hostname = "unknown"
+        end
+      rescue ActiveRecord::RecordNotUnique => e
+        Rails.logger.error e
+        retry
+      end
     end
 
     ApplicationRecord.transaction do
