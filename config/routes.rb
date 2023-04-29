@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   get 'terms' => 'pages#terms', as: :terms
   get 'faq' => 'pages#faq', as: :faq
+  get 'ads.txt' => 'pages#ads'
   resource :demo, only: [:show] do
     get :procon_performance_metric, on: :collection
   end
