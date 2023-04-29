@@ -1,6 +1,8 @@
 class UserSessionsController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
 
+  before_action :no_adsence_filter, only: :new
+
   def new
   end
 
