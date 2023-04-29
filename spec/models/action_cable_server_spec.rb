@@ -39,5 +39,13 @@ RSpec.describe ActionCableServer, type: :model do
         expect(subject).to eq('ws://hoge.com/foo')
       end
     end
+
+    context 'when action_cable_url is not null2' do
+      let(:action_cable_url) { 'wss://hoge.com/foo' }
+
+      it do
+        expect(subject).to eq('wss://hoge.com/foo')
+      end
+    end
   end
 end

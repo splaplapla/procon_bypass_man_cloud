@@ -15,7 +15,7 @@ class ActionCableServer
   # NOTE: APIから使われていて、同じホスト名であってもホスト名を省略できない
   # NOTE: 引数hostよりも@action_cable_urlが優先される
   def url_with_host(host: )
-    return url if url.start_with?('ws:')
+    return url if url.start_with?('ws:') or url.start_with?('wss:')
 
     if @action_cable_url.blank?
       "ws://#{File.join(host, DEFAULT_PATH)}"
