@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:new, :create]
   before_action :redirect_if_has_user, only: [:new, :create]
+  before_action :no_adsence_filter, only: :new
 
   def new
     @user = User.new
