@@ -58,7 +58,7 @@ jobs:
           context: .
           push: true
           target: production
-          tags: ${{ env.REGISTRY_HOST }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/web:master-${{ github.sha }}
+          tags: ${{ env.REGISTRY_HOST }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/web:master-${{ github.sha }} , ${{ env.REGISTRY_HOST }}/${{ env.PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/web:master
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
