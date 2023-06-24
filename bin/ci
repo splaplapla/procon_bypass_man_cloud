@@ -5,4 +5,5 @@ bundle exec bundler-audit --update && \
          yarn format-check && \
          yarn lint && \
          bundle exec rake && \
+         bundle exec rubocop -P && \
          echo OK!!!!!!!!!!!!!!!
