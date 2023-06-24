@@ -45,7 +45,7 @@ class StreamingService::ConvertMessagesToCommandsService
 
   def trigger(messages)
     messages.each do |message|
-      if remote_macro = @streaming_service_account.streaming_service.remote_macro_group.remote_macros.tagged_with(message.to_trigger_word, on: :trigger_words).first
+      if (remote_macro = @streaming_service_account.streaming_service.remote_macro_group.remote_macros.tagged_with(message.to_trigger_word, on: :trigger_words).first)
         remote_macro_job = RemoteMacro::CreatePbmRemoteMacroJobService.new(device: device).execute(steps: remote_macro.steps, name: remote_macro.name)
         ActionCable.server.broadcast(device.push_token, PbmRemoteMacroJobSerializer.new(remote_macro_job).attributes)
       end

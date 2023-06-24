@@ -24,7 +24,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
     end
 
     it do
-      expect { subject }.to change { saved_buttons_setting.reload.name }
+      expect { subject }.to(change { saved_buttons_setting.reload.name })
     end
   end
 

@@ -55,7 +55,7 @@ describe Feature::Splatoon2::DrawingSketchesController, type: :request do
       end
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do
@@ -74,7 +74,7 @@ describe Feature::Splatoon2::DrawingSketchesController, type: :request do
       end
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do
@@ -93,7 +93,7 @@ describe Feature::Splatoon2::DrawingSketchesController, type: :request do
       end
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do

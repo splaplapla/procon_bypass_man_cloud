@@ -2,6 +2,7 @@ class Lib::Image2Base64 < Lib::Base64Converter
   def initialize(file, content_type: nil)
     @prefix = generate_prefix(content_type || file.content_type)
     @binary = file.read
+    super()
   end
 
   def execute

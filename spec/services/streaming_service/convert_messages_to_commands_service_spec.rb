@@ -22,7 +22,7 @@ describe StreamingService::ConvertMessagesToCommandsService do
       ] }
 
       it do
-        expect { subject }.to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do
@@ -36,7 +36,7 @@ describe StreamingService::ConvertMessagesToCommandsService do
       ] }
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do
@@ -50,7 +50,7 @@ describe StreamingService::ConvertMessagesToCommandsService do
       ] }
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do
@@ -64,7 +64,7 @@ describe StreamingService::ConvertMessagesToCommandsService do
       ] }
 
       it do
-        expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+        expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
       end
 
       it do

@@ -15,7 +15,7 @@ RSpec.describe "Admin::PbmJobs::ChangePbmVersion", type: :request do
       end
 
       it do
-        expect { subject }.not_to change { device.pbm_jobs.count }
+        expect { subject }.not_to(change { device.pbm_jobs.count })
       end
 
     end

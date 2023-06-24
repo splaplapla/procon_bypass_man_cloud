@@ -29,7 +29,7 @@ class DevicesController < ApplicationController
 
     uuid = params.required(:device)[:uuid]
 
-    if device = Device.find_by(user_id: nil, uuid: uuid)
+    if (device = Device.find_by(user_id: nil, uuid: uuid))
       device.update!(user: current_user)
       redirect_to device_path(device.unique_key), notice: "デバイスの登録が完了しました"
     else

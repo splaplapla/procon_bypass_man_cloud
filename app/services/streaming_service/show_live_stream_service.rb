@@ -6,6 +6,8 @@ class StreamingService::ShowLiveStreamService
     @video_id = video_id
   end
 
+  # rubocop:disable Lint/DuplicateBranch
+  # rubocop:disable Lint/UselessRescue
   # TODO 引数の数が変わったら再取得したい. 実装が変わったときに起きる
   # @raise [AvailableVideoNotError]
   def execute
@@ -37,10 +39,10 @@ class StreamingService::ShowLiveStreamService
     @streaming_service_account.save!
 
     video = if @streaming_service_account.video.id
-              @streaming_service_account.video
-            else
-              client.active_streaming_video
-            end
+      @streaming_service_account.video
+    else
+      client.active_streaming_video
+    end
     return video
   rescue StreamingService::YoutubeLiveClient::UnexpectedError
     raise # TODO
@@ -51,6 +53,8 @@ class StreamingService::ShowLiveStreamService
   rescue StreamingService::YoutubeLiveClient::NotOwnerVideoError
     raise # TODO
   end
+  # rubocop:enable Lint/DuplicateBranch
+  # rubocop:enable Lint/UselessRescue # これは誤検知っぽい
 
   private
 

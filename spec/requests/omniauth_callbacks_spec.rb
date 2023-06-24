@@ -35,7 +35,7 @@ RSpec.describe OmniauthCallbacksController, type: :request do
       end
 
       it do
-        expect { subject }.not_to change { streaming_service.reload_streaming_service_account.id }
+        expect { subject }.not_to(change { streaming_service.reload_streaming_service_account.id })
       end
 
       it do
@@ -45,7 +45,7 @@ RSpec.describe OmniauthCallbacksController, type: :request do
     end
 
     it do
-      expect { subject }.not_to change { streaming_service.reload_streaming_service_account }
+      expect { subject }.not_to(change { streaming_service.reload_streaming_service_account })
     end
 
     it do

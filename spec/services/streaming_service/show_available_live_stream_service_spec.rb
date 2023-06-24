@@ -22,7 +22,7 @@ describe StreamingService::ShowAvailableLiveStreamService do
       end
 
       it do
-        expect { subject }.not_to change { streaming_service_account.cached_data["my_channel_id"] }
+        expect { subject }.not_to(change { streaming_service_account.cached_data["my_channel_id"] })
       end
 
       it do

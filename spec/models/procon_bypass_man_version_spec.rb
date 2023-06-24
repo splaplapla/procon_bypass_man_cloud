@@ -14,7 +14,7 @@ describe ProconBypassManVersion, type: :model do
       end
 
       it do
-        expect { subject }.not_to change { ProconBypassManVersion.count }
+        expect { subject }.not_to(change { ProconBypassManVersion.count })
       end
     end
 

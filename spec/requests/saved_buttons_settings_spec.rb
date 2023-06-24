@@ -47,7 +47,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
       end
 
       it do
-        expect { subject }.not_to change { user.saved_buttons_settings.count }
+        expect { subject }.not_to(change { user.saved_buttons_settings.count })
       end
 
       it do
@@ -80,7 +80,7 @@ RSpec.describe "SavedButtonsSettings", type: :request do
 
     subject { put saved_buttons_setting_path(saved_buttons_setting), params: { saved_buttons_setting: { name: :updated } } }
 
-    it { expect { subject }.to change { saved_buttons_setting.reload.name } }
+    it { expect { subject }.to(change { saved_buttons_setting.reload.name }) }
     it do
       subject
       expect(response).to be_redirect

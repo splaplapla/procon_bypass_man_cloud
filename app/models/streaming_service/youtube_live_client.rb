@@ -16,7 +16,7 @@ class StreamingService::YoutubeLiveClient
       http.use_ssl = true
       req = Net::HTTP::Get.new(uri.request_uri)
       yield(req)
-      Rails.logger.info { "[youtube api] #{uri.to_s}" }
+      Rails.logger.info { "[youtube api] #{uri}" }
       http.request(req)
     end
   end
@@ -51,7 +51,8 @@ class StreamingService::YoutubeLiveClient
     end
   end
 
-  attr_accessor :video_id, :chat_id
+  attr_accessor :video_id
+  attr_writer :chat_id
   attr_writer :my_channel_id
 
   def initialize(streaming_service_account)
@@ -157,7 +158,7 @@ class StreamingService::YoutubeLiveClient
       grant_type: 'refresh_token',
     }
     headers = { 'Content-Type' => 'application/json' }
-    Rails.logger.info { "[youtube api] #{uri.to_s}" }
+    Rails.logger.info { "[youtube api] #{uri}" }
     response = http.post(uri.path, params.to_json, headers)
 
     handle_error(response) do |json|
@@ -178,7 +179,7 @@ class StreamingService::YoutubeLiveClient
     http.use_ssl = true
     req = Net::HTTP::Get.new(uri.request_uri)
     req["Authorization"] = "Bearer #{access_token}"
-    Rails.logger.info { "[youtube api] #{uri.to_s}" }
+    Rails.logger.info { "[youtube api] #{uri}" }
     res = http.request(req)
 
     handle_error(res) do |json|
@@ -197,7 +198,7 @@ class StreamingService::YoutubeLiveClient
     elsif response.code == "401"
       domain, reason = parse_error2(response.body)
       case
-      when ["global", "authError"]
+      when ["global", "authError"] # rubocop:disable Lint/LiteralAsCondition # FIXME: 実装ミスっぽい
         raise ExpiredRefreshTokenError
       else
         # whenで書きたい
@@ -206,7 +207,7 @@ class StreamingService::YoutubeLiveClient
         raise OldAccessTokenError
       end
     elsif response.code == "403"
-      error = parse_error(response.body)
+      parse_error(response.body)
 
       case
       when errors.include?("youtube.quota")

@@ -35,8 +35,7 @@ class PbmJobFactory
   def validate!(attributes)
     case attributes[:action]
     when :restore_pbm_setting
-      if attributes[:args].key?(:setting) && attributes[:args].key?(:setting_name)
-      else
+      unless attributes[:args].key?(:setting) && attributes[:args].key?(:setting_name)
         raise ValidationError, "invalid args(#{attributes})"
       end
     when :change_pbm_version

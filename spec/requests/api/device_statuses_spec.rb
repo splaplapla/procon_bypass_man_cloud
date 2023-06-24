@@ -12,7 +12,7 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
 
       it do
         subject
-        expect(response.body).to eq({ "errors":["Status can't be blank", "Pbm session can't be blank"] }.to_json)
+        expect(response.body).to eq({ errors:["Status can't be blank", "Pbm session can't be blank"] }.to_json)
       end
     end
 
@@ -21,7 +21,7 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
 
       it do
         subject
-        expect(response.body).to eq({ "errors":["Status is invalid"] }.to_json)
+        expect(response.body).to eq({ errors:["Status is invalid"] }.to_json)
       end
     end
 
@@ -39,7 +39,7 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
           end
 
           it do
-            expect { subject }.to change { device.reload.current_device_status_id }
+            expect { subject }.to(change { device.reload.current_device_status_id })
           end
         end
       end
@@ -57,14 +57,14 @@ RSpec.describe "/api/devices/:device_id/device_statuses", type: :request do
         end
 
         it do
-          expect { subject }.to change { device.reload.current_device_status_id }
+          expect { subject }.to(change { device.reload.current_device_status_id })
         end
 
         context 'pbm_sessionのupdate_at' do
           let(:pbm_session) { PbmSession.create(uuid: :a, device: device, hostname: "a", updated_at: 1.minutes.ago) }
 
           it do
-            expect { subject }.to change { pbm_session.reload.updated_at }
+            expect { subject }.to(change { pbm_session.reload.updated_at })
           end
         end
       end

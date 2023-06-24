@@ -11,7 +11,7 @@ RSpec.describe Api::EventsController, type: :request do
 
     context 'does not provide params' do
       it do
-        expect { post api_events_path }.not_to change { Event.count }
+        expect { post api_events_path }.not_to(change { Event.count })
         expect(response).to be_bad_request
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe Api::EventsController, type: :request do
         end
 
         it do
-          expect { subject }.not_to change { device.reload.enable_pbmenv }
+          expect { subject }.not_to(change { device.reload.enable_pbmenv })
           expect(device.reload.enable_pbmenv).to eq(false)
         end
       end
@@ -190,7 +190,7 @@ RSpec.describe Api::EventsController, type: :request do
       let(:params_body) { { pid: 1, pbm_version: "1.1", use_pbmenv: true } }
 
       it do
-        expect { subject }.not_to change { Event.count }
+        expect { subject }.not_to(change { Event.count })
       end
 
       it do

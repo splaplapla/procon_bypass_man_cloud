@@ -6,9 +6,7 @@ class Api::CreateDeviceStatsForm
 
   attr_accessor :status, :pbm_session_id
 
-  def initialize(attrs)
-    super(attrs)
-  end
+  
 
   private
 

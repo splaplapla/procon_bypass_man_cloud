@@ -1,0 +1,45 @@
+AllCops:
+  NewCops: enable
+  SuggestExtensions: false
+  Include:
+    - 'app/**/*.rb'
+    - 'spec/**/*.rb'
+
+Style:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
+Layout:
+  Enabled: false
+
+Naming:
+  Enabled: false
+
+Layout/ExtraSpacing:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: true
+
+Lint/UselessAssignment:
+  Enabled: true
+
+Lint/EmptyBlock:
+  Enabled: false
+
+Lint/ReturnInVoidContext:
+  Enabled: true
+
+Lint/AssignmentInCondition:
+  Enabled: true
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: true
+
+Security/Eval:
+  Enabled: true

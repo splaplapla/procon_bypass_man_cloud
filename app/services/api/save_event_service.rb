@@ -11,8 +11,8 @@ class Api::SaveEventService
         end
       device.update_columns(last_access_at: Time.zone.now)
 
-      pbm_session = device.pbm_sessions.find_or_create_by!(uuid: session_id) do |pbm_session|
-        pbm_session.assign_attributes(hostname: hostname, ip_address: nil)
+      pbm_session = device.pbm_sessions.find_or_create_by!(uuid: session_id) do |ps|
+        ps.assign_attributes(hostname: hostname, ip_address: nil)
       end
 
       case event_type
