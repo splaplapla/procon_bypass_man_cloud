@@ -9,6 +9,7 @@ module Splatoon2SketchService
       @threshold = threshold
       @file_extension = file_content_type.match('\Aimage/(.+)\z')[1]
       @crop_arg = crop_arg
+      super()
     end
 
     private

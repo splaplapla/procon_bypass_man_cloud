@@ -54,7 +54,7 @@ describe StreamingService::YoutubeLiveClient do
     it { expect(subject.first).to eq("GL2e8Oes2_YCIIjIwv6s2_YC") }
 
     describe 'message' do
-      let(:message)  { subject.last.last }
+      let(:message) { subject.last.last }
 
       it { expect(message.body).to eq("ドクターイエロー汐留のライブカメラ通過") }
       it { expect(message.author_channel_id).to eq("UC18DensR1cKwdzHy4Q8c5qw") }

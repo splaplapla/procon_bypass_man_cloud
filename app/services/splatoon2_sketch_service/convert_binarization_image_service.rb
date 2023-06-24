@@ -7,6 +7,7 @@ module Splatoon2SketchService
       @image_data = image_data
       @threshold = threshold
       @file_extension = file_content_type.match('\Aimage/(.+)\z')[1]
+      super()
     end
 
     def convert_cmd

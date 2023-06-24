@@ -15,7 +15,7 @@ RSpec.describe "Devices", type: :request do
     end
 
     context 'ログインしていない' do
-      it  do
+      it do
         subject
         expect(response).to redirect_to(root_path)
       end
@@ -84,7 +84,7 @@ RSpec.describe "Devices", type: :request do
 
     subject { get new_device_path }
 
-    it  do
+    it do
       subject
       expect(response).to be_ok
     end
@@ -99,7 +99,7 @@ RSpec.describe "Devices", type: :request do
 
     context 'デバイスが見つかったとき' do
       let(:device_uuid) { device.uuid }
-      it  do
+      it do
         subject
         expect(response).to be_redirect
       end
@@ -117,7 +117,7 @@ RSpec.describe "Devices", type: :request do
 
     context 'デバイスが見つからなかったとき' do
       let(:device_uuid) { "foo" }
-      it  do
+      it do
         subject
         expect(response).to be_ok
       end

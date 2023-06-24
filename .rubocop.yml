@@ -2,8 +2,9 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
   Include:
-    - 'lib/**/*.rb'
+    - 'app/**/*.rb'
     - 'spec/**/*.rb'
+
 Style:
   Enabled: false
 
@@ -16,17 +17,29 @@ Layout:
 Naming:
   Enabled: false
 
+Layout/ExtraSpacing:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+
 Lint/ConstantDefinitionInBlock:
-    Enabled: true
+  Enabled: true
+
 Lint/UselessAssignment:
-    Enabled: true
+  Enabled: true
+
 Lint/EmptyBlock:
-    Enabled: false
+  Enabled: false
+
 Lint/ReturnInVoidContext:
-    Enabled: true
+  Enabled: true
+
 Lint/AssignmentInCondition:
-    Enabled: true
+  Enabled: true
+
 Lint/AmbiguousBlockAssociation:
-    Enabled: true
+  Enabled: true
+
 Security/Eval:
-    Enabled: true
+  Enabled: true

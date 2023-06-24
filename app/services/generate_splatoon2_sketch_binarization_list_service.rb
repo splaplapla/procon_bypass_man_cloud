@@ -9,7 +9,7 @@ class GenerateSplatoon2SketchBinarizationListService
     img = Magick::ImageList.new(@file.open)
     # img_depth = img.depth NOTE: pngを与えると、to_colorでinvalid depeth(1) エラーになるのでハードコードする
     img_depth = 8
-    dots = img.rows.times.map { |y|
+    img.rows.times.map { |y|
       img.columns.times.map { |x|
         color = img.pixel_color(x, y).to_color(Magick::AllCompliance, false, img_depth, true)
         # Rails.logger.info "color: #{color}"

@@ -21,7 +21,7 @@ RSpec.describe StreamingServices::TwitchController, type: :request do
       before do
         allow(live_video).to receive(:thumbnail_url) { "/" }
         allow(live_video).to receive(:started_at) { Time.zone.now }
-        allow(client).to receive(:myself_live)  { live_video }
+        allow(client).to receive(:myself_live) { live_video }
         allow(StreamingService::TwitchClient).to receive(:new) { client }
       end
 
@@ -72,8 +72,8 @@ RSpec.describe StreamingServices::TwitchController, type: :request do
 
       allow(live_video).to receive(:thumbnail_url) { "/" }
       allow(live_video).to receive(:started_at) { Time.zone.now }
-      allow(client).to receive(:myself)  { double(:user).as_null_object }
-      allow(client).to receive(:myself_live)  { live_video }
+      allow(client).to receive(:myself) { double(:user).as_null_object }
+      allow(client).to receive(:myself_live) { live_video }
       allow(StreamingService::TwitchClient).to receive(:new) { client }
     end
 

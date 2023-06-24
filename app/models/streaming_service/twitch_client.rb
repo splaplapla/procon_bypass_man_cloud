@@ -25,7 +25,7 @@ class StreamingService::TwitchClient
       req = Net::HTTP::Get.new(uri.request_uri)
       req["Authorization"] = "Bearer #{access_token}"
       req["Client-Id"] = CLIENT_ID
-      Rails.logger.info { "[twitch api] #{uri.to_s}" }
+      Rails.logger.info { "[twitch api] #{uri}" }
       http.request(req)
     end
 
@@ -42,7 +42,7 @@ class StreamingService::TwitchClient
     def execute(user_name: )
       uri = URI.parse("#{BASE}/streams")
       uri.query = "user_login=#{user_name}"
-       self.class.do_request(uri: uri, access_token: access_token)
+      self.class.do_request(uri: uri, access_token: access_token)
     end
   end
 
@@ -95,9 +95,9 @@ class StreamingService::TwitchClient
       refresh!
       raise OldAccessTokenError
     elsif response.code == "403"
-      errors = parse_error(response.body)
+      parse_error(response.body)
       case
-      when nil
+      when nil # rubocop:disable Lint/LiteralAsCondition NOTE: 謎
       else
         raise "知らないエラーです(#{response.body})"
       end
@@ -122,7 +122,7 @@ class StreamingService::TwitchClient
       grant_type: 'refresh_token',
     }
     headers = { 'Content-Type' => 'application/json' }
-    Rails.logger.info { "[twitch] #{uri.to_s}" }
+    Rails.logger.info { "[twitch] #{uri}" }
     response = http.post(uri.path, params.to_json, headers)
 
     handle_error(response) do |json|

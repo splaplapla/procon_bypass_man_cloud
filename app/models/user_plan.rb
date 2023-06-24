@@ -3,7 +3,7 @@ module UserPlan
     PLAN_FREE = 0
     PLAN_LIGHT = 1
     PLAN_STANDARD = 2
-    PLAN_PRO  = 3
+    PLAN_PRO = 3
   end
 
   module CAPACITY
