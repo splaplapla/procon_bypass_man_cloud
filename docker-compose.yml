@@ -15,7 +15,6 @@ services:
     volumes:
       - data-volume:/var/lib/mysql
   web:
-    image: pbm_cloud
     container_name: pbm_cloud
     build:
       target: dev

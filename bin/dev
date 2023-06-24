@@ -6,7 +6,7 @@ then
   gem install foreman
 fi
 
-bundle check || bundle install
+bundle check || bundle install --clean
 
 bin/rails db:create db:migrate &
 
