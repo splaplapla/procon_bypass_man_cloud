@@ -39,5 +39,7 @@ module ProconBypassManCloud
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    config.x.discord_invitation_link = 'https://discord.gg/GjaywxVZHY'
   end
 end
