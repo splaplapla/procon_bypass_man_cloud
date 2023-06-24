@@ -121,7 +121,7 @@ RSpec.describe "Devices", type: :request do
         subject
         expect(response).to be_ok
       end
-      it { expect { subject }.not_to change { user.devices.count } }
+      it { expect { subject }.not_to(change { user.devices.count }) }
     end
   end
 

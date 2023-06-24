@@ -36,8 +36,9 @@ describe StreamingService::ShowLiveStreamService do
             begin
               subject
             rescue
+              # no-op
             end
-          }.not_to change { StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_live? }
+          }.not_to(change { StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_live? })
         end
       end
 
@@ -56,6 +57,7 @@ describe StreamingService::ShowLiveStreamService do
             begin
               subject
             rescue
+              # no-op
             end
           }.to change { StreamingService::YoutubeLiveDecorator.new(streaming_service_account).video_is_live? }.from(false).to(true)
         end
@@ -68,7 +70,7 @@ describe StreamingService::ShowLiveStreamService do
       end
 
       it do
-        expect { subject }.to change { streaming_service_account.cached_data["video"] }
+        expect { subject }.to(change { streaming_service_account.cached_data["video"] })
       end
 
       it do
@@ -91,13 +93,13 @@ describe StreamingService::ShowLiveStreamService do
       end
 
       it do
-        expect { subject }.not_to change { streaming_service_account.cached_data["video"] }
+        expect { subject }.not_to(change { streaming_service_account.cached_data["video"] })
       end
     end
 
     context 'cached_dataにvideoがないとき' do
       it do
-        expect { subject }.to change { streaming_service_account.cached_data["video"] }
+        expect { subject }.to(change { streaming_service_account.cached_data["video"] })
       end
 
       it do
@@ -112,7 +114,7 @@ describe StreamingService::ShowLiveStreamService do
       end
 
       it do
-        expect { subject }.not_to change { streaming_service_account.cached_data["my_channel_id"] }
+        expect { subject }.not_to(change { streaming_service_account.cached_data["my_channel_id"] })
       end
 
       it do

@@ -40,7 +40,7 @@ describe Api::StreamingServices::PbmRemoteMacroJobsController, type: :request do
         end
 
         it do
-          expect { subject }.not_to change { device.pbm_remote_macro_jobs.count }
+          expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count })
         end
       end
 

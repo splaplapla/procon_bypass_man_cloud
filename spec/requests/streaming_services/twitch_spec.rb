@@ -177,7 +177,7 @@ RSpec.describe StreamingServices::TwitchController, type: :request do
           end
 
           it { expect { subject }.not_to have_broadcasted_to(device.push_token) }
-          it { expect { subject }.not_to change { device.pbm_remote_macro_jobs.count } }
+          it { expect { subject }.not_to(change { device.pbm_remote_macro_jobs.count }) }
         end
       end
     end

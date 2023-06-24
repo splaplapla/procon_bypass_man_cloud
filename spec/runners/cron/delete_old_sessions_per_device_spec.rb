@@ -13,5 +13,5 @@ RSpec.describe Cron::DeleteOldSessionsPerDevice do
   end
 
   it { expect { subject }.to change { PbmSession.count }.by(-1) }
-  it { expect { subject }.not_to change { active_pbm_session.reload } }
+  it { expect { subject }.not_to(change { active_pbm_session.reload }) }
 end

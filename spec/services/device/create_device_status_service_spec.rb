@@ -25,7 +25,7 @@ RSpec.describe Api::CreateDeviceStatusService do
 
         context 'session_idが同じとき' do
           it do
-            expect { subject }.not_to change { device.device_statuses.count }
+            expect { subject }.not_to(change { device.device_statuses.count })
           end
         end
 

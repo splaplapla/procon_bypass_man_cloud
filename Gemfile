@@ -50,3 +50,7 @@ group :development do
   gem 'foreman'
   gem "action_cable_client"
 end
+
+group :lint do
+  gem "rubocop", require: false
+end

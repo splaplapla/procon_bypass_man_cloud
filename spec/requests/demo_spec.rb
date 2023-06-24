@@ -32,7 +32,7 @@ RSpec.describe "Demo", type: :request do
         end
 
         it do
-          expect { subject }.not_to change { session[:user_id] }
+          expect { subject }.not_to(change { session[:user_id] })
         end
       end
     end
