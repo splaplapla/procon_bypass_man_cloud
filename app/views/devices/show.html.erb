@@ -12,7 +12,7 @@
 <div
   data-controller="device-onload"
   data-device-onload-ping-url-value="<%= ping_device_path(@device.unique_key) %>"
-  data-device-onload-pbm-version-url-value="<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>"
+  data-device-onload-pbm-version-url-value="<%= internal_procon_bypass_man_version_path(@device.pbm_version) if @device.pbm_version %>"
 ></div>
 
 <div>
