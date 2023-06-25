@@ -9,6 +9,12 @@
 
 <%= render 'devices/shared/tab', device: @device %>
 
+<div
+  data-controller="device-onload"
+  data-device-onload-ping-url-value="<%= ping_device_path(@device.unique_key) %>"
+  data-device-onload-pbm-version-url-value="<%= internal_procon_bypass_man_version_path(@device.pbm_version) if @device.pbm_version %>"
+></div>
+
 <div>
   <div class="row">
     <div class="col-md-9 col-lg-9">
@@ -197,14 +203,6 @@
     startWatchdogOfPing();
     return false;
   }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    $.post("<%= ping_device_path(@device.unique_key) %>");
-
-    <% if @device.pbm_version %>
-      $.get("<%= internal_procon_bypass_man_version_path(@device.pbm_version) %>");
-    <% end %>
-  });
 </script>
 
 <% if @saved_buttons_setting_form %>

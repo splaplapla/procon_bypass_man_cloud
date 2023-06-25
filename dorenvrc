@@ -1,3 +1,5 @@
 export GOOGLE_OAUTH2_CLIENT_ID=xxx
 export GOOGLE_OAUTH2_SECRET=xxx
 
+export DATABASE_HOST=localhost
+export REDIS_URL=redis://localhost:6379/0
