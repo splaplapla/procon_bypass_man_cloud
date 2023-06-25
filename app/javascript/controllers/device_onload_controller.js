@@ -1,9 +1,9 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from '@hotwired/stimulus';
 
 // 時間的凝集
 // Connects to data-controller="device-onload"
 export default class extends Controller {
-  static values = { pingUrl: String, pbmVersionUrl: String }
+  static values = { pingUrl: String, pbmVersionUrl: String };
 
   connect() {
     this.pingDevice();
