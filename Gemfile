@@ -3,7 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.2.2'
 
-gem 'rails', "7.0.5"
+gem 'rails', "7.0.6"
 gem 'mysql2'
 gem 'puma'
 gem 'cssbundling-rails'
@@ -28,6 +28,7 @@ gem "rmagick" # グレースケース化とピクセルの色を取得してい�
 gem 'procon_bypass_man'
 
 gem 'bootsnap', require: false
+gem "uri", ">= 0.12.2"
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
