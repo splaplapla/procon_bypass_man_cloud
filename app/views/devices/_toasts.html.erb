@@ -1,6 +1,6 @@
 <div class="position-fixed position-absolute top-0 start-50 translate-middle-x" style="z-index: 11">
   <div class="toast-container">
-    <div class="toast  bg-primary text-white fade" id="ok-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast  bg-primary text-white fade" id="ok-toast" role="alert" data-controller="device-toast" data-action="click->device-toast#openToast">
       <div class="toast-header bg-primary text-white">
         <strong class="me-auto">設定ファイルの復元結果</strong>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <div class="toast bg-warning text-dark" id="ng-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast bg-warning text-dark" id="ng-toast" role="alert" data-controller="device-toast" data-action="click->device-toast#openToast">
       <div class="toast-header bg-warning text-dark">
         <strong class="me-auto">設定ファイルの復元結果</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="toast" id="reboot-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast" id="reboot-toast" role="alert" data-controller="device-toast" data-action="click->device-toast#openToast">
       <div class="toast-header">
         <strong class="me-auto">デバイスの再起動を開始します</strong>
         <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <div class="toast  bg-primary text-white fade" id="ok-upgrade-toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast  bg-primary text-white fade" id="ok-upgrade-toast" role="alert" data-controller="device-toast" data-action="click->device-toast#openToast">
       <div class="toast-header bg-primary text-white">
         <strong class="me-auto">PBMのバージョンアップ</strong>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
@@ -40,14 +40,5 @@
         アップグレードに成功しました。デバイスが起動するまで1分ほどお待ちください。
       </div>
     </div>
-
   </div>
 </div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    Array.from(document.querySelectorAll(".toast")).forEach(
-      (toastNode) => new bootstrap.Toast(toastNode, { delay: 9999999999 })
-    );
-  })
-</script>
