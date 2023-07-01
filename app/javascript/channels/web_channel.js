@@ -1,6 +1,5 @@
 import consumer from "channels/consumer"
 import $ from 'jquery'
-import * as bootstrap from 'bootstrap'
 window.$ = $
 window.jQuery = $
 
@@ -22,16 +21,16 @@ $(function(){
         } else if (data.type === "loaded_config" ) {
           window.location.reload();
         } else if (data.type === "completed_upgrade_pbm" ) {
-          (new bootstrap.Toast(document.getElementById("ok-upgrade-toast"))).show();
+          document.getElementById("ok-upgrade-toast").click();
           $.post($("[data-offline-action-url]").data("offline-action-url"));
           $.get(refreshUrl);
         } else if (data.type === "reload_config" ) {
-          (new bootstrap.Toast(document.getElementById("ok-toast"))).show();
+          document.getElementById("ok-toast").click();
         } else if (data.type === "error_reload_config" ) {
-          (new bootstrap.Toast(document.getElementById("ng-toast"))).show();
+          document.getElementById("ng-toast").click();
           $("#ng-toast-reason").text(data.reason);
         } else if (data.type === "start_reboot" ) {
-          (new bootstrap.Toast(document.getElementById("reboot-toast"))).show();
+          document.getElementById("reboot-toast").click();
           $.post($("[data-offline-action-url]").data("offline-action-url"));
           $.get(refreshUrl);
         } else {

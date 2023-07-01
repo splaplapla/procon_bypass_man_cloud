@@ -11,7 +11,7 @@ window.$ = $
 window.jQuery = $
 
 import * as bootstrap from 'bootstrap'
-window.bootstrap = bootstrap
+window.bootstrap = bootstrap // FIXME: テンプレートに書いているインラインjsがなくなったら消せる
 
 import "channels"
 
