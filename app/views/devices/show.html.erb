@@ -31,7 +31,10 @@
         <ul class="dropdown-menu text-small" aria-labelledby="setting">
           <% if @device.enable_pbmenv %>
             <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deviceNameModal">このデバイス名を変更する</a></li>
-            <li><a class="dropdown-item" href="#" onClick="openUpgradeModal()">PBMのバージョンアップ</a></li>
+            <li data-controller="device-action-modal" data-device-action-modal-ping-url-value="<%= ping_device_path(@device.unique_key) %>">
+              <a class="dropdown-item" href="#" data-action="click->device-action-modal#open">PBMのバージョンアップ</a>
+              <%= render "devices/upgrade_pbm_modal", device: @device %>
+            </li>
             <li><a class="dropdown-item" href="#" onClick="openRestartModal()">デバイスのOSを再起動する</a></li>
             <li><a class="dropdown-item" href="#" onClick="openRestoreSettingModal()">設定ファイルを復元する</a></li>
             <li><%= device_actions_procon_status_link(@device) %></li>
@@ -179,14 +182,6 @@
 </div>
 
 <script>
-  function openUpgradeModal() {
-    const elem = document.getElementById("pbmUpgradeModal");
-    pbmUpgradeModal = new bootstrap.Modal(elem);
-    pbmUpgradeModal.show();
-    $.post("<%= ping_device_path(@device.unique_key) %>");
-    startWatchdogOfPing();
-    return false;
-  }
   function openRestartModal() {
     const elem = document.getElementById("restartModal");
     restartModal = new bootstrap.Modal(elem);
@@ -209,7 +204,6 @@
   <%= render "devices/save_setting_modal", form: @saved_buttons_setting_form %>
 <% end %>
 <%= render "devices/restore_setting_modal", device: @device, saved_buttons_settings: @saved_buttons_settings %>
-<%= render "devices/upgrade_pbm_modal", device: @device %>
 <%= render "devices/restart_modal", device: @device %>
 <%= render "devices/progress_modal" %>
 <%= render "devices/device_name_modal", default_device_name: @device.name, device: @device %>
