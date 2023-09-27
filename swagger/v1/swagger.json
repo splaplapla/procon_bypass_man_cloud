@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "backend",
+    "contact": {
+      "name": "backend"
+    }
+  },
+  "paths": {
+    "/api/v1/configuration": {
+      "get": {
+        "description": "Fetches the WebSocket server URL for client-side use",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "properties": {
+                "ws_server_url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

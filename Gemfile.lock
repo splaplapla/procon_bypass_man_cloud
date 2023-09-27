@@ -291,6 +291,11 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.0)
+    rswag-api (2.10.1)
+      railties (>= 3.1, < 7.1)
+    rswag-ui (2.10.1)
+      actionpack (>= 3.1, < 7.1)
+      railties (>= 3.1, < 7.1)
     rubocop (1.53.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -319,6 +324,7 @@ GEM
       set (~> 1.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    swagger-blocks (3.0.0)
     thor (1.2.2)
     timecop (0.9.6)
     timeout (0.4.0)
@@ -377,9 +383,12 @@ DEPENDENCIES
   rmagick
   rouge
   rspec-rails
+  rswag-api
+  rswag-ui
   rubocop
   sorcery
   stimulus-rails
+  swagger-blocks
   timecop
   uri (>= 0.12.2)
 

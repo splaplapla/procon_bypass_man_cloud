@@ -29,6 +29,9 @@ gem 'procon_bypass_man'
 
 gem 'bootsnap', require: false
 gem "uri", ">= 0.12.2"
+gem 'rswag-api'
+gem 'rswag-ui'
+gem 'swagger-blocks'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
