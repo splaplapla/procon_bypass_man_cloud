@@ -16,10 +16,10 @@ class Api::CreateDeviceStatusService
           s.device = device
           s.hostname = "unknown"
         end
-      rescue ActiveRecord::RecordNotUnique => e
-        Rails.logger.error e
-        retry
       end
+    rescue ActiveRecord::RecordNotUnique => e
+      Rails.logger.error e
+      retry
     end
 
     ApplicationRecord.transaction do
