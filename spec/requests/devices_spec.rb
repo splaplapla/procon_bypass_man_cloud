@@ -111,7 +111,11 @@ RSpec.describe "Devices", type: :request do
           FactoryBot.create(:device, user: user)
         end
 
-        it { expect { subject }.to raise_error(RuntimeError) }
+        it do
+          subject
+          expect(response.response_code).to eq(500)
+        end
+        it { expect { subject }.not_to change { user.devices.count } }
       end
     end
 
