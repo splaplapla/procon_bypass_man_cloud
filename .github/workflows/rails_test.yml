@@ -13,6 +13,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: password
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5 -e MYSQL_ROOT_PASSWORD=password -e MYSQL_USER=test -e MYSQL_PASSWORD=password -e MYSQL_DATABASE=example_test --entrypoint sh mysql:8 -c "exec docker-entrypoint.sh mysqld --default-authentication-plugin=mysql_native_password" # NOTE: https://gist.github.com/kmcphillips/55043742fcf6e882a7e2eb90611a4910
         ports:
           - 3306:3306
       redis:
