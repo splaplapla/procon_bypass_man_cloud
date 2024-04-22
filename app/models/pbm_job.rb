@@ -1,7 +1,7 @@
 class PbmJob < ApplicationRecord
   belongs_to :device
 
-  serialize :args, JSON
+  serialize :args, coder: JSON
 
   enum action: {
     change_pbm_version: 0,

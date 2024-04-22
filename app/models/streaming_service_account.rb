@@ -1,7 +1,7 @@
 class StreamingServiceAccount < ApplicationRecord
   belongs_to :streaming_service
 
-  serialize :cached_data, JSON
+  serialize :cached_data, coder: JSON
 
   before_create do
     self.cached_data = {}

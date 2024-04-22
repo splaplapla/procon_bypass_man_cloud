@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  serialize :body, JSON
+  serialize :body, coder: JSON
 
   EVENT_TYPE = {
     boot: { value: 0, label: '起動完了', body_visibility: false },
