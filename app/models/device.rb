@@ -27,7 +27,7 @@ class Device < ApplicationRecord
     sessions_has_config = pbm_sessions.
       joins(:events).
       where(events: { event_type: [:reload_config, :load_config]})
-    Event.where(pbm_sessions: sessions_has_config).where(event_type: [:reload_config, :load_config]).order(created_at: :desc).limit(1).first
+    Event.where(pbm_session: sessions_has_config).where(event_type: [:reload_config, :load_config]).order(created_at: :desc).limit(1).first
   end
 
   # @return [String]

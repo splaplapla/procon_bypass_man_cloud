@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_26_075626) do
+ActiveRecord::Schema[7.1].define(version: 2022_08_26_075626) do
   create_table "demo_devices", charset: "utf8mb4", collation: "utf8mb4_bin", force: :cascade do |t|
     t.bigint "device_id", null: false
     t.datetime "created_at", null: false

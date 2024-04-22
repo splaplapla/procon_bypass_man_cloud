@@ -1,7 +1,7 @@
 class Splatoon2Sketch < ApplicationRecord
   belongs_to :user
 
-  serialize :crop_data, JSON
+  serialize :crop_data, coder: JSON
 
   validates :encoded_image, presence: true
   validate :validate_image_extension, if: :encoded_image?

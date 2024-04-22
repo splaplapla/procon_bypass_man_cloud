@@ -3,7 +3,7 @@ class SavedButtonsSetting < ApplicationRecord
 
   belongs_to :user
 
-  serialize :content, JSON
+  serialize :content, coder: JSON
 
   before_save :update_content_hash
 
