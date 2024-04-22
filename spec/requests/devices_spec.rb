@@ -115,7 +115,7 @@ RSpec.describe "Devices", type: :request do
           subject
           expect(response.response_code).to eq(500)
         end
-        it { expect { subject }.not_to change { user.devices.count } }
+        it { expect { subject }.not_to(change { user.devices.count }) }
       end
     end
 
